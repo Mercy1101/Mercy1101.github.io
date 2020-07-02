@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>阅读C++线程池源码 | 李建聪的学习笔记</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="阅读C++线程池源码" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="progschj/thread_pool Github上这个库(progschj/thread_pool)的点赞最多，学习一下。 接口定义 ```c++ class ThreadPool { public: ThreadPool(size_t); /// 任务入列 template &lt;class F, class… Args&gt; auto enqueue(F&amp;&amp; f, Args&amp;&amp;… args) -&gt; std::future&lt;typename std::invoke_result&lt;F(Args…)&gt;::type&gt;; ~ThreadPool();" />
+<meta property="og:description" content="progschj/thread_pool Github上这个库(progschj/thread_pool)的点赞最多，学习一下。 接口定义 ```c++ class ThreadPool { public: ThreadPool(size_t); /// 任务入列 template &lt;class F, class… Args&gt; auto enqueue(F&amp;&amp; f, Args&amp;&amp;… args) -&gt; std::future&lt;typename std::invoke_result&lt;F(Args…)&gt;::type&gt;; ~ThreadPool();" />
+<link rel="canonical" href="http://localhost:4000/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/2020/06/27/%E9%98%85%E8%AF%BBC++%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%BA%90%E7%A0%81.html" />
+<meta property="og:url" content="http://localhost:4000/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/2020/06/27/%E9%98%85%E8%AF%BBC++%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%BA%90%E7%A0%81.html" />
+<meta property="og:site_name" content="李建聪的学习笔记" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-27T16:37:47+08:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/2020/06/27/%E9%98%85%E8%AF%BBC++%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%BA%90%E7%A0%81.html"},"description":"progschj/thread_pool Github上这个库(progschj/thread_pool)的点赞最多，学习一下。 接口定义 ```c++ class ThreadPool { public: ThreadPool(size_t); /// 任务入列 template &lt;class F, class… Args&gt; auto enqueue(F&amp;&amp; f, Args&amp;&amp;… args) -&gt; std::future&lt;typename std::invoke_result&lt;F(Args…)&gt;::type&gt;; ~ThreadPool();","url":"http://localhost:4000/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/2020/06/27/%E9%98%85%E8%AF%BBC++%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%BA%90%E7%A0%81.html","headline":"阅读C++线程池源码","@type":"BlogPosting","dateModified":"2020-06-27T16:37:47+08:00","datePublished":"2020-06-27T16:37:47+08:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="李建聪的学习笔记" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">李建聪的学习笔记</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">阅读C++线程池源码</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-06-27T16:37:47+08:00" itemprop="datePublished">Jun 27, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="progschjthread_pool">progschj/thread_pool</h2>
+<p>Github上这个库(<a href="https://github.com/progschj/ThreadPool/blob/master/ThreadPool.h">progschj/thread_pool</a>)的点赞最多，学习一下。</p>
+<h3 id="接口定义">接口定义</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ThreadPool</span> <span class="p">{</span>
+ <span class="nl">public:</span>
+  <span class="n">ThreadPool</span><span class="p">(</span><span class="kt">size_t</span><span class="p">);</span>
+  <span class="c1">/// 任务入列</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">F</span><span class="p">,</span> <span class="k">class</span><span class="o">...</span> <span class="nc">Args</span><span class="p">&gt;</span>
+  <span class="k">auto</span> <span class="n">enqueue</span><span class="p">(</span><span class="n">F</span><span class="o">&amp;&amp;</span> <span class="n">f</span><span class="p">,</span> <span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+      <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">invoke_result</span><span class="o">&lt;</span><span class="n">F</span><span class="p">(</span><span class="n">Args</span><span class="p">...)</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="o">~</span><span class="n">ThreadPool</span><span class="p">();</span>
+
+ <span class="nl">private:</span>
+  <span class="c1">/// 所有的工作线程</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;</span> <span class="n">workers</span><span class="p">;</span>
+  <span class="c1">/// 任务队列</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">tasks</span><span class="p">;</span>
+
+  <span class="c1">/// 用于同步的互斥锁和条件变量</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">queue_mutex</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">condition_variable</span> <span class="n">condition</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">stop</span><span class="p">;</span>  <span class="c1">///&lt; 用于判断所有线程是否需要结束</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="构造函数和消费者实现">构造函数和消费者实现</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">/// @name     ThreadPool</span>
+<span class="c1">/// @brief    用于创建若干个线程，并规定消费者函数</span>
+<span class="c1">///</span>
+<span class="c1">/// @param    threads   [in]    要创建的线程数量</span>
+<span class="c1">///</span>
+<span class="c1">/// @return   NONE</span>
+<span class="c1">///</span>
+<span class="c1">/// @date     2020-06-27 16:17:50</span>
+<span class="c1">/// @warning  线程安全</span>
+<span class="kr">inline</span> <span class="n">ThreadPool</span><span class="o">::</span><span class="n">ThreadPool</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">threads</span><span class="p">)</span> <span class="o">:</span> <span class="n">stop</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">threads</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">workers</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">([</span><span class="k">this</span><span class="p">]</span> <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">task</span><span class="p">;</span>
+
+        <span class="p">{</span>
+          <span class="c1">/// 获取同步锁</span>
+          <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">queue_mutex</span><span class="p">);</span>
+          <span class="c1">/// 阻塞等待获取任务，直到任务队列不为空</span>
+          <span class="k">this</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span>
+              <span class="n">lock</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">stop</span> <span class="o">||</span> <span class="o">!</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span> <span class="p">});</span>
+          <span class="c1">/// 如果stop标志位为true，且任务列表都执行完毕后，该线程退出</span>
+          <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">stop</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="k">return</span><span class="p">;</span>
+          <span class="c1">/// 从任务队列中拿出来一个任务</span>
+          <span class="n">task</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">front</span><span class="p">());</span>
+          <span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="p">}</span>  <span class="c1">///&lt; 这里释放锁</span>
+
+        <span class="c1">/// 执行该任务函数</span>
+        <span class="n">task</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="析构函数">析构函数</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">inline</span> <span class="n">ThreadPool</span><span class="o">::~</span><span class="n">ThreadPool</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">queue_mutex</span><span class="p">);</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">/// 在stop位, 置为true后通知所有线程执行一次，然后等待所有线程处理完任务后join()</span>
+  <span class="n">condition</span><span class="p">.</span><span class="n">notify_all</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&amp;</span> <span class="n">worker</span> <span class="o">:</span> <span class="n">workers</span><span class="p">)</span> <span class="n">worker</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="生产者函数">生产者函数</h3>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">/// @name     enqueue</span>
+<span class="c1">/// @brief    用于添加任务函数到任务队列中</span>
+<span class="c1">///</span>
+<span class="c1">/// @param    f     [in]    任务函数</span>
+<span class="c1">/// @param    args  [in]    任务函数的入参列表</span>
+<span class="c1">///</span>
+<span class="c1">/// @return   取决于任务函数的返回值</span>
+<span class="c1">///</span>
+<span class="c1">/// @date     2020-06-27 16:06:30</span>
+<span class="c1">/// @warning  线程安全</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">F</span><span class="p">,</span> <span class="k">class</span><span class="o">...</span> <span class="nc">Args</span><span class="p">&gt;</span>
+<span class="k">auto</span> <span class="n">ThreadPool</span><span class="o">::</span><span class="n">enqueue</span><span class="p">(</span><span class="n">F</span><span class="o">&amp;&amp;</span> <span class="n">f</span><span class="p">,</span> <span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+    <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">invoke_result</span><span class="o">&lt;</span><span class="n">F</span><span class="p">(</span><span class="n">Args</span><span class="p">...)</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">using</span> <span class="n">return_type</span> <span class="o">=</span> <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">invoke_result</span><span class="o">&lt;</span><span class="n">F</span><span class="p">(</span><span class="n">Args</span><span class="p">...)</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">;</span>
+
+  <span class="c1">/// 这里封装一个异步的线程并执行刚刚传入的函数，这个函数通过bind改类型为void()</span>
+  <span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">packaged_task</span><span class="o">&lt;</span><span class="n">return_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...));</span>
+  <span class="c1">/// 创建一个这个函数的未来的值， 这个未来值不获取就不会进行计算</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">return_type</span><span class="o">&gt;</span> <span class="n">res</span> <span class="o">=</span> <span class="n">task</span><span class="o">-&gt;</span><span class="n">get_future</span><span class="p">();</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">queue_mutex</span><span class="p">);</span>
+
+    <span class="c1">/// 假如说没有让这个线程停止则继续，否则抛出异常阻止线程池结束后在入列</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">stop</span><span class="p">)</span> <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">"enqueue on stopped ThreadPool"</span><span class="p">);</span>
+    <span class="c1">/// 这个封装好的函数放入任务列表中</span>
+    <span class="n">tasks</span><span class="p">.</span><span class="n">emplace</span><span class="p">([</span><span class="n">task</span><span class="p">]()</span> <span class="p">{</span> <span class="p">(</span><span class="o">*</span><span class="n">task</span><span class="p">)();</span> <span class="p">});</span>
+  <span class="p">}</span>
+  <span class="c1">/// 通知一个阻塞中的线程，任务队列中有任务了</span>
+  <span class="n">condition</span><span class="p">.</span><span class="n">notify_one</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+  </div><a class="u-url" href="/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/2020/06/27/%E9%98%85%E8%AF%BBC++%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%BA%90%E7%A0%81.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">李建聪的学习笔记</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">李建聪的学习笔记</li><li><a class="u-email" href="mailto:pipinstall@163.com">pipinstall@163.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/Mercy1101"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">Mercy1101</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
