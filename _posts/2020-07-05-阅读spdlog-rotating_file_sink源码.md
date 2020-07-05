@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "阅读spdlog-rotating_file_sink源码"
-date:   2020-07-04 21:39:47 +0800
+date:   2020-07-05 09:59:47 +0800
 categories: 源码阅读 
 published:  true
 tag: c++
@@ -128,4 +128,39 @@ rotating_file_sink(std::string base_filename, std::size_t max_size,
   }
 ```
 
-### calc_filename()
+### 虚函数的实现
+```C++
+/// @name   sink_it_
+/// @brief  写文件日志的函数，如果写入日志大于最大文件大小则创建下一个文件
+///
+/// @param  msg [in]  写入的日志信息
+///
+/// @return   
+///
+/// @date     2020-07-05 09:33:12
+void sink_it_(const details::log_msg &msg) override {
+  std::string formatted;
+  /// 拼装日志信息
+  base_sink<Mutex>::formatter_->format(msg, formatted);
+  /// 计算这条日志加上原本大小是否超过了最大文件大小
+  current_size_ += formatted.size();
+  if (current_size_ > max_size_) {
+    /// 超过了就创建下一个文件
+    rotate_();
+    /// 更新为当前文件大小为这个日志信息的大小
+    current_size_ = formatted.size();
+  }
+  /// 如果没有超过最大大小则继续写该文件
+  file_helper_.write(formatted);
+}
+
+/// @name     flush_
+/// @brief    刷新文件
+///
+/// @param    NONE
+///
+/// @return   NONE
+///
+/// @date     2020-07-05 09:36:23
+void flush_() override { file_helper_.flush(); }
+```
