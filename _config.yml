@@ -32,7 +32,7 @@ github_username: Mercy1101
 profile: To witness a miracle.
 
 # Build settings
-theme: minima
+theme: jekyll-theme-cayman
 plugins:
   - jekyll-feed
 
