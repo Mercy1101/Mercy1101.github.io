@@ -12,7 +12,7 @@ typora-root-url: ..
 ## rotating_file_sink定义
 [rotating_file_sink.h](https://github.com/gabime/spdlog/blob/v1.x/include/spdlog/sinks/rotating_file_sink.h)
 
-```C++
+```c++
 //
 // Rotating file sink based on size
 //
@@ -49,7 +49,7 @@ private:
 ```
 
 ### 构造函数
-```C++
+```c++
 
 /// @name     rotating_file_sink
 /// @brief    构造本对象，
@@ -81,7 +81,7 @@ rotating_file_sink(std::string base_filename, std::size_t max_size,
 ```
 
 ### rotate_()函数
-```C++
+```c++
   /// @name     rotate_
   /// @brief    执行循环日志文件的创建
   /// @details  
@@ -129,7 +129,7 @@ rotating_file_sink(std::string base_filename, std::size_t max_size,
 ```
 
 ### 虚函数的实现
-```C++
+```c++
 /// @name   sink_it_
 /// @brief  写文件日志的函数，如果写入日志大于最大文件大小则创建下一个文件
 ///

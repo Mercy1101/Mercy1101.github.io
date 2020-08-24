@@ -9,7 +9,7 @@ typora-root-url: ..
 ---
 
 ## integer_sequence
-```C++
+```c++
 #include <array>
 #include <iostream>
 #include <tuple>
