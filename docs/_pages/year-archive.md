@@ -1,6 +1,6 @@
 ---
 title: "Posts by Year"
 permalink: /year-archive/
-layout: posts
+s
 author_profile: true
 ---

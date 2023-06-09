@@ -124,12 +124,12 @@ Auto-generated table of contents list for your posts and pages can be enabled by
 
 ![table of contents example]({{ "/assets/images/mm-toc-helper-example.jpg" | relative_url }})
 
-| Parameter   | Required | Description | Default |
-| ---------   | -------- | ----------- | ------- |
-| **toc**     | Optional | Show table of contents. (boolean) | `false` |
-| **toc_label** | Optional | Table of contents title. (string) | `toc_label` in UI Text data file. |
-| **toc_icon**  | Optional | Table of contents icon, displays before the title. (string) | [Font Awesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) <i class="fas fa-file-alt"></i> **file-alt** icon. Other FA icons can be used instead. |
-| **toc_sticky** | Optional | Stick table of contents to top of screen.                   | `false` |
+| Parameter      | Required | Description                                                 | Default                                                                                                                                                       |
+| -------------- | -------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **toc**        | Optional | Show table of contents. (boolean)                           | `false`                                                                                                                                                       |
+| **toc_label**  | Optional | Table of contents title. (string)                           | `toc_label` in UI Text data file.                                                                                                                             |
+| **toc_icon**   | Optional | Table of contents icon, displays before the title. (string) | [Font Awesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) <i class="fas fa-file-alt"></i> **file-alt** icon. Other FA icons can be used instead. |
+| **toc_sticky** | Optional | Stick table of contents to top of screen.                   | `false`                                                                                                                                                       |
 
 **TOC example with custom title and icon**
 
@@ -243,19 +243,19 @@ If you have the luxury of using Jekyll plugins, the creation of category and tag
 
 If you're not using the `jekyll-archives` plugin then you need to create archive pages yourself. Sample taxonomy archives can be found by grabbing the Markdown sources below and adding to your site.
 
-| Name                 | Layout | Example |
-| -------------------- | ------ | ------ |
-| [Posts Archive](https://mmistakes.github.io/minimal-mistakes/year-archive/) | `layout: posts` | [year-archive.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/year-archive.md) |
-| [Categories Archive](https://mmistakes.github.io/minimal-mistakes/categories/) | `layout: categories` | [category-archive.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/category-archive.md) |
-| [Category Archive](https://mmistakes.github.io/minimal-mistakes/categories/edge-case/) | `layout: category` | [edge-case.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/edge-case.md) |
-| [Tags Archive](https://mmistakes.github.io/minimal-mistakes/tags/) | `layout: tags` | [tag-archive.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/tag-archive.md) |
-| [Tag Archive](https://mmistakes.github.io/minimal-mistakes/tags/markup/) | `layout: tag` | [markup.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/markup.md) |
-| [Collection Archive](https://mmistakes.github.io/minimal-mistakes/recipes/) | `layout: collection` | [recipes-archive.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/recipes-archive.md) |
+| Name                                                                                   | Layout               | Example                                                                                                          |
+| -------------------------------------------------------------------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| [Posts Archive](https://mmistakes.github.io/minimal-mistakes/year-archive/)            | `s`                  | [year-archive.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/year-archive.md)         |
+| [Categories Archive](https://mmistakes.github.io/minimal-mistakes/categories/)         | `layout: categories` | [category-archive.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/category-archive.md) |
+| [Category Archive](https://mmistakes.github.io/minimal-mistakes/categories/edge-case/) | `layout: category`   | [edge-case.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/edge-case.md)               |
+| [Tags Archive](https://mmistakes.github.io/minimal-mistakes/tags/)                     | `layout: tags`       | [tag-archive.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/tag-archive.md)           |
+| [Tag Archive](https://mmistakes.github.io/minimal-mistakes/tags/markup/)               | `layout: tag`        | [markup.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/markup.md)                     |
+| [Collection Archive](https://mmistakes.github.io/minimal-mistakes/recipes/)            | `layout: collection` | [recipes-archive.md](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/recipes-archive.md)   |
 
 **Note:** By default, documents are shown in a list view. To change to a grid view add `entries_layout: grid` to the page's front matter.
 {: .notice--info}
 
-### `layout: posts`
+### `s`
 
 This layout displays all posts grouped by the year they were published. It accommodates the same front matter as `layout: archive`.
 
@@ -455,16 +455,16 @@ header:
 
 To overlay text on top of a header image you have a few more options:
 
-| Name                     | Description | Default |
-| ----                     | ----------- | ------- |
-| **overlay_image**        | Header image you'd like to overlay. Same rules as `header.image` from above. | |
+| Name                     | Description                                                                                                                              | Default                           |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| **overlay_image**        | Header image you'd like to overlay. Same rules as `header.image` from above.                                                             |                                   |
 | **overlay_filter**       | Color/opacity to overlay on top of the header image. Example: `0.5`, `rgba(255, 0, 0, 0.5)` or [`linear-gradient`][mdn-linear-gradient]. |
-| **show_overlay_excerpt** | Display excerpt in the overlay text | true |
-| **excerpt**              | Auto-generated page excerpt is added to the overlay text or can be overridden. | |
-| **tagline**              | Overrides page excerpt. Useful when header text needs to be different from excerpt in archive views. | |
-| **actions**              | Call to action button links (`actions` array: `label` and `url`). More than one button link can be assigned. | |
-| **cta_label**            | Deprecated, use `actions` instead. Call to action button text label. | `more_label` in UI Text data file |
-| **cta_url**              | Deprecated, use `actions` instead. Call to action button URL. | |
+| **show_overlay_excerpt** | Display excerpt in the overlay text                                                                                                      | true                              |
+| **excerpt**              | Auto-generated page excerpt is added to the overlay text or can be overridden.                                                           |                                   |
+| **tagline**              | Overrides page excerpt. Useful when header text needs to be different from excerpt in archive views.                                     |                                   |
+| **actions**              | Call to action button links (`actions` array: `label` and `url`). More than one button link can be assigned.                             |                                   |
+| **cta_label**            | Deprecated, use `actions` instead. Call to action button text label.                                                                     | `more_label` in UI Text data file |
+| **cta_url**              | Deprecated, use `actions` instead. Call to action button URL.                                                                            |                                   |
 
   [mdn-linear-gradient]: https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient()
 
@@ -636,7 +636,7 @@ For example, to color a Reddit icon, simply add a `color` declaration and the co
 Blocks of content can be added by using the following under `sidebar`:
 
 | Name          | Description                                                |
-| ----          | -----------                                                |
+| ------------- | ---------------------------------------------------------- |
 | **title**     | Title or heading.                                          |
 | **image**     | Image path placed in `/images/` folder or an external URL. |
 | **image_alt** | Alternate description for image.                           |

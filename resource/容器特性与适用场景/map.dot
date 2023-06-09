@@ -1,0 +1,19 @@
+digraph binaryTree{
+    node[shape=record,/*color=red,*/ /*fontcolor=blue,*/fontsize=10];
+    a[label="<f0> key|<f1> value"];
+    b[label="<f0> key|<f1> value"];
+    c[label="<f0> key|<f1> value"];
+    d[label="<f0> key|<f1> value"];
+    e[label="<f0> key|<f1> value"];
+    f[label="<f0> key|<f1> value"];
+    g[label="<f0> key|<f1> value"];
+
+    a->b;
+    a->c;
+
+    b->d;
+    b->e;
+
+    c->f;
+    c->g;
+}
