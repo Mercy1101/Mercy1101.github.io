@@ -1,11 +1,6 @@
 ---
-
 title:  "《Effective Modern C++》读书笔记(2)"
-date:   2020-12-14 16:10:44 +0800
-categories: c++ 读书笔记
-published:  true
-tag: c++ 读书笔记
-typora-root-url: ..
+toc: true
 ---
 
 # 《Effective Modern C++》读书笔记(2)

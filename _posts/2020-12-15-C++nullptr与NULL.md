@@ -6,6 +6,7 @@ categories: c++
 published:  true
 tag: c++
 typora-root-url: ..
+toc: true
 ---
 
 # NULL与nullptr的区别
