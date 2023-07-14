@@ -1,0 +1,18 @@
+@startuml 调度服务器架构设计
+
+title 调度服务器架构设计
+
+网络模块 --> 事件队列 : 存入事件
+activate 网络模块
+网络模块 --> 事件调度 : 告知存在事件
+deactivate 网络模块
+
+事件队列 <-- 事件调度 : 拿取消息
+activate 事件调度
+事件调度 --> 业务类 : 调用函数处理
+
+activate 业务类
+业务类 --> 网络模块 : 网络发送
+deactivate 业务类
+deactivate 事件调度
+@enduml
