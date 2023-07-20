@@ -1,6 +1,7 @@
 ---
 title:  "《Effective Modern C++》读书笔记(2)"
 toc: true
+toc_sticky: true
 ---
 
 # 《Effective Modern C++》读书笔记(2)

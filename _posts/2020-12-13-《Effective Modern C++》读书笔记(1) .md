@@ -7,6 +7,7 @@ published:  true
 tag: c++ 读书笔记
 typora-root-url: ..
 toc: true
+toc_sticky: true
 ---
 
 # 《Effective Modern C++》读书笔记(1)

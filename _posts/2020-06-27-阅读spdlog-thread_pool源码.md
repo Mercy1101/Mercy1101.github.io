@@ -8,6 +8,7 @@ published:  true   # default true 设置 “false” 后，文章不会显示
 tag: c++
 typora-root-url: ..
 toc: true
+toc_sticky: true
 ---
 
 ## thread_pool 源码学习

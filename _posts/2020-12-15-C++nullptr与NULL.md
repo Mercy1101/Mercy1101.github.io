@@ -7,6 +7,7 @@ published:  true
 tag: c++
 typora-root-url: ..
 toc: true
+toc_sticky: true
 ---
 
 # NULL与nullptr的区别
