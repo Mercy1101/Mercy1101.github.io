@@ -6,6 +6,7 @@ toc_sticky: true
 author_profile: true
 ---
 
+GitHub Copilot是GitHub和OpenAI合作开发的一个人工智能工具，用户在使用Visual Studio Code、Microsoft Visual Studio、Vim、Cursor或JetBrains集成开发环境时可以通过GitHub Copilot自动补全代码。GitHub于2021年6月29日对开公开该软件，GitHub Copilot于技术预览阶段主要面向Python、JavaScript、TypeScript、Ruby和Go等编程语言。
 
 ## 提高编码效率
 
