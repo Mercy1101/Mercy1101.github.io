@@ -8,7 +8,7 @@ author_profile: true
 
 `std::filesystem` 是 C++17 中引入的标准库，用于处理文件系统操作。它提供了一组类和函数，用于执行文件和目录的创建、删除、遍历、重命名、复制等操作，以及获取文件和目录的属性信息。
 
-## std::filesystem::path
+## std::filesystem::path 核心概念解释
 
 `std::filesystem::path` 类用于表示文件系统路径。它提供了一组函数，用于获取路径的各个部分，以及将路径转换为字符串。
 
