@@ -218,7 +218,7 @@ std::vector<std::string> get_directory_files(const std::string& path, const std:
     {
         auto fp = dir_entry.path();
         /// 过滤文件夹
-        if (!std::filesystem::is_directory(fs::status(fp)))
+        if (!std::filesystem::is_directory(std::filesystem::status(fp)))
         {
             auto file_name = fp.filename().string();
             /// 正则匹配
@@ -232,12 +232,12 @@ std::vector<std::string> get_directory_files(const std::string& path, const std:
     if (is_recursive)
     {
         /// 递归查找
-        std::ranges::for_each(fs::recursive_directory_iterator{p}, f);
+        std::ranges::for_each(std::filesystem::recursive_directory_iterator{p}, f);
     }
     else
     {
         /// 非递归查找
-        std::ranges::for_each(fs::directory_iterator{p}, f);
+        std::ranges::for_each(std::filesystem::directory_iterator{p}, f);
     }
 
     std::ranges::sort(vec);
@@ -248,15 +248,15 @@ int main()
 {
 
     /// 默认情况下，查找所有文件, 非递归
-    auto c0 = cp4::get_directory_files(dir1.string());
+    auto c0 = get_directory_files(dir1.string());
     /// 非递归，查找所有文件
-    auto c1 = cp4::get_directory_files(dir1.string(), std::regex("(.*)"), false);
+    auto c1 = get_directory_files(dir1.string(), std::regex("(.*)"), false);
     /// 非递归，查找特定文件 .log
-    auto c2 = cp4::get_directory_files(dir1.string(), std::regex("(.*\\.log)"), false);
+    auto c2 = get_directory_files(dir1.string(), std::regex("(.*\\.log)"), false);
     /// 递归，查找所有文件
-    auto c3 = cp4::get_directory_files(dir1.string(), std::regex("(.*)"), true);
+    auto c3 = get_directory_files(dir1.string(), std::regex("(.*)"), true);
     /// 递归，查找特定文件 .log
-    auto c4 = cp4::get_directory_files(dir1.string(), std::regex("(.*\\.log)"), true);
+    auto c4 = get_directory_files(dir1.string(), std::regex("(.*\\.log)"), true);
 
     return 0;
 
