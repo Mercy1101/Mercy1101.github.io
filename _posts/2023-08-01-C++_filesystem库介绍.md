@@ -208,7 +208,7 @@ int main()
 std::vector<std::string> get_directory_files(const std::string& path, const std::regex& reg, bool is_recursive)
 {
     auto p = std::filesystem::path(path);
-    if (!is_exist(p.string()))
+    if (!std::filesystem::exists(p.string()))
     {
         return {};
     }
@@ -319,12 +319,12 @@ bool copy_directory(const std::string& from, const std::string& to) noexcept
         return false;
     }
 
-    if (!is_exist(from))
+    if (!std::filesystem::exists(from))
     {
         return false;
     }
 
-    if (is_exist(to))
+    if (std::filesystem::exists(to))
     {
         return false;
     }
