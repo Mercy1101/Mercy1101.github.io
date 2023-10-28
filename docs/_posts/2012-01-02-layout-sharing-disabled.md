@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layout: Social Sharing Links Disabled"
 share: false
 categories:

@@ -1,4 +1,4 @@
----
+﻿---
 title: "Markup: Image Alignment"
 categories:
   - Markup

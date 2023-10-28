@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layout: Excerpt (Generated)"
 excerpt_separator: "<!--more-->"
 categories:

@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layout: Related Posts Enabled"
 related: true
 categories:

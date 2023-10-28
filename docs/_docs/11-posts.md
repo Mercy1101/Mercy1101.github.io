@@ -1,4 +1,4 @@
----
+﻿---
 title: "Working with Posts"
 permalink: /docs/posts/
 excerpt: "Suggestions and Front Matter defaults for working with posts."

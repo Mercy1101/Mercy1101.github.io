@@ -1,4 +1,4 @@
-## [4.24.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.24.0)
+﻿## [4.24.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.24.0)
 
 ### Bug Fixes
 

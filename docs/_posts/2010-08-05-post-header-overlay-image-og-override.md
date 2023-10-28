@@ -1,4 +1,4 @@
----
+﻿---
 title: "Post: Overlay Image with OpenGraph Override"
 header:
   overlay_image: /assets/images/unsplash-image-1.jpg

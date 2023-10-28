@@ -1,4 +1,4 @@
----
+﻿---
 title: "Contributing"
 permalink: /docs/contributing/
 excerpt: "How you can contribute to make this theme better."

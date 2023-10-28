@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layout: Header Image Overlay with Custom Tagline"
 tagline: "This is a custom tagline content which overrides the *default* page excerpt."
 header:

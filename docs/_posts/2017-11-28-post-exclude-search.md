@@ -1,4 +1,4 @@
----
+﻿---
 title:  "Exclude Post from Search Index"
 search: false
 categories: 

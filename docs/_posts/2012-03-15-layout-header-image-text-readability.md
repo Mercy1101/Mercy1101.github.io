@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layout: Header Image and Text Readability"
 header:
   image: /assets/images/unsplash-image-4.jpg

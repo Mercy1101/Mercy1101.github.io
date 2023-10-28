@@ -1,4 +1,4 @@
----
+﻿---
 title: "UI Text"
 permalink: /docs/ui-text/
 excerpt: "Text for customizing user interface elements found in the theme."

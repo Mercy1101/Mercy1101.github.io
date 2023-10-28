@@ -1,4 +1,4 @@
----
+﻿---
 title: "Working with Collections"
 permalink: /docs/collections/
 excerpt: "Suggestions and Front Matter defaults for working with collections."

@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layout: Header Image (Vertical)"
 header:
   image: /assets/images/unsplash-image-6.jpg
@@ -13,7 +13,7 @@ tags:
   - layout
 ---
 
-This post should display a **header image**, if the theme supports it.
+This post should display aÂ **header image**, if the theme supports it.
 
 Non-square images can provide some unique styling issues.
 

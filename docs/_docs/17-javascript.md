@@ -1,4 +1,4 @@
----
+﻿---
 title: "JavaScript"
 permalink: /docs/javascript/
 excerpt: "Instructions for customizing and building the theme's scripts."

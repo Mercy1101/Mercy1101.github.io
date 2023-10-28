@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layout: Sidebar with Navigation List"
 excerpt: "A post with a sidebar navigation list."
 author_profile: false

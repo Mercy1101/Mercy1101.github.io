@@ -1,4 +1,4 @@
----
+﻿---
 title: "History"
 classes: wide
 permalink: /docs/history/

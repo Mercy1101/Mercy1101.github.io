@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layouts"
 permalink: /docs/layouts/
 excerpt: "Descriptions and samples of all layouts included with the theme and how to best use them."

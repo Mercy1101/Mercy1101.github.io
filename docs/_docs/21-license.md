@@ -1,4 +1,4 @@
----
+﻿---
 title: "License"
 permalink: /docs/license/
 excerpt: "License for Minimal Mistakes Jekyll Theme."

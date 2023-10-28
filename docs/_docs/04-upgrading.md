@@ -1,4 +1,4 @@
----
+﻿---
 title: "Upgrading"
 permalink: /docs/upgrading/
 excerpt: "Instructions and suggestions for upgrading the theme."

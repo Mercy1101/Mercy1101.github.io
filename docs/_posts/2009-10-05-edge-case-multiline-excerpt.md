@@ -1,4 +1,4 @@
----
+﻿---
 title: "Edge Case: Post with multiline excerpt"
 ---
 

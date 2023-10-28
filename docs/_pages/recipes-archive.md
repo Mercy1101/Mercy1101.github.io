@@ -1,4 +1,4 @@
----
+﻿---
 layout: collection
 title: "Recipes"
 collection: recipes

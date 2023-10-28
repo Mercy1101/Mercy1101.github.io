@@ -1,4 +1,4 @@
----
+﻿---
 title: "Antidisestablishmentarianism"
 categories:
   - Edge Case

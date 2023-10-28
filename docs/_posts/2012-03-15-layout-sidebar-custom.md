@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layout: Sidebar Custom"
 excerpt: "A post with custom sidebar content."
 last_modified_at: 2021-06-23T07:53:04-04:00

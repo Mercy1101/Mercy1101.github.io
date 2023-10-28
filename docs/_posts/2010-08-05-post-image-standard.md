@@ -1,4 +1,4 @@
----
+﻿---
 title: "Post: Image (Standard)"
 categories:
   - Post Formats

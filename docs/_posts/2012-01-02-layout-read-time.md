@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layout: Read Time Enabled"
 read_time: true
 tags:

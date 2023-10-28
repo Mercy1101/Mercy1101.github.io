@@ -1,4 +1,4 @@
----
+﻿---
 title: "Working with Pages"
 permalink: /docs/pages/
 excerpt: "Suggestions and Front Matter defaults for working with pages."

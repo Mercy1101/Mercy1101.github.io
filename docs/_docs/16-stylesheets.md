@@ -1,4 +1,4 @@
----
+﻿---
 title: "Stylesheets"
 permalink: /docs/stylesheets/
 excerpt: "Instructions for customizing and building the theme's stylesheets."

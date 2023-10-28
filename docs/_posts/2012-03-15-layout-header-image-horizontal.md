@@ -1,4 +1,4 @@
----
+﻿---
 title: "Layout: Header Image (Horizontal)"
 header:
   image: /assets/images/unsplash-image-1.jpg

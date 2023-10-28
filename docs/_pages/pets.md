@@ -1,4 +1,4 @@
----
+﻿---
 title: Pets
 layout: collection
 permalink: /pets/

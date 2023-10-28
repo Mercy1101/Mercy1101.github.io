@@ -1,4 +1,4 @@
----
+﻿---
 title: "Authors"
 permalink: /docs/authors/
 excerpt: "Instructions and settings for working with multiple site authors."
