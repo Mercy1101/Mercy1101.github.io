@@ -205,6 +205,7 @@ int main()
 #include <string>
 #include <filesystem>
 #include <ranges>
+#include <algorithm>
 
 std::vector<std::string> get_directory_files(const std::string& path, const std::regex& reg = std::regex("(.*)"), bool is_recursive = false)
 {
