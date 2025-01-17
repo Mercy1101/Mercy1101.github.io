@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="SIL2（Safety Integrity Level 2） 是一种安全完整性级别，用于评估和确定安全相关系统的可靠性和性能。SIL是根据国际标准IEC 61508（功能安全）和相关行业标准（如IEC 61511、ISO 26262等）定义的。 SIL2认证是指通过对特定系统或设备进行评估和验证，确认其满足SIL2级别的要求。SIL2级别通常适用于具有中等安全风险的系统，要求系统在设计、实施和操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SIL2 认证工作总结">
+<meta property="og:url" content="https://mercy1101.github.io/2023/09/01/2023-09-01-SIL2%E8%AE%A4%E8%AF%81%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:description" content="SIL2（Safety Integrity Level 2） 是一种安全完整性级别，用于评估和确定安全相关系统的可靠性和性能。SIL是根据国际标准IEC 61508（功能安全）和相关行业标准（如IEC 61511、ISO 26262等）定义的。 SIL2认证是指通过对特定系统或设备进行评估和验证，确认其满足SIL2级别的要求。SIL2级别通常适用于具有中等安全风险的系统，要求系统在设计、实施和操作">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-09-01T08:41:32.743Z">
+<meta property="article:modified_time" content="2023-10-28T06:29:44.910Z">
+<meta property="article:author" content="Jiancong Li">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://mercy1101.github.io/2023/09/01/2023-09-01-SIL2%E8%AE%A4%E8%AF%81%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>SIL2 认证工作总结 | Jiancong Li's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/09/01/2023-09-01-SIL2%E8%AE%A4%E8%AF%81%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jiancong Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jiancong Li's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SIL2 认证工作总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-09-01 16:41:32" itemprop="dateCreated datePublished" datetime="2023-09-01T16:41:32+08:00">2023-09-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><code>SIL2（Safety Integrity Level 2）</code> 是一种安全完整性级别，用于评估和确定安全相关系统的可靠性和性能。SIL是根据国际标准IEC 61508（功能安全）和相关行业标准（如IEC 61511、ISO 26262等）定义的。</p>
+<p><code>SIL2</code>认证是指通过对特定系统或设备进行评估和验证，确认其满足SIL2级别的要求。SIL2级别通常适用于具有中等安全风险的系统，要求系统在设计、实施和操作过程中采取特定的安全措施和功能，以确保其能够达到预期的安全性能。</p>
+<p>本次我参与的 <code>SIL2</code> 认证是只做软件部分的认证，其中设计的标准为 <code>EN50128-2011</code>。</p>
+<p>目前 <code>SIL2</code> 认证工作已经基本完成，现总结此次认证工作的经验。</p>
+<h2 id="EN50128-整体脉络"><a href="#EN50128-整体脉络" class="headerlink" title="EN50128 整体脉络"></a>EN50128 整体脉络</h2><p>EN50128 更多的是在强调软件质量保障。</p>
+<p>软件质量保障是以计划为指导，计划指导实践。</p>
+<p>EN50128 推荐&#x2F;要求的整体流程为：</p>
+<ol>
+<li>计划阶段</li>
+<li>需求阶段</li>
+<li>架构与设计阶段</li>
+<li>组件设计阶段</li>
+<li>组件实现与测试阶段</li>
+<li>集成阶段</li>
+<li>总体测试与最后确认阶段</li>
+<li>软件部署</li>
+<li>软件维护</li>
+</ol>
+<p>其中 2 ～ 7 作为软件研发的主要流程，1和8 ～ 9 作为软件工程管理过程。</p>
+<h3 id="计划阶段"><a href="#计划阶段" class="headerlink" title="计划阶段"></a>计划阶段</h3><p>所有计划的制定，独立于研发过程。</p>
+<h3 id="需求阶段"><a href="#需求阶段" class="headerlink" title="需求阶段"></a>需求阶段</h3><p>研发的第一个过程，准确定义需求和需求对应的测试。</p>
+<h3 id="架构与设计阶段"><a href="#架构与设计阶段" class="headerlink" title="架构与设计阶段"></a>架构与设计阶段</h3><p>对整个系统进行定义，分为哪几个组件，网络拓扑怎么搭建，使用什么硬件，使用什么数据库。</p>
+<p>定义组件之间的接口。</p>
+<h3 id="组件实现与测试阶段"><a href="#组件实现与测试阶段" class="headerlink" title="组件实现与测试阶段"></a>组件实现与测试阶段</h3><p>编码与调试阶段。</p>
+<h3 id="集成阶段"><a href="#集成阶段" class="headerlink" title="集成阶段"></a>集成阶段</h3><p>对软件组件进行集成，对真实的硬件进行集成。</p>
+<h3 id="总体测试与最后确认"><a href="#总体测试与最后确认" class="headerlink" title="总体测试与最后确认"></a>总体测试与最后确认</h3><p>对已经集成好的整体系统，对照软件需求测试用例进行测试并记录。发行说明，总体测试报告与软件确认报告。</p>
+<h3 id="软件部署"><a href="#软件部署" class="headerlink" title="软件部署"></a>软件部署</h3><p>软件发布计划隶属于配置管理计划，规定了每个基线版本包含什么功能，什么时候发布。</p>
+<p>而跟随着软件发布的就是软件部署。</p>
+<p>软件部署分为：部署计划、部署操作手册、部署记录、部署记录报告。</p>
+<h3 id="软件维护"><a href="#软件维护" class="headerlink" title="软件维护"></a>软件维护</h3><p>运维阶段（升级）。</p>
+<p>软件维护计划、软件变更记录、软件维护记录。</p>
+<h2 id="此次认证过程得到的收获"><a href="#此次认证过程得到的收获" class="headerlink" title="此次认证过程得到的收获"></a>此次认证过程得到的收获</h2><p>西方主导思想：计划指导实践。</p>
+<p>但是在没有计划时，没有构思后面工作流程的能力。</p>
+<p>在计划不成熟或不合理时，经常会出现无视规定，灵活应对。</p>
+<p>那有的人有心，在实施后会更新计划。但更多的人没有能力将自己的经验推广给每个部门内的人，也没有管理者来主导更新流程。</p>
+<p>甚至有人没有责任心，回来不更新计划，完全按照后面自己的意思去实施。</p>
+<p>那计划本身已经被弱化，后续逐渐被丢弃。</p>
+<p>所以我认为在一个没有经验的项目上，一上来的计划没有必要急着写，而是先写个框架，后续慢慢补充细节。</p>
+<p>就比如如上的生命周期，各个阶段完全可以顺序打乱去处理。</p>
+<p>需求规范的制定，保证了测试用例的诞生，有依据，</p>
+<p>确定了软件架构的设计的。</p>
+<p>判断一个人的工作是否完成，应该以计划中的规定来判定，比如测试通过了，那是如何通过的。</p>
+<p>版本发布了，那版本中有哪些功能，那些缺陷，那些更改。</p>
+<p>软件部署了，部署的什么版本，哪些升级，哪些没有升级。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>只讲 SIL2 的要求，给出生命周期，以及要干的事情。</p>
+<p>压缩 SIL2 的要求到我们的生命周期中。</p>
+<p>为每个周期设立检查点。</p>
+<p>对部分代码的查看总结</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/01/2023-09-01-Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" rel="prev" title="Wireshark使用技巧">
+      <i class="fa fa-chevron-left"></i> Wireshark使用技巧
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/01/2023-09-01-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B%E6%8A%80%E5%B7%A7/" rel="next" title="日志文件查看技巧">
+      日志文件查看技巧 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#EN50128-%E6%95%B4%E4%BD%93%E8%84%89%E7%BB%9C"><span class="nav-number">1.</span> <span class="nav-text">EN50128 整体脉络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E5%88%92%E9%98%B6%E6%AE%B5"><span class="nav-number">1.1.</span> <span class="nav-text">计划阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E9%98%B6%E6%AE%B5"><span class="nav-number">1.2.</span> <span class="nav-text">需求阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E9%98%B6%E6%AE%B5"><span class="nav-number">1.3.</span> <span class="nav-text">架构与设计阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E4%B8%8E%E6%B5%8B%E8%AF%95%E9%98%B6%E6%AE%B5"><span class="nav-number">1.4.</span> <span class="nav-text">组件实现与测试阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E6%88%90%E9%98%B6%E6%AE%B5"><span class="nav-number">1.5.</span> <span class="nav-text">集成阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E6%B5%8B%E8%AF%95%E4%B8%8E%E6%9C%80%E5%90%8E%E7%A1%AE%E8%AE%A4"><span class="nav-number">1.6.</span> <span class="nav-text">总体测试与最后确认</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2"><span class="nav-number">1.7.</span> <span class="nav-text">软件部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E7%BB%B4%E6%8A%A4"><span class="nav-number">1.8.</span> <span class="nav-text">软件维护</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A4%E6%AC%A1%E8%AE%A4%E8%AF%81%E8%BF%87%E7%A8%8B%E5%BE%97%E5%88%B0%E7%9A%84%E6%94%B6%E8%8E%B7"><span class="nav-number">2.</span> <span class="nav-text">此次认证过程得到的收获</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">3.</span> <span class="nav-text">思路</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jiancong Li</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

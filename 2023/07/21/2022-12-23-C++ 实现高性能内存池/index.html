@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在 C&#x2F;C++ 中，内存管理是一个非常棘手的问题，我们在编写一个程序的时候几乎不可避免的要遇到内存的分配逻辑，这时候随之而来的有这样一些问题：是否有足够的内存可供分配? 分配失败了怎么办? 如何管理自身的内存使用情况? 等等一系列问题。在一个高可用的软件中，如果我们仅仅单纯的向操作系统去申请内存，当出现内存不足时就退出软件，是明显不合理的。正确的思路应该是在内存不足的时，考虑如何管理并优">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 实现高性能内存池">
+<meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2022-12-23-C++%20%E5%AE%9E%E7%8E%B0%E9%AB%98%E6%80%A7%E8%83%BD%E5%86%85%E5%AD%98%E6%B1%A0/index.html">
+<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:description" content="在 C&#x2F;C++ 中，内存管理是一个非常棘手的问题，我们在编写一个程序的时候几乎不可避免的要遇到内存的分配逻辑，这时候随之而来的有这样一些问题：是否有足够的内存可供分配? 分配失败了怎么办? 如何管理自身的内存使用情况? 等等一系列问题。在一个高可用的软件中，如果我们仅仅单纯的向操作系统去申请内存，当出现内存不足时就退出软件，是明显不合理的。正确的思路应该是在内存不足的时，考虑如何管理并优">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-07-21T05:28:45.226Z">
+<meta property="article:modified_time" content="2023-10-28T06:29:44.901Z">
+<meta property="article:author" content="Jiancong Li">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://mercy1101.github.io/2023/07/21/2022-12-23-C++%20%E5%AE%9E%E7%8E%B0%E9%AB%98%E6%80%A7%E8%83%BD%E5%86%85%E5%AD%98%E6%B1%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>C++ 实现高性能内存池 | Jiancong Li's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2022-12-23-C++%20%E5%AE%9E%E7%8E%B0%E9%AB%98%E6%80%A7%E8%83%BD%E5%86%85%E5%AD%98%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jiancong Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jiancong Li's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ 实现高性能内存池
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在 C&#x2F;C++ 中，内存管理是一个非常棘手的问题，我们在编写一个程序的时候几乎不可避免的要遇到内存的分配逻辑，这时候随之而来的有这样一些问题：是否有足够的内存可供分配? 分配失败了怎么办? 如何管理自身的内存使用情况? 等等一系列问题。在一个高可用的软件中，如果我们仅仅单纯的向操作系统去申请内存，当出现内存不足时就退出软件，是明显不合理的。正确的思路应该是在内存不足的时，考虑如何管理并优化自身已经使用的内存，这样才能使得软件变得更加可用。本次项目我们将实现一个内存池，并使用一个栈结构来测试我们的内存池提供的分配性能。最终，我们要实现的内存池在栈结构中的性能，要远高于使用 <code>std::allocator</code> 和 <code>std::vector</code>.</p>
+<ul>
+<li>C++ 中的内存分配器 <code>std::allocator</code></li>
+<li>内存池技术</li>
+<li>手动实现模板链式栈</li>
+<li>链式栈和列表栈的性能比较</li>
+</ul>
+<h3 id="内存池简介"><a href="#内存池简介" class="headerlink" title="内存池简介"></a>内存池简介</h3><p>内存池是池化技术中的一种形式。通常我们在编写程序的时候回使用 <code>new</code> <code>delete</code> 这些关键字来向操作系统申请内存，而这样造成的后果就是每次申请内存和释放内存的时候，都需要和操作系统的系统调用打交道，从堆中分配所需的内存。如果这样的操作太过频繁，就会找成大量的内存碎片进而降低内存的分配性能，甚至出现内存分配失败的情况。</p>
+<p>而内存池就是为了解决这个问题而产生的一种技术。从内存分配的概念上看，内存申请无非就是向内存分配方索要一个指针，当向操作系统申请内存时，操作系统需要进行复杂的内存管理调度之后，才能正确的分配出一个相应的指针。而这个分配的过程中，我们还面临着分配失败的风险。</p>
+<p>所以，每一次进行内存分配，就会消耗一次分配内存的时间，设这个时间为 T，那么进行 n 次分配总共消耗的时间就是 nT；如果我们一开始就确定好我们可能需要多少内存，那么在最初的时候就分配好这样的一块内存区域，当我们需要内存的时候，直接从这块已经分配好的内存中使用即可，那么总共需要的分配时间仅仅只有 T。当 n 越大时，节约的时间就越多。</p>
+<h2 id="二、主函数设计"><a href="#二、主函数设计" class="headerlink" title="二、主函数设计"></a>二、主函数设计</h2><p>我们要设计实现一个高性能的内存池，那么自然避免不了需要对比已有的内存，而比较内存池对内存的分配性能，就需要实现一个需要对内存进行动态分配的结构（比如：链表栈），为此，可以写出如下的代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span>   <span class="comment">// std::cout, std::endl</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cassert&gt;</span>    <span class="comment">// assert()</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ctime&gt;</span>      <span class="comment">// clock()</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span>     <span class="comment">// std::vector</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;MemoryPool.hpp&quot;</span>  <span class="comment">// MemoryPool&lt;T&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;StackAlloc.hpp&quot;</span>  <span class="comment">// StackAlloc&lt;T, Alloc&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 插入元素个数</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ELEMS 10000000</span></span><br><span class="line"><span class="comment">// 重复次数</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> REPS 100</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">clock_t</span> start;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 STL 默认分配器</span></span><br><span class="line">    StackAlloc&lt;<span class="type">int</span>, std::allocator&lt;<span class="type">int</span>&gt; &gt; stackDefault;</span><br><span class="line">    start = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; REPS; j++) &#123;</span><br><span class="line">        <span class="built_in">assert</span>(stackDefault.<span class="built_in">empty</span>());</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; ELEMS; i++)</span><br><span class="line">          stackDefault.<span class="built_in">push</span>(i);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; ELEMS; i++)</span><br><span class="line">          stackDefault.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Default Allocator Time: &quot;</span>;</span><br><span class="line">    std::cout &lt;&lt; (((<span class="type">double</span>)<span class="built_in">clock</span>() - start) / CLOCKS_PER_SEC) &lt;&lt; <span class="string">&quot;\n\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用内存池</span></span><br><span class="line">    StackAlloc&lt;<span class="type">int</span>, MemoryPool&lt;<span class="type">int</span>&gt; &gt; stackPool;</span><br><span class="line">    start = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; REPS; j++) &#123;</span><br><span class="line">        <span class="built_in">assert</span>(stackPool.<span class="built_in">empty</span>());</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; ELEMS; i++)</span><br><span class="line">          stackPool.<span class="built_in">push</span>(i);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; ELEMS; i++)</span><br><span class="line">          stackPool.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;MemoryPool Allocator Time: &quot;</span>;</span><br><span class="line">    std::cout &lt;&lt; (((<span class="type">double</span>)<span class="built_in">clock</span>() - start) / CLOCKS_PER_SEC) &lt;&lt; <span class="string">&quot;\n\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的两段代码中，<code>StackAlloc</code> 是一个链表栈，接受两个模板参数，第一个参数是栈中的元素类型，第二个参数就是栈使用的内存分配器。</p>
+<p>因此，这个内存分配器的模板参数就是整个比较过程中唯一的变量，使用默认分配器的模板参数为 <code>std::allocator</code>，而使用内存池的模板参数为 <code>MemoryPool</code>。</p>
+<blockquote>
+<p>std::allocator 是 C++标准库中提供的默认分配器，他的特点就在于我们在 使用 new 来申请内存构造新对象的时候，势必要调用类对象的默认构造函数，而使用 std::allocator 则可以将内存分配和对象的构造这两部分逻辑给分离开来，使得分配的内存是原始、未构造的。</p>
+</blockquote>
+<p>下面我们来实现这个链表栈。</p>
+<h2 id="三、模板链表栈"><a href="#三、模板链表栈" class="headerlink" title="三、模板链表栈"></a>三、模板链表栈</h2><p>栈的结构非常的简单，没有什么复杂的逻辑操作，其成员函数只需要考虑两个基本的操作：入栈、出栈。为了操作上的方便，我们可能还需要这样一些方法：判断栈是否空、清空栈、获得栈顶元素。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">StackNode_</span></span><br><span class="line">&#123;</span><br><span class="line">  T data;</span><br><span class="line">  StackNode_* prev;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// T 为存储的对象类型, Alloc 为使用的分配器, 并默认使用 std::allocator 作为对象的分配器</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Alloc = std::allocator&lt;T&gt; &gt;</span><br><span class="line"><span class="keyword">class</span> StackAlloc</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 使用 typedef 简化类型名</span></span><br><span class="line">    <span class="keyword">typedef</span> StackNode_&lt;T&gt; Node;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> Alloc::<span class="keyword">template</span> rebind&lt;Node&gt;::other allocator;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 默认构造</span></span><br><span class="line">    <span class="built_in">StackAlloc</span>() &#123; head_ = <span class="number">0</span>; &#125;</span><br><span class="line">    <span class="comment">// 默认析构</span></span><br><span class="line">    ~<span class="built_in">StackAlloc</span>() &#123; <span class="built_in">clear</span>(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当栈中元素为空时返回 true</span></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> (head_ == <span class="number">0</span>);&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 释放栈中元素的所有内存</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 压栈</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(T element)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 出栈</span></span><br><span class="line">    <span class="function">T <span class="title">pop</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回栈顶元素</span></span><br><span class="line">    <span class="function">T <span class="title">top</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> (head_-&gt;data); &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    allocator allocator_;</span><br><span class="line">    <span class="comment">// 栈顶</span></span><br><span class="line">    Node* head_;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>简单的逻辑诸如构造、析构、判断栈是否空、返回栈顶元素的逻辑都非常简单，直接在上面的定义中实现了，下面我们来实现 <code>clear()</code>, <code>push()</code> 和 <code>pop()</code> 这三个重要的逻辑：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 释放栈中元素的所有内存</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Node* curr = head_;</span><br><span class="line">  <span class="comment">// 依次出栈</span></span><br><span class="line">  <span class="keyword">while</span> (curr != <span class="number">0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    Node* tmp = curr-&gt;prev;</span><br><span class="line">    <span class="comment">// 先析构, 再回收内存</span></span><br><span class="line">    allocator_.<span class="built_in">destroy</span>(curr);</span><br><span class="line">    allocator_.<span class="built_in">deallocate</span>(curr, <span class="number">1</span>);</span><br><span class="line">    curr = tmp;</span><br><span class="line">  &#125;</span><br><span class="line">  head_ = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 入栈</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(T element)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 为一个节点分配内存</span></span><br><span class="line">  Node* newNode = allocator_.<span class="built_in">allocate</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="comment">// 调用节点的构造函数</span></span><br><span class="line">  allocator_.<span class="built_in">construct</span>(newNode, <span class="built_in">Node</span>());</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 入栈操作</span></span><br><span class="line">  newNode-&gt;data = element;</span><br><span class="line">  newNode-&gt;prev = head_;</span><br><span class="line">  head_ = newNode;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 出栈</span></span><br><span class="line"><span class="function">T <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 出栈操作 返回出栈元素</span></span><br><span class="line">  T result = head_-&gt;data;</span><br><span class="line">  Node* tmp = head_-&gt;prev;</span><br><span class="line">  allocator_.<span class="built_in">destroy</span>(head_);</span><br><span class="line">  allocator_.<span class="built_in">deallocate</span>(head_, <span class="number">1</span>);</span><br><span class="line">  head_ = tmp;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本节我们实现了一个用于测试性能比较的模板链表栈，目前的代码如下。在下一节中，我们开始详细实现我们的高性能内存池。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// StackAlloc.hpp</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> STACK_ALLOC_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STACK_ALLOC_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">StackNode_</span></span><br><span class="line">&#123;</span><br><span class="line">  T data;</span><br><span class="line">  StackNode_* prev;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// T 为存储的对象类型, Alloc 为使用的分配器,</span></span><br><span class="line"><span class="comment">// 并默认使用 std::allocator 作为对象的分配器</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>, <span class="keyword">class</span> <span class="title class_">Alloc</span> = std::allocator&lt;T&gt; &gt;</span><br><span class="line"><span class="keyword">class</span> StackAlloc</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 使用 typedef 简化类型名</span></span><br><span class="line">    <span class="keyword">typedef</span> StackNode_&lt;T&gt; Node;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> Alloc::<span class="keyword">template</span> rebind&lt;Node&gt;::other allocator;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 默认构造</span></span><br><span class="line">    <span class="built_in">StackAlloc</span>() &#123; head_ = <span class="number">0</span>; &#125;</span><br><span class="line">    <span class="comment">// 默认析构</span></span><br><span class="line">    ~<span class="built_in">StackAlloc</span>() &#123; <span class="built_in">clear</span>(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当栈中元素为空时返回 true</span></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> (head_ == <span class="number">0</span>);&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 释放栈中元素的所有内存</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Node* curr = head_;</span><br><span class="line">      <span class="keyword">while</span> (curr != <span class="number">0</span>)</span><br><span class="line">      &#123;</span><br><span class="line">        Node* tmp = curr-&gt;prev;</span><br><span class="line">        allocator_.<span class="built_in">destroy</span>(curr);</span><br><span class="line">        allocator_.<span class="built_in">deallocate</span>(curr, <span class="number">1</span>);</span><br><span class="line">        curr = tmp;</span><br><span class="line">      &#125;</span><br><span class="line">      head_ = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 入栈</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(T element)</span> </span>&#123;</span><br><span class="line">      <span class="comment">// 为一个节点分配内存</span></span><br><span class="line">      Node* newNode = allocator_.<span class="built_in">allocate</span>(<span class="number">1</span>);</span><br><span class="line">      <span class="comment">// 调用节点的构造函数</span></span><br><span class="line">      allocator_.<span class="built_in">construct</span>(newNode, <span class="built_in">Node</span>());</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 入栈操作</span></span><br><span class="line">      newNode-&gt;data = element;</span><br><span class="line">      newNode-&gt;prev = head_;</span><br><span class="line">      head_ = newNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 出栈</span></span><br><span class="line">    <span class="function">T <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="comment">// 出栈操作 返回出栈结果</span></span><br><span class="line">      T result = head_-&gt;data;</span><br><span class="line">      Node* tmp = head_-&gt;prev;</span><br><span class="line">      allocator_.<span class="built_in">destroy</span>(head_);</span><br><span class="line">      allocator_.<span class="built_in">deallocate</span>(head_, <span class="number">1</span>);</span><br><span class="line">      head_ = tmp;</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回栈顶元素</span></span><br><span class="line">    <span class="function">T <span class="title">top</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> (head_-&gt;data); &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    allocator allocator_;</span><br><span class="line">    Node* head_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">// STACK_ALLOC_H</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cassert&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ctime&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// #include &quot;MemoryPool.hpp&quot;</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;StackAlloc.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据电脑性能调整这些值</span></span><br><span class="line"><span class="comment">// 插入元素个数</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ELEMS 25000000</span></span><br><span class="line"><span class="comment">// 重复次数</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> REPS 50</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">clock_t</span> start;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用默认分配器</span></span><br><span class="line">    StackAlloc&lt;<span class="type">int</span>, std::allocator&lt;<span class="type">int</span>&gt; &gt; stackDefault;</span><br><span class="line">    start = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; REPS; j++) &#123;</span><br><span class="line">        <span class="built_in">assert</span>(stackDefault.<span class="built_in">empty</span>());</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; ELEMS; i++)</span><br><span class="line">          stackDefault.<span class="built_in">push</span>(i);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; ELEMS; i++)</span><br><span class="line">          stackDefault.<span class="built_in">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Default Allocator Time: &quot;</span>;</span><br><span class="line">    std::cout &lt;&lt; (((<span class="type">double</span>)<span class="built_in">clock</span>() - start) / CLOCKS_PER_SEC) &lt;&lt; <span class="string">&quot;\n\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用内存池</span></span><br><span class="line">    <span class="comment">// StackAlloc&lt;int, MemoryPool&lt;int&gt; &gt; stackPool;</span></span><br><span class="line">    <span class="comment">// start = clock();</span></span><br><span class="line">    <span class="comment">// for (int j = 0; j &lt; REPS; j++) &#123;</span></span><br><span class="line">    <span class="comment">//     assert(stackPool.empty());</span></span><br><span class="line">    <span class="comment">//     for (int i = 0; i &lt; ELEMS; i++)</span></span><br><span class="line">    <span class="comment">//       stackPool.push(i);</span></span><br><span class="line">    <span class="comment">//     for (int i = 0; i &lt; ELEMS; i++)</span></span><br><span class="line">    <span class="comment">//       stackPool.pop();</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">// std::cout &lt;&lt; &quot;MemoryPool Allocator Time: &quot;;</span></span><br><span class="line">    <span class="comment">// std::cout &lt;&lt; (((double)clock() - start) / CLOCKS_PER_SEC) &lt;&lt; &quot;\n\n&quot;;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、设计内存池"><a href="#二、设计内存池" class="headerlink" title="二、设计内存池"></a>二、设计内存池</h2><p>在节中，我们在模板链表栈中使用了默认构造器来管理栈操作中的元素内存，一共涉及到了 <code>rebind::other</code>, <code>allocate()</code>, <code>dealocate()</code>, <code>construct()</code>, <code>destroy()</code>这些关键性的接口。所以为了让代码直接可用，我们同样应该在内存池中设计同样的接口：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> MEMORY_POOL_HPP</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MEMORY_POOL_HPP</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;climits&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstddef&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">size_t</span> BlockSize = <span class="number">4096</span>&gt;</span><br><span class="line"><span class="keyword">class</span> MemoryPool</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 使用 typedef 简化类型书写</span></span><br><span class="line">    <span class="keyword">typedef</span> T*              pointer;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义 rebind&lt;U&gt;::other 接口</span></span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt; <span class="keyword">struct</span> <span class="title class_">rebind</span> &#123;</span><br><span class="line">      <span class="keyword">typedef</span> MemoryPool&lt;U&gt; other;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 默认构造, 初始化所有的槽指针</span></span><br><span class="line">    <span class="comment">// C++11 使用了 noexcept 来显式的声明此函数不会抛出异常</span></span><br><span class="line">    <span class="built_in">MemoryPool</span>() <span class="keyword">noexcept</span> &#123;</span><br><span class="line">      currentBlock_ = <span class="literal">nullptr</span>;</span><br><span class="line">      currentSlot_ = <span class="literal">nullptr</span>;</span><br><span class="line">      lastSlot_ = <span class="literal">nullptr</span>;</span><br><span class="line">      freeSlots_ = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 销毁一个现有的内存池</span></span><br><span class="line">    ~<span class="built_in">MemoryPool</span>() <span class="keyword">noexcept</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 同一时间只能分配一个对象, n 和 hint 会被忽略</span></span><br><span class="line">    <span class="function">pointer <span class="title">allocate</span><span class="params">(<span class="type">size_t</span> n = <span class="number">1</span>, <span class="type">const</span> T* hint = <span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 销毁指针 p 指向的内存区块</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">deallocate</span><span class="params">(pointer p, <span class="type">size_t</span> n = <span class="number">1</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用构造函数</span></span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U, <span class="keyword">typename</span>... Args&gt;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">construct</span><span class="params">(U* p, Args&amp;&amp;... args)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 销毁内存池中的对象, 即调用对象的析构函数</span></span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">destroy</span><span class="params">(U* p)</span> </span>&#123;</span><br><span class="line">      p-&gt;~<span class="built_in">U</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// 用于存储内存池中的对象槽,</span></span><br><span class="line">    <span class="comment">// 要么被实例化为一个存放对象的槽,</span></span><br><span class="line">    <span class="comment">// 要么被实例化为一个指向存放对象槽的槽指针</span></span><br><span class="line">    <span class="keyword">union</span> <span class="title class_">Slot_</span> &#123;</span><br><span class="line">      T element;</span><br><span class="line">      Slot_* next;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 数据指针</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">char</span>* data_pointer_;</span><br><span class="line">    <span class="comment">// 对象槽</span></span><br><span class="line">    <span class="keyword">typedef</span> Slot_ slot_type_;</span><br><span class="line">    <span class="comment">// 对象槽指针</span></span><br><span class="line">    <span class="keyword">typedef</span> Slot_* slot_pointer_;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 指向当前内存区块</span></span><br><span class="line">    slot_pointer_ currentBlock_;</span><br><span class="line">    <span class="comment">// 指向当前内存区块的一个对象槽</span></span><br><span class="line">    slot_pointer_ currentSlot_;</span><br><span class="line">    <span class="comment">// 指向当前内存区块的最后一个对象槽</span></span><br><span class="line">    slot_pointer_ lastSlot_;</span><br><span class="line">    <span class="comment">// 指向当前内存区块中的空闲对象槽</span></span><br><span class="line">    slot_pointer_ freeSlots_;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查定义的内存池大小是否过小</span></span><br><span class="line">    <span class="built_in">static_assert</span>(BlockSize &gt;= <span class="number">2</span> * <span class="built_in">sizeof</span>(slot_type_), <span class="string">&quot;BlockSize too small.&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">// MEMORY_POOL_HPP</span></span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的类设计中可以看到，在这个内存池中，其实是使用链表来管理整个内存池的内存区块的。内存池首先会定义固定大小的基本内存区块(Block)，然后在其中定义了一个可以实例化为存放对象内存槽的对象槽（Slot_）和对象槽指针的一个联合。然后在区块中，定义了四个关键性质的指针，它们的作用分别是：</p>
+<ol>
+<li><code>currentBlock_</code>: 指向当前内存区块的指针</li>
+<li><code>currentSlot_</code>: 指向当前内存区块中的对象槽</li>
+<li><code>lastSlot_</code>: 指向当前内存区块中的最后一个对象槽</li>
+<li><code>freeSlots_</code>: 指向当前内存区块中所有空闲的对象槽</li>
+</ol>
+<p>梳理好整个内存池的设计结构之后，我们就可以开始实现关键性的逻辑了。</p>
+<h2 id="三、实现"><a href="#三、实现" class="headerlink" title="三、实现"></a>三、实现</h2><h3 id="MemoryPool-construct-实现"><a href="#MemoryPool-construct-实现" class="headerlink" title="MemoryPool::construct() 实现"></a>MemoryPool::construct() 实现</h3><p><code>MemoryPool::construct()</code> 的逻辑是最简单的，我们需要实现的，仅仅只是调用信件对象的构造函数即可，因此：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用构造函数, 使用 std::forward 转发变参模板</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> U, <span class="keyword">typename</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">construct</span><span class="params">(U* p, Args&amp;&amp;... args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> (p) <span class="built_in">U</span> (std::forward&lt;Args&gt;(args)...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MemoryPool-deallocate-实现"><a href="#MemoryPool-deallocate-实现" class="headerlink" title="MemoryPool::deallocate() 实现"></a>MemoryPool::deallocate() 实现</h3><p><code>MemoryPool::deallocate()</code> 是在对象槽中的对象被析构后才会被调用的，主要目的是销毁内存槽。其逻辑也不复杂：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 销毁指针 p 指向的内存区块</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">deallocate</span><span class="params">(pointer p, <span class="type">size_t</span> n = <span class="number">1</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (p != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">    <span class="comment">// reinterpret_cast 是强制类型转换符</span></span><br><span class="line">    <span class="comment">// 要访问 next 必须强制将 p 转成 slot_pointer_</span></span><br><span class="line">    <span class="built_in">reinterpret_cast</span>&lt;slot_pointer_&gt;(p)-&gt;next = freeSlots_;</span><br><span class="line">    freeSlots_ = <span class="built_in">reinterpret_cast</span>&lt;slot_pointer_&gt;(p);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MemoryPool-MemoryPool-实现"><a href="#MemoryPool-MemoryPool-实现" class="headerlink" title="MemoryPool::~MemoryPool() 实现"></a>MemoryPool::~MemoryPool() 实现</h3><p>析构函数负责销毁整个内存池，因此我们需要逐个删除掉最初向操作系统申请的内存块：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 销毁一个现有的内存池</span></span><br><span class="line">~<span class="built_in">MemoryPool</span>() <span class="keyword">noexcept</span> &#123;</span><br><span class="line">  <span class="comment">// 循环销毁内存池中分配的内存区块</span></span><br><span class="line">  slot_pointer_ curr = currentBlock_;</span><br><span class="line">  <span class="keyword">while</span> (curr != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">    slot_pointer_ prev = curr-&gt;next;</span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">delete</span><span class="params">(<span class="keyword">reinterpret_cast</span>&lt;<span class="type">void</span>*&gt;(curr))</span></span>;</span><br><span class="line">    curr = prev;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MemoryPool-allocate-实现"><a href="#MemoryPool-allocate-实现" class="headerlink" title="MemoryPool::allocate() 实现"></a>MemoryPool::allocate() 实现</h3><p><code>MemoryPool::allocate()</code> 毫无疑问是整个内存池的关键所在，但实际上理清了整个内存池的设计之后，其实现并不复杂。具体实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同一时间只能分配一个对象, n 和 hint 会被忽略</span></span><br><span class="line"><span class="function">pointer <span class="title">allocate</span><span class="params">(<span class="type">size_t</span> n = <span class="number">1</span>, <span class="type">const</span> T* hint = <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 如果有空闲的对象槽，那么直接将空闲区域交付出去</span></span><br><span class="line">  <span class="keyword">if</span> (freeSlots_ != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">    pointer result = <span class="built_in">reinterpret_cast</span>&lt;pointer&gt;(freeSlots_);</span><br><span class="line">    freeSlots_ = freeSlots_-&gt;next;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 如果对象槽不够用了，则分配一个新的内存区块</span></span><br><span class="line">    <span class="keyword">if</span> (currentSlot_ &gt;= lastSlot_) &#123;</span><br><span class="line">      <span class="comment">// 分配一个新的内存区块，并指向前一个内存区块</span></span><br><span class="line">      data_pointer_ newBlock = <span class="built_in">reinterpret_cast</span>&lt;data_pointer_&gt;(<span class="keyword">operator</span> <span class="built_in">new</span>(BlockSize));</span><br><span class="line">      <span class="built_in">reinterpret_cast</span>&lt;slot_pointer_&gt;(newBlock)-&gt;next = currentBlock_;</span><br><span class="line">      currentBlock_ = <span class="built_in">reinterpret_cast</span>&lt;slot_pointer_&gt;(newBlock);</span><br><span class="line">      <span class="comment">// 填补整个区块来满足元素内存区域的对齐要求</span></span><br><span class="line">      data_pointer_ body = newBlock + <span class="built_in">sizeof</span>(slot_pointer_);</span><br><span class="line">      <span class="type">uintptr_t</span> result = <span class="built_in">reinterpret_cast</span>&lt;<span class="type">uintptr_t</span>&gt;(body);</span><br><span class="line">      <span class="type">size_t</span> bodyPadding = (<span class="built_in">alignof</span>(slot_type_) - result) % <span class="built_in">alignof</span>(slot_type_);</span><br><span class="line">      currentSlot_ = <span class="built_in">reinterpret_cast</span>&lt;slot_pointer_&gt;(body + bodyPadding);</span><br><span class="line">      lastSlot_ = <span class="built_in">reinterpret_cast</span>&lt;slot_pointer_&gt;(newBlock + BlockSize - <span class="built_in">sizeof</span>(slot_type_) + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">reinterpret_cast</span>&lt;pointer&gt;(currentSlot_++);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、与-std-vector-的性能对比"><a href="#四、与-std-vector-的性能对比" class="headerlink" title="四、与 std::vector 的性能对比"></a>四、与 std::vector 的性能对比</h2><p>我们知道，对于栈来说，链栈其实并不是最好的实现方式，因为这种结构的栈不可避免的会涉及到指针相关的操作，同时，还会消耗一定量的空间来存放节点之间的指针。事实上，我们可以使用 <code>std::vector</code> 中的 <code>push_back()</code> 和 <code>pop_back()</code> 这两个操作来模拟一个栈，我们不妨来对比一下这个 <code>std::vector</code> 与我们所实现的内存池在性能上谁高谁低，我们在 主函数中加入如下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 比较内存池和 std::vector 之间的性能</span></span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; stackVector;</span><br><span class="line">    start = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; REPS; j++) &#123;</span><br><span class="line">        <span class="built_in">assert</span>(stackVector.<span class="built_in">empty</span>());</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; ELEMS; i++)</span><br><span class="line">          stackVector.<span class="built_in">push_back</span>(i);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; ELEMS; i++)</span><br><span class="line">          stackVector.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Vector Time: &quot;</span>;</span><br><span class="line">    std::cout &lt;&lt; (((<span class="type">double</span>)<span class="built_in">clock</span>() - start) / CLOCKS_PER_SEC) &lt;&lt; <span class="string">&quot;\n\n&quot;</span>;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/21/2023-06-27-%E8%BD%AF%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%E5%92%8C%E6%8A%80%E6%9C%AF/" rel="prev" title="软件自动化测试方法和技术">
+      <i class="fa fa-chevron-left"></i> 软件自动化测试方法和技术
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/21/2022-09-13-C++%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" rel="next" title="C++调试工具函数介绍">
+      C++调试工具函数介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B1%A0%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">内存池简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1"><span class="nav-number"></span> <span class="nav-text">二、主函数设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%A8%A1%E6%9D%BF%E9%93%BE%E8%A1%A8%E6%A0%88"><span class="nav-number"></span> <span class="nav-text">三、模板链表栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number"></span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%AE%BE%E8%AE%A1%E5%86%85%E5%AD%98%E6%B1%A0"><span class="nav-number"></span> <span class="nav-text">二、设计内存池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E7%8E%B0"><span class="nav-number"></span> <span class="nav-text">三、实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MemoryPool-construct-%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">MemoryPool::construct() 实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MemoryPool-deallocate-%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">MemoryPool::deallocate() 实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MemoryPool-MemoryPool-%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">MemoryPool::~MemoryPool() 实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MemoryPool-allocate-%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">MemoryPool::allocate() 实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%8E-std-vector-%E7%9A%84%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="nav-number"></span> <span class="nav-text">四、与 std::vector 的性能对比</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jiancong Li</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
