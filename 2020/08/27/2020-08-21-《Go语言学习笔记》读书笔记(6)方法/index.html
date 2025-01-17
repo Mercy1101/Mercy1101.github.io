@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="方法方法是与对象实例绑定的特殊函数。方法是面向对象编程的基本概念，用于维护和展示对象的自身状态。对象是内敛的，每个实例都有各自不同的独立特征，以属性和方法来暴露对外通信接口。普通函数则专注于算法流程，通过接收参数来完成特定逻辑运算，并返回最终结果。换句话说，方法是有关联的而函数通常没有。方法和函数定义语法区别，在于前者有前置实例接收参数，编译器以此确定方法所数类型。可以为当前包，以及除接口和指针以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Go语言学习笔记》读书笔记(6)方法">
+<meta property="og:url" content="https://mercy1101.github.io/2020/08/27/2020-08-21-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(6)%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:description" content="方法方法是与对象实例绑定的特殊函数。方法是面向对象编程的基本概念，用于维护和展示对象的自身状态。对象是内敛的，每个实例都有各自不同的独立特征，以属性和方法来暴露对外通信接口。普通函数则专注于算法流程，通过接收参数来完成特定逻辑运算，并返回最终结果。换句话说，方法是有关联的而函数通常没有。方法和函数定义语法区别，在于前者有前置实例接收参数，编译器以此确定方法所数类型。可以为当前包，以及除接口和指针以">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-08-27T13:24:47.000Z">
+<meta property="article:modified_time" content="2023-10-28T06:29:44.896Z">
+<meta property="article:author" content="Jiancong Li">
+<meta property="article:tag" content="Go 读书笔记">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://mercy1101.github.io/2020/08/27/2020-08-21-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(6)%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>《Go语言学习笔记》读书笔记(6)方法 | Jiancong Li's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/08/27/2020-08-21-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(6)%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jiancong Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jiancong Li's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《Go语言学习笔记》读书笔记(6)方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-27 21:24:47" itemprop="dateCreated datePublished" datetime="2020-08-27T21:24:47+08:00">2020-08-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">Go 读书笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>方法是与对象实例绑定的特殊函数。<br>方法是面向对象编程的基本概念，用于维护和展示对象的自身状态。对象是内敛的，每个实例都有各自不同的独立特征，以属性和方法来暴露对外通信接口。普通函数则专注于算法流程，通过接收参数来完成特定逻辑运算，并返回最终结果。换句话说，方法是有关联的而函数通常没有。<br>方法和函数定义语法区别，在于前者有前置实例接收参数，编译器以此确定方法所数类型。<br>可以为当前包，以及除接口和指针以外的任何类型定义方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n N)</span></span> toString() <span class="type">string</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> fmt.Sprintf(<span class="string">&quot;%#x&quot;</span>, n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> a N = <span class="number">25</span></span><br><span class="line">  <span class="built_in">println</span>(a.toString())</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// 0x19</span></span><br></pre></td></tr></table></figure>
+<p>方法同样不支持重载(<code>overload</code>)。<code>receiver</code>参数名没有限制，按惯例会选用简短有意义的名称。如方法内部并不引用实例，可省略参数名，仅保留类型。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(N)</span></span> test() &#123;</span><br><span class="line">  <span class="built_in">println</span>(<span class="string">&quot;hi~&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法可看作特殊的函数，那么<code>receiver</code>的类型自然可以是基础类型或指针类型。这会关系到调用时对象实例是否被赋值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n N)</span></span> value() &#123;</span><br><span class="line">  n++</span><br><span class="line">  fmt.Printf(<span class="string">&quot;v: %p, %v\n&quot;</span>, &amp;n, n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n *N)</span></span> pointer() &#123;</span><br><span class="line">  (*n)++</span><br><span class="line">  fmt.Printf(<span class="string">&quot;p: %p, %v\n&quot;</span>, n, *n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> a N = <span class="number">25</span></span><br><span class="line">  a.value()</span><br><span class="line">  a.pointer()</span><br><span class="line"></span><br><span class="line">  fmt.Printf(<span class="string">&quot;a: %p, %v\n&quot;</span>, &amp;a, a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// v: 0xc8200741c8, 26 /// receiver 被复制</span></span><br><span class="line"><span class="comment">/// p: 0xc8200741c0, 26</span></span><br><span class="line"><span class="comment">/// a: 0xc8200741c0, 26</span></span><br></pre></td></tr></table></figure>
+
+<p>可使用实例值或指针调用方法，编译器会根据方法<code>receiver</code>类型自动在基础类型和指针类型间转换。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> a N = <span class="number">25</span></span><br><span class="line">  p := &amp;a</span><br><span class="line">  a.value()</span><br><span class="line">  a.pointer()</span><br><span class="line">  p.value()</span><br><span class="line">  p.pointer()</span><br><span class="line"></span><br><span class="line">  <span class="comment">/// p2 := &amp;p   错误</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// v: 0xc82999a2c0, 26</span></span><br><span class="line"><span class="comment">/// p: 0xc82999a298, 26</span></span><br><span class="line"><span class="comment">/// v: 0xc82000a2f0, 27</span></span><br><span class="line"><span class="comment">/// v: 0xc82000a298, 27</span></span><br></pre></td></tr></table></figure>
+
+<p>指针类型的<code>receiver</code>必须时合法指针(包括<code>nil</code>), 或能获取实例地址。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> X <span class="keyword">struct</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(x *X)</span></span> test() &#123;</span><br><span class="line">  <span class="built_in">println</span>(<span class="string">&quot;hi!&quot;</span>, x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> a *X</span><br><span class="line">  a.test()  <span class="comment">///相当于test(nil)</span></span><br><span class="line">  X&#123;&#125;.test()  <span class="comment">/// 错误无法获取地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如何选择方法的<code>receiver</code>类型：</p>
+<ul>
+<li>要修改实例状态，用<code>*T</code></li>
+<li>无需修改状态的小对象或固定值，建议用<code>T</code></li>
+<li>大对象建议用<code>*T</code>, 以减少复制成本。</li>
+<li>引用类型、字符串、函数等指针包装对象，直接用T。</li>
+<li>若包含<code>Mutex</code>等同步字段，用<code>*T</code>,避免因复制造成锁操作无效</li>
+<li>其他无法确定的情况，都用<code>*T</code></li>
+</ul>
+<h3 id="匿名字段"><a href="#匿名字段" class="headerlink" title="匿名字段"></a>匿名字段</h3><p>可以访问匿名字段成员那样调用其方法，有编译器负责查找。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> data <span class="keyword">struct</span> &#123;</span><br><span class="line">  sync.Mutex</span><br><span class="line">  buf [<span class="number">1024</span>]<span class="type">byte</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  d := data()</span><br><span class="line">  d.Lock()  <span class="comment">/// 编译器会处理为 sync.(*Mutex).Lock()调用</span></span><br><span class="line">  <span class="keyword">defer</span> d.Unlock()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法也会有同名遮蔽问题。但利用这一特性可实现类似(<code>override</code>)操作。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> user <span class="keyword">struct</span> &#123;&#125;</span><br><span class="line"><span class="keyword">type</span> manager <span class="keyword">struct</span> &#123;</span><br><span class="line">  user</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun (user) toString() <span class="type">string</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;user&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m manager)</span></span> toString() <span class="type">string</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> m.user.toString() + <span class="string">&quot;; manager&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> m manager</span><br><span class="line">  <span class="built_in">println</span>(m.toString())</span><br><span class="line">  <span class="built_in">println</span>(m.user.toString())</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// user; manager</span></span><br><span class="line"><span class="comment">/// user</span></span><br></pre></td></tr></table></figure>
+<p>尽可能直接访问匿名字段的成员和方法，但他们依然不属于继承关系。</p>
+<h3 id="方法集"><a href="#方法集" class="headerlink" title="方法集"></a>方法集</h3><p>类型有一个与之相关的方法集，这决定了它是否实现某个接口。</p>
+<ul>
+<li>类型<code>T</code>方法集包含所有<code>receiver T</code>方法。</li>
+<li>类型<code>*T</code>方法集包含所有<code>recever T</code> + <code>*T</code>方法。</li>
+<li>匿名嵌入<code>S</code>, <code>T</code>方法集包含所有<code>receiver S</code>方法。</li>
+<li>匿名嵌入<code>*S</code>, <code>T</code>方法集包含所有<code>receiver S</code>+<code>*S</code>方法。</li>
+<li>匿名嵌入<code>S</code>或<code>*S</code>, <code>*T</code>方法集包含所有<code>receiver S</code>+<code>*S</code>方法。</li>
+</ul>
+<p>可利用反射测试这些规则。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> S <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"><span class="keyword">type</span> T <span class="keyword">struct</span>&#123;</span><br><span class="line">  S <span class="comment">// 匿名嵌入字段</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(S)</span></span> sVal() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(*S)</span></span> sPtr() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(T)</span></span> tVal() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(*T)</span></span> tPtr() &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">methodSet</span><span class="params">(a <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">  t := reflect.TypeOf(a)</span><br><span class="line">  <span class="keyword">for</span> i, n := <span class="number">0</span>, t.NumMethod(); i &lt; n; i++ &#123;</span><br><span class="line">    m := t.Method(i)</span><br><span class="line">    fmt.Println(m.Name, m.Type)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> t T</span><br><span class="line">  methodSet(t)  <span class="comment">///&lt; 显示T方法集</span></span><br><span class="line">  <span class="built_in">println</span>(<span class="string">&quot;-------&quot;</span>)</span><br><span class="line">  methodSet(&amp;t) <span class="comment">///&lt; 显示*T方法集</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// sVal func(main.T)</span></span><br><span class="line"><span class="comment">/// tVal func(main.T)</span></span><br><span class="line"><span class="comment">/// ---------</span></span><br><span class="line"><span class="comment">/// sPtr func(*main.T)</span></span><br><span class="line"><span class="comment">/// sVal func(*main.T)</span></span><br><span class="line"><span class="comment">/// tPtr func(*main.T)</span></span><br><span class="line"><span class="comment">/// tVal func(*main.T)</span></span><br></pre></td></tr></table></figure>
+
+<p>方法集影响接口实现和方法表达式转换，于通过实例或实例指针调用方法无关。实例并不使用方法集，而是直接调用(或通过隐式字段名).<br>很显然，匿名字段就是为方法准备的。否则，完全没必要为少写个字段名而大费周折。<br>面向对象的三大特征”封装”,”继承”和”多态”, Go仅仅实现了部分特征，它更倾向于”组合优于继承“这种思想。将模块分解成相互独立的更小单元，分别处理不同方面的需求，最后以匿名嵌入方式组合到一起，共同实现对外接口。而且其简短一致的调用方式，更是隐藏了内部实现细节。</p>
+<blockquote>
+<p>组合没有父子依赖，不会破坏封装。且整体和局部松耦合，可任意增加来实现实现扩展。各单元持有单一职责，互无关联，实现和维护更加简单。</p>
+</blockquote>
+<h3 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h3><p>方法和函数一样，除直接调用外还可以赋值给变量，或作为参数传递。依照具体引用方式不同，可分为<code>expression</code>和<code>value</code>两种状态。<br>通过类型引用<code>Method expression</code>会被还原为普通函数央视，receiver是第一参数，调用时须显示传参。至于类型，可以是<code>T</code>或<code>*T</code>, 只要目标方法集中即可。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n N)</span></span> test() &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;test.n: %p, %d&quot;</span>, &amp;n, n)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> n N = <span class="number">25</span></span><br><span class="line">  fmt.Printf(<span class="string">&quot;main.n: %p, %d\n&quot;</span>, &amp;n, n)</span><br><span class="line">  f1 := N.test  <span class="comment">///&lt; func(n N)</span></span><br><span class="line">  f1(n)</span><br><span class="line">  f2 := (*N).test <span class="comment">///&lt; func(n *N)</span></span><br><span class="line">  f2(&amp;n)  <span class="comment">///&lt; 按方法集中的签名传递正确类型的参数</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// main.n: 0xc82000a140, 25</span></span><br><span class="line"><span class="comment">/// test.n: 0xc82000a158, 25</span></span><br><span class="line"><span class="comment">/// test.n: 0xc82000a168, 25</span></span><br></pre></td></tr></table></figure>
+<p>当然，也可直接以表达式方式调用。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> n N = <span class="number">25</span></span><br><span class="line">  N.test(n)</span><br><span class="line">  (*N).test(&amp;n) <span class="comment">///&lt; 注意： *N 须使用括号，以免语法解析错误。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>基于实例或指针引用的<code>method value</code>, 参数签名不会改变，依旧按正常方式调用。<br>但当<code>method value</code>被赋值给变量或作为参数传递时，会立即计算并复制该方法执行所需的<code>receiver</code>对象，与其绑定，以便在稍后执行时，能隐式传入<code>receiver</code>参数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n N)</span></span> test() &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;test.n: %p, %v\n&quot;</span>, &amp;n, n)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> n N = <span class="number">100</span></span><br><span class="line">  p := &amp;n</span><br><span class="line">  n++</span><br><span class="line">  f1 := n.test  <span class="comment">//&lt; 因为test方法的reveiver是类型,所以复制n, 等于101</span></span><br><span class="line"></span><br><span class="line">  n++</span><br><span class="line">  f2 := p.test  <span class="comment">///&lt; 复制*p, 等于102</span></span><br><span class="line">  n++</span><br><span class="line">  fmt.Printf(<span class="string">&quot;main.n: %p, %v\n&quot;</span>, p, n)</span><br><span class="line">  f1()</span><br><span class="line">  f2()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// main.n: 0xc829976028, 103</span></span><br><span class="line"><span class="comment">/// test.n: 0xc820076060, 101</span></span><br><span class="line"><span class="comment">/// test.n: 0xc820076060, 102</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>编译器会为method value生成一个包装函数，实现间接调用。至于<code>receiver</code>复制，和闭包的实现方法基本相同，打包成<code>funcval</code>, 经由<code>DX</code>寄存器传递。</p>
+</blockquote>
+<p>当<code>method value</code>作为参数是，会复制含<code>receiver</code>在内的整个<code>method value</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">call</span><span class="params">(m <span class="keyword">func</span>()</span></span>) &#123;</span><br><span class="line">  m()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> n N = <span class="number">100</span></span><br><span class="line">  p := &amp;n</span><br><span class="line">  fmt.Printf(<span class="string">&quot;main.h: %p, %v&quot;</span>, p, n)</span><br><span class="line">  n++</span><br><span class="line">  call(n.test)</span><br><span class="line">  n++</span><br><span class="line">  call(p.test)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// main.n 0x82000a288, 100</span></span><br><span class="line"><span class="comment">/// test.n 0x82000a2c0, 101</span></span><br><span class="line"><span class="comment">/// main.n 0x82000a2d0, 102</span></span><br></pre></td></tr></table></figure>
+<p>当然，如果目标方法的<code>receiver</code>是指针类型，那么被复制的仅是指针。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n *N)</span></span> test() &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;test.n: %p, %v\n&quot;</span>, n, *n)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> n N = <span class="number">100</span></span><br><span class="line">  p := &amp;n</span><br><span class="line">  n++</span><br><span class="line">  f1 := n.test  <span class="comment">///&lt; 因为test方法的receiver是*N类型, 所以复制&amp;n</span></span><br><span class="line">  n++</span><br><span class="line">  f2 := p.test  <span class="comment">///&lt; 复制p指针</span></span><br><span class="line">  n++</span><br><span class="line">  fmt.Printf(<span class="string">&quot;main.n: %p, %v\n&quot;</span>, p, n)</span><br><span class="line">  f1()  <span class="comment">///&lt; 延迟调用，n == 103</span></span><br><span class="line">  f2()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// main.n: 0xc82000a298, 103</span></span><br><span class="line"><span class="comment">/// test.n: 0xc82000a298, 103</span></span><br><span class="line"><span class="comment">/// test.n: 0xc82000a298, 103</span></span><br></pre></td></tr></table></figure>
+<p>只要receiver参数类型正确，使用<code>nil</code>同样可以执行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(N)</span></span> value() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(*N)</span></span> pointer() &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> p *N</span><br><span class="line">  p.pointer() <span class="comment">// method value</span></span><br><span class="line">  (*N)(<span class="literal">nil</span>).pointer() <span class="comment">// method value</span></span><br><span class="line">  (*N).pointer(<span class="literal">nil</span>) <span class="comment">// method expression</span></span><br><span class="line">  <span class="comment">/// p.value() 错误： invalid memory address or nil pointer dereference</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag"># Go 读书笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/26/2020-08-26-C++%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/" rel="prev" title="C++ 二叉树的遍历">
+      <i class="fa fa-chevron-left"></i> C++ 二叉树的遍历
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/31/2020-08-31-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(7)%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="next" title="《Go语言学习笔记》读书笔记(7)数据结构">
+      《Go语言学习笔记》读书笔记(7)数据结构 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BF%E5%90%8D%E5%AD%97%E6%AE%B5"><span class="nav-number">1.1.</span> <span class="nav-text">匿名字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E9%9B%86"><span class="nav-number">1.2.</span> <span class="nav-text">方法集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">表达式</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jiancong Li</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
