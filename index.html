@@ -1377,6 +1377,163 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jiancong Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jiancong Li's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">读书笔记-《代码大全》</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="强制类型转换的应用"><a href="#强制类型转换的应用" class="headerlink" title="强制类型转换的应用"></a>强制类型转换的应用</h2><h2 id="C语言中void-可以转换为任意指针"><a href="#C语言中void-可以转换为任意指针" class="headerlink" title="C语言中void* 可以转换为任意指针"></a>C语言中void* 可以转换为任意指针</h2><p>size_t 到 unsigned</p>
+<p>变量初始化</p>
+<ul>
+<li>从未对变量赋值。它的值只是程序启动时变量所处内存区域的值</li>
+<li>变量值已经过期。变量在某个地方曾经被赋值，但该值已经不再有效</li>
+<li>变量的一部分被赋值，而另一部分没有</li>
+</ul>
+<h2 id="在声明变量的时候初始化"><a href="#在声明变量的时候初始化" class="headerlink" title="在声明变量的时候初始化"></a>在声明变量的时候初始化</h2><h2 id="理想情况下，在靠近第一次使用变量的位置声明和定义该变量"><a href="#理想情况下，在靠近第一次使用变量的位置声明和定义该变量" class="headerlink" title="理想情况下，在靠近第一次使用变量的位置声明和定义该变量"></a>理想情况下，在靠近第一次使用变量的位置声明和定义该变量</h2><ul>
+<li>在有可能的情况下使用<code>const</code>， 定义常量，入参。</li>
+<li>特别注意计数器和累加器，在下一次使用时忘记重置其值。</li>
+<li>在类的构造函数中，初始化该类的数据成员</li>
+<li>检查是否需要重新初始化</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> index = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/// do something with index</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/// do something with index</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="尽可能缩短变量存活时间"><a href="#尽可能缩短变量存活时间" class="headerlink" title="尽可能缩短变量存活时间"></a>尽可能缩短变量存活时间</h2><p>短的变量存活时间减少了初始化错误的可能。</p>
+<p>变量存活时间短还会使代码具有可读性。阅读者同一时间内需要阅读的代码越少，越容易理解代码。</p>
+<p>当需要把一个大的函数，拆分成几个小程序，短的存活时间方便拆分。</p>
+<p>在循环开始之前再去初始化该循环里使用的变量，而不是在该循环所属的子程序的开始处初始化这些变量。</p>
+<p>直到变量即将被使用时再为其赋值。</p>
+<p>把相关语句放在一起。把相关语句提取成单独的子程序。</p>
+<p>开始时采用最严格的可见性，然后根据扩展变量的作用域。比如，把一个循环内的变量挪到循环外的难度要比反过来难度低，或把一个<code>private</code>转变为<code>public</code>的难度远比反过来难度低。</p>
+<p>避免采用硬编码，宏定义总是好于硬编码。</p>
+<ul>
+<li><code>TITLE_BAR_COLOR</code> 比 <code>0xFFFFFF</code> 更能反应出所代表的信息</li>
+<li>同时，也方便修改宏定义时，同时改变所有的颜色的RGB值</li>
+</ul>
+<h2 id="为变量指定单一用途"><a href="#为变量指定单一用途" class="headerlink" title="为变量指定单一用途"></a>为变量指定单一用途</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">temp = <span class="built_in">Sqrt</span>(b*b - <span class="number">4</span>*a*c);</span><br><span class="line">root[<span class="number">0</span>] = (-b + temp) / (<span class="number">2</span>*a);</span><br><span class="line">root[<span class="number">1</span>] = (-b - temp) / (<span class="number">2</span>*a);</span><br><span class="line"></span><br><span class="line"><span class="comment">// swap the roots</span></span><br><span class="line">temp = root[<span class="number">0</span>];</span><br><span class="line">root[<span class="number">0</span>] = root[<span class="number">1</span>];</span><br><span class="line">root[<span class="number">1</span>] = temp;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">discriminant = <span class="built_in">Sqrt</span>(b*b - <span class="number">4</span>*a*c);</span><br><span class="line">root[<span class="number">0</span>] = (-b + discriminant) / (<span class="number">2</span>*a);</span><br><span class="line">root[<span class="number">1</span>] = (-b - discriminant) / (<span class="number">2</span>*a);</span><br><span class="line"></span><br><span class="line"><span class="comment">// swap the roots</span></span><br><span class="line">oldRoot = root[<span class="number">0</span>];</span><br><span class="line">root[<span class="number">0</span>] = root[<span class="number">1</span>];</span><br><span class="line">root[<span class="number">1</span>] = oldRoot;</span><br></pre></td></tr></table></figure>
+
+
+<p>避免让代码具有隐含含义，把同一变量用于多个多个用途的另外一种方式是当变量代表不同事务时让其具有不同的取值集合。</p>
+<ul>
+<li>变量<code>count</code>的取值可能表示某个计数，除非他等于<code>-1</code>，在这种情况下表明有错误发生</li>
+<li>变量<code>customerId</code>可能代表某个客户账号，除非他的取值大于50000，在这种情况下，你通过减去50000来得到过期账号。</li>
+<li>变量<code>bytesWritten</code>可能表示写入输出文件的字节数，除非它的取值为负，在这种情况下他表示的是用于输出磁盘驱动器的号码。</li>
+</ul>
+<h2 id="变量名的注意事项"><a href="#变量名的注意事项" class="headerlink" title="变量名的注意事项"></a>变量名的注意事项</h2><p>糟糕的变量名</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = x - xx;</span><br><span class="line">xxx = fido + <span class="built_in">SalesTax</span>(fido);</span><br><span class="line">x = x + <span class="built_in">LateFee</span>(x1, x) + xxx;</span><br><span class="line">x = x + <span class="built_in">Interest</span>(x1, x);</span><br></pre></td></tr></table></figure>
+
+<p>良好的变量名</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">balance = balance - lastPayment;</span><br><span class="line">monthlyTotal = newPurchases + <span class="built_in">SalesTax</span>(newPurchases);</span><br><span class="line">balance = balance + <span class="built_in">LateFee</span>(customerID, balance) + monthlyTotal;</span><br><span class="line">balance = balance + <span class="built_in">Interest</span>(customerID, balance);</span><br></pre></td></tr></table></figure>
+
+<p>为变量命名时最重要的考虑事项时，改名字要完全、准确地描述该变量所代表的事物<br>不包含晦涩的缩写，同时也没有歧义。<br>对于一个表示中国奥林匹克代表团成员数量的变量，你可能会使用<code>NumberOfPeopleOnTheChineseOlympicTeam</code><br>表示当前利率的变量最好为<code>rate</code>而不是<code>r</code>.</p>
+<p>变量名太长: <code>numberOfPeopleOnTheChineseOlympicTeam</code>,<code>numberOfSeatsInTheStadium</code>, <code>maximumNumberOfPointsInModernOlympics</code><br>变量名太短: <code>n</code>, <code>np</code>, <code>ntm</code>, <code>ms</code>, <code>nsisd</code>, <code>m</code>, <code>max</code>, <code>min</code><br>变量名正好： <code>numTeamMembers</code>, <code>teamMemberCount</code>, <code>numSeatsInStadium</code>, <code>seatCount</code>, <code>teamPointsMax</code>, <code>pointSRecord</code></p>
+<p>很多程序有表示计算机结果的变量：总额、平均值、最大值，等等。如果你要用类似于<code>Total</code>、<code>Sum</code>、<code>Average</code>、<code>Max</code>、<code>Min</code>、<code>Record</code>这样的限定词，那么请一定记住把限定词加到名字最后。<br>变量名中最重要的部分应该被放置在最前面，限定词在最后。<br>这样做会避免，<code>totalRevenue</code>和<code>revenueTotal</code>异议词语</p>
+<p>为状态变量起一个比<code>flag</code>更好的名字。最好把标记<code>flag</code>看作状态变量，标记的名字中不应该含有<code>flag</code>，因为你从中丝毫看不出该标记是做什么的。<br>含义模糊的标记</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (flag) ...</span><br><span class="line"><span class="keyword">if</span> (statusFlag &amp; <span class="number">0xF</span>) ...</span><br><span class="line"><span class="keyword">if</span> (printFlag == <span class="number">16</span>) ...</span><br><span class="line"><span class="keyword">if</span> (computeFlag == <span class="number">0</span>) ...</span><br></pre></td></tr></table></figure>
+
+<p>更好的状态变量命名</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (dataReady) ...</span><br><span class="line"><span class="keyword">if</span> (characterType &amp; PRINTABLE_CHAR) ...</span><br><span class="line"><span class="keyword">if</span> (reportType == ReportType_Annual) ...</span><br><span class="line"><span class="keyword">if</span> (recalcNeeded == <span class="literal">false</span>) ...</span><br></pre></td></tr></table></figure>
+
+<p>为布尔变量命名</p>
+<ul>
+<li><code>done</code> 用<code>done</code>表示某件事情已经发生之前把变量值设为<code>false</code>, 在错误已经发生时把它设为<code>true</code></li>
+<li><code>error</code> 用<code>error</code>表示有错误发生。在错误发生之前把变量值设为<code>false</code>, 在错误已经发生时把它设为<code>true</code></li>
+<li><code>found</code> 用<code>found</code>来表明某个值已经找到了。在没有找到设为<code>false</code>, 找到后设为<code>true</code>.</li>
+<li><code>success</code>和<code>ok</code>, 操作失败时设为<code>false</code>, 操作成功后设为<code>true</code></li>
+</ul>
+<p>给布尔变量赋予隐含“真、假”含义的名字: <code>status</code>和<code>sourceFile</code>是很糟糕的布尔变量名。<br>应该把<code>status</code>替换为类似<code>error</code>或者<code>statusOK</code>这样的名称，把<code>sourceFile</code>替换为<code>sourceFileAvailable</code>、<code>sourceFileFound</code></p>
+<p>使用肯定的布尔变量名，否定的布尔名如<code>notFound</code>、<code>notDone</code>以及<code>notSuccessful</code>比较难阅读。使用肯定的语义避免双重否定带来的阅读难度。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">AnsiString strTmp;</span><br><span class="line">strTmp = edtAccount-&gt;Text;</span><br><span class="line"><span class="keyword">if</span>(strTmp.<span class="built_in">IsInvalid</span>())</span><br><span class="line">&#123;</span><br><span class="line">    st.Account = strTmp;</span><br><span class="line">&#125;</span><br><span class="line">strTmp = edtPassword-&gt;Text;</span><br><span class="line"><span class="keyword">if</span>(strTmp.<span class="built_in">IsInvalid</span>())</span><br><span class="line">&#123;</span><br><span class="line">    st.Password = strTmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>缩写的一般指导原则：</p>
+<ul>
+<li>使用标准的缩写(列在字典中的那些常见缩写)</li>
+<li>去掉虚词<code>and</code>, <code>or</code>, <code>the</code>等</li>
+<li>去掉无用的后缀<code>ing</code>, <code>end</code></li>
+<li>确保不要改变变量的含义</li>
+<li>反复使用上述技术，知道你把每个变量名的长度缩减到了8到20个字符，或者达到你所用的编程语言对变量名的限制字符数。</li>
+</ul>
+<h2 id="不要用每个单词中删除一个字符的方式来缩写"><a href="#不要用每个单词中删除一个字符的方式来缩写" class="headerlink" title="不要用每个单词中删除一个字符的方式来缩写"></a>不要用每个单词中删除一个字符的方式来缩写</h2><p>键入一个字符算不上是什么额外工作，而节省一个字符带来的便利却很难抵消由此而造成的可读性的损失。</p>
+<h2 id="缩写要一致"><a href="#缩写要一致" class="headerlink" title="缩写要一致"></a>缩写要一致</h2><p>应该一直使用相同的缩写。要么全用<code>Num</code>，要么全用<code>No</code>，也不要有些地方使用全写<code>Number</code>, 同时在其他地方使用缩写<code>Num</code></p>
+<h2 id="创建你能读出来的名字"><a href="#创建你能读出来的名字" class="headerlink" title="创建你能读出来的名字"></a>创建你能读出来的名字</h2><p>使用<code>xPos</code>而不是<code>xPstn</code>, 用<code>needsCompu</code>而不用<code>ndsCmptg</code>。这里可以使用电话沟通，如果你无法向他人读出你的代码，就请重新给变量起一个更清晰的名字。</p>
+<h2 id="名字对于代码的读者的意义要比对作者更重要"><a href="#名字对于代码的读者的意义要比对作者更重要" class="headerlink" title="名字对于代码的读者的意义要比对作者更重要"></a>名字对于代码的读者的意义要比对作者更重要</h2><h2 id="避免使用令人误解的名字或缩写"><a href="#避免使用令人误解的名字或缩写" class="headerlink" title="避免使用令人误解的名字或缩写"></a>避免使用令人误解的名字或缩写</h2><p>要确保名字的含义是明确的</p>
+<h2 id="避免使用具有相似含义的名字"><a href="#避免使用具有相似含义的名字" class="headerlink" title="避免使用具有相似含义的名字"></a>避免使用具有相似含义的名字</h2><p>如果你能够交换两个变量的名字而不会妨碍对程序的理解，那么你就需要为这两个变量重新命名了。</p>
+<h2 id="避免在名字中使用数字"><a href="#避免在名字中使用数字" class="headerlink" title="避免在名字中使用数字"></a>避免在名字中使用数字</h2><p>如果名字中的数字真的非常重要，就请使用数组来代替一组单个的变量。如果数组不合适，那么数字就更不合适。</p>
+<h2 id="避免在名字中拼错单词"><a href="#避免在名字中拼错单词" class="headerlink" title="避免在名字中拼错单词"></a>避免在名字中拼错单词</h2><h2 id="避免在名字中使用容易混淆的字符"><a href="#避免在名字中使用容易混淆的字符" class="headerlink" title="避免在名字中使用容易混淆的字符"></a>避免在名字中使用容易混淆的字符</h2><ul>
+<li>数字<code>1</code>和小写的<code>l</code></li>
+<li>数字<code>1</code>和大写的<code>L</code></li>
+<li>数字<code>0</code>和大写的<code>O</code></li>
+<li>数字<code>2</code>和小写的<code>z</code></li>
+<li>数字<code>6</code>和大写的<code>G</code></li>
+</ul>
+<h2 id="避免浮点数的数量级相差巨大的数字之间的四则运算"><a href="#避免浮点数的数量级相差巨大的数字之间的四则运算" class="headerlink" title="避免浮点数的数量级相差巨大的数字之间的四则运算"></a>避免浮点数的数量级相差巨大的数字之间的四则运算</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">double</span> d = <span class="number">100000000.0</span> + <span class="number">0.1</span>;</span><br><span class="line">    std::cout &lt;&lt; d &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="避免浮点数的等量比较"><a href="#避免浮点数的等量比较" class="headerlink" title="避免浮点数的等量比较"></a>避免浮点数的等量比较</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">double</span> tmp = <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        tmp += <span class="number">0.1</span>;</span><br><span class="line">        std::cout &lt;&lt; tmp &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">IncreaseA</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    a++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">IncreaseB</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    b++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">IncreaseA</span>() || !<span class="built_in">IncreaseB</span>())</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="为空语句创建一个DoNothing-预处理宏或者内联函数"><a href="#为空语句创建一个DoNothing-预处理宏或者内联函数" class="headerlink" title="为空语句创建一个DoNothing()预处理宏或者内联函数"></a>为空语句创建一个DoNothing()预处理宏或者内联函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(recordArray.<span class="built_in">Read</span>(index++) != recordArray.<span class="built_in">EmptyRecord</span>())</span><br><span class="line">&#123;</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DoNothing()</span></span><br><span class="line"><span class="keyword">while</span>(...)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">DoNothing</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-05-17-%E5%8D%8E%E4%B8%BAC++%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%E6%91%98%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1685,255 +1842,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">读书笔记-《代码大全》</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="强制类型转换的应用"><a href="#强制类型转换的应用" class="headerlink" title="强制类型转换的应用"></a>强制类型转换的应用</h2><h2 id="C语言中void-可以转换为任意指针"><a href="#C语言中void-可以转换为任意指针" class="headerlink" title="C语言中void* 可以转换为任意指针"></a>C语言中void* 可以转换为任意指针</h2><p>size_t 到 unsigned</p>
-<p>变量初始化</p>
-<ul>
-<li>从未对变量赋值。它的值只是程序启动时变量所处内存区域的值</li>
-<li>变量值已经过期。变量在某个地方曾经被赋值，但该值已经不再有效</li>
-<li>变量的一部分被赋值，而另一部分没有</li>
-</ul>
-<h2 id="在声明变量的时候初始化"><a href="#在声明变量的时候初始化" class="headerlink" title="在声明变量的时候初始化"></a>在声明变量的时候初始化</h2><h2 id="理想情况下，在靠近第一次使用变量的位置声明和定义该变量"><a href="#理想情况下，在靠近第一次使用变量的位置声明和定义该变量" class="headerlink" title="理想情况下，在靠近第一次使用变量的位置声明和定义该变量"></a>理想情况下，在靠近第一次使用变量的位置声明和定义该变量</h2><ul>
-<li>在有可能的情况下使用<code>const</code>， 定义常量，入参。</li>
-<li>特别注意计数器和累加器，在下一次使用时忘记重置其值。</li>
-<li>在类的构造函数中，初始化该类的数据成员</li>
-<li>检查是否需要重新初始化</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> index = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/// do something with index</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/// do something with index</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="尽可能缩短变量存活时间"><a href="#尽可能缩短变量存活时间" class="headerlink" title="尽可能缩短变量存活时间"></a>尽可能缩短变量存活时间</h2><p>短的变量存活时间减少了初始化错误的可能。</p>
-<p>变量存活时间短还会使代码具有可读性。阅读者同一时间内需要阅读的代码越少，越容易理解代码。</p>
-<p>当需要把一个大的函数，拆分成几个小程序，短的存活时间方便拆分。</p>
-<p>在循环开始之前再去初始化该循环里使用的变量，而不是在该循环所属的子程序的开始处初始化这些变量。</p>
-<p>直到变量即将被使用时再为其赋值。</p>
-<p>把相关语句放在一起。把相关语句提取成单独的子程序。</p>
-<p>开始时采用最严格的可见性，然后根据扩展变量的作用域。比如，把一个循环内的变量挪到循环外的难度要比反过来难度低，或把一个<code>private</code>转变为<code>public</code>的难度远比反过来难度低。</p>
-<p>避免采用硬编码，宏定义总是好于硬编码。</p>
-<ul>
-<li><code>TITLE_BAR_COLOR</code> 比 <code>0xFFFFFF</code> 更能反应出所代表的信息</li>
-<li>同时，也方便修改宏定义时，同时改变所有的颜色的RGB值</li>
-</ul>
-<h2 id="为变量指定单一用途"><a href="#为变量指定单一用途" class="headerlink" title="为变量指定单一用途"></a>为变量指定单一用途</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">temp = <span class="built_in">Sqrt</span>(b*b - <span class="number">4</span>*a*c);</span><br><span class="line">root[<span class="number">0</span>] = (-b + temp) / (<span class="number">2</span>*a);</span><br><span class="line">root[<span class="number">1</span>] = (-b - temp) / (<span class="number">2</span>*a);</span><br><span class="line"></span><br><span class="line"><span class="comment">// swap the roots</span></span><br><span class="line">temp = root[<span class="number">0</span>];</span><br><span class="line">root[<span class="number">0</span>] = root[<span class="number">1</span>];</span><br><span class="line">root[<span class="number">1</span>] = temp;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">discriminant = <span class="built_in">Sqrt</span>(b*b - <span class="number">4</span>*a*c);</span><br><span class="line">root[<span class="number">0</span>] = (-b + discriminant) / (<span class="number">2</span>*a);</span><br><span class="line">root[<span class="number">1</span>] = (-b - discriminant) / (<span class="number">2</span>*a);</span><br><span class="line"></span><br><span class="line"><span class="comment">// swap the roots</span></span><br><span class="line">oldRoot = root[<span class="number">0</span>];</span><br><span class="line">root[<span class="number">0</span>] = root[<span class="number">1</span>];</span><br><span class="line">root[<span class="number">1</span>] = oldRoot;</span><br></pre></td></tr></table></figure>
-
-
-<p>避免让代码具有隐含含义，把同一变量用于多个多个用途的另外一种方式是当变量代表不同事务时让其具有不同的取值集合。</p>
-<ul>
-<li>变量<code>count</code>的取值可能表示某个计数，除非他等于<code>-1</code>，在这种情况下表明有错误发生</li>
-<li>变量<code>customerId</code>可能代表某个客户账号，除非他的取值大于50000，在这种情况下，你通过减去50000来得到过期账号。</li>
-<li>变量<code>bytesWritten</code>可能表示写入输出文件的字节数，除非它的取值为负，在这种情况下他表示的是用于输出磁盘驱动器的号码。</li>
-</ul>
-<h2 id="变量名的注意事项"><a href="#变量名的注意事项" class="headerlink" title="变量名的注意事项"></a>变量名的注意事项</h2><p>糟糕的变量名</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = x - xx;</span><br><span class="line">xxx = fido + <span class="built_in">SalesTax</span>(fido);</span><br><span class="line">x = x + <span class="built_in">LateFee</span>(x1, x) + xxx;</span><br><span class="line">x = x + <span class="built_in">Interest</span>(x1, x);</span><br></pre></td></tr></table></figure>
-
-<p>良好的变量名</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">balance = balance - lastPayment;</span><br><span class="line">monthlyTotal = newPurchases + <span class="built_in">SalesTax</span>(newPurchases);</span><br><span class="line">balance = balance + <span class="built_in">LateFee</span>(customerID, balance) + monthlyTotal;</span><br><span class="line">balance = balance + <span class="built_in">Interest</span>(customerID, balance);</span><br></pre></td></tr></table></figure>
-
-<p>为变量命名时最重要的考虑事项时，改名字要完全、准确地描述该变量所代表的事物<br>不包含晦涩的缩写，同时也没有歧义。<br>对于一个表示中国奥林匹克代表团成员数量的变量，你可能会使用<code>NumberOfPeopleOnTheChineseOlympicTeam</code><br>表示当前利率的变量最好为<code>rate</code>而不是<code>r</code>.</p>
-<p>变量名太长: <code>numberOfPeopleOnTheChineseOlympicTeam</code>,<code>numberOfSeatsInTheStadium</code>, <code>maximumNumberOfPointsInModernOlympics</code><br>变量名太短: <code>n</code>, <code>np</code>, <code>ntm</code>, <code>ms</code>, <code>nsisd</code>, <code>m</code>, <code>max</code>, <code>min</code><br>变量名正好： <code>numTeamMembers</code>, <code>teamMemberCount</code>, <code>numSeatsInStadium</code>, <code>seatCount</code>, <code>teamPointsMax</code>, <code>pointSRecord</code></p>
-<p>很多程序有表示计算机结果的变量：总额、平均值、最大值，等等。如果你要用类似于<code>Total</code>、<code>Sum</code>、<code>Average</code>、<code>Max</code>、<code>Min</code>、<code>Record</code>这样的限定词，那么请一定记住把限定词加到名字最后。<br>变量名中最重要的部分应该被放置在最前面，限定词在最后。<br>这样做会避免，<code>totalRevenue</code>和<code>revenueTotal</code>异议词语</p>
-<p>为状态变量起一个比<code>flag</code>更好的名字。最好把标记<code>flag</code>看作状态变量，标记的名字中不应该含有<code>flag</code>，因为你从中丝毫看不出该标记是做什么的。<br>含义模糊的标记</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (flag) ...</span><br><span class="line"><span class="keyword">if</span> (statusFlag &amp; <span class="number">0xF</span>) ...</span><br><span class="line"><span class="keyword">if</span> (printFlag == <span class="number">16</span>) ...</span><br><span class="line"><span class="keyword">if</span> (computeFlag == <span class="number">0</span>) ...</span><br></pre></td></tr></table></figure>
-
-<p>更好的状态变量命名</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (dataReady) ...</span><br><span class="line"><span class="keyword">if</span> (characterType &amp; PRINTABLE_CHAR) ...</span><br><span class="line"><span class="keyword">if</span> (reportType == ReportType_Annual) ...</span><br><span class="line"><span class="keyword">if</span> (recalcNeeded == <span class="literal">false</span>) ...</span><br></pre></td></tr></table></figure>
-
-<p>为布尔变量命名</p>
-<ul>
-<li><code>done</code> 用<code>done</code>表示某件事情已经发生之前把变量值设为<code>false</code>, 在错误已经发生时把它设为<code>true</code></li>
-<li><code>error</code> 用<code>error</code>表示有错误发生。在错误发生之前把变量值设为<code>false</code>, 在错误已经发生时把它设为<code>true</code></li>
-<li><code>found</code> 用<code>found</code>来表明某个值已经找到了。在没有找到设为<code>false</code>, 找到后设为<code>true</code>.</li>
-<li><code>success</code>和<code>ok</code>, 操作失败时设为<code>false</code>, 操作成功后设为<code>true</code></li>
-</ul>
-<p>给布尔变量赋予隐含“真、假”含义的名字: <code>status</code>和<code>sourceFile</code>是很糟糕的布尔变量名。<br>应该把<code>status</code>替换为类似<code>error</code>或者<code>statusOK</code>这样的名称，把<code>sourceFile</code>替换为<code>sourceFileAvailable</code>、<code>sourceFileFound</code></p>
-<p>使用肯定的布尔变量名，否定的布尔名如<code>notFound</code>、<code>notDone</code>以及<code>notSuccessful</code>比较难阅读。使用肯定的语义避免双重否定带来的阅读难度。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">AnsiString strTmp;</span><br><span class="line">strTmp = edtAccount-&gt;Text;</span><br><span class="line"><span class="keyword">if</span>(strTmp.<span class="built_in">IsInvalid</span>())</span><br><span class="line">&#123;</span><br><span class="line">    st.Account = strTmp;</span><br><span class="line">&#125;</span><br><span class="line">strTmp = edtPassword-&gt;Text;</span><br><span class="line"><span class="keyword">if</span>(strTmp.<span class="built_in">IsInvalid</span>())</span><br><span class="line">&#123;</span><br><span class="line">    st.Password = strTmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>缩写的一般指导原则：</p>
-<ul>
-<li>使用标准的缩写(列在字典中的那些常见缩写)</li>
-<li>去掉虚词<code>and</code>, <code>or</code>, <code>the</code>等</li>
-<li>去掉无用的后缀<code>ing</code>, <code>end</code></li>
-<li>确保不要改变变量的含义</li>
-<li>反复使用上述技术，知道你把每个变量名的长度缩减到了8到20个字符，或者达到你所用的编程语言对变量名的限制字符数。</li>
-</ul>
-<h2 id="不要用每个单词中删除一个字符的方式来缩写"><a href="#不要用每个单词中删除一个字符的方式来缩写" class="headerlink" title="不要用每个单词中删除一个字符的方式来缩写"></a>不要用每个单词中删除一个字符的方式来缩写</h2><p>键入一个字符算不上是什么额外工作，而节省一个字符带来的便利却很难抵消由此而造成的可读性的损失。</p>
-<h2 id="缩写要一致"><a href="#缩写要一致" class="headerlink" title="缩写要一致"></a>缩写要一致</h2><p>应该一直使用相同的缩写。要么全用<code>Num</code>，要么全用<code>No</code>，也不要有些地方使用全写<code>Number</code>, 同时在其他地方使用缩写<code>Num</code></p>
-<h2 id="创建你能读出来的名字"><a href="#创建你能读出来的名字" class="headerlink" title="创建你能读出来的名字"></a>创建你能读出来的名字</h2><p>使用<code>xPos</code>而不是<code>xPstn</code>, 用<code>needsCompu</code>而不用<code>ndsCmptg</code>。这里可以使用电话沟通，如果你无法向他人读出你的代码，就请重新给变量起一个更清晰的名字。</p>
-<h2 id="名字对于代码的读者的意义要比对作者更重要"><a href="#名字对于代码的读者的意义要比对作者更重要" class="headerlink" title="名字对于代码的读者的意义要比对作者更重要"></a>名字对于代码的读者的意义要比对作者更重要</h2><h2 id="避免使用令人误解的名字或缩写"><a href="#避免使用令人误解的名字或缩写" class="headerlink" title="避免使用令人误解的名字或缩写"></a>避免使用令人误解的名字或缩写</h2><p>要确保名字的含义是明确的</p>
-<h2 id="避免使用具有相似含义的名字"><a href="#避免使用具有相似含义的名字" class="headerlink" title="避免使用具有相似含义的名字"></a>避免使用具有相似含义的名字</h2><p>如果你能够交换两个变量的名字而不会妨碍对程序的理解，那么你就需要为这两个变量重新命名了。</p>
-<h2 id="避免在名字中使用数字"><a href="#避免在名字中使用数字" class="headerlink" title="避免在名字中使用数字"></a>避免在名字中使用数字</h2><p>如果名字中的数字真的非常重要，就请使用数组来代替一组单个的变量。如果数组不合适，那么数字就更不合适。</p>
-<h2 id="避免在名字中拼错单词"><a href="#避免在名字中拼错单词" class="headerlink" title="避免在名字中拼错单词"></a>避免在名字中拼错单词</h2><h2 id="避免在名字中使用容易混淆的字符"><a href="#避免在名字中使用容易混淆的字符" class="headerlink" title="避免在名字中使用容易混淆的字符"></a>避免在名字中使用容易混淆的字符</h2><ul>
-<li>数字<code>1</code>和小写的<code>l</code></li>
-<li>数字<code>1</code>和大写的<code>L</code></li>
-<li>数字<code>0</code>和大写的<code>O</code></li>
-<li>数字<code>2</code>和小写的<code>z</code></li>
-<li>数字<code>6</code>和大写的<code>G</code></li>
-</ul>
-<h2 id="避免浮点数的数量级相差巨大的数字之间的四则运算"><a href="#避免浮点数的数量级相差巨大的数字之间的四则运算" class="headerlink" title="避免浮点数的数量级相差巨大的数字之间的四则运算"></a>避免浮点数的数量级相差巨大的数字之间的四则运算</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">double</span> d = <span class="number">100000000.0</span> + <span class="number">0.1</span>;</span><br><span class="line">    std::cout &lt;&lt; d &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="避免浮点数的等量比较"><a href="#避免浮点数的等量比较" class="headerlink" title="避免浮点数的等量比较"></a>避免浮点数的等量比较</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">double</span> tmp = <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        tmp += <span class="number">0.1</span>;</span><br><span class="line">        std::cout &lt;&lt; tmp &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">IncreaseA</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    a++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">IncreaseB</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    b++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">IncreaseA</span>() || !<span class="built_in">IncreaseB</span>())</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="为空语句创建一个DoNothing-预处理宏或者内联函数"><a href="#为空语句创建一个DoNothing-预处理宏或者内联函数" class="headerlink" title="为空语句创建一个DoNothing()预处理宏或者内联函数"></a>为空语句创建一个DoNothing()预处理宏或者内联函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(recordArray.<span class="built_in">Read</span>(index++) != recordArray.<span class="built_in">EmptyRecord</span>())</span><br><span class="line">&#123;</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DoNothing()</span></span><br><span class="line"><span class="keyword">while</span>(...)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">DoNothing</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">UML语法简介</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="泛化关系-generalization"><a href="#泛化关系-generalization" class="headerlink" title="泛化关系(generalization)"></a>泛化关系(generalization)</h2><p>类的继承结构表现在UML中为：泛化(generalize)与实现(realize)：</p>
-<p>继承关系为 is-a的关系；两个对象之间如果可以用 is-a 来表示，就是继承关系：（..是..)</p>
-<p>eg：自行车是车、猫是动物</p>
-<p>泛化关系用一条带空心箭头的直接表示；如下图表示（A继承自B）；</p>
-<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/generalize_example.png" alt="generalize_example"></p>
-<p>eg：猫是一种动物；猫与动物之间为泛化关系。</p>
-<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/generalize_example(2).png" alt="generalize_example(2)"></p>
-<h2 id="实现关系-realize"><a href="#实现关系-realize" class="headerlink" title="实现关系(realize)"></a>实现关系(realize)</h2><p>实现关系用一条带空心箭头的虚线表示；</p>
-<p>eg：”猫”和”鸟”运动方式不同，它们的运动方式一个为走一个为飞，必须要在派生类”动物”中提供具体实现，那么”猫”和”鸟”对于基类动物来说为实现关系。</p>
-<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/realize_example.png" alt="realize_example"></p>
-<h2 id="聚合关系-aggregation"><a href="#聚合关系-aggregation" class="headerlink" title="聚合关系(aggregation)"></a>聚合关系(aggregation)</h2><p>聚合关系用一条带空心菱形箭头的直线表示，如下图表示A聚合到B上，或者说B由A组成；</p>
-<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/aggregation_example.png" alt="aggregation_example"></p>
-<p>聚合关系用于表示实体对象之间的关系，表示整体由部分构成的语义；例如一个部门由多个员工组成；</p>
-<p>与组合关系不同的是，<strong>整体和部分不是强依赖的</strong>，即使整体不存在了，部分仍然存在；例如， 部门撤销了，人员不会消失，他们依然存在；</p>
-<h2 id="组合关系-composition"><a href="#组合关系-composition" class="headerlink" title="组合关系(composition)"></a>组合关系(composition)</h2><p>组合关系用一条带实心菱形箭头直线表示，如下图表示A组成B，或者B由A组成；</p>
-<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/composition_example.png" alt="composition_example"></p>
-<p>与聚合关系一样，组合关系同样表示整体由部分构成的语义；比如公司由多个部门组成；</p>
-<p>但组合关系是一种<strong>强依赖的特殊聚合关系</strong>，如果整体不存在了，则部分也不存在了；例如， 公司不存在了，部门也将不存在了；</p>
-<h2 id="关联关系-association"><a href="#关联关系-association" class="headerlink" title="关联关系(association)"></a>关联关系(association)</h2><p>关联关系是用一条直线表示的；它描述不同类的对象之间的结构关系；它是一种静态关系， 通常与运行状态无关，一般由常识等因素决定的；它一般用来定义对象之间静态的、天然的结构； 所以，关联关系是一种“强关联”的关系；</p>
-<p>比如，乘车人和车票之间就是一种关联关系；学生和学校就是一种关联关系；</p>
-<p>关联关系默认不强调方向，表示对象间相互知道；如果特别强调方向，如下图，表示A知道B，但 B不知道A；</p>
-<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/association_example.png" alt="association_example"></p>
-<p>注：在最终代码中，关联对象通常是以成员变量的形式实现的；</p>
-<h2 id="依赖关系-dependency"><a href="#依赖关系-dependency" class="headerlink" title="依赖关系(dependency)"></a>依赖关系(dependency)</h2><p>依赖关系是用一套带箭头的虚线表示的；如下图表示A依赖于B；他描述一个对象在运行期间会用到另一个对象的关系；</p>
-<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/dependency_example.png" alt="dependency_example"></p>
-<p>与关联关系不同的是，它是一种临时性的关系，通常在运行期间产生，并且随着运行时的变化； 依赖关系也可能发生变化；</p>
-<p>显然，依赖也有方向，双向依赖是一种非常糟糕的结构，我们总是应该保持单向依赖，杜绝双向依赖的产生；</p>
-<p>注：在最终代码中，依赖关系体现为类构造方法及类方法的传入参数，箭头的指向为调用关系；依赖关系除了临时知道对方外，还是“使用”对方的方法和属性；</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-04-28-C++POD%E7%9A%84%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2078,7 +1986,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -2092,7 +2000,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">C++ 观察者设计模式</a>
+            <a href="/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">UML语法简介</a>
         </h2>
 
         <div class="post-meta">
@@ -2123,7 +2031,190 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h1><h2 id="观察者模式实现"><a href="#观察者模式实现" class="headerlink" title="观察者模式实现"></a>观察者模式实现</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">observer</span>;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">subscriber</span> : <span class="keyword">public</span> std::enable_shared_from_this&lt;subscriber&gt; &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">subscriber</span>(<span class="type">const</span> std::string&amp; user_name) : <span class="built_in">user_name_</span>(user_name) &#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">callback</span><span class="params">(<span class="type">const</span> std::string&amp; str)</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; user_name_ &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; str &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  std::string user_name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">observer</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">boardcast</span><span class="params">(<span class="type">const</span> std::string&amp; message)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> it = vec.<span class="built_in">begin</span>(); it != vec.<span class="built_in">end</span>();) &#123;</span><br><span class="line">      <span class="keyword">auto</span> sp = it-&gt;<span class="built_in">lock</span>();</span><br><span class="line">      <span class="keyword">if</span> (sp) &#123;</span><br><span class="line">        sp-&gt;<span class="built_in">callback</span>(message);</span><br><span class="line">        it++;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        it = vec.<span class="built_in">erase</span>(it);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">regist</span><span class="params">(std::weak_ptr&lt;subscriber&gt; wp)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (wp.<span class="built_in">lock</span>()) &#123;</span><br><span class="line">      vec.<span class="built_in">push_back</span>(wp);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  std::vector&lt;std::weak_ptr&lt;subscriber&gt;&gt; vec;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">auto</span> ob = std::<span class="built_in">make_shared</span>&lt;observer&gt;();</span><br><span class="line">  <span class="keyword">auto</span> sp1 = std::<span class="built_in">make_shared</span>&lt;subscriber&gt; (<span class="string">&quot;subscriber1&quot;</span>);</span><br><span class="line">  ob-&gt;<span class="built_in">regist</span>(sp1-&gt;<span class="built_in">weak_from_this</span>());</span><br><span class="line">  <span class="keyword">auto</span> sp2 = std::<span class="built_in">make_shared</span>&lt;subscriber&gt; (<span class="string">&quot;subscriber2&quot;</span>);</span><br><span class="line">  ob-&gt;<span class="built_in">regist</span>(sp2-&gt;<span class="built_in">weak_from_this</span>());</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">auto</span> sp3 = std::<span class="built_in">make_shared</span>&lt;subscriber&gt; (<span class="string">&quot;subscriber3&quot;</span>);</span><br><span class="line">    ob-&gt;<span class="built_in">regist</span>(sp3-&gt;<span class="built_in">weak_from_this</span>());</span><br><span class="line">    <span class="keyword">auto</span> sp4 = std::<span class="built_in">make_shared</span>&lt;subscriber&gt; (<span class="string">&quot;subscriber4&quot;</span>);</span><br><span class="line">    ob-&gt;<span class="built_in">regist</span>(sp4-&gt;<span class="built_in">weak_from_this</span>());</span><br><span class="line">    ob-&gt;<span class="built_in">boardcast</span>(<span class="string">&quot;start boardcast!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  ob-&gt;<span class="built_in">boardcast</span>(<span class="string">&quot;boardcast again!&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="泛化关系-generalization"><a href="#泛化关系-generalization" class="headerlink" title="泛化关系(generalization)"></a>泛化关系(generalization)</h2><p>类的继承结构表现在UML中为：泛化(generalize)与实现(realize)：</p>
+<p>继承关系为 is-a的关系；两个对象之间如果可以用 is-a 来表示，就是继承关系：（..是..)</p>
+<p>eg：自行车是车、猫是动物</p>
+<p>泛化关系用一条带空心箭头的直接表示；如下图表示（A继承自B）；</p>
+<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/generalize_example.png" alt="generalize_example"></p>
+<p>eg：猫是一种动物；猫与动物之间为泛化关系。</p>
+<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/generalize_example(2).png" alt="generalize_example(2)"></p>
+<h2 id="实现关系-realize"><a href="#实现关系-realize" class="headerlink" title="实现关系(realize)"></a>实现关系(realize)</h2><p>实现关系用一条带空心箭头的虚线表示；</p>
+<p>eg：”猫”和”鸟”运动方式不同，它们的运动方式一个为走一个为飞，必须要在派生类”动物”中提供具体实现，那么”猫”和”鸟”对于基类动物来说为实现关系。</p>
+<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/realize_example.png" alt="realize_example"></p>
+<h2 id="聚合关系-aggregation"><a href="#聚合关系-aggregation" class="headerlink" title="聚合关系(aggregation)"></a>聚合关系(aggregation)</h2><p>聚合关系用一条带空心菱形箭头的直线表示，如下图表示A聚合到B上，或者说B由A组成；</p>
+<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/aggregation_example.png" alt="aggregation_example"></p>
+<p>聚合关系用于表示实体对象之间的关系，表示整体由部分构成的语义；例如一个部门由多个员工组成；</p>
+<p>与组合关系不同的是，<strong>整体和部分不是强依赖的</strong>，即使整体不存在了，部分仍然存在；例如， 部门撤销了，人员不会消失，他们依然存在；</p>
+<h2 id="组合关系-composition"><a href="#组合关系-composition" class="headerlink" title="组合关系(composition)"></a>组合关系(composition)</h2><p>组合关系用一条带实心菱形箭头直线表示，如下图表示A组成B，或者B由A组成；</p>
+<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/composition_example.png" alt="composition_example"></p>
+<p>与聚合关系一样，组合关系同样表示整体由部分构成的语义；比如公司由多个部门组成；</p>
+<p>但组合关系是一种<strong>强依赖的特殊聚合关系</strong>，如果整体不存在了，则部分也不存在了；例如， 公司不存在了，部门也将不存在了；</p>
+<h2 id="关联关系-association"><a href="#关联关系-association" class="headerlink" title="关联关系(association)"></a>关联关系(association)</h2><p>关联关系是用一条直线表示的；它描述不同类的对象之间的结构关系；它是一种静态关系， 通常与运行状态无关，一般由常识等因素决定的；它一般用来定义对象之间静态的、天然的结构； 所以，关联关系是一种“强关联”的关系；</p>
+<p>比如，乘车人和车票之间就是一种关联关系；学生和学校就是一种关联关系；</p>
+<p>关联关系默认不强调方向，表示对象间相互知道；如果特别强调方向，如下图，表示A知道B，但 B不知道A；</p>
+<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/association_example.png" alt="association_example"></p>
+<p>注：在最终代码中，关联对象通常是以成员变量的形式实现的；</p>
+<h2 id="依赖关系-dependency"><a href="#依赖关系-dependency" class="headerlink" title="依赖关系(dependency)"></a>依赖关系(dependency)</h2><p>依赖关系是用一套带箭头的虚线表示的；如下图表示A依赖于B；他描述一个对象在运行期间会用到另一个对象的关系；</p>
+<p><img src="/../resource/UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/dependency_example.png" alt="dependency_example"></p>
+<p>与关联关系不同的是，它是一种临时性的关系，通常在运行期间产生，并且随着运行时的变化； 依赖关系也可能发生变化；</p>
+<p>显然，依赖也有方向，双向依赖是一种非常糟糕的结构，我们总是应该保持单向依赖，杜绝双向依赖的产生；</p>
+<p>注：在最终代码中，依赖关系体现为类构造方法及类方法的传入参数，箭头的指向为调用关系；依赖关系除了临时知道对方外，还是“使用”对方的方法和属性；</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-14-%20%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jiancong Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jiancong Li's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2020-12-14-%20%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)/" class="post-title-link" itemprop="url">《Effective Modern C++》读书笔记(2)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="《Effective-Modern-C-》读书笔记-2"><a href="#《Effective-Modern-C-》读书笔记-2" class="headerlink" title="《Effective Modern C++》读书笔记(2)"></a>《Effective Modern C++》读书笔记(2)</h1><ol>
+<li><p>裸指针在声明中并没有指出，裸指针指涉到的是单个对象还是一个数组。</p>
+</li>
+<li><p>裸指针在声明中也没有提示在使用完指涉到的对象以后，是否需要析构它。换言之，你从声明中看不出来指针是否拥有其指涉的对象。</p>
+</li>
+<li><p>即使知道需要析构指针所指涉的对象，也不可能知道如何析构才是适当的。是应该使用<code>delete</code>运算符，还是有其他用途。</p>
+</li>
+<li><p>即使知道了使用<code>delete</code>运算符，还是会发生到底应该用的那个对象形式（<code>delete</code>）还是数组形式（<code>delete[]</code>）。</p>
+</li>
+<li><p>即启用够确信，指针拥有其指涉对象，并且也确知应该如何析构，要保证析构在所有代码路径上都仅执行一次（包括那些异常导致的路径）仍然困难重重。只要少在一条路径上执行，就会导致资源泄露。而如果析构在一条路径上执行了多次，则会导致未定义行为。</p>
+</li>
+<li><p>没有什么正规的方式能检测出指针是否空悬，也就是说，它指涉的内存是否已经不再持有指针本应该指涉的对象。如果一个对象已经被析构了，而某些指针仍然指涉到它，就会产生空悬指针。</p>
+</li>
+</ol>
+<p>在创建对象时注意区分<code>()</code>和<code>&#123;&#125;</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Widget w1;  <span class="comment">///&lt; 调用默认构造函数</span></span><br><span class="line">Widget w2 = w1; <span class="comment">///&lt; 调用复制构造函数</span></span><br><span class="line">w1 = w2;  <span class="comment">///&lt; 赋值运算符</span></span><br></pre></td></tr></table></figure>
+
+<p>大括号可以用来为非静态成员指定默认初始化值，却不能使用小括号。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">0</span>&#125;; <span class="comment">///&lt; 可行</span></span><br><span class="line"><span class="type">int</span> y = <span class="number">0</span>;  <span class="comment">///&lt; 可行</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">z</span><span class="params">(<span class="number">0</span>)</span></span>; <span class="comment">///&lt; 不可行</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>不可复制的对象可以采用大括号和小括号来进行初始化，却不能使用<code>=</code>:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::atomic&lt;<span class="type">int</span>&gt; ai1&#123;<span class="number">0</span>&#125;; <span class="comment">///&lt; 可行</span></span><br><span class="line"><span class="function">std::atomic&lt;<span class="type">int</span>&gt; <span class="title">ai2</span><span class="params">(<span class="number">0</span>)</span></span>; <span class="comment">///&lt; 可行</span></span><br><span class="line">std::atomic&lt;<span class="type">int</span>&gt; ai3 = <span class="number">0</span>; <span class="comment">///&lt; 不可行</span></span><br></pre></td></tr></table></figure>
+<p>大括号适用所有场合。<br>大括号初始化有一项新特性，就是它禁止内建型别之间进行隐式窄化型别转换。而采用小括号和<code>=</code>的初始化则不会进行窄化型别转换检查，因为如果那样的化就会破坏太多的遗留代码了。</p>
+<p>大括号初始化的另一项值得一提的特征是，它对于C++最令人苦恼之解析语法免疫。C++规定：任何能够解析为声明的都要解析为声明。本来想要以默认方式构造一个对象，结果却一不小心声明了一个函数。这个错误的根本原因构造函数调用语法。<br>当你想要以传参的方式调用构造函数时：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Widget <span class="title">w1</span><span class="params">(<span class="number">10</span>)</span></span>;  <span class="comment">///&lt; 调用Widget的构造函数，传入形参10</span></span><br></pre></td></tr></table></figure>
+<p>但你如果试图用相同的语法构造一个没有形参的Widget的话，结果却变成了声明了一个函数而非对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Widget <span class="title">w2</span><span class="params">()</span></span>;  <span class="comment">///&lt; 最令人苦恼之解析语法现身</span></span><br></pre></td></tr></table></figure>
+<p>由于函数声明不能使用大括号来指定形参列表，所以使用大括号来完成对象的默认构造上面这个问题：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Widget w3&#123;&#125;;  <span class="comment">///&lt; 调用没有形参的Widget构造函数</span></span><br></pre></td></tr></table></figure>
+
+<p>大括号初始化的缺陷在于伴随它有时会出现的意外行为。这种行为源于大括号初始化物、<code>std::initializer_list</code>以及构造函数重载决议之间的纠结。</p>
+<p>如果一个或多个构造函数声明了任何一个具备<code>std::initializer_list</code>型别的形参那么采用了大括号初始化语法的调用语句会强烈地优先选用带有<code>std::initializer_list</code>型别形参的重载版本。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span> &#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">Widget</span>(<span class="type">int</span> i, <span class="type">bool</span> b);</span><br><span class="line">  <span class="built_in">Widget</span>(<span class="type">int</span> i, <span class="type">double</span> d);</span><br><span class="line">  <span class="built_in">Widget</span>(std::initializer_list&lt;<span class="type">long</span> <span class="type">double</span>&gt; il);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Widget <span class="title">w1</span><span class="params">(<span class="number">10</span>, <span class="literal">true</span>)</span></span>;  <span class="comment">///&lt; 调用第一个构造函数</span></span><br><span class="line">Widget w2&#123;<span class="number">10</span>, <span class="literal">true</span>&#125;;  <span class="comment">///&lt; 使用最后一个构造函数, 10, true 被强制转化为long double</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果你的确想要调用一个带有<code>std::initializer_list</code>型别形参的构造函数，并传入一个空的<code>std::initializer_list</code>的话，你可以通过把空大括号对作为构造函数实参的方式实现这个目的，即把一对空大括号放入一对小括号或大括号的方式来清楚地表明你传递地是什么：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Widget <span class="title">w4</span><span class="params">(&#123;&#125;)</span></span>;  <span class="comment">///&lt; 带有std::initializer_list型别形参地构造函数</span></span><br><span class="line">Widget w5&#123;&#123;&#125;&#125;;  <span class="comment">///&lt; 同上</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">v1</span><span class="params">(<span class="number">10</span>, <span class="number">20</span>)</span></span>;  <span class="comment">///&lt; 创建了一个拥有十个元素，每个元素值都为20的vector</span></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">v1</span><span class="params">(<span class="number">10</span>, <span class="number">20</span>)</span></span>;  <span class="comment">///&lt; 创建了一个拥有两个元素，值分别为10、20 的vector</span></span><br></pre></td></tr></table></figure>
+
+<p><code>std::make_unique</code>和<code>std::make_shared</code>在函数内部使用的小括号，作为其接口的一部分。</p>
+<ul>
+<li>大括号初始化可以应用的语境最为宽泛，可以阻止隐式窄化型别转换，还对最令人苦恼之解析语法免疫</li>
+<li>在构造函数重载决议期间，只要有任何可能，大括号初始化物就会与带有<code>std::initializer_list</code>型别的形参相匹配，即使其他重载版本有着貌似更加匹配的形参表。</li>
+<li>使用小括号还是大括号，会造成结果大相径庭的一个例子是：使用两个实参来创建一个<code>std::vector&lt;数值型别&gt;</code>对象。</li>
+<li>在模板内容进行对象创建时，到底应该使用小括号还是大括号会成为一个棘手问题。</li>
+</ul>
+<h2 id="理解特种成员函数的生成机制"><a href="#理解特种成员函数的生成机制" class="headerlink" title="理解特种成员函数的生成机制"></a>理解特种成员函数的生成机制</h2><p>两种复制操作是彼此独立的：声明了其中一个，并不会阻止编译器生成另外一个。如果你生成了一个复制构造函数，同时未声明复制赋值运算符，并撰写了要求复制赋值的代码，则编译器会为你生成复制赋值运算符。反过来一样。</p>
+<p>两种移动操作并不彼此独立：声明了其中一个就会阻止编译器生成另外一个。假设你声明了一个移动构造函数，你实际上表明了移动操作的实现方式将会与编译器生成的默认按成员移动的移动构造函数多少有些不同。而若是按成员进行的移动构造操作有不合用之处的话，那么按成员进行的移动赋值运算符极有可能也会有不合用之处。综上声明一个移动构造函数会阻止编译器去生成移动赋值运算符，而声明一个移动赋值运算符也会阻止编译器去生成移动构造函数。</p>
+<p>一旦显式声明了赋值操作，这个类也就不再会生成移动操作了。依据在于，声明复制操作的行为表明了对象的常规复制途径（按成员复制）对于该类并不适用。从而判定既然按成员复制不适用于赋值操作，则按成员移动极有可能也不适用于移动操作。<br>一旦声明了移动操作，编译器就会删除复制操作。</p>
+<p>三大律：如果你声明了复制构造函数、复制复制运算符，或析构函数中的任何一个，你就得同时声明所有这三个。<br>如果有改写复制操作的需求，往往意味着该类需要执行某种资源管理，而这就意味着：1. 在一种复制操作中进行的任何资源管理，也极有可能在另一种复制操作中也需要进行。 2. 该类的析构函数也会参与到该资源的管理之中。</p>
+<p>大三律的一个推论是，如果存在用户声明的析构函数，则平凡的按成员赋值也不适用于该类。如果声明了析构函数，则复制操作就不该被自动生成，因为他们呢的行为不可能正确。所以在C++11中：只要用户声明了析构函数，就不会生成移动操作。</p>
+<p>移动操作的生成条件（如果需要生成）仅当以下三者同时成立：</p>
+<ul>
+<li>该类未声明任何复制操作</li>
+<li>该类未声明任何移动操作</li>
+<li>该类未声明任何析构操作</li>
+</ul>
+<p>总而言之， C++11中， 支配特种成员函数的机制如下：</p>
+<ul>
+<li>默认构造函数： 仅当类中不包含用户声明的构造函数时才生成</li>
+<li>析构函数：与C++98中基本相同，唯一的区别在于析构函数默认为<code>noexcept</code>.仅当基类的析构函数为虚的，派生类析构函数才是虚的。</li>
+<li>复制构造函数： 按成员进行非静态数据成员的复制构造。仅当类中不包含用户声明的复制构造函数时才生成。如果该类声明了移动操作，则复制构造函数将被删除。在已经存在复制赋值运算符或析构函数的条件下，仍然生成复制构造函数已经成为了被废弃的行为。</li>
+<li>移动构造函数和移动赋值运算符<br>都按成员进行非静态数据成员的移动操作。仅当类中不包含用户声明的复制操作、移动操作和析构函数时才生成。</li>
+</ul>
+<p>成员函数模板的存在会阻止编译器生成任何特种成员函数。</p>
+<ul>
+<li><p>移动操作仅当类中未包含用户显式声明的复制操作、移动操作和析构函数时才生成</p>
+</li>
+<li><p>复制构造函数仅当类中不包含用户显式声明的复制构造函数时才生成，如果该类声明了移动操作则复制构造函数时才生成，复制赋值运算符仅当类中不包含用户显式声明的复制赋值运算符才生成，如果该类声明了移动操作则复制赋值运算符将被删除。在已经存在显式声明的析构函数的条件下，生成复制操作已经成为了被废弃的行为。</p>
+</li>
+<li><p>成员函数模板在任何情况下都不会抑制特种成员函数的生成。</p>
+</li>
+<li><p>auto 变量必须初始化，基本上对会导致兼容性和效率问题的型别不匹配现象免疫，还可以简化重构流程，通常也比显式指定型别少打一些字</p>
+</li>
+<li><p>在模板推导过程中，具有引用型别的实参会被当成非引用型别来处理。换言之，其引用性会被忽略。</p>
+</li>
+<li><p>对万能引用形参进行推导时，左值实参会进行特殊处理。</p>
+</li>
+<li><p>对按值传递的形参进行推导时，若实参型别中带有<code>const</code>或<code>volatile</code>饰词，则它们还是会被当作不带<code>const</code>或<code>volatile</code>饰词的型别来处理。</p>
+</li>
+<li><p>在模板型别推导过程中， 数组或函数型别的实参会退化成对应的指针，除非它们被用来初始化引用。</p>
+</li>
+<li><p>在一般情况下，auto型别推导和模板型推导是一模一样的，但是auto型别推导会假定用大括号括起的初始化表达式代表一个<code>std::initializer_list</code>, 但模板型别推导却不会。</p>
+</li>
+<li><p>在函数返回值或lambda式的形参中使用auto， 意思是使用模板型别推导而非auto型推导。</p>
+</li>
+<li><p>绝大多数情况下，<code>decltype</code>会得出变量或表达式的型别而不做任何修改</p>
+</li>
+<li><p>对于型别为T的左值表达式，除非该表达式仅有一个名字，<code>decltype</code>总是得出型别<code>T&amp;</code></p>
+</li>
+</ul>
+
       
     </div>
 
