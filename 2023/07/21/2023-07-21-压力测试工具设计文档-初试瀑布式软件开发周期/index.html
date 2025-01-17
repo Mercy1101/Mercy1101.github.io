@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="用于集成测试时的模拟机器的硬件情况，如 cpu 占用率、内存占用率、磁盘占用率。 本文使用 MoSCoW (莫斯科) 法则, 对需求优先级进行排序。 需求分析5. 自动化测试应可以在跨平台的环境下，自动化测试。 6. 使用提示6.1 提示应具有良好的可读性Must have 6.2 重点文本，颜色高亮Could have 假设约束功能需求1. cpu 占用率模拟1.1 支持单核满载Should h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="压力测试工具设计-初试瀑布式软件开发周期">
+<meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2023-07-21-%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3-%E5%88%9D%E8%AF%95%E7%80%91%E5%B8%83%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%91%A8%E6%9C%9F/index.html">
+<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:description" content="用于集成测试时的模拟机器的硬件情况，如 cpu 占用率、内存占用率、磁盘占用率。 本文使用 MoSCoW (莫斯科) 法则, 对需求优先级进行排序。 需求分析5. 自动化测试应可以在跨平台的环境下，自动化测试。 6. 使用提示6.1 提示应具有良好的可读性Must have 6.2 重点文本，颜色高亮Could have 假设约束功能需求1. cpu 占用率模拟1.1 支持单核满载Should h">
+<meta property="og:locale">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2023-07-21-stress_tool/xx.gif">
+<meta property="article:published_time" content="2023-07-21T02:38:51.686Z">
+<meta property="article:modified_time" content="2023-10-28T06:29:44.899Z">
+<meta property="article:author" content="Jiancong Li">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mercy1101.github.io/resource/2023-07-21-stress_tool/xx.gif">
+
+<link rel="canonical" href="https://mercy1101.github.io/2023/07/21/2023-07-21-%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3-%E5%88%9D%E8%AF%95%E7%80%91%E5%B8%83%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%91%A8%E6%9C%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>压力测试工具设计-初试瀑布式软件开发周期 | Jiancong Li's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2023-07-21-%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3-%E5%88%9D%E8%AF%95%E7%80%91%E5%B8%83%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%91%A8%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jiancong Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jiancong Li's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          压力测试工具设计-初试瀑布式软件开发周期
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 10:38:51" itemprop="dateCreated datePublished" datetime="2023-07-21T10:38:51+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>用于集成测试时的模拟机器的硬件情况，如 cpu 占用率、内存占用率、磁盘占用率。</p>
+<p>本文使用 <a href="#moscow-%E8%8E%AB%E6%96%AF%E7%A7%91-%E6%B3%95%E5%88%99"><code>MoSCoW</code> (莫斯科)</a> 法则, 对需求优先级进行排序。</p>
+<h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><h3 id="5-自动化测试"><a href="#5-自动化测试" class="headerlink" title="5. 自动化测试"></a>5. 自动化测试</h3><p>应可以在跨平台的环境下，自动化测试。</p>
+<h3 id="6-使用提示"><a href="#6-使用提示" class="headerlink" title="6. 使用提示"></a>6. 使用提示</h3><h4 id="6-1-提示应具有良好的可读性"><a href="#6-1-提示应具有良好的可读性" class="headerlink" title="6.1 提示应具有良好的可读性"></a>6.1 提示应具有良好的可读性</h4><p>Must have</p>
+<h4 id="6-2-重点文本，颜色高亮"><a href="#6-2-重点文本，颜色高亮" class="headerlink" title="6.2 重点文本，颜色高亮"></a>6.2 重点文本，颜色高亮</h4><p>Could have</p>
+<h2 id="假设约束"><a href="#假设约束" class="headerlink" title="假设约束"></a>假设约束</h2><h2 id="功能需求"><a href="#功能需求" class="headerlink" title="功能需求"></a>功能需求</h2><h3 id="1-cpu-占用率模拟"><a href="#1-cpu-占用率模拟" class="headerlink" title="1. cpu 占用率模拟"></a>1. cpu 占用率模拟</h3><h4 id="1-1-支持单核满载"><a href="#1-1-支持单核满载" class="headerlink" title="1.1 支持单核满载"></a>1.1 支持单核满载</h4><p>Should have</p>
+<h4 id="1-2-支持多核满载"><a href="#1-2-支持多核满载" class="headerlink" title="1.2 支持多核满载"></a>1.2 支持多核满载</h4><p>Must have</p>
+<h4 id="1-3-CPU-占用率区间"><a href="#1-3-CPU-占用率区间" class="headerlink" title="1.3 CPU 占用率区间"></a>1.3 CPU 占用率区间</h4><p>不限制最低 CPU 占用率，限制最高 CPU 占用率为 95%([x%, 95%]).</p>
+<h4 id="1-4-关闭程序后，CPU-占用率恢复到运行前水平"><a href="#1-4-关闭程序后，CPU-占用率恢复到运行前水平" class="headerlink" title="1.4 关闭程序后，CPU 占用率恢复到运行前水平"></a>1.4 关闭程序后，CPU 占用率恢复到运行前水平</h4><p>Must have</p>
+<h3 id="2-内存占用率模拟"><a href="#2-内存占用率模拟" class="headerlink" title="2. 内存占用率模拟"></a>2. 内存占用率模拟</h3><p>TODO(lijiancong): 需要确认内存占用率的计算方式。</p>
+<h4 id="2-1-支持内存占用率区间"><a href="#2-1-支持内存占用率区间" class="headerlink" title="2.1 支持内存占用率区间"></a>2.1 支持内存占用率区间</h4><p>不限制最低内存占用率，限制最高内存占用率为 95%([x%, 95%]).</p>
+<h4 id="2-2-关闭程序后，内存占用率恢复到运行前水平"><a href="#2-2-关闭程序后，内存占用率恢复到运行前水平" class="headerlink" title="2.2 关闭程序后，内存占用率恢复到运行前水平"></a>2.2 关闭程序后，内存占用率恢复到运行前水平</h4><h3 id="3-磁盘占用率模拟"><a href="#3-磁盘占用率模拟" class="headerlink" title="3. 磁盘占用率模拟"></a>3. 磁盘占用率模拟</h3><h4 id="3-1-支持磁盘占用率区间"><a href="#3-1-支持磁盘占用率区间" class="headerlink" title="3.1 支持磁盘占用率区间"></a>3.1 支持磁盘占用率区间</h4><p>Must have</p>
+<p>不限制最低磁盘占用率，限制最高磁盘占用率为 95%([x%, 95%]).</p>
+<h4 id="3-2-关闭程序后，磁盘占用率恢复到运行前水平"><a href="#3-2-关闭程序后，磁盘占用率恢复到运行前水平" class="headerlink" title="3.2 关闭程序后，磁盘占用率恢复到运行前水平"></a>3.2 关闭程序后，磁盘占用率恢复到运行前水平</h4><p>Should have</p>
+<h4 id="3-3-支持运行当前运行磁盘的占用率模拟"><a href="#3-3-支持运行当前运行磁盘的占用率模拟" class="headerlink" title="3.3 支持运行当前运行磁盘的占用率模拟"></a>3.3 支持运行当前运行磁盘的占用率模拟</h4><p>Must have</p>
+<h4 id="3-4-支持指定磁盘的占用率模拟"><a href="#3-4-支持指定磁盘的占用率模拟" class="headerlink" title="3.4 支持指定磁盘的占用率模拟"></a>3.4 支持指定磁盘的占用率模拟</h4><p>Won’t have</p>
+<h2 id="非功能需求"><a href="#非功能需求" class="headerlink" title="非功能需求"></a>非功能需求</h2><h3 id="4-跨平台支持"><a href="#4-跨平台支持" class="headerlink" title="4. 跨平台支持"></a>4. 跨平台支持</h3><h3 id="4-1-跨系统支持"><a href="#4-1-跨系统支持" class="headerlink" title="4.1 跨系统支持"></a>4.1 跨系统支持</h3><h4 id="4-1-1-Windows11"><a href="#4-1-1-Windows11" class="headerlink" title="4.1.1. Windows11"></a>4.1.1. Windows11</h4><p>Must have</p>
+<h4 id="4-1-2-Windows10"><a href="#4-1-2-Windows10" class="headerlink" title="4.1.2. Windows10"></a>4.1.2. Windows10</h4><p>Must have</p>
+<h4 id="4-1-3-Centos7"><a href="#4-1-3-Centos7" class="headerlink" title="4.1.3. Centos7"></a>4.1.3. Centos7</h4><p>Should have</p>
+<h4 id="4-1-4-Ubuntu"><a href="#4-1-4-Ubuntu" class="headerlink" title="4.1.4. Ubuntu"></a>4.1.4. Ubuntu</h4><p>Should have</p>
+<h4 id="4-1-5-openEuler"><a href="#4-1-5-openEuler" class="headerlink" title="4.1.5. openEuler"></a>4.1.5. openEuler</h4><p>Should have</p>
+<h4 id="4-1-6-MacOS"><a href="#4-1-6-MacOS" class="headerlink" title="4.1.6. MacOS"></a>4.1.6. MacOS</h4><p>Could have</p>
+<h3 id="4-2-多编译器支持"><a href="#4-2-多编译器支持" class="headerlink" title="4.2 多编译器支持"></a>4.2 多编译器支持</h3><h4 id="4-2-1-G-12"><a href="#4-2-1-G-12" class="headerlink" title="4.2.1. G++12"></a>4.2.1. G++12</h4><p>Must have</p>
+<h4 id="4-2-2-Visual-Studio-2022"><a href="#4-2-2-Visual-Studio-2022" class="headerlink" title="4.2.2. Visual Studio 2022"></a>4.2.2. Visual Studio 2022</h4><p>Must have</p>
+<h4 id="4-2-3-Visual-Studio-2010"><a href="#4-2-3-Visual-Studio-2010" class="headerlink" title="4.2.3. Visual Studio 2010"></a>4.2.3. Visual Studio 2010</h4><p>Could have</p>
+<h4 id="4-2-4-clang14"><a href="#4-2-4-clang14" class="headerlink" title="4.2.4. clang14"></a>4.2.4. clang14</h4><p>Could have</p>
+<h4 id="4-2-5-G-3-8-及以上"><a href="#4-2-5-G-3-8-及以上" class="headerlink" title="4.2.5. G++3.8 及以上"></a>4.2.5. G++3.8 及以上</h4><p>Could have</p>
+<h3 id="7-安全要求"><a href="#7-安全要求" class="headerlink" title="7. 安全要求"></a>7. 安全要求</h3><p>以不损害硬件为原则，运行本软件后恢复硬件环境到运行前水平。</p>
+<h4 id="7-1-cpu-高负载"><a href="#7-1-cpu-高负载" class="headerlink" title="7.1 cpu 高负载"></a>7.1 cpu 高负载</h4><h5 id="7-1-1-高负载限制-95"><a href="#7-1-1-高负载限制-95" class="headerlink" title="7.1.1 高负载限制 95%"></a>7.1.1 高负载限制 95%</h5><h5 id="7-1-2-高负载时间限制-20min"><a href="#7-1-2-高负载时间限制-20min" class="headerlink" title="7.1.2 高负载时间限制 20min"></a>7.1.2 高负载时间限制 20min</h5><h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="MoSCoW-莫斯科-法则"><a href="#MoSCoW-莫斯科-法则" class="headerlink" title="MoSCoW (莫斯科) 法则"></a>MoSCoW (莫斯科) 法则</h3><p><code>MoSCoW</code> 法则是一种优先级排序法则，用于项目管理定义范围、确定功能质量、变更管理中常用的工具法则，以便用户、项目主管、项目经理、供应商对纳入项目中的每个需求交付的重要性和紧急性达成共识。</p>
+<p><code>MoSCoW</code> 代表四个优先级别的首字母的缩写，再加上O使之能够形成便于记忆的名称——<code>MoSCoW</code>。</p>
+<ol>
+<li><code>Must have</code>: 必须有。 如果不包含，则产品不可行。 <code>Must Have</code> 的功能，通常就是最小可行产品（<code>MVP</code>）的功能。</li>
+<li><code>Should have</code>: 应该有。 这些功能很重要，但不是必需的。 虽然“应该有”的要求与“必须有”一样重要，但它们通常可以用另一种方式来代替，去满足客户要求。</li>
+<li><code>Could have</code>: 可以有。 这些要求是客户期望的，但不是必需的。 可以提高用户体验，或提高客户满意度。 如果时间充足，资源允许，通常会包括这些功能。 但如果交付时间紧张，通常现阶段不会做，会挪到下一阶段或者下一期做。</li>
+<li><code>Won’t have</code>:这次不会有。 最不重要，最低回报的事项，或在当下是不适合的要求。 不会被计划到当前交货计划中。 “不会有”会被要求删除，或重新考虑。</li>
+</ol>
+<p><img src="/../resource/2023-07-21-stress_tool/xx.gif" alt="image"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/06/16/2023-06-09-EN50128%E4%B8%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%A6%81%E6%B1%82/" rel="prev" title="EN50128中的基本要求">
+      <i class="fa fa-chevron-left"></i> EN50128中的基本要求
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/21/2020-12-11-C++%20%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%AE%80%E4%BB%8B%E4%B8%8E%E9%94%99%E8%AF%AF%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/" rel="next" title="C++ 智能指针简介与错误使用情况">
+      C++ 智能指针简介与错误使用情况 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">需求分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.</span> <span class="nav-text">5. 自动化测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E4%BD%BF%E7%94%A8%E6%8F%90%E7%A4%BA"><span class="nav-number">1.2.</span> <span class="nav-text">6. 使用提示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-%E6%8F%90%E7%A4%BA%E5%BA%94%E5%85%B7%E6%9C%89%E8%89%AF%E5%A5%BD%E7%9A%84%E5%8F%AF%E8%AF%BB%E6%80%A7"><span class="nav-number">1.2.1.</span> <span class="nav-text">6.1 提示应具有良好的可读性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-%E9%87%8D%E7%82%B9%E6%96%87%E6%9C%AC%EF%BC%8C%E9%A2%9C%E8%89%B2%E9%AB%98%E4%BA%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">6.2 重点文本，颜色高亮</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%87%E8%AE%BE%E7%BA%A6%E6%9D%9F"><span class="nav-number">2.</span> <span class="nav-text">假设约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82"><span class="nav-number">3.</span> <span class="nav-text">功能需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-cpu-%E5%8D%A0%E7%94%A8%E7%8E%87%E6%A8%A1%E6%8B%9F"><span class="nav-number">3.1.</span> <span class="nav-text">1. cpu 占用率模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E6%94%AF%E6%8C%81%E5%8D%95%E6%A0%B8%E6%BB%A1%E8%BD%BD"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1 支持单核满载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E6%94%AF%E6%8C%81%E5%A4%9A%E6%A0%B8%E6%BB%A1%E8%BD%BD"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2 支持多核满载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-CPU-%E5%8D%A0%E7%94%A8%E7%8E%87%E5%8C%BA%E9%97%B4"><span class="nav-number">3.1.3.</span> <span class="nav-text">1.3 CPU 占用率区间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-%E5%85%B3%E9%97%AD%E7%A8%8B%E5%BA%8F%E5%90%8E%EF%BC%8CCPU-%E5%8D%A0%E7%94%A8%E7%8E%87%E6%81%A2%E5%A4%8D%E5%88%B0%E8%BF%90%E8%A1%8C%E5%89%8D%E6%B0%B4%E5%B9%B3"><span class="nav-number">3.1.4.</span> <span class="nav-text">1.4 关闭程序后，CPU 占用率恢复到运行前水平</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%8E%87%E6%A8%A1%E6%8B%9F"><span class="nav-number">3.2.</span> <span class="nav-text">2. 内存占用率模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E6%94%AF%E6%8C%81%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%8E%87%E5%8C%BA%E9%97%B4"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1 支持内存占用率区间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E5%85%B3%E9%97%AD%E7%A8%8B%E5%BA%8F%E5%90%8E%EF%BC%8C%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%8E%87%E6%81%A2%E5%A4%8D%E5%88%B0%E8%BF%90%E8%A1%8C%E5%89%8D%E6%B0%B4%E5%B9%B3"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2 关闭程序后，内存占用率恢复到运行前水平</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E7%8E%87%E6%A8%A1%E6%8B%9F"><span class="nav-number">3.3.</span> <span class="nav-text">3. 磁盘占用率模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E6%94%AF%E6%8C%81%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E7%8E%87%E5%8C%BA%E9%97%B4"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.1 支持磁盘占用率区间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E5%85%B3%E9%97%AD%E7%A8%8B%E5%BA%8F%E5%90%8E%EF%BC%8C%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8%E7%8E%87%E6%81%A2%E5%A4%8D%E5%88%B0%E8%BF%90%E8%A1%8C%E5%89%8D%E6%B0%B4%E5%B9%B3"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.2 关闭程序后，磁盘占用率恢复到运行前水平</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E6%94%AF%E6%8C%81%E8%BF%90%E8%A1%8C%E5%BD%93%E5%89%8D%E8%BF%90%E8%A1%8C%E7%A3%81%E7%9B%98%E7%9A%84%E5%8D%A0%E7%94%A8%E7%8E%87%E6%A8%A1%E6%8B%9F"><span class="nav-number">3.3.3.</span> <span class="nav-text">3.3 支持运行当前运行磁盘的占用率模拟</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E6%94%AF%E6%8C%81%E6%8C%87%E5%AE%9A%E7%A3%81%E7%9B%98%E7%9A%84%E5%8D%A0%E7%94%A8%E7%8E%87%E6%A8%A1%E6%8B%9F"><span class="nav-number">3.3.4.</span> <span class="nav-text">3.4 支持指定磁盘的占用率模拟</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82"><span class="nav-number">4.</span> <span class="nav-text">非功能需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%94%AF%E6%8C%81"><span class="nav-number">4.1.</span> <span class="nav-text">4. 跨平台支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E8%B7%A8%E7%B3%BB%E7%BB%9F%E6%94%AF%E6%8C%81"><span class="nav-number">4.2.</span> <span class="nav-text">4.1 跨系统支持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-Windows11"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.1.1. Windows11</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-Windows10"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.1.2. Windows10</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-Centos7"><span class="nav-number">4.2.3.</span> <span class="nav-text">4.1.3. Centos7</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-4-Ubuntu"><span class="nav-number">4.2.4.</span> <span class="nav-text">4.1.4. Ubuntu</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-5-openEuler"><span class="nav-number">4.2.5.</span> <span class="nav-text">4.1.5. openEuler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-6-MacOS"><span class="nav-number">4.2.6.</span> <span class="nav-text">4.1.6. MacOS</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%A4%9A%E7%BC%96%E8%AF%91%E5%99%A8%E6%94%AF%E6%8C%81"><span class="nav-number">4.3.</span> <span class="nav-text">4.2 多编译器支持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-G-12"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.2.1. G++12</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-Visual-Studio-2022"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.2.2. Visual Studio 2022</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-Visual-Studio-2010"><span class="nav-number">4.3.3.</span> <span class="nav-text">4.2.3. Visual Studio 2010</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-4-clang14"><span class="nav-number">4.3.4.</span> <span class="nav-text">4.2.4. clang14</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-5-G-3-8-%E5%8F%8A%E4%BB%A5%E4%B8%8A"><span class="nav-number">4.3.5.</span> <span class="nav-text">4.2.5. G++3.8 及以上</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%AE%89%E5%85%A8%E8%A6%81%E6%B1%82"><span class="nav-number">4.4.</span> <span class="nav-text">7. 安全要求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-cpu-%E9%AB%98%E8%B4%9F%E8%BD%BD"><span class="nav-number">4.4.1.</span> <span class="nav-text">7.1 cpu 高负载</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#7-1-1-%E9%AB%98%E8%B4%9F%E8%BD%BD%E9%99%90%E5%88%B6-95"><span class="nav-number">4.4.1.1.</span> <span class="nav-text">7.1.1 高负载限制 95%</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-1-2-%E9%AB%98%E8%B4%9F%E8%BD%BD%E6%97%B6%E9%97%B4%E9%99%90%E5%88%B6-20min"><span class="nav-number">4.4.1.2.</span> <span class="nav-text">7.1.2 高负载时间限制 20min</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MoSCoW-%E8%8E%AB%E6%96%AF%E7%A7%91-%E6%B3%95%E5%88%99"><span class="nav-number">5.1.</span> <span class="nav-text">MoSCoW (莫斯科) 法则</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jiancong Li</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

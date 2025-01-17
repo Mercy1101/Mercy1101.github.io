@@ -1,0 +1,30 @@
+@startuml 调度服务器回调业务设计示例
+
+title 调度服务器回调业务设计示例
+
+class TaskCfg
+{
+    +OnAppReqCall()
+}
+
+class GMsgPool
+{
+
+}
+
+class GMsgPool_base
+{
+
+}
+
+class GMsgPool_Mock
+{
+
+}
+
+TaskCfg -right-> GMsgPool_base : 获取事件进行处理
+
+GMsgPool_Mock -down-> GMsgPool_base : 实现模拟接口
+GMsgPool -up-> GMsgPool_base : 实现业务接口
+
+@enduml

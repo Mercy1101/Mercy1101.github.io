@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="《Effective Modern C++》读书笔记(2) 裸指针在声明中并没有指出，裸指针指涉到的是单个对象还是一个数组。  裸指针在声明中也没有提示在使用完指涉到的对象以后，是否需要析构它。换言之，你从声明中看不出来指针是否拥有其指涉的对象。  即使知道需要析构指针所指涉的对象，也不可能知道如何析构才是适当的。是应该使用delete运算符，还是有其他用途。  即使知道了使用delete运算符，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Effective Modern C++》读书笔记(2)">
+<meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2020-12-14-%20%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)/index.html">
+<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:description" content="《Effective Modern C++》读书笔记(2) 裸指针在声明中并没有指出，裸指针指涉到的是单个对象还是一个数组。  裸指针在声明中也没有提示在使用完指涉到的对象以后，是否需要析构它。换言之，你从声明中看不出来指针是否拥有其指涉的对象。  即使知道需要析构指针所指涉的对象，也不可能知道如何析构才是适当的。是应该使用delete运算符，还是有其他用途。  即使知道了使用delete运算符，">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-07-21T05:28:45.219Z">
+<meta property="article:modified_time" content="2023-10-28T06:29:44.896Z">
+<meta property="article:author" content="Jiancong Li">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://mercy1101.github.io/2023/07/21/2020-12-14-%20%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>《Effective Modern C++》读书笔记(2) | Jiancong Li's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-14-%20%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jiancong Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jiancong Li's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《Effective Modern C++》读书笔记(2)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="《Effective-Modern-C-》读书笔记-2"><a href="#《Effective-Modern-C-》读书笔记-2" class="headerlink" title="《Effective Modern C++》读书笔记(2)"></a>《Effective Modern C++》读书笔记(2)</h1><ol>
+<li><p>裸指针在声明中并没有指出，裸指针指涉到的是单个对象还是一个数组。</p>
+</li>
+<li><p>裸指针在声明中也没有提示在使用完指涉到的对象以后，是否需要析构它。换言之，你从声明中看不出来指针是否拥有其指涉的对象。</p>
+</li>
+<li><p>即使知道需要析构指针所指涉的对象，也不可能知道如何析构才是适当的。是应该使用<code>delete</code>运算符，还是有其他用途。</p>
+</li>
+<li><p>即使知道了使用<code>delete</code>运算符，还是会发生到底应该用的那个对象形式（<code>delete</code>）还是数组形式（<code>delete[]</code>）。</p>
+</li>
+<li><p>即启用够确信，指针拥有其指涉对象，并且也确知应该如何析构，要保证析构在所有代码路径上都仅执行一次（包括那些异常导致的路径）仍然困难重重。只要少在一条路径上执行，就会导致资源泄露。而如果析构在一条路径上执行了多次，则会导致未定义行为。</p>
+</li>
+<li><p>没有什么正规的方式能检测出指针是否空悬，也就是说，它指涉的内存是否已经不再持有指针本应该指涉的对象。如果一个对象已经被析构了，而某些指针仍然指涉到它，就会产生空悬指针。</p>
+</li>
+</ol>
+<p>在创建对象时注意区分<code>()</code>和<code>&#123;&#125;</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Widget w1;  <span class="comment">///&lt; 调用默认构造函数</span></span><br><span class="line">Widget w2 = w1; <span class="comment">///&lt; 调用复制构造函数</span></span><br><span class="line">w1 = w2;  <span class="comment">///&lt; 赋值运算符</span></span><br></pre></td></tr></table></figure>
+
+<p>大括号可以用来为非静态成员指定默认初始化值，却不能使用小括号。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">0</span>&#125;; <span class="comment">///&lt; 可行</span></span><br><span class="line"><span class="type">int</span> y = <span class="number">0</span>;  <span class="comment">///&lt; 可行</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">z</span><span class="params">(<span class="number">0</span>)</span></span>; <span class="comment">///&lt; 不可行</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>不可复制的对象可以采用大括号和小括号来进行初始化，却不能使用<code>=</code>:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::atomic&lt;<span class="type">int</span>&gt; ai1&#123;<span class="number">0</span>&#125;; <span class="comment">///&lt; 可行</span></span><br><span class="line"><span class="function">std::atomic&lt;<span class="type">int</span>&gt; <span class="title">ai2</span><span class="params">(<span class="number">0</span>)</span></span>; <span class="comment">///&lt; 可行</span></span><br><span class="line">std::atomic&lt;<span class="type">int</span>&gt; ai3 = <span class="number">0</span>; <span class="comment">///&lt; 不可行</span></span><br></pre></td></tr></table></figure>
+<p>大括号适用所有场合。<br>大括号初始化有一项新特性，就是它禁止内建型别之间进行隐式窄化型别转换。而采用小括号和<code>=</code>的初始化则不会进行窄化型别转换检查，因为如果那样的化就会破坏太多的遗留代码了。</p>
+<p>大括号初始化的另一项值得一提的特征是，它对于C++最令人苦恼之解析语法免疫。C++规定：任何能够解析为声明的都要解析为声明。本来想要以默认方式构造一个对象，结果却一不小心声明了一个函数。这个错误的根本原因构造函数调用语法。<br>当你想要以传参的方式调用构造函数时：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Widget <span class="title">w1</span><span class="params">(<span class="number">10</span>)</span></span>;  <span class="comment">///&lt; 调用Widget的构造函数，传入形参10</span></span><br></pre></td></tr></table></figure>
+<p>但你如果试图用相同的语法构造一个没有形参的Widget的话，结果却变成了声明了一个函数而非对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Widget <span class="title">w2</span><span class="params">()</span></span>;  <span class="comment">///&lt; 最令人苦恼之解析语法现身</span></span><br></pre></td></tr></table></figure>
+<p>由于函数声明不能使用大括号来指定形参列表，所以使用大括号来完成对象的默认构造上面这个问题：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Widget w3&#123;&#125;;  <span class="comment">///&lt; 调用没有形参的Widget构造函数</span></span><br></pre></td></tr></table></figure>
+
+<p>大括号初始化的缺陷在于伴随它有时会出现的意外行为。这种行为源于大括号初始化物、<code>std::initializer_list</code>以及构造函数重载决议之间的纠结。</p>
+<p>如果一个或多个构造函数声明了任何一个具备<code>std::initializer_list</code>型别的形参那么采用了大括号初始化语法的调用语句会强烈地优先选用带有<code>std::initializer_list</code>型别形参的重载版本。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span> &#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">Widget</span>(<span class="type">int</span> i, <span class="type">bool</span> b);</span><br><span class="line">  <span class="built_in">Widget</span>(<span class="type">int</span> i, <span class="type">double</span> d);</span><br><span class="line">  <span class="built_in">Widget</span>(std::initializer_list&lt;<span class="type">long</span> <span class="type">double</span>&gt; il);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Widget <span class="title">w1</span><span class="params">(<span class="number">10</span>, <span class="literal">true</span>)</span></span>;  <span class="comment">///&lt; 调用第一个构造函数</span></span><br><span class="line">Widget w2&#123;<span class="number">10</span>, <span class="literal">true</span>&#125;;  <span class="comment">///&lt; 使用最后一个构造函数, 10, true 被强制转化为long double</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果你的确想要调用一个带有<code>std::initializer_list</code>型别形参的构造函数，并传入一个空的<code>std::initializer_list</code>的话，你可以通过把空大括号对作为构造函数实参的方式实现这个目的，即把一对空大括号放入一对小括号或大括号的方式来清楚地表明你传递地是什么：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Widget <span class="title">w4</span><span class="params">(&#123;&#125;)</span></span>;  <span class="comment">///&lt; 带有std::initializer_list型别形参地构造函数</span></span><br><span class="line">Widget w5&#123;&#123;&#125;&#125;;  <span class="comment">///&lt; 同上</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">v1</span><span class="params">(<span class="number">10</span>, <span class="number">20</span>)</span></span>;  <span class="comment">///&lt; 创建了一个拥有十个元素，每个元素值都为20的vector</span></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">v1</span><span class="params">(<span class="number">10</span>, <span class="number">20</span>)</span></span>;  <span class="comment">///&lt; 创建了一个拥有两个元素，值分别为10、20 的vector</span></span><br></pre></td></tr></table></figure>
+
+<p><code>std::make_unique</code>和<code>std::make_shared</code>在函数内部使用的小括号，作为其接口的一部分。</p>
+<ul>
+<li>大括号初始化可以应用的语境最为宽泛，可以阻止隐式窄化型别转换，还对最令人苦恼之解析语法免疫</li>
+<li>在构造函数重载决议期间，只要有任何可能，大括号初始化物就会与带有<code>std::initializer_list</code>型别的形参相匹配，即使其他重载版本有着貌似更加匹配的形参表。</li>
+<li>使用小括号还是大括号，会造成结果大相径庭的一个例子是：使用两个实参来创建一个<code>std::vector&lt;数值型别&gt;</code>对象。</li>
+<li>在模板内容进行对象创建时，到底应该使用小括号还是大括号会成为一个棘手问题。</li>
+</ul>
+<h2 id="理解特种成员函数的生成机制"><a href="#理解特种成员函数的生成机制" class="headerlink" title="理解特种成员函数的生成机制"></a>理解特种成员函数的生成机制</h2><p>两种复制操作是彼此独立的：声明了其中一个，并不会阻止编译器生成另外一个。如果你生成了一个复制构造函数，同时未声明复制赋值运算符，并撰写了要求复制赋值的代码，则编译器会为你生成复制赋值运算符。反过来一样。</p>
+<p>两种移动操作并不彼此独立：声明了其中一个就会阻止编译器生成另外一个。假设你声明了一个移动构造函数，你实际上表明了移动操作的实现方式将会与编译器生成的默认按成员移动的移动构造函数多少有些不同。而若是按成员进行的移动构造操作有不合用之处的话，那么按成员进行的移动赋值运算符极有可能也会有不合用之处。综上声明一个移动构造函数会阻止编译器去生成移动赋值运算符，而声明一个移动赋值运算符也会阻止编译器去生成移动构造函数。</p>
+<p>一旦显式声明了赋值操作，这个类也就不再会生成移动操作了。依据在于，声明复制操作的行为表明了对象的常规复制途径（按成员复制）对于该类并不适用。从而判定既然按成员复制不适用于赋值操作，则按成员移动极有可能也不适用于移动操作。<br>一旦声明了移动操作，编译器就会删除复制操作。</p>
+<p>三大律：如果你声明了复制构造函数、复制复制运算符，或析构函数中的任何一个，你就得同时声明所有这三个。<br>如果有改写复制操作的需求，往往意味着该类需要执行某种资源管理，而这就意味着：1. 在一种复制操作中进行的任何资源管理，也极有可能在另一种复制操作中也需要进行。 2. 该类的析构函数也会参与到该资源的管理之中。</p>
+<p>大三律的一个推论是，如果存在用户声明的析构函数，则平凡的按成员赋值也不适用于该类。如果声明了析构函数，则复制操作就不该被自动生成，因为他们呢的行为不可能正确。所以在C++11中：只要用户声明了析构函数，就不会生成移动操作。</p>
+<p>移动操作的生成条件（如果需要生成）仅当以下三者同时成立：</p>
+<ul>
+<li>该类未声明任何复制操作</li>
+<li>该类未声明任何移动操作</li>
+<li>该类未声明任何析构操作</li>
+</ul>
+<p>总而言之， C++11中， 支配特种成员函数的机制如下：</p>
+<ul>
+<li>默认构造函数： 仅当类中不包含用户声明的构造函数时才生成</li>
+<li>析构函数：与C++98中基本相同，唯一的区别在于析构函数默认为<code>noexcept</code>.仅当基类的析构函数为虚的，派生类析构函数才是虚的。</li>
+<li>复制构造函数： 按成员进行非静态数据成员的复制构造。仅当类中不包含用户声明的复制构造函数时才生成。如果该类声明了移动操作，则复制构造函数将被删除。在已经存在复制赋值运算符或析构函数的条件下，仍然生成复制构造函数已经成为了被废弃的行为。</li>
+<li>移动构造函数和移动赋值运算符<br>都按成员进行非静态数据成员的移动操作。仅当类中不包含用户声明的复制操作、移动操作和析构函数时才生成。</li>
+</ul>
+<p>成员函数模板的存在会阻止编译器生成任何特种成员函数。</p>
+<ul>
+<li><p>移动操作仅当类中未包含用户显式声明的复制操作、移动操作和析构函数时才生成</p>
+</li>
+<li><p>复制构造函数仅当类中不包含用户显式声明的复制构造函数时才生成，如果该类声明了移动操作则复制构造函数时才生成，复制赋值运算符仅当类中不包含用户显式声明的复制赋值运算符才生成，如果该类声明了移动操作则复制赋值运算符将被删除。在已经存在显式声明的析构函数的条件下，生成复制操作已经成为了被废弃的行为。</p>
+</li>
+<li><p>成员函数模板在任何情况下都不会抑制特种成员函数的生成。</p>
+</li>
+<li><p>auto 变量必须初始化，基本上对会导致兼容性和效率问题的型别不匹配现象免疫，还可以简化重构流程，通常也比显式指定型别少打一些字</p>
+</li>
+<li><p>在模板推导过程中，具有引用型别的实参会被当成非引用型别来处理。换言之，其引用性会被忽略。</p>
+</li>
+<li><p>对万能引用形参进行推导时，左值实参会进行特殊处理。</p>
+</li>
+<li><p>对按值传递的形参进行推导时，若实参型别中带有<code>const</code>或<code>volatile</code>饰词，则它们还是会被当作不带<code>const</code>或<code>volatile</code>饰词的型别来处理。</p>
+</li>
+<li><p>在模板型别推导过程中， 数组或函数型别的实参会退化成对应的指针，除非它们被用来初始化引用。</p>
+</li>
+<li><p>在一般情况下，auto型别推导和模板型推导是一模一样的，但是auto型别推导会假定用大括号括起的初始化表达式代表一个<code>std::initializer_list</code>, 但模板型别推导却不会。</p>
+</li>
+<li><p>在函数返回值或lambda式的形参中使用auto， 意思是使用模板型别推导而非auto型推导。</p>
+</li>
+<li><p>绝大多数情况下，<code>decltype</code>会得出变量或表达式的型别而不做任何修改</p>
+</li>
+<li><p>对于型别为T的左值表达式，除非该表达式仅有一个名字，<code>decltype</code>总是得出型别<code>T&amp;</code></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/" rel="prev" title="C++ 类内默认成员函数">
+      <i class="fa fa-chevron-left"></i> C++ 类内默认成员函数
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="next" title="C++ 观察者设计模式">
+      C++ 观察者设计模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8AEffective-Modern-C-%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-2"><span class="nav-number">1.</span> <span class="nav-text">《Effective Modern C++》读书笔记(2)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3%E7%89%B9%E7%A7%8D%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">理解特种成员函数的生成机制</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jiancong Li</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

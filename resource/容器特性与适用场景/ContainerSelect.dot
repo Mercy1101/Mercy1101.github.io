@@ -1,0 +1,80 @@
+digraph ContainerSelect {
+    start [label="开始" shape=ellipse]
+    start -> order_judge
+
+    order_judge [label="顺序重要么?" shape=diamond]
+
+    order_judge -> order_yes [label="yes"]
+    order_yes [label="后进先出?" shape=diamond]
+    order_judge -> order_no [label="no"]
+    order_no [label="需要通过键查找元素?" shape=diamond]
+
+    order_no->allow_duplicates[label="yes"]
+    order_no->need_to_merge_collections1[label="no"]
+
+    stack [label="std::stack" shape=box color=blue]
+    order_yes -> stack [label="yes"]
+    first_in_first_out [label="先进先出?" shape=diamond]
+    order_yes -> first_in_first_out [label="no"]
+
+    queue[label="std::queue" shape = "box" color=blue]
+    first_in_first_out -> queue [label="yes"]
+    largest_element_first_out[label="优先元素先出?" shape=diamond]
+    first_in_first_out -> largest_element_first_out[label="no"]
+
+    priority_queue[label="std::priority_queue" shape=box color=blue]
+    largest_element_first_out->priority_queue[label="yes"]
+    sorted_by_key[label="通过键值排序?" shape=diamond]
+    largest_element_first_out->sorted_by_key[label="no"]
+
+    allow_duplicates[label="是否允许重复？" shape=diamond]
+    sorted_by_key->allow_duplicates[label="yes"]
+    insert_erase_in_middle[label="是否在中间插入或删除?" shape=diamond]
+    sorted_by_key->insert_erase_in_middle[label="no"]
+
+    store_key_separate_to_value0[label="键值分开存储？" shape=diamond]
+    store_key_separate_to_value1[label="键值分开存储？" shape=diamond]
+    allow_duplicates->store_key_separate_to_value0[label="yes"]
+    allow_duplicates->store_key_separate_to_value1[label="no"]
+
+    /// priority_queue[label="std::priority_queue" shape=box]
+    multi_map[label="std::multimap" shape=box color=blue]
+    multi_set[label="std::multiset" shape=box color=blue]
+    store_key_separate_to_value0->multi_map[label="yes"]
+    store_key_separate_to_value0->multi_set[label="no"]
+
+    map [label="std::map" shape=box color=blue]
+    set [label="std::set" shape=box color=blue]
+    store_key_separate_to_value1->map[label="yes"]
+    store_key_separate_to_value1->set[label="no"]
+
+    list [label="std::list" shape=box color=blue]
+    insert_erase_in_front[label="是否在头部插入或删除" shape = diamond]
+    insert_erase_in_middle->list[label="yes"]
+    insert_erase_in_middle->insert_erase_in_front[label="no"]
+
+    /// [label="？" shape=diamond]
+    /// ->[label="yes"]
+    /// ->[label="no"]
+
+    need_to_merge_collections[label="是否需要合并集合?" shape = diamond]
+    need_to_find_the_nth_element[label="是否需要寻找第n个元素" shape = diamond]
+    insert_erase_in_front->need_to_merge_collections[label="yes"]
+    insert_erase_in_front->need_to_find_the_nth_element[label="no"]
+
+    deque[label="std::deque" shape=box color=blue]
+    need_to_merge_collections->list[label="yes"]
+    need_to_merge_collections->deque[label="no"]
+
+    size_will_vary_widely[label="大小变化很大?" shape=diamond]
+    need_to_merge_collections1[label="是否需要合并集合?" shape=diamond]
+    need_to_find_the_nth_element->size_will_vary_widely[label="yes"]
+    need_to_find_the_nth_element->need_to_merge_collections1[label="no"]
+
+    need_to_merge_collections1->list[label="yes"]
+    need_to_merge_collections1->size_will_vary_widely[label="no"]
+
+    size_will_vary_widely->deque[label="yes"]
+    vector[label="std::vector" shape=box color=blue]
+    size_will_vary_widely->vector[label="no"]
+}

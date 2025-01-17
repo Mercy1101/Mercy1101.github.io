@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="软件自动化测试是指利用自动化工具和脚本来执行测试任务和验证软件系统的过程。它通过编写脚本和使用自动化工具来模拟用户操作、执行测试用例、比较预期结果和实际结果，从而自动化执行软件测试过程。 自动化测试目的为什么要使用自动化测试？  节省人力 质量保障 量化代码质量（代码测试覆盖率） 便于重构 回归测试的快速迭代  C++ 自动化测试框架的选择   自动化测试框架 GitHub Starts Stan">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件自动化测试方法和技术">
+<meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2023-06-27-%E8%BD%AF%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%E5%92%8C%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:description" content="软件自动化测试是指利用自动化工具和脚本来执行测试任务和验证软件系统的过程。它通过编写脚本和使用自动化工具来模拟用户操作、执行测试用例、比较预期结果和实际结果，从而自动化执行软件测试过程。 自动化测试目的为什么要使用自动化测试？  节省人力 质量保障 量化代码质量（代码测试覆盖率） 便于重构 回归测试的快速迭代  C++ 自动化测试框架的选择   自动化测试框架 GitHub Starts Stan">
+<meta property="og:locale">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/Snipaste_2023-06-27_18-07-03.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/Snipaste_2023-06-27_18-21-20.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/Snipaste_2023-07-12_18-54-50.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/%E8%B0%83%E5%BA%A6%E5%8F%B0%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/%E8%B0%83%E5%BA%A6%E5%8F%B0%E5%9B%9E%E8%B0%83%E4%B8%9A%E5%8A%A1%E8%AE%BE%E8%AE%A1%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/%E8%B0%83%E5%BA%A6%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/%E8%B0%83%E5%BA%A6%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9B%9E%E8%B0%83%E4%B8%9A%E5%8A%A1%E8%AE%BE%E8%AE%A1%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/Snipaste_2023-07-14_10-37-45.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/Snipaste_2023-07-14_11-01-15.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/Snipaste_2023-07-14_10-39-31.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/Snipaste_2023-07-14_11-46-37.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/Snipaste_2023-07-14_17-33-17.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/auto_test/Snipaste_2023-07-14_17-33-48.png">
+<meta property="article:published_time" content="2023-07-21T05:28:45.226Z">
+<meta property="article:modified_time" content="2023-10-28T06:29:44.910Z">
+<meta property="article:author" content="Jiancong Li">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mercy1101.github.io/resource/auto_test/Snipaste_2023-06-27_18-07-03.png">
+
+<link rel="canonical" href="https://mercy1101.github.io/2023/07/21/2023-06-27-%E8%BD%AF%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%E5%92%8C%E6%8A%80%E6%9C%AF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>软件自动化测试方法和技术 | Jiancong Li's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2023-06-27-%E8%BD%AF%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%E5%92%8C%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jiancong Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jiancong Li's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件自动化测试方法和技术
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>软件自动化测试是指利用自动化工具和脚本来执行测试任务和验证软件系统的过程。它通过编写脚本和使用自动化工具来模拟用户操作、执行测试用例、比较预期结果和实际结果，从而自动化执行软件测试过程。</p>
+<h2 id="自动化测试目的"><a href="#自动化测试目的" class="headerlink" title="自动化测试目的"></a>自动化测试目的</h2><p>为什么要使用自动化测试？</p>
+<ol>
+<li>节省人力</li>
+<li>质量保障</li>
+<li>量化代码质量（代码测试覆盖率）</li>
+<li>便于重构</li>
+<li>回归测试的快速迭代</li>
+</ol>
+<h2 id="C-自动化测试框架的选择"><a href="#C-自动化测试框架的选择" class="headerlink" title="C++ 自动化测试框架的选择"></a>C++ 自动化测试框架的选择</h2><table>
+<thead>
+<tr>
+<th align="center">自动化测试框架</th>
+<th align="center">GitHub Starts</th>
+<th align="center">Standard Support</th>
+<th align="center">Header-only</th>
+<th align="center">Fixtures</th>
+<th align="center">Mock</th>
+<th align="center">BDD-style</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/google/googletest">Google Test</a></td>
+<td align="center">30.2k</td>
+<td align="center">C++14</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/catchorg/Catch2">Catch2</a></td>
+<td align="center">16.8k</td>
+<td align="center">C++14</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/doctest/doctest">DOCTest</a></td>
+<td align="center">5.0k</td>
+<td align="center">C++14</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">no</td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>Google Test</code> 使用人数最多，功能最全面。</li>
+<li><code>Catch2</code> 易于集成，支持 <code>BDD-style</code>，但是不支持 <code>Mock</code>。</li>
+<li><code>DOCTest</code> 易于集成，不支持 <code>Mock</code>。</li>
+</ul>
+<h2 id="GoogleTest-简介"><a href="#GoogleTest-简介" class="headerlink" title="GoogleTest 简介"></a>GoogleTest 简介</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;gtest/gtest.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">(<span class="type">int</span> i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    retrun i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">TEST</span>(f,simple_test)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">ASSERT_TRUE</span>(<span class="built_in">f</span>(<span class="number">1</span>) == <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">ASSERT_EQ</span>(<span class="built_in">f</span>(<span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 主函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 初始化 Google Test 框架</span></span><br><span class="line">    ::testing::<span class="built_in">InitGoogleTest</span>(&amp;argc, argv);</span><br><span class="line">    <span class="comment">// 运行所有测试用例</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">RUN_ALL_TESTS</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p><img src="/../resource/auto_test/Snipaste_2023-06-27_18-07-03.png" alt="image"></p>
+<ul>
+<li>改变函数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">(<span class="type">int</span> i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    retrun i<span class="number">+1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p><img src="/../resource/auto_test/Snipaste_2023-06-27_18-21-20.png" alt="image"></p>
+<ul>
+<li>类推其他复杂函数</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">void f(std::string str, std::string&amp; out)</span><br><span class="line">&#123;</span><br><span class="line">    out = str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TEST(f, simple_test)</span><br><span class="line">&#123;</span><br><span class="line">    std::string in = &quot;Hello world&quot;;</span><br><span class="line">    std::string out;</span><br><span class="line"></span><br><span class="line">    f(in, out);</span><br><span class="line"></span><br><span class="line">    ASSERT_EQ(out, in);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../resource/auto_test/Snipaste_2023-07-12_18-54-50.png" alt="image"></p>
+<ul>
+<li>为失败添加更多说明</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ASSERT(st.IsSuccess()) &lt;&lt; &quot;st is not success!&quot;;</span><br><span class="line">ASSERT(st.IsSuccess()) &lt;&lt; DBG(st);</span><br></pre></td></tr></table></figure>
+
+<h2 id="ASSERT-宏说明"><a href="#ASSERT-宏说明" class="headerlink" title="ASSERT 宏说明"></a>ASSERT 宏说明</h2><p><a target="_blank" rel="noopener" href="https://google.github.io/googletest/reference/assertions.html">GoogleTest ASSERT 官方说明</a>{: .btn .btn–success}</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">ASSERT_TRUE(condition);     <span class="comment">///&lt; true</span></span><br><span class="line">ASSERT_FALSE(condition);    <span class="comment">///&lt; false</span></span><br><span class="line"></span><br><span class="line">ASSERT_EQ(val1,val2);       <span class="comment">///&lt; val1 == val2</span></span><br><span class="line">ASSERT_NE(val1,val2);       <span class="comment">///&lt; val1 != val2</span></span><br><span class="line"></span><br><span class="line">ASSERT_LT(val1,val2);   <span class="comment">///&lt; val1 &lt; val2</span></span><br><span class="line">ASSERT_LE(val1,val2);   <span class="comment">///&lt; val1 &lt;= val2</span></span><br><span class="line">ASSERT_GT(val1,val2);   <span class="comment">///&lt; val1 &gt; val2</span></span><br><span class="line">ASSERT_GE(val1,val2);   <span class="comment">///&lt; val1 &gt;= val2</span></span><br><span class="line"></span><br><span class="line">ASSERT_STRCASEEQ(str1,str2);    <span class="comment">///&lt; str1 == str2(忽略大小写)</span></span><br><span class="line">ASSERT_FLOAT_EQ(val1,val2);     <span class="comment">///&lt; 浮点数比较,误差小于 4ULP</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// 数值模糊比较，std::abs(val1 - val2) &lt;= abs_error</span></span><br><span class="line">ASSERT_NEAR(val1,val2,abs_error);</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 语句 statement 抛出异常，且异常的类型为 exception_type</span></span><br><span class="line">ASSERT_THROW(statement,exception_type);</span><br><span class="line"><span class="comment">/// 语句 statement 抛出异常，但不限定异常类型</span></span><br><span class="line">ASSERT_ANY_THROW(statement);</span><br><span class="line"><span class="comment">/// 语句 statement 不抛出异常</span></span><br><span class="line">ASSERT_NO_THROW(statement);</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 验证该语句导致进程以非零退出状态终止，stderr 输出 matcher</span></span><br><span class="line">ASSERT_DEATH(statement,matcher);</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试夹具"><a href="#测试夹具" class="headerlink" title="测试夹具"></a>测试夹具</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">class_name</span> : <span class="keyword">public</span> ::testing::Test</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    class_name()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/// 打开数据库链接</span></span><br><span class="line">        m_pDao = <span class="keyword">new</span> <span class="title class_">mysql</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~class_name()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/// 关闭数据库链接</span></span><br><span class="line">        delete m_pDao;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CfgDao* m_pDao = nullptr; <span class="comment">///&lt; 数据库实例</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">TEST_F(class_name, description)</span><br><span class="line">&#123;</span><br><span class="line">    ASSERT_TRUE(m_pDao-&gt;InsertCallHistory(st));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多线程测试"><a href="#多线程测试" class="headerlink" title="多线程测试"></a>多线程测试</h2><p>GoogleTest 没有提供，一个测试用例，在多个线程中同时调用，以证明其线程安全。</p>
+<p>但其实现原理可以手动实现，代码如下。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">GosLog</span><span class="params">(...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test_function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/// 本线程先 sleep 2秒</span></span><br><span class="line">    std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">seconds</span>(<span class="number">2</span>));</span><br><span class="line">    <span class="comment">/// 调用一万次函数</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10000</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">GosLog</span>(<span class="string">&quot;Hello world!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">TEST</span>(f, simple_test)</span><br><span class="line">&#123;</span><br><span class="line">    std::deque&lt;std::thread&gt; threads;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">unsigned</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/// 使用 test_function 创建线程</span></span><br><span class="line">        vec.<span class="built_in">push_back</span>(std::<span class="built_in">thread</span>(test_function));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 等待每个线程结束</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;thread : threads)</span><br><span class="line">    &#123;</span><br><span class="line">        thread.<span class="built_in">join</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>提取出重复的语句做测试夹具</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;condition_variable&gt;</span></span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief           多线程测试封装</span></span><br><span class="line"><span class="comment"> * @author          lijiancong</span></span><br><span class="line"><span class="comment"> * @date            2023-01-19 17:27:15</span></span><br><span class="line"><span class="comment"> * @note</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">mt_unittest</span> : <span class="keyword">public</span> ::testing::Test</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="built_in">mt_unittest</span>() &#123;&#125;</span><br><span class="line">    ~<span class="built_in">mt_unittest</span>() <span class="keyword">override</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add new work item to the pool</span></span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">F</span>, <span class="keyword">class</span>... Args&gt;</span><br><span class="line">    ::<span class="function">testing::AssertionResult <span class="title">invoke</span><span class="params">(F&amp;&amp; f, Args&amp;&amp;... args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">unsigned</span> cpu_thread = std::thread::<span class="built_in">hardware_concurrency</span>();</span><br><span class="line">        <span class="keyword">if</span> (cpu_thread &lt;= <span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">/// 多线程测试要求测试机器， 硬件支持 3 线程以上</span></span><br><span class="line">            <span class="keyword">return</span> ::testing::<span class="built_in">AssertionFailure</span>() &lt;&lt; <span class="string">&quot;cpu_thread is less than 2. &quot;</span></span><br><span class="line">                &lt;&lt; std::<span class="built_in">to_string</span>(cpu_thread);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">auto</span> task = std::<span class="built_in">bind</span>(std::forward&lt;F&gt;(f), std::forward&lt;Args&gt;(args)...);</span><br><span class="line"></span><br><span class="line">        std::vector&lt;std::jthread&gt; vec;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; cpu_thread - <span class="number">2</span>; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            vec.<span class="built_in">push_back</span>(std::<span class="built_in">jthread</span>(</span><br><span class="line">                [<span class="keyword">this</span>, task]() <span class="keyword">mutable</span></span><br><span class="line">                &#123;</span><br><span class="line">                    std::unique_lock&lt;std::mutex&gt; <span class="built_in">mutex</span>(mutex_);</span><br><span class="line">                    <span class="comment">/// 等待同步开始</span></span><br><span class="line">                    cv_.<span class="built_in">wait</span>(mutex, [<span class="keyword">this</span>] &#123; <span class="keyword">return</span> ready_; &#125;);</span><br><span class="line">                    <span class="comment">/// 执行测试函数</span></span><br><span class="line">                    <span class="built_in">task</span>();</span><br><span class="line">                &#125;));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line">            std::lock_guard&lt;std::mutex&gt; guard&#123;mutex_&#125;;</span><br><span class="line">            ready_ = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cv_.<span class="built_in">notify_all</span>();</span><br><span class="line">        <span class="keyword">return</span> ::testing::<span class="built_in">AssertionSuccess</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    std::mutex mutex_;</span><br><span class="line">    std::condition_variable cv_;</span><br><span class="line">    <span class="type">bool</span> ready_ = <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">TEST_F</span>(mt_unittest, GosLogTest)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">ASSERT_TRUE</span>(<span class="built_in">invoke</span>(</span><br><span class="line">        []()</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10000</span>; ++i)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">GosLog</span>(<span class="string">&quot;Hello world!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="模板函数测试"><a href="#模板函数测试" class="headerlink" title="模板函数测试"></a>模板函数测试</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief           擦除vector中特定值的元素</span></span><br><span class="line"><span class="comment"> * @param           vec      [out]  要操作的vector</span></span><br><span class="line"><span class="comment"> * @param           value    [in]   要擦除的值</span></span><br><span class="line"><span class="comment"> * @return          size_t  擦除元素的个数</span></span><br><span class="line"><span class="comment"> * @author          lijiancong</span></span><br><span class="line"><span class="comment"> * @note</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Container&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">size_t</span> <span class="title">erase</span><span class="params">(Container&amp; vec,</span></span></span><br><span class="line"><span class="params"><span class="function">                    <span class="type">const</span> <span class="keyword">typename</span> Container::value_type&amp; value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">typename</span> Container::iterator it =</span><br><span class="line">        std::<span class="built_in">remove</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>(), value);</span><br><span class="line">    <span class="type">size_t</span> count = <span class="built_in">static_cast</span>&lt;<span class="type">size_t</span>&gt;(std::<span class="built_in">distance</span>(it, vec.<span class="built_in">end</span>()));</span><br><span class="line">    vec.<span class="built_in">erase</span>(it, vec.<span class="built_in">end</span>());</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">gos_erase_test</span> : <span class="keyword">public</span> testing::Test</span><br><span class="line">&#123;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">TYPED_TEST_SUITE(gos_erase_test, ::testing::Types&lt;</span><br><span class="line">                                 std::vector&lt;<span class="type">char</span>&gt;,</span><br><span class="line">                                 std::deque&lt;<span class="type">char</span>&gt;,</span><br><span class="line">                                 std::string,</span><br><span class="line">                                 std::vector&lt;<span class="type">int</span>&gt;,</span><br><span class="line">                                 std::deque&lt;<span class="type">int</span>&gt;</span><br><span class="line">                                 &gt;);</span><br><span class="line"></span><br><span class="line">TYPED_TEST(gos_erase_test, find_simple_char)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">TypeParam</span> <span class="variable">n</span> <span class="operator">=</span> &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>&#125;;</span><br><span class="line">    TypeParam cmp&#123;<span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>&#125;;</span><br><span class="line">    ASSERT_EQ(<span class="number">1</span>, gos::erase(n, <span class="string">&#x27;a&#x27;</span>));</span><br><span class="line">    ASSERT_EQ(<span class="number">2</span>, gos::erase(n, <span class="string">&#x27;b&#x27;</span>));</span><br><span class="line">    ASSERT_EQ(cmp, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Mock-简介"><a href="#Mock-简介" class="headerlink" title="Mock 简介"></a>Mock 简介</h2><p><a target="_blank" rel="noopener" href="https://google.github.io/googletest/gmock_for_dummies.html">Mock 入门</a>{: .btn .btn–success}</p>
+<p>测试场景</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SpeakManager</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">TalkRequest</span><span class="params">(<span class="type">int</span> number)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GroupCall</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">TalkRequest</span><span class="params">(<span class="type">int</span> number, SpeakManager&amp; SpeakManager)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SpeakManager-&gt;<span class="built_in">TalkRequest</span>(number);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">TEST</span>(GroupCall, simple_test)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">auto</span> p = <span class="keyword">new</span> SpeakManager;</span><br><span class="line">    <span class="built_in">ASSERT_TRUE</span>(Groupcall::<span class="built_in">GI</span>().<span class="built_in">TalkRequest</span>(<span class="number">4106</span>, p));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于 <code>SpeakManager::TalkRequest()</code>, 依赖于 SDK 的初始化, 依赖于通话存在，所以为单独测试 <code>GroupCall::TalkRequest()</code> 增加了难度。</p>
+<p>实现方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#include <span class="string">&quot;gtest/gtest.h&quot;</span></span><br><span class="line">#include <span class="string">&quot;gmock/gmock.h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// 接口类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpeakManagerBase</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    virtual bool <span class="title function_">TalkRequest</span><span class="params">(<span class="type">int</span> number)</span> = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 原业务类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpeakManager</span> : <span class="keyword">public</span> SpeakManagerBase</span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/// virtual bool TalkRequest(int number);</span></span><br><span class="line">    bool <span class="title function_">TalkRequest</span><span class="params">(<span class="type">int</span> number)</span> override;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 模拟类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpeakManagerMock</span> : <span class="keyword">public</span> SpeakManagerBase</span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    MOCK_METHOD(bool, TalkRequest, (<span class="type">int</span> number), (override));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GroupCall</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">static</span> GroupCall&amp; GI()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">static</span> GroupCall instance;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool <span class="title function_">TalkRequest</span><span class="params">(<span class="type">int</span> number, SpeakManagerBase&amp; SpeakManager)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> SpeakManager.TalkRequest(number);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">TEST(GroupCall, simple_test)</span><br><span class="line">&#123;</span><br><span class="line">    using namespace testing;</span><br><span class="line"></span><br><span class="line">    SpeakManagerMock SpeakManager;</span><br><span class="line">    <span class="comment">/// 规定 TalkRequest 在任意入参时，将会总是返回 true</span></span><br><span class="line">    EXPECT_CALL(SpeakManager, TalkRequest(_)).WillRepeatedly(Return(<span class="literal">true</span>));</span><br><span class="line">    <span class="comment">/// 进行测试结果</span></span><br><span class="line">    ASSERT_TRUE(GroupCall::GI().TalkRequest(<span class="number">4106</span>, SpeakManager));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TEST(GroupCall, simple_test_1)</span><br><span class="line">&#123;</span><br><span class="line">    using namespace testing;</span><br><span class="line"></span><br><span class="line">    SpeakManagerMock SpeakManager;</span><br><span class="line">    <span class="comment">/// 规定 TalkRequest 在入参为 4106 时，将会总是返回 true</span></span><br><span class="line">    EXPECT_CALL(SpeakManager, TalkRequest(<span class="number">4106</span>))</span><br><span class="line">        .WillRepeatedly(Return(<span class="literal">true</span>));</span><br><span class="line">    <span class="comment">/// 规定 TalkRequest 在入参在大于 4100 并且不等于 4106 的情况下，总是返回 false</span></span><br><span class="line">    EXPECT_CALL(SpeakManager, TalkRequest(AllOf(Gt(<span class="number">4100</span>), Ne(<span class="number">4106</span>))))</span><br><span class="line">                                .WillRepeatedly(Return(<span class="literal">false</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 进行测试结果</span></span><br><span class="line">    ASSERT_TRUE(GroupCall::GI().TalkRequest(<span class="number">4106</span>, SpeakManager));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 进行测试结果</span></span><br><span class="line">    ASSERT_FALSE(GroupCall::GI().TalkRequest(<span class="number">4105</span>, SpeakManager));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TEST(GroupCall, simple_test_2)</span><br><span class="line">&#123;</span><br><span class="line">    using namespace testing;</span><br><span class="line"></span><br><span class="line">    SpeakManagerMock SpeakManager;</span><br><span class="line">    <span class="comment">/// 规定 TalkRequest 在任意入参时，第一次调用返回 true， 第二次返回 false</span></span><br><span class="line">    EXPECT_CALL(SpeakManager, TalkRequest(_))</span><br><span class="line">        .WillOnce(Return(<span class="literal">true</span>))</span><br><span class="line">        .WillOnce(Return(<span class="literal">false</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 进行测试结果</span></span><br><span class="line">    ASSERT_TRUE(GroupCall::GI().TalkRequest(<span class="number">4106</span>, SpeakManager));</span><br><span class="line">    ASSERT_FALSE(GroupCall::GI().TalkRequest(<span class="number">4106</span>, SpeakManager));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自动化测试场景"><a href="#自动化测试场景" class="headerlink" title="自动化测试场景"></a>自动化测试场景</h2><p>通常自动化测试的测试用例之间不应存在影响，每个测试用例应拆分为最小可测试单元(函数)，测试用例的顺序应互不影响。</p>
+<h3 id="工具函数测试"><a href="#工具函数测试" class="headerlink" title="工具函数测试"></a>工具函数测试</h3><ul>
+<li>SQL 语句组装类测试</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">TEST(sql_utility, simple)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/// insert</span></span><br><span class="line">    gos::sql sql_string;</span><br><span class="line">    std::<span class="type">string</span> <span class="variable">str</span> <span class="operator">=</span> sql_string.insert(<span class="string">&quot;operation_log&quot;</span>)</span><br><span class="line">        .bind(<span class="string">&quot;UUID&quot;</span>, <span class="string">&quot;555&quot;</span>)</span><br><span class="line">        .bind(<span class="string">&quot;Time&quot;</span>, <span class="number">666</span>)</span><br><span class="line">        .bind(<span class="string">&quot;UserType&quot;</span>, <span class="string">&quot;777&quot;</span>)</span><br><span class="line">        .bind(<span class="string">&quot;UserID&quot;</span>, <span class="string">&quot;888&quot;</span>)</span><br><span class="line">        .bind(<span class="string">&quot;LogInfo&quot;</span>, <span class="string">&quot;999&quot;</span>)</span><br><span class="line">        .sql();</span><br><span class="line"></span><br><span class="line">    ASSERT_EQ(str, <span class="string">&quot;INSERT INTO operation_log(UUID, Time, UserType, UserID, LogInfo) VALUES(\&quot;555\&quot;, 666, \&quot;777\&quot;, \&quot;888\&quot;, \&quot;999\&quot;);&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// delete</span></span><br><span class="line">    gos::sql sql;</span><br><span class="line">    std::<span class="type">string</span> <span class="variable">strSQL</span> <span class="operator">=</span> sql.remove(<span class="string">&quot;operation_log&quot;</span>)</span><br><span class="line">                            .where(<span class="string">&quot;Time &lt; :time&quot;</span>)</span><br><span class="line">                            .bind(<span class="string">&quot;time&quot;</span>, <span class="number">55</span>).sql();</span><br><span class="line">    ASSERT_EQ(strSQL, <span class="string">&quot;DELETE FROM operation_log WHERE Time &lt; 55;&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时间函数测试</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">TEST(gos_sleep_1ms, Simple_Test)</span><br><span class="line">&#123;</span><br><span class="line">    gos::tick_count timer;</span><br><span class="line">    <span class="comment">/// 开始计时</span></span><br><span class="line">    timer.start();</span><br><span class="line">    gos_sleep_1ms(<span class="number">1000</span>);</span><br><span class="line">    <span class="comment">/// 结束计时</span></span><br><span class="line">    timer.finish();</span><br><span class="line">    <span class="comment">/// 模糊比较，误差不超过 20ms</span></span><br><span class="line">    ASSERT_TRUE(gos::approx(<span class="number">1000</span>, <span class="number">20</span>).equal(timer.get_ms()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Json-接口函数测试"><a href="#Json-接口函数测试" class="headerlink" title="Json 接口函数测试"></a>Json 接口函数测试</h3><p>在客户端与服务端的通信中，如果使用 <code>json</code> 报文来传递事件，那么就存在 结构体序列化成 <code>json</code> 与 <code>json</code> 反序列化成结构体的过程，现在我们来测试这个过程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DC_TO_DIS_LOAD_SDS_HISTORY_C</span> : <span class="keyword">public</span> gos::json_parser&lt;DC_TO_DIS_LOAD_SDS_HISTORY_C&gt;</span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    std::string strDCLongNum;  <span class="comment">///&lt; M, 发送者长号码</span></span><br><span class="line">    UINT32 ulBeginTime;        <span class="comment">///&lt; M, 开始时间, 秒级时间戳</span></span><br><span class="line">    UINT32 ulEndTime;          <span class="comment">///&lt; M, 结束时间, 秒级时间戳</span></span><br><span class="line">    UINT32 ulCountLimit;       <span class="comment">///&lt; M, 最多回复记录数</span></span><br><span class="line"></span><br><span class="line">    bool operator==(const DC_TO_DIS_LOAD_SDS_HISTORY_C&amp; stOther) const</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> strDCLongNum == stOther.strDCLongNum &amp;&amp;</span><br><span class="line">               ulBeginTime == stOther.ulBeginTime &amp;&amp;</span><br><span class="line">               ulEndTime == stOther.ulEndTime &amp;&amp;</span><br><span class="line">               ulCountLimit == stOther.ulCountLimit;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 从 json 报文中解析出数值, 并赋予本结构体</span></span><br><span class="line">    virtual bool <span class="title function_">StructToJson</span><span class="params">(std::string&amp; str)</span> const;</span><br><span class="line">    <span class="comment">/// 从结构体的数值拼装 json 报文</span></span><br><span class="line">    virtual bool <span class="title function_">JsonToStruct</span><span class="params">(const std::string&amp; str)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 获取一个随机的本结构体</span></span><br><span class="line">    <span class="keyword">static</span> DC_TO_DIS_LOAD_SDS_HISTORY_C <span class="title function_">GetRandomObj</span><span class="params">()</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">TEST(DC_TO_DIS_LOAD_SDS_HISTORY_C, simple_test)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">auto</span> <span class="variable">st</span> <span class="operator">=</span> DC_TO_DIS_LOAD_SDS_HISTORY_C::GetRandomObj();</span><br><span class="line"></span><br><span class="line">    std::string strJson;</span><br><span class="line">    <span class="comment">/// 序列化</span></span><br><span class="line">    ASSERT(st.StructToJson(strJson));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 反序列化</span></span><br><span class="line">    DC_TO_DIS_LOAD_SDS_HISTORY_C stCmp;</span><br><span class="line">    ASSERT(stCmp.JsonToStruct(strJson));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 判断两个结构体是否相等</span></span><br><span class="line">    ASSERT_EQ(st, strCmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上重复的步骤过多，封装后的测试用例较为整洁，如下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">TEST(DC_TO_DIS_LOAD_SDS_HISTORY_C, simple_test)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">unsigned</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">auto</span> <span class="variable">st</span> <span class="operator">=</span> DC_TO_DIS_LOAD_SDS_HISTORY_C::GetRandomObj();</span><br><span class="line"></span><br><span class="line">        ASSERT_TRUE(gos::test_json_parser(st));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据库层自动化测试"><a href="#数据库层自动化测试" class="headerlink" title="数据库层自动化测试"></a>数据库层自动化测试</h3><p>数据库函数测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CfgDaoTests</span> : <span class="keyword">public</span> ::testing::Test</span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">protected</span>:</span><br><span class="line">    <span class="comment">/// 初始化数据库链接</span></span><br><span class="line">    CfgDaoTests();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 释放数据库链接</span></span><br><span class="line">    ~CfgDaoTests() override;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@brief</span>           查询 brd_info 表中是否有记录</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>           find    [in]</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>          ::testing::AssertionResult</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span>          lijiancong</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@date</span>            2022-07-07 16:59:03</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@note</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    ::testing::AssertionResult <span class="title function_">HaveRowInBrdInfo</span><span class="params">(const DB_BRD_INFO_C&amp; find)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/// 查询记录</span></span><br><span class="line">        std::vector&lt;DB_BRD_INFO_C&gt; vec;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!m_pDao-&gt;QueryBrdInfo(vec, <span class="number">1000</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> ::testing::AssertionFailure() &lt;&lt; <span class="string">&quot;QueryBrdInfo failed!&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (const auto&amp; element : vec)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (element == find)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> ::testing::AssertionSuccess();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ::testing::AssertionFailure()</span><br><span class="line">                &lt;&lt; <span class="string">&quot;can&#x27;t find struct! &quot;</span> &lt;&lt; DBG(find);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">TEST_F(CfgDaoTests, brd_info_simple_test)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/// 创建随机的结构体</span></span><br><span class="line">    <span class="type">DB_BRD_INFO_C</span> <span class="variable">stDB</span> <span class="operator">=</span> DB_BRD_INFO_C::GetRandomObj();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 验证没有该条记录</span></span><br><span class="line">    ASSERT_FALSE(HaveRowInBrdInfo(stDB));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 插入</span></span><br><span class="line">    ASSERT_TRUE(m_pDao-&gt;InsertBrdInfo(stDB));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 验证有该条记录</span></span><br><span class="line">    ASSERT_TRUE(HaveRowInBrdInfo(stDB));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 删除该条记录</span></span><br><span class="line">    ASSERT_TRUE(m_pDao-&gt;DeleteBrdInfo(stDB.GetKey()));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 验证没有该条记录</span></span><br><span class="line">    ASSERT_FALSE(HaveRowInBrdInfo(stDB));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TEST_F(CfgDaoTests, call_history_simple_test)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置文件读取测试"><a href="#配置文件读取测试" class="headerlink" title="配置文件读取测试"></a>配置文件读取测试</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">dc_global_config_manager_test</span> : <span class="keyword">public</span> ::testing::Test</span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">protected</span>:</span><br><span class="line">    <span class="type">DC_GLOBAL_CONFIG_INFO_C</span> <span class="variable">cfg_</span> <span class="operator">=</span> DC_GLOBAL_CONFIG_INFO_C::GetRandomObj();</span><br><span class="line">    std::<span class="type">string</span> <span class="variable">m_strFile</span> <span class="operator">=</span> <span class="string">&quot;dc_global_config_manager_test.ini&quot;</span>;</span><br><span class="line"></span><br><span class="line">    dc_global_config_manager_test()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (gos_file_exist(m_strFile.c_str()))</span><br><span class="line">        &#123;</span><br><span class="line">            gos_delete_file(m_strFile.c_str());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/// 生成配置文件</span></span><br><span class="line">        inifile::IniFile ini_file;</span><br><span class="line"></span><br><span class="line">        ini_file.SetBoolValue(<span class="string">&quot;DCGlobal&quot;</span>, <span class="string">&quot;is_use_link_switch&quot;</span>,</span><br><span class="line">                                cfg_.is_use_link_switch_);</span><br><span class="line">        ini_file.SetIntValue(<span class="string">&quot;DCGlobal&quot;</span>, <span class="string">&quot;ping_interval_time_ms&quot;</span>,</span><br><span class="line">                                cfg_.ping_interval_time_ms_);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/// 保存配置文件</span></span><br><span class="line">        ini_file.SaveAs(m_strFile);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~dc_global_config_manager_test()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (gos_file_exist(m_strFile.c_str()))</span><br><span class="line">        &#123;</span><br><span class="line">            gos_delete_file(m_strFile.c_str());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">TEST_F(dc_global_config_manager_test, DC_GLOBAL_CONFIG_MANAGER)</span><br><span class="line">&#123;</span><br><span class="line">    ASSERT_TRUE(dc_global_config_manager::GI().load(m_strFile));</span><br><span class="line"></span><br><span class="line">    <span class="type">auto</span> <span class="variable">cfg</span> <span class="operator">=</span> dc_global_config_manager::GI().get();</span><br><span class="line"></span><br><span class="line">    EXPECT_EQ(cfg_, cfg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端软件集成测试"><a href="#客户端软件集成测试" class="headerlink" title="客户端软件集成测试"></a>客户端软件集成测试</h3><p>对于客户端大致有两个调用流程。</p>
+<p><img src="/../resource/auto_test/%E8%B0%83%E5%BA%A6%E5%8F%B0%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F.png" alt="image"></p>
+<p>对于回调业务设计:</p>
+<p><img src="/../resource/auto_test/%E8%B0%83%E5%BA%A6%E5%8F%B0%E5%9B%9E%E8%B0%83%E4%B8%9A%E5%8A%A1%E8%AE%BE%E8%AE%A1%E7%A4%BA%E4%BE%8B.png" alt="image"></p>
+<p>对于以上解决方案，需要客户端把业务类与界面类分开。</p>
+<p>界面只根据输入数据进行更新显示。而业务类管理所有业务(管理业务信息)。</p>
+<h3 id="服务器软件集成测试"><a href="#服务器软件集成测试" class="headerlink" title="服务器软件集成测试"></a>服务器软件集成测试</h3><p>同样对于服务端程序，一样可以做代理类而测试业务。</p>
+<p><img src="/../resource/auto_test/%E8%B0%83%E5%BA%A6%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1.png" alt="image"></p>
+<p><img src="/../resource/auto_test/%E8%B0%83%E5%BA%A6%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9B%9E%E8%B0%83%E4%B8%9A%E5%8A%A1%E8%AE%BE%E8%AE%A1%E7%A4%BA%E4%BE%8B.png" alt="image"></p>
+<h3 id="服务器业务函数测试"><a href="#服务器业务函数测试" class="headerlink" title="服务器业务函数测试"></a>服务器业务函数测试</h3><p>代码举例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">VOID TaskAPP::OnAppRequestCallReq(const std::string &amp;app_id,</span><br><span class="line">                                  const APP_TO_DIS_MSG_INFO_C &amp;stAppMsgInfo)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!AppRegisterManager::GI().HandleAppRequestCallReq(app_id,</span><br><span class="line">                                            stAppMsgInfo, <span class="built_in">this</span>, m_pDao))</span><br><span class="line">    &#123;</span><br><span class="line">        GLOGE(<span class="string">&quot;AppRegisterManager HandleAppRequestCallReq failed! %s&quot;</span>,</span><br><span class="line">                DBG(stAppMsgInfo));</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在事件函数中，使用单独的业务函数或业务类，把业务模块(<code>AppRegisterManager</code>)与数据库模块(<code>m_pDao</code>)还有事件调度模块(<code>TaskApp</code>)隔离开后，使用测试普通函数的模式测试该函数。</p>
+<h3 id="如何组织工程级别单元测试"><a href="#如何组织工程级别单元测试" class="headerlink" title="如何组织工程级别单元测试"></a>如何组织工程级别单元测试</h3><p>使用 CMake 来组织工程文件。</p>
+<h4 id="CMake-简介"><a href="#CMake-简介" class="headerlink" title="CMake 简介"></a>CMake 简介</h4><p>CMake是一个跨平台的自动化构建工具，用于管理软件项目的构建过程。它使用一种类似于脚本的语法（CMakeLists.txt文件）来描述项目的构建配置和依赖关系，并生成适合不同构建系统（如Make、Ninja、Visual Studio等）的构建脚本。<br>{: .notice–info}</p>
+<ul>
+<li>CMake 使用示例：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake .</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Windows 下生成的 VS 工程结构</li>
+</ul>
+<p><img src="/../resource/auto_test/Snipaste_2023-07-14_10-37-45.png" alt="image"></p>
+<ul>
+<li>Linux 下生成的 Makefile:</li>
+</ul>
+<p><img src="/../resource/auto_test/Snipaste_2023-07-14_11-01-15.png" alt="image"></p>
+<ul>
+<li>编译工程</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">工程全部编译</span></span><br><span class="line">cmake --build .</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">工程 clean 后单独编译 Release 下的 dis</span></span><br><span class="line">cmake --build . --target dis_wz2 --config=Release --clean-first</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 CMake 命令自动运行单元测试:</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CMakeLists.txt 中增加如下语句，注册运行的单元测试</span></span><br><span class="line">add_test(NAME GosTest COMMAND gos_unittest)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">命令行运行 Debug 模式下的注册过的所有单元测试</span></span><br><span class="line">ctest . -C Debug</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>VS 中可视化界面运行单元测试</li>
+</ul>
+<p><img src="/../resource/auto_test/Snipaste_2023-07-14_10-39-31.png" alt="image"></p>
+<h4 id="单个文件夹下的文件组织"><a href="#单个文件夹下的文件组织" class="headerlink" title="单个文件夹下的文件组织"></a>单个文件夹下的文件组织</h4><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── cp4_debug.cpp</span><br><span class="line">├── cp4_debug.hpp</span><br><span class="line">└── cp4_debug_unittest.cpp</span><br></pre></td></tr></table></figure>
+
+<p><code>CMakeLists.txt</code>: 工程文件, 其中定义了生成静态库(<code>libcp4_debug.a</code>)，生成测试的可执行文件(<code>cp4_debug_unittest.exe</code>)。</p>
+<h4 id="多个文件夹下的文件组织"><a href="#多个文件夹下的文件组织" class="headerlink" title="多个文件夹下的文件组织"></a>多个文件夹下的文件组织</h4><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── db</span><br><span class="line">│   ├── CMakeLists.txt</span><br><span class="line">│   ├── CfgDao.cpp</span><br><span class="line">│   └── CfgDao.h</span><br><span class="line">│   └── CfgDao_unittest.cpp</span><br><span class="line">├── middle</span><br><span class="line">│   ├── CMakeLists.txt</span><br><span class="line">│   ├── ATSManager.cpp</span><br><span class="line">│   ├── ATSManager.h</span><br><span class="line">│   ├── ATSManager_unittest.cpp</span><br><span class="line">├── dis_main.cpp</span><br></pre></td></tr></table></figure>
+
+<p>服务器中，<code>app/</code> 和 <code>cfg/</code> 文件夹会分别生成静态库，然后文件 <code>dis_main.cpp</code> 、 <code>libdb.a</code> 、 <code>libmiddle.a</code> 生成 <code>dis.exe</code>。</p>
+<p>也同时生成对应的测试程序。</p>
+<h4 id="如何引用第三方库（如：GoogleTest）"><a href="#如何引用第三方库（如：GoogleTest）" class="headerlink" title="如何引用第三方库（如：GoogleTest）"></a>如何引用第三方库（如：<code>GoogleTest</code>）</h4><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── dis/</span><br><span class="line">│   ├── ...</span><br><span class="line">├── thirdparty/</span><br><span class="line">│   ├── googletest/</span><br><span class="line">│       ├── CMakeLists.txt</span><br><span class="line">|       ├─- ...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CMakeLists.txt 中增加如下语句，引用第三方库</span></span><br><span class="line">add_subdirectory(thirdparty/googletest)</span><br></pre></td></tr></table></figure>
+
+<p>然后需要使用该第三方库的工程，包含第三方库的头文件，并链接该第三方库的 <code>libgtest.a</code> 文件，即可正常使用第三方库。</p>
+<h2 id="如何确认测试覆盖率"><a href="#如何确认测试覆盖率" class="headerlink" title="如何确认测试覆盖率"></a>如何确认测试覆盖率</h2><ol>
+<li>g++ 编译选项中添加: <code>-fprofile-arcs</code>、 <code>-ftest-coverage</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CMakeLists.txt 中添加</span></span><br><span class="line">set(CMAKE_C_FLAGS &quot;$&#123;CMAKE_C_FLAGS&#125; -Wall -fprofile-arcs -ftest-coverage&quot;)</span><br><span class="line">set(CMAKE_CXX_FLAGS &quot;$&#123;CMAKE_CXX_FLAGS&#125; -Wall -fprofile-arcs -ftest-coverage&quot;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>编译并运行单元测试</li>
+<li>生成覆盖率信息文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcov &lt;source_file&gt;</span><br></pre></td></tr></table></figure>
+
+<p>直接使用 vim 打开该信息文件 <code>test.c.gcov</code></p>
+<p><img src="/../resource/auto_test/Snipaste_2023-07-14_11-46-37.png" alt="image"></p>
+<ol start="4">
+<li>使用<code>lcov</code>工具处理<code>.gcov</code>文件并生成可读的代码覆盖率报告。使用以下命令：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lcov -c -d &lt;directory&gt; -o coverage.info</span><br><span class="line">genhtml coverage.info -o coverage_report</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>打开 <code>coverage_report/index.html</code> 查看覆盖率报告</li>
+</ol>
+<p><img src="/../resource/auto_test/Snipaste_2023-07-14_17-33-17.png" alt="image"></p>
+<p><img src="/../resource/auto_test/Snipaste_2023-07-14_17-33-48.png" alt="image"></p>
+<h2 id="提交代码前的自动化测试"><a href="#提交代码前的自动化测试" class="headerlink" title="提交代码前的自动化测试"></a>提交代码前的自动化测试</h2><p>在提交 <code>push</code> 前，自动生成并运行单元测试， 可以使用 <code>git</code> 自带的 <code>pre-push</code>.</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── .git</span><br><span class="line">│   ├── branches</span><br><span class="line">│   ├── COMMIT_EDITMSG</span><br><span class="line">│   ├── config</span><br><span class="line">│   ├── description</span><br><span class="line">│   ├── FETCH_HEAD</span><br><span class="line">│   ├── HEAD</span><br><span class="line">│   ├── hooks</span><br><span class="line">│       ├── pre-commit.sample</span><br><span class="line">│       ├── pre-push.sample</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>Linux</code> 下工程目录下, 找到 <code>./.git/hooks/pre-push.sample</code> 文件，复制一份并重命名为 <code>pre-push</code>，然后修改 <code>pre-push</code> 文件内容为如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># An example hook script to verify what is about to be committed.</span></span><br><span class="line"><span class="comment"># Called by &quot;git push&quot; with no arguments.  The hook should</span></span><br><span class="line"><span class="comment"># exit with non-zero status after issuing an appropriate message if</span></span><br><span class="line"><span class="comment"># it wants to stop the push.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># To enable this hook, rename this file to &quot;pre-push&quot;.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自动格式化代码</span></span><br><span class="line">python3 ./ClangFormat.py</span><br><span class="line"><span class="comment"># 添加格式化后的代码</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行单元测试</span></span><br><span class="line">cmake -E <span class="built_in">chdir</span> <span class="string">&quot;build&quot;</span> cmake .. ; cmake --build ./build/ ; cmake -E <span class="built_in">chdir</span> <span class="string">&quot;build&quot;</span> ctest .. -C Release</span><br><span class="line"></span><br><span class="line"><span class="comment"># If the tests fail, prevent the push</span></span><br><span class="line"><span class="keyword">if</span> [ $? -ne 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Tests failed. Push aborted.&quot;</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>添加内容后，为该脚本文件增加可执行权限。 <code>sudo chmod +x pre_push</code></p>
+<p>如果该脚本运行过程中，异常结束则不会推送代码到远端，并提示错误。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/21/2022-09-13-C++%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" rel="prev" title="C++调试工具函数介绍">
+      <i class="fa fa-chevron-left"></i> C++调试工具函数介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/24/2023-07-24-GitHub-Copilot%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" rel="next" title="GitHub Copilot功能介绍">
+      GitHub Copilot功能介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">自动化测试目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">2.</span> <span class="nav-text">C++ 自动化测试框架的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GoogleTest-%E7%AE%80%E4%BB%8B"><span class="nav-number">3.</span> <span class="nav-text">GoogleTest 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASSERT-%E5%AE%8F%E8%AF%B4%E6%98%8E"><span class="nav-number">4.</span> <span class="nav-text">ASSERT 宏说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%A4%B9%E5%85%B7"><span class="nav-number">5.</span> <span class="nav-text">测试夹具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%B5%8B%E8%AF%95"><span class="nav-number">6.</span> <span class="nav-text">多线程测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0%E6%B5%8B%E8%AF%95"><span class="nav-number">7.</span> <span class="nav-text">模板函数测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mock-%E7%AE%80%E4%BB%8B"><span class="nav-number">8.</span> <span class="nav-text">Mock 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%9C%BA%E6%99%AF"><span class="nav-number">9.</span> <span class="nav-text">自动化测试场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E6%B5%8B%E8%AF%95"><span class="nav-number">9.1.</span> <span class="nav-text">工具函数测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Json-%E6%8E%A5%E5%8F%A3%E5%87%BD%E6%95%B0%E6%B5%8B%E8%AF%95"><span class="nav-number">9.2.</span> <span class="nav-text">Json 接口函数测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B1%82%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">9.3.</span> <span class="nav-text">数据库层自动化测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%B5%8B%E8%AF%95"><span class="nav-number">9.4.</span> <span class="nav-text">配置文件读取测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BD%AF%E4%BB%B6%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95"><span class="nav-number">9.5.</span> <span class="nav-text">客户端软件集成测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95"><span class="nav-number">9.6.</span> <span class="nav-text">服务器软件集成测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%9A%E5%8A%A1%E5%87%BD%E6%95%B0%E6%B5%8B%E8%AF%95"><span class="nav-number">9.7.</span> <span class="nav-text">服务器业务函数测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%BB%84%E7%BB%87%E5%B7%A5%E7%A8%8B%E7%BA%A7%E5%88%AB%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="nav-number">9.8.</span> <span class="nav-text">如何组织工程级别单元测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CMake-%E7%AE%80%E4%BB%8B"><span class="nav-number">9.8.1.</span> <span class="nav-text">CMake 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87"><span class="nav-number">9.8.2.</span> <span class="nav-text">单个文件夹下的文件组织</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87"><span class="nav-number">9.8.3.</span> <span class="nav-text">多个文件夹下的文件组织</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%BC%95%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%EF%BC%88%E5%A6%82%EF%BC%9AGoogleTest%EF%BC%89"><span class="nav-number">9.8.4.</span> <span class="nav-text">如何引用第三方库（如：GoogleTest）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%A1%AE%E8%AE%A4%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87"><span class="nav-number">10.</span> <span class="nav-text">如何确认测试覆盖率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E4%BB%A3%E7%A0%81%E5%89%8D%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">11.</span> <span class="nav-text">提交代码前的自动化测试</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jiancong Li</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="强制类型转换的应用C语言中void* 可以转换为任意指针size_t 到 unsigned 变量初始化  从未对变量赋值。它的值只是程序启动时变量所处内存区域的值 变量值已经过期。变量在某个地方曾经被赋值，但该值已经不再有效 变量的一部分被赋值，而另一部分没有  在声明变量的时候初始化理想情况下，在靠近第一次使用变量的位置声明和定义该变量 在有可能的情况下使用const， 定义常量，入参。 特别注">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记-《代码大全》">
+<meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:description" content="强制类型转换的应用C语言中void* 可以转换为任意指针size_t 到 unsigned 变量初始化  从未对变量赋值。它的值只是程序启动时变量所处内存区域的值 变量值已经过期。变量在某个地方曾经被赋值，但该值已经不再有效 变量的一部分被赋值，而另一部分没有  在声明变量的时候初始化理想情况下，在靠近第一次使用变量的位置声明和定义该变量 在有可能的情况下使用const， 定义常量，入参。 特别注">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-07-21T05:28:45.221Z">
+<meta property="article:modified_time" content="2023-10-28T06:29:44.898Z">
+<meta property="article:author" content="Jiancong Li">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://mercy1101.github.io/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>读书笔记-《代码大全》 | Jiancong Li's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jiancong Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jiancong Li's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          读书笔记-《代码大全》
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="强制类型转换的应用"><a href="#强制类型转换的应用" class="headerlink" title="强制类型转换的应用"></a>强制类型转换的应用</h2><h2 id="C语言中void-可以转换为任意指针"><a href="#C语言中void-可以转换为任意指针" class="headerlink" title="C语言中void* 可以转换为任意指针"></a>C语言中void* 可以转换为任意指针</h2><p>size_t 到 unsigned</p>
+<p>变量初始化</p>
+<ul>
+<li>从未对变量赋值。它的值只是程序启动时变量所处内存区域的值</li>
+<li>变量值已经过期。变量在某个地方曾经被赋值，但该值已经不再有效</li>
+<li>变量的一部分被赋值，而另一部分没有</li>
+</ul>
+<h2 id="在声明变量的时候初始化"><a href="#在声明变量的时候初始化" class="headerlink" title="在声明变量的时候初始化"></a>在声明变量的时候初始化</h2><h2 id="理想情况下，在靠近第一次使用变量的位置声明和定义该变量"><a href="#理想情况下，在靠近第一次使用变量的位置声明和定义该变量" class="headerlink" title="理想情况下，在靠近第一次使用变量的位置声明和定义该变量"></a>理想情况下，在靠近第一次使用变量的位置声明和定义该变量</h2><ul>
+<li>在有可能的情况下使用<code>const</code>， 定义常量，入参。</li>
+<li>特别注意计数器和累加器，在下一次使用时忘记重置其值。</li>
+<li>在类的构造函数中，初始化该类的数据成员</li>
+<li>检查是否需要重新初始化</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> index = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/// do something with index</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/// do something with index</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="尽可能缩短变量存活时间"><a href="#尽可能缩短变量存活时间" class="headerlink" title="尽可能缩短变量存活时间"></a>尽可能缩短变量存活时间</h2><p>短的变量存活时间减少了初始化错误的可能。</p>
+<p>变量存活时间短还会使代码具有可读性。阅读者同一时间内需要阅读的代码越少，越容易理解代码。</p>
+<p>当需要把一个大的函数，拆分成几个小程序，短的存活时间方便拆分。</p>
+<p>在循环开始之前再去初始化该循环里使用的变量，而不是在该循环所属的子程序的开始处初始化这些变量。</p>
+<p>直到变量即将被使用时再为其赋值。</p>
+<p>把相关语句放在一起。把相关语句提取成单独的子程序。</p>
+<p>开始时采用最严格的可见性，然后根据扩展变量的作用域。比如，把一个循环内的变量挪到循环外的难度要比反过来难度低，或把一个<code>private</code>转变为<code>public</code>的难度远比反过来难度低。</p>
+<p>避免采用硬编码，宏定义总是好于硬编码。</p>
+<ul>
+<li><code>TITLE_BAR_COLOR</code> 比 <code>0xFFFFFF</code> 更能反应出所代表的信息</li>
+<li>同时，也方便修改宏定义时，同时改变所有的颜色的RGB值</li>
+</ul>
+<h2 id="为变量指定单一用途"><a href="#为变量指定单一用途" class="headerlink" title="为变量指定单一用途"></a>为变量指定单一用途</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">temp = <span class="built_in">Sqrt</span>(b*b - <span class="number">4</span>*a*c);</span><br><span class="line">root[<span class="number">0</span>] = (-b + temp) / (<span class="number">2</span>*a);</span><br><span class="line">root[<span class="number">1</span>] = (-b - temp) / (<span class="number">2</span>*a);</span><br><span class="line"></span><br><span class="line"><span class="comment">// swap the roots</span></span><br><span class="line">temp = root[<span class="number">0</span>];</span><br><span class="line">root[<span class="number">0</span>] = root[<span class="number">1</span>];</span><br><span class="line">root[<span class="number">1</span>] = temp;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">discriminant = <span class="built_in">Sqrt</span>(b*b - <span class="number">4</span>*a*c);</span><br><span class="line">root[<span class="number">0</span>] = (-b + discriminant) / (<span class="number">2</span>*a);</span><br><span class="line">root[<span class="number">1</span>] = (-b - discriminant) / (<span class="number">2</span>*a);</span><br><span class="line"></span><br><span class="line"><span class="comment">// swap the roots</span></span><br><span class="line">oldRoot = root[<span class="number">0</span>];</span><br><span class="line">root[<span class="number">0</span>] = root[<span class="number">1</span>];</span><br><span class="line">root[<span class="number">1</span>] = oldRoot;</span><br></pre></td></tr></table></figure>
+
+
+<p>避免让代码具有隐含含义，把同一变量用于多个多个用途的另外一种方式是当变量代表不同事务时让其具有不同的取值集合。</p>
+<ul>
+<li>变量<code>count</code>的取值可能表示某个计数，除非他等于<code>-1</code>，在这种情况下表明有错误发生</li>
+<li>变量<code>customerId</code>可能代表某个客户账号，除非他的取值大于50000，在这种情况下，你通过减去50000来得到过期账号。</li>
+<li>变量<code>bytesWritten</code>可能表示写入输出文件的字节数，除非它的取值为负，在这种情况下他表示的是用于输出磁盘驱动器的号码。</li>
+</ul>
+<h2 id="变量名的注意事项"><a href="#变量名的注意事项" class="headerlink" title="变量名的注意事项"></a>变量名的注意事项</h2><p>糟糕的变量名</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = x - xx;</span><br><span class="line">xxx = fido + <span class="built_in">SalesTax</span>(fido);</span><br><span class="line">x = x + <span class="built_in">LateFee</span>(x1, x) + xxx;</span><br><span class="line">x = x + <span class="built_in">Interest</span>(x1, x);</span><br></pre></td></tr></table></figure>
+
+<p>良好的变量名</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">balance = balance - lastPayment;</span><br><span class="line">monthlyTotal = newPurchases + <span class="built_in">SalesTax</span>(newPurchases);</span><br><span class="line">balance = balance + <span class="built_in">LateFee</span>(customerID, balance) + monthlyTotal;</span><br><span class="line">balance = balance + <span class="built_in">Interest</span>(customerID, balance);</span><br></pre></td></tr></table></figure>
+
+<p>为变量命名时最重要的考虑事项时，改名字要完全、准确地描述该变量所代表的事物<br>不包含晦涩的缩写，同时也没有歧义。<br>对于一个表示中国奥林匹克代表团成员数量的变量，你可能会使用<code>NumberOfPeopleOnTheChineseOlympicTeam</code><br>表示当前利率的变量最好为<code>rate</code>而不是<code>r</code>.</p>
+<p>变量名太长: <code>numberOfPeopleOnTheChineseOlympicTeam</code>,<code>numberOfSeatsInTheStadium</code>, <code>maximumNumberOfPointsInModernOlympics</code><br>变量名太短: <code>n</code>, <code>np</code>, <code>ntm</code>, <code>ms</code>, <code>nsisd</code>, <code>m</code>, <code>max</code>, <code>min</code><br>变量名正好： <code>numTeamMembers</code>, <code>teamMemberCount</code>, <code>numSeatsInStadium</code>, <code>seatCount</code>, <code>teamPointsMax</code>, <code>pointSRecord</code></p>
+<p>很多程序有表示计算机结果的变量：总额、平均值、最大值，等等。如果你要用类似于<code>Total</code>、<code>Sum</code>、<code>Average</code>、<code>Max</code>、<code>Min</code>、<code>Record</code>这样的限定词，那么请一定记住把限定词加到名字最后。<br>变量名中最重要的部分应该被放置在最前面，限定词在最后。<br>这样做会避免，<code>totalRevenue</code>和<code>revenueTotal</code>异议词语</p>
+<p>为状态变量起一个比<code>flag</code>更好的名字。最好把标记<code>flag</code>看作状态变量，标记的名字中不应该含有<code>flag</code>，因为你从中丝毫看不出该标记是做什么的。<br>含义模糊的标记</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (flag) ...</span><br><span class="line"><span class="keyword">if</span> (statusFlag &amp; <span class="number">0xF</span>) ...</span><br><span class="line"><span class="keyword">if</span> (printFlag == <span class="number">16</span>) ...</span><br><span class="line"><span class="keyword">if</span> (computeFlag == <span class="number">0</span>) ...</span><br></pre></td></tr></table></figure>
+
+<p>更好的状态变量命名</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (dataReady) ...</span><br><span class="line"><span class="keyword">if</span> (characterType &amp; PRINTABLE_CHAR) ...</span><br><span class="line"><span class="keyword">if</span> (reportType == ReportType_Annual) ...</span><br><span class="line"><span class="keyword">if</span> (recalcNeeded == <span class="literal">false</span>) ...</span><br></pre></td></tr></table></figure>
+
+<p>为布尔变量命名</p>
+<ul>
+<li><code>done</code> 用<code>done</code>表示某件事情已经发生之前把变量值设为<code>false</code>, 在错误已经发生时把它设为<code>true</code></li>
+<li><code>error</code> 用<code>error</code>表示有错误发生。在错误发生之前把变量值设为<code>false</code>, 在错误已经发生时把它设为<code>true</code></li>
+<li><code>found</code> 用<code>found</code>来表明某个值已经找到了。在没有找到设为<code>false</code>, 找到后设为<code>true</code>.</li>
+<li><code>success</code>和<code>ok</code>, 操作失败时设为<code>false</code>, 操作成功后设为<code>true</code></li>
+</ul>
+<p>给布尔变量赋予隐含“真、假”含义的名字: <code>status</code>和<code>sourceFile</code>是很糟糕的布尔变量名。<br>应该把<code>status</code>替换为类似<code>error</code>或者<code>statusOK</code>这样的名称，把<code>sourceFile</code>替换为<code>sourceFileAvailable</code>、<code>sourceFileFound</code></p>
+<p>使用肯定的布尔变量名，否定的布尔名如<code>notFound</code>、<code>notDone</code>以及<code>notSuccessful</code>比较难阅读。使用肯定的语义避免双重否定带来的阅读难度。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">AnsiString strTmp;</span><br><span class="line">strTmp = edtAccount-&gt;Text;</span><br><span class="line"><span class="keyword">if</span>(strTmp.<span class="built_in">IsInvalid</span>())</span><br><span class="line">&#123;</span><br><span class="line">    st.Account = strTmp;</span><br><span class="line">&#125;</span><br><span class="line">strTmp = edtPassword-&gt;Text;</span><br><span class="line"><span class="keyword">if</span>(strTmp.<span class="built_in">IsInvalid</span>())</span><br><span class="line">&#123;</span><br><span class="line">    st.Password = strTmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>缩写的一般指导原则：</p>
+<ul>
+<li>使用标准的缩写(列在字典中的那些常见缩写)</li>
+<li>去掉虚词<code>and</code>, <code>or</code>, <code>the</code>等</li>
+<li>去掉无用的后缀<code>ing</code>, <code>end</code></li>
+<li>确保不要改变变量的含义</li>
+<li>反复使用上述技术，知道你把每个变量名的长度缩减到了8到20个字符，或者达到你所用的编程语言对变量名的限制字符数。</li>
+</ul>
+<h2 id="不要用每个单词中删除一个字符的方式来缩写"><a href="#不要用每个单词中删除一个字符的方式来缩写" class="headerlink" title="不要用每个单词中删除一个字符的方式来缩写"></a>不要用每个单词中删除一个字符的方式来缩写</h2><p>键入一个字符算不上是什么额外工作，而节省一个字符带来的便利却很难抵消由此而造成的可读性的损失。</p>
+<h2 id="缩写要一致"><a href="#缩写要一致" class="headerlink" title="缩写要一致"></a>缩写要一致</h2><p>应该一直使用相同的缩写。要么全用<code>Num</code>，要么全用<code>No</code>，也不要有些地方使用全写<code>Number</code>, 同时在其他地方使用缩写<code>Num</code></p>
+<h2 id="创建你能读出来的名字"><a href="#创建你能读出来的名字" class="headerlink" title="创建你能读出来的名字"></a>创建你能读出来的名字</h2><p>使用<code>xPos</code>而不是<code>xPstn</code>, 用<code>needsCompu</code>而不用<code>ndsCmptg</code>。这里可以使用电话沟通，如果你无法向他人读出你的代码，就请重新给变量起一个更清晰的名字。</p>
+<h2 id="名字对于代码的读者的意义要比对作者更重要"><a href="#名字对于代码的读者的意义要比对作者更重要" class="headerlink" title="名字对于代码的读者的意义要比对作者更重要"></a>名字对于代码的读者的意义要比对作者更重要</h2><h2 id="避免使用令人误解的名字或缩写"><a href="#避免使用令人误解的名字或缩写" class="headerlink" title="避免使用令人误解的名字或缩写"></a>避免使用令人误解的名字或缩写</h2><p>要确保名字的含义是明确的</p>
+<h2 id="避免使用具有相似含义的名字"><a href="#避免使用具有相似含义的名字" class="headerlink" title="避免使用具有相似含义的名字"></a>避免使用具有相似含义的名字</h2><p>如果你能够交换两个变量的名字而不会妨碍对程序的理解，那么你就需要为这两个变量重新命名了。</p>
+<h2 id="避免在名字中使用数字"><a href="#避免在名字中使用数字" class="headerlink" title="避免在名字中使用数字"></a>避免在名字中使用数字</h2><p>如果名字中的数字真的非常重要，就请使用数组来代替一组单个的变量。如果数组不合适，那么数字就更不合适。</p>
+<h2 id="避免在名字中拼错单词"><a href="#避免在名字中拼错单词" class="headerlink" title="避免在名字中拼错单词"></a>避免在名字中拼错单词</h2><h2 id="避免在名字中使用容易混淆的字符"><a href="#避免在名字中使用容易混淆的字符" class="headerlink" title="避免在名字中使用容易混淆的字符"></a>避免在名字中使用容易混淆的字符</h2><ul>
+<li>数字<code>1</code>和小写的<code>l</code></li>
+<li>数字<code>1</code>和大写的<code>L</code></li>
+<li>数字<code>0</code>和大写的<code>O</code></li>
+<li>数字<code>2</code>和小写的<code>z</code></li>
+<li>数字<code>6</code>和大写的<code>G</code></li>
+</ul>
+<h2 id="避免浮点数的数量级相差巨大的数字之间的四则运算"><a href="#避免浮点数的数量级相差巨大的数字之间的四则运算" class="headerlink" title="避免浮点数的数量级相差巨大的数字之间的四则运算"></a>避免浮点数的数量级相差巨大的数字之间的四则运算</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">double</span> d = <span class="number">100000000.0</span> + <span class="number">0.1</span>;</span><br><span class="line">    std::cout &lt;&lt; d &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="避免浮点数的等量比较"><a href="#避免浮点数的等量比较" class="headerlink" title="避免浮点数的等量比较"></a>避免浮点数的等量比较</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">double</span> tmp = <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        tmp += <span class="number">0.1</span>;</span><br><span class="line">        std::cout &lt;&lt; tmp &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">IncreaseA</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    a++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">IncreaseB</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    b++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">IncreaseA</span>() || !<span class="built_in">IncreaseB</span>())</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="为空语句创建一个DoNothing-预处理宏或者内联函数"><a href="#为空语句创建一个DoNothing-预处理宏或者内联函数" class="headerlink" title="为空语句创建一个DoNothing()预处理宏或者内联函数"></a>为空语句创建一个DoNothing()预处理宏或者内联函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(recordArray.<span class="built_in">Read</span>(index++) != recordArray.<span class="built_in">EmptyRecord</span>())</span><br><span class="line">&#123;</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DoNothing()</span></span><br><span class="line"><span class="keyword">while</span>(...)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">DoNothing</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/21/2021-05-17-%E5%8D%8E%E4%B8%BAC++%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%E6%91%98%E5%BD%95/" rel="prev" title="华为C++编程规范摘录">
+      <i class="fa fa-chevron-left"></i> 华为C++编程规范摘录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/21/2021-05-09-C++%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%8D%E5%88%B6/" rel="next" title="C++ 关于对象的复制">
+      C++ 关于对象的复制 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">强制类型转换的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%E8%AF%AD%E8%A8%80%E4%B8%ADvoid-%E5%8F%AF%E4%BB%A5%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BB%BB%E6%84%8F%E6%8C%87%E9%92%88"><span class="nav-number">2.</span> <span class="nav-text">C语言中void* 可以转换为任意指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F%E7%9A%84%E6%97%B6%E5%80%99%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">在声明变量的时候初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E6%83%B3%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E5%9C%A8%E9%9D%A0%E8%BF%91%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%8D%E7%BD%AE%E5%A3%B0%E6%98%8E%E5%92%8C%E5%AE%9A%E4%B9%89%E8%AF%A5%E5%8F%98%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">理想情况下，在靠近第一次使用变量的位置声明和定义该变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%BD%E5%8F%AF%E8%83%BD%E7%BC%A9%E7%9F%AD%E5%8F%98%E9%87%8F%E5%AD%98%E6%B4%BB%E6%97%B6%E9%97%B4"><span class="nav-number">5.</span> <span class="nav-text">尽可能缩短变量存活时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E5%8F%98%E9%87%8F%E6%8C%87%E5%AE%9A%E5%8D%95%E4%B8%80%E7%94%A8%E9%80%94"><span class="nav-number">6.</span> <span class="nav-text">为变量指定单一用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%90%8D%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">7.</span> <span class="nav-text">变量名的注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E7%94%A8%E6%AF%8F%E4%B8%AA%E5%8D%95%E8%AF%8D%E4%B8%AD%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9D%A5%E7%BC%A9%E5%86%99"><span class="nav-number">8.</span> <span class="nav-text">不要用每个单词中删除一个字符的方式来缩写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%A9%E5%86%99%E8%A6%81%E4%B8%80%E8%87%B4"><span class="nav-number">9.</span> <span class="nav-text">缩写要一致</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%BD%A0%E8%83%BD%E8%AF%BB%E5%87%BA%E6%9D%A5%E7%9A%84%E5%90%8D%E5%AD%97"><span class="nav-number">10.</span> <span class="nav-text">创建你能读出来的名字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E5%AD%97%E5%AF%B9%E4%BA%8E%E4%BB%A3%E7%A0%81%E7%9A%84%E8%AF%BB%E8%80%85%E7%9A%84%E6%84%8F%E4%B9%89%E8%A6%81%E6%AF%94%E5%AF%B9%E4%BD%9C%E8%80%85%E6%9B%B4%E9%87%8D%E8%A6%81"><span class="nav-number">11.</span> <span class="nav-text">名字对于代码的读者的意义要比对作者更重要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E4%BB%A4%E4%BA%BA%E8%AF%AF%E8%A7%A3%E7%9A%84%E5%90%8D%E5%AD%97%E6%88%96%E7%BC%A9%E5%86%99"><span class="nav-number">12.</span> <span class="nav-text">避免使用令人误解的名字或缩写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E5%85%B7%E6%9C%89%E7%9B%B8%E4%BC%BC%E5%90%AB%E4%B9%89%E7%9A%84%E5%90%8D%E5%AD%97"><span class="nav-number">13.</span> <span class="nav-text">避免使用具有相似含义的名字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%9C%A8%E5%90%8D%E5%AD%97%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%95%B0%E5%AD%97"><span class="nav-number">14.</span> <span class="nav-text">避免在名字中使用数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%9C%A8%E5%90%8D%E5%AD%97%E4%B8%AD%E6%8B%BC%E9%94%99%E5%8D%95%E8%AF%8D"><span class="nav-number">15.</span> <span class="nav-text">避免在名字中拼错单词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%9C%A8%E5%90%8D%E5%AD%97%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AE%B9%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E5%AD%97%E7%AC%A6"><span class="nav-number">16.</span> <span class="nav-text">避免在名字中使用容易混淆的字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B0%E9%87%8F%E7%BA%A7%E7%9B%B8%E5%B7%AE%E5%B7%A8%E5%A4%A7%E7%9A%84%E6%95%B0%E5%AD%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97"><span class="nav-number">17.</span> <span class="nav-text">避免浮点数的数量级相差巨大的数字之间的四则运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%AD%89%E9%87%8F%E6%AF%94%E8%BE%83"><span class="nav-number">18.</span> <span class="nav-text">避免浮点数的等量比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E7%A9%BA%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AADoNothing-%E9%A2%84%E5%A4%84%E7%90%86%E5%AE%8F%E6%88%96%E8%80%85%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="nav-number">19.</span> <span class="nav-text">为空语句创建一个DoNothing()预处理宏或者内联函数</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jiancong Li</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

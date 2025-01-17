@@ -1,0 +1,38 @@
+@startuml 调度台回调业务设计示例
+
+title 调度台回调业务设计示例
+
+class GroupCall
+{
+    +UpdateCallStatus()
+}
+
+class UI_Agent_Base
+{
+    +UpdateCallStatus()
+}
+
+class UI_Agent
+{
+    +UpdateCallStatus()
+}
+
+class FormCallIn
+{
+}
+
+class UI_Agent_Mock
+{
+    +UpdateCallStatus()
+}
+
+
+UI_Agent_Base -down-> UI_Agent : 实现接口
+UI_Agent_Base -up-> UI_Agent_Mock : 实现接口
+
+GroupCall -right-> UI_Agent_Base : 调用
+UI_Agent -right->  FormCallIn : 界面更新
+
+UI_Agent_Mock -right-> GMock : 调用
+
+@enduml
