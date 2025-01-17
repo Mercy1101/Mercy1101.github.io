@@ -960,210 +960,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-06-26-Git-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/07/21/2021-06-26-Git-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/" class="post-title-link" itemprop="url">Git使用场景</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Git 使用场景</p>
-<h2 id="场景：仓库中的临时文件"><a href="#场景：仓库中的临时文件" class="headerlink" title="场景：仓库中的临时文件"></a>场景：仓库中的临时文件</h2><p>我们编译出来了大量临时文件或很大的二进制文件，如 .o, .lib文件，这些文件不想上传。</p>
-<p>提出问题： 想要在本文件夹中做版本控制，但需要忽略某些特定的文件</p>
-<p>解决方案： 使用.gitignore文件来标记不想要进行版本控制的临时文件。</p>
-<p>.gitignore 文件的用法:</p>
-<p>.gitignore文件是由我们自己创建, 并默认放置在仓库的根目录。<br>Git 默认会忽略<code>.gitignore</code>中的文件名的大小写, 不过我们可以通过<code>git config core.ignorecase false</code>，来设置为不忽略大小写。</p>
-<ol>
-<li>文件内容格式</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vim .gitignore</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">忽略.lib为后缀的文件</span></span><br><span class="line">*.lib</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">libmysql.lib 这个文件不忽略</span></span><br><span class="line">!libmysql.lib</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">忽略所有的bin文件夹</span></span><br><span class="line">bin/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">忽略根目录下的bin文件夹</span></span><br><span class="line">/bin/</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>已经被忽略的文件如何添加到暂存区: <code>git add -f &lt;filename&gt;</code></li>
-<li>已经添加到暂存区中的文件如何忽略: <code>git rm --cached &lt;filename&gt;</code></li>
-</ol>
-<h2 id="场景-不小心提交了一个临时文件"><a href="#场景-不小心提交了一个临时文件" class="headerlink" title="场景: 不小心提交了一个临时文件"></a>场景: 不小心提交了一个临时文件</h2><p>我们对<strong>这个临时文件不想做版本跟踪</strong>，但是在<code>.gitignore</code>文件中添加该文件，这个文件仍然会被追踪。</p>
-<p>提出问题: 如何忽略一个已经被追踪的文件?</p>
-<p>解决方案：</p>
-<ol>
-<li><code>git rm filename</code>直接从仓库中删除该文件，并把该改动commit后，随后在<code>.gitignore</code>中添加该文件为忽略。</li>
-<li><code>git update-index --assume-unchanged &lt;filename&gt;</code>, 这个操作不会删除该文件，也不用提交，但命令太长</li>
-</ol>
-<h2 id="场景-需要标记一个特定的版本"><a href="#场景-需要标记一个特定的版本" class="headerlink" title="场景: 需要标记一个特定的版本"></a>场景: 需要标记一个特定的版本</h2><p>当我们的代码进入到比较稳定，或者开发出了一个功能，需要标记一个commit来作为稳定版本的基准。</p>
-<p>提出问题： 如何为commit添加标记和备注信息</p>
-<p>解决方案： 使用<code>git tag</code>为版本打标签</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -a vx.x.x -m &quot;message&quot;</span><br><span class="line">git push origin tags    ///&lt; 推送到远端</span><br></pre></td></tr></table></figure>
-
-<h2 id="场景-修改远端标签名称"><a href="#场景-修改远端标签名称" class="headerlink" title="场景: 修改远端标签名称"></a>场景: 修改远端标签名称</h2><p>修改tag名 v1.0重命名v2.0</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git tag 新tag名称 旧tag名称</span><br><span class="line">git tag -d 旧tag名称</span><br><span class="line">git push origin :refs/tags/旧tag名称</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
-
-<h2 id="场景：-开发一个功能"><a href="#场景：-开发一个功能" class="headerlink" title="场景： 开发一个功能"></a>场景： 开发一个功能</h2><p>某项功能可能开发时间较久，但又想把未完成的代码上传到远端版本库，来实现多台电脑同步。</p>
-<p>例如：在开发随车通信需求时，在<code>linux</code>上编译<code>dis</code>，而我开发的环境在<code>windows</code>上, 当我在本地<code>window</code>开发的临时代码，想要放到<code>linux</code>机器上，这时我们需要分支来对代码的同步。</p>
-<p>提出问题： 怎样才能在不影响远端仓库的代码的情况下，在远端备份开发过程代码？</p>
-<p>解决方法： 使用 git branch<br>brunch 介绍:<br>brunch意味着你可以从主分支中，分叉出来一个分支来提交代码而不影响主分支的代码。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/// 创建并切换到分支</span><br><span class="line">git checkout -b &lt;branch_name&gt;</span><br><span class="line"></span><br><span class="line">/// 做相应的提交，修改</span><br><span class="line">git add .</span><br><span class="line">git commit -m&quot;some comment&quot;</span><br><span class="line"></span><br><span class="line">/// 把本地分支上传到远端</span><br><span class="line">git push origin &lt;branch_name&gt;</span><br><span class="line"></span><br><span class="line">/// 切换到另一台电脑上，拉去自己的分支</span><br><span class="line">git pull origin &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
-
-<p>合并分支:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout develop    ///&lt; 当前处于develop分支下</span><br><span class="line">git merge master   ///&lt; 把master的东西合入到当前分支，方便在自己开发的分支上处理冲突</span><br><span class="line">git checkout master    ///&lt; 切换到master分支</span><br><span class="line">git merge develop    ///&lt; 把develop合并到当前分支</span><br><span class="line">git branch -d future    ///&lt; 把合并过的分支删除</span><br></pre></td></tr></table></figure>
-
-<h2 id="场景：临时切换分支"><a href="#场景：临时切换分支" class="headerlink" title="场景：临时切换分支"></a>场景：临时切换分支</h2><p>我们会遇到临时切换回主分支的情况。<br>例如： 当我在开发随车通信功能开发一半时，雷总让我在仓库中提交一个文档。如果我在自己的开发分支上上传该文档，那么在<code>master</code>分支上会没有这个文档，其他人也获取不到，所以只能切换回<code>master</code>分支上进行上传。</p>
-<p>提出问题： 快速切换分支，做完提交，切换回开发分支时，工作区应跟切换分支前一样。</p>
-<p>解决方案：<br>那么现在分为两种情况：</p>
-<ol>
-<li>我们工作区没有未被commit的文件，那么我们直接<code>git checkout &lt;branch_name&gt;</code>, 即可切换到相应的分支。</li>
-<li>我们工作区有很多未被commit的代码，这时我们可以选择，把工作区内代码全部commit或者选择使用<code>git stash</code>来临时把未被commit的代码给存储起来， 在我们切换回开发分支时，再把临时存储的代码拿出来。</li>
-</ol>
-<p><code>stash</code>介绍：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/// 把所有未commit的文件(工作区、暂存区里的文件)都放入一个临时的分支，使工作区可以切换分支</span><br><span class="line">git stash</span><br><span class="line">或</span><br><span class="line">git stash save &quot;some comment&quot;</span><br><span class="line"></span><br><span class="line">/// 切换到其他分支，并做一些提交, 并切换回自己的开发分支</span><br><span class="line">git checkout master</span><br><span class="line">git add .</span><br><span class="line">git commit -m&quot;some comment&quot;</span><br><span class="line">git checkout develop</span><br><span class="line"></span><br><span class="line">/// 把临时存储的代码给拿出来，放入工作区(之前暂存区的文件在pop后的状态是到工作区)</span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure>
-
-<p><code>git stash --include-untracked</code>或<code>git stash -u</code> 来存储未被跟踪的文件</p>
-<h2 id="场景：-某个commit，提交错分支了"><a href="#场景：-某个commit，提交错分支了" class="headerlink" title="场景： 某个commit，提交错分支了"></a>场景： 某个commit，提交错分支了</h2><p>开发过程中，突然出现了一个<code>BUG</code>需要立即修复，我们急着修复，把修复的代码放入了正在大改开发分支上。<br>提出问题： 我们需要怎样，把主分支上的<code>BUG</code>给修正过来<br>解决方案:</p>
-<ol>
-<li>切换到主分支，再次把刚才修改的文件，同样在主分支上进行修改，再次进行提交。</li>
-<li>切换到主分支，使用<code>git cherry-pick &lt;SHA&gt;</code>把特定提交给放到主分支中。</li>
-</ol>
-<p>方案一存在修改的不一致，当后面需要合并分支时，需要处理冲突。<br>方案二快速提交，不用再次使用手动修改文件。</p>
-<p><code>git cherry-pick &lt;SHA&gt;</code>用法示例：<br>该操作会把特定的commit给，放入当前所在的分支，并产生一个新的提交</p>
-<p>之前分支的情况：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a - b - c - d - f   Master</span><br><span class="line">        \</span><br><span class="line">        e - f - g Feature</span><br></pre></td></tr></table></figure>
-
-<p><code>cherry-pick</code>操作</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/// 切换到</span><br><span class="line">git checkout master</span><br><span class="line">/// 把提交f给提交到本分支</span><br><span class="line">git cherry-pick f</span><br></pre></td></tr></table></figure>
-
-<p>操作后的分支情况：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a - b - c - d - f   Master</span><br><span class="line">    \</span><br><span class="line">    e - f - g       Feature</span><br></pre></td></tr></table></figure>
-
-<h2 id="场景-commit的信息输入错了"><a href="#场景-commit的信息输入错了" class="headerlink" title="场景: commit的信息输入错了"></a>场景: commit的信息输入错了</h2><p>提出问题： 怎么修改提交的commit信息</p>
-<p>解决方案：</p>
-<ol>
-<li>修改最近一次提交的commit</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend</span><br><span class="line"></span><br><span class="line">/// 进入到提交的文件里面，默认使用vim打开</span><br><span class="line">/// 修改好提交信息，保存后退出</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>如果想要修改之前的commit</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3    ///&lt; 回退到HEAD前面第三个commit处</span><br><span class="line"></span><br><span class="line">/// 想要修改哪一个提交就把pick换成你想要的操作,edit</span><br><span class="line">git commit --amend</span><br><span class="line">/// 然后执行</span><br><span class="line">git rebase --continue</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>如果该 commit 已经 push 到远端</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend</span><br><span class="line">git push --force-with-lease origin &lt;分支名称&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="场景-开发到一半，发现修改的思路有误"><a href="#场景-开发到一半，发现修改的思路有误" class="headerlink" title="场景: 开发到一半，发现修改的思路有误"></a>场景: 开发到一半，发现修改的思路有误</h2><p>我们从远端仓库拉去最新代码，修改过程中，发现修改错误了，想再从已经提交的代码上重新开始。</p>
-<p>提出问题： 如何回退版本</p>
-<p>解决方案：</p>
-<ol>
-<li>没有commit想要回退， 只是清除工作区修改的代码, 如何让当前已经修改过的代码恢复到HEAD的最新提交代码一致, 即清除工作区修改的代码</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/// 清除所有没有被暂存的改动</span><br><span class="line">git checkout .</span><br><span class="line"></span><br><span class="line">/// 清除该文件没有被暂存的改动</span><br><span class="line">git checkout filename</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>想要撤销上一个commit</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/// 删除工作区改动的代码，撤销最近一次的commit，撤销git add .</span><br><span class="line">/// 注意完成这个操作后，就恢复到了上一次的commit状态。</span><br><span class="line">git reset --hard HEAD^</span><br><span class="line">/// HEAD 指向 commit_id 指向的提交</span><br><span class="line">git reset --hard &lt;commit_id&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>--hard</code>换成<code>--soft</code>, 则会保留已经暂存和修改的文件</li>
-<li><code>HEAD^</code>换成<code>HEAD~2</code>则可以回退两个commit</li>
-</ul>
-<h3 id="清除工作区的修改"><a href="#清除工作区的修改" class="headerlink" title="清除工作区的修改"></a>清除工作区的修改</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard &lt;commit_id&gt;    /// 返回到某个节点，不保留修改，已有的改动会丢失</span><br><span class="line">git reset --soft &lt;commit_id&gt;    /// 返回到某个节点，保留修改，已有的改动会保留，在未提交中， `git status` 或 `git diff` 查看</span><br><span class="line"></span><br><span class="line">git clean -df /// 返回到某个节点(未跟踪文件的删除)</span><br><span class="line">git clean -n  /// 不实际删除，展示即将哪些文件要被删除</span><br><span class="line">git clean -f  /// 不实际删除，展示即将哪些文件要被删除</span><br><span class="line">git clean -i  /// 显示将要删除的文件</span><br><span class="line">git clean -d  /// 递归删除目录及文件(未跟踪的文件)</span><br><span class="line">git clean -q  /// 仅显示错误，成功删除的文件不显示</span><br></pre></td></tr></table></figure>
-
-<p>示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clean -nxdf /// 查看要删除的文件及目录，确认无误后再使用下面的命令进行删除</span><br><span class="line">git checkout . &amp;&amp; git clean -xdf</span><br></pre></td></tr></table></figure>
-
-<h3 id="revert-和-reset"><a href="#revert-和-reset" class="headerlink" title="revert 和 reset"></a>revert 和 reset</h3><ol>
-<li><p>revert<br>首先肯定的是 <code>revert</code>，<code>git revert commit_id</code> 能产生一个 与 <code>commit_id</code> 完全相反的提交，即 <code>commit_id</code> 里是添加， <code>revert</code> 提交里就是删除。<br><code>revert</code> 会生成一个新的提交记录，但不适合回退多个提交。</p>
-</li>
-<li><p>reset<br><code>reset</code> 的原理是把 <code>HEAD</code> 的指向，并删除回退后的版本之后的提交(被删除的提交可以通过 git reflog 查看)。<code>git reset --hard &lt;commit_id&gt;</code><br>但是由于是本地回退版本，所以在推送至远端时，需要使用 <code>git push -f origin master</code> 的命令象只覆盖远端分支。由于我们的远端仓库大部分都是对 <code>master</code> 分支进行保护不允许使用 <code>-f</code> 强制覆盖。我们可以先回退 <code>develop</code> 分支, 在 <code>develop</code> 分支上在创建一次提交(该提交已经领先于远端<code>master</code>分支), 再提交至远端 <code>develop</code> 分支后 <code>merge</code>。</p>
-</li>
-</ol>
-<h2 id="场景：-想要找到某个特定业务的所有提交"><a href="#场景：-想要找到某个特定业务的所有提交" class="headerlink" title="场景： 想要找到某个特定业务的所有提交"></a>场景： 想要找到某个特定业务的所有提交</h2><p>假设我们的commit的信息都是采用模板来填写的，且已经有大量的<code>commit</code>时候，需要过滤检索一些特定提交信息的<code>commit</code>。</p>
-<p>提出问题： 如何使用关键字搜索提交信息</p>
-<p>解决方案：<br>使用git自带的文字搜索功能<code>git log --all --grep=&#39;TrainPosCall&#39;</code>, 搜索提交信息中带有<code>TrainPosCall</code>的<code>commit</code>。</p>
-<h2 id="场景：-想要确认代码的改动"><a href="#场景：-想要确认代码的改动" class="headerlink" title="场景： 想要确认代码的改动"></a>场景： 想要确认代码的改动</h2><p>想要分步提交修改库函数的文件和修改业务逻辑的文件，需要确认每个文件的改动。</p>
-<p>提出问题： 怎么查看已修改的代码对比之前的版本</p>
-<p>解决方案：</p>
-<ol>
-<li>查看尚未缓存的改动：<code>git diff</code></li>
-<li>查看已缓存的改动： <code>git diff --cached</code>, <code>git diff --staged</code></li>
-<li>查看已缓存的与未缓存的所有改动：<code>git diff HEAD</code></li>
-<li>显示摘要而非整个 diff： <code>git diff --stat</code></li>
-<li>版本号与版本号之间的差别: <code>git diff &lt;SHA&gt; &lt;SHA&gt;</code></li>
-</ol>
-<h2 id="场景误删除分支"><a href="#场景误删除分支" class="headerlink" title="场景误删除分支"></a>场景误删除分支</h2><p>在误删除分支后，可以使用 <code>git reflog</code> 来查看分支的<code>commit id</code>并使用该<code>commit id</code>来创建一个新的分支<br><code>git branch recover-branch [commit id]</code></p>
-<h2 id="场景-git-账户修改密码"><a href="#场景-git-账户修改密码" class="headerlink" title="场景: git 账户修改密码"></a>场景: git 账户修改密码</h2><p>操作<code>git</code>时, 出现错误</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">remote: HTTP Basic: Access denied</span><br></pre></td></tr></table></figure>
-
-<p>管理员权限输入以下命令后在命令行中操作<code>git</code>，重新输入用户名，密码。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --system --unset credential.helper</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://git-scm.com/docs">git Reference</a></p>
-<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2">Pro Git</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903965625155597">Git新手教程-添加忽略文件(十)</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.freecodecamp.org/news/git-cheat-sheet/">Git Cheat Sheet – 50 Git Commands You Should Know</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-diff.html">git diff 命令</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.atlassian.com/git/tutorials/saving-changes/git-diff">Git diff</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ibingshan/p/10783552.html">git clean 删除忽略文件 和 未被跟踪文件及文件夹</a></p>
-<p><a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-branch">git-branch - List, create, or delete branches</a></p>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/7124914/how-to-search-a-git-repository-by-commit-message/7124949#7124949">How to search a Git repository by commit message?</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-09-24-C++%E7%B1%BB%E5%9E%8B%E5%A4%A7%E5%B0%8F(32bit%E4%B8%8E64bit)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1570,7 +1366,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-05-09-C++%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%8D%E5%88%B6/">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-06-26-Git-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1584,7 +1380,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/07/21/2021-05-09-C++%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%8D%E5%88%B6/" class="post-title-link" itemprop="url">C++ 关于对象的复制</a>
+            <a href="/2023/07/21/2021-06-26-Git-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/" class="post-title-link" itemprop="url">Git使用场景</a>
         </h2>
 
         <div class="post-meta">
@@ -1615,15 +1411,146 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>通常我们使用对象内的拷贝构造函数和拷贝构造符来进行初始化和拷贝。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/// 拷贝构造函数</span></span><br><span class="line">    <span class="built_in">A</span>(<span class="type">const</span> A&amp; other)</span><br><span class="line">    &#123;</span><br><span class="line">        i = other.i;</span><br><span class="line">        vec = other.vec;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 拷贝赋值符</span></span><br><span class="line">    A&amp; <span class="keyword">operator</span>=(<span class="type">const</span> A&amp; other)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span> != &amp;other)</span><br><span class="line">        &#123;</span><br><span class="line">            i = other.i;</span><br><span class="line">            vec = other.vec;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">A foo;</span><br><span class="line"><span class="function">A <span class="title">bar</span><span class="params">(foo)</span></span>; <span class="comment">///&lt; 在这里调用拷贝构造函数</span></span><br><span class="line">A bar2;</span><br><span class="line">bar2 = foo; <span class="comment">///&lt; 这里调用拷贝赋值符</span></span><br></pre></td></tr></table></figure>
+          <p>Git 使用场景</p>
+<h2 id="场景：仓库中的临时文件"><a href="#场景：仓库中的临时文件" class="headerlink" title="场景：仓库中的临时文件"></a>场景：仓库中的临时文件</h2><p>我们编译出来了大量临时文件或很大的二进制文件，如 .o, .lib文件，这些文件不想上传。</p>
+<p>提出问题： 想要在本文件夹中做版本控制，但需要忽略某些特定的文件</p>
+<p>解决方案： 使用.gitignore文件来标记不想要进行版本控制的临时文件。</p>
+<p>.gitignore 文件的用法:</p>
+<p>.gitignore文件是由我们自己创建, 并默认放置在仓库的根目录。<br>Git 默认会忽略<code>.gitignore</code>中的文件名的大小写, 不过我们可以通过<code>git config core.ignorecase false</code>，来设置为不忽略大小写。</p>
+<ol>
+<li>文件内容格式</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vim .gitignore</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">忽略.lib为后缀的文件</span></span><br><span class="line">*.lib</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">libmysql.lib 这个文件不忽略</span></span><br><span class="line">!libmysql.lib</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">忽略所有的bin文件夹</span></span><br><span class="line">bin/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">忽略根目录下的bin文件夹</span></span><br><span class="line">/bin/</span><br></pre></td></tr></table></figure>
 
-<h2 id="关于memset"><a href="#关于memset" class="headerlink" title="关于memset"></a>关于memset</h2><p>首先说结论，不推荐使用<code>memset</code>对某个对象进行擦写内存。因为可能导致未定义行为。<br>具体可以查看<code>stackflow</code>上的这个问题 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2481654/memset-for-initialization-in-c">memset for initialization in C++</a>和<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/6421818/c-use-memset-or-a-struct-constructor-whats-the-fastest">Use memset or a struct constructor? What’s the fastest?</a></p>
-<p>你可以使用构造函数进行初始化，也可以定义成员函数<code>clear()</code>， 或是使用<code>std::fill</code>, <code>std::fill_n</code>。<br>在使用函数<code>memset</code>时，有部分限定条件，只有目标对象为POD类型才可以使用。</p>
-<p>简单来说就是，该对象如果没有继承，都是基础类型(如: <code>int</code>、<code>char</code>或其他<code>POD</code>类型), 没有包含如<code>std::array</code>, <code>std::vector</code>等STL容器, 该对象可以称为<code>POD</code>类型。如下面示例</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">pod</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> ac[<span class="number">12</span>];</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="type">float</span> f;</span><br><span class="line">  <span class="type">long</span> l;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>关于<code>POD</code>具体查看<a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/named_req/PODType">C++ named requirements: PODType</a></p>
-<h2 id="关于memcpy"><a href="#关于memcpy" class="headerlink" title="关于memcpy"></a>关于memcpy</h2><p>结论是，不推荐使用，同样除了你能确保该对象为<code>POD</code>类型，否则则会导致未定义现象。<br>可以使用拷贝构造函数或拷贝赋值符，或是<code>std::copy</code>或<code>std::copy_n</code>来代替<code>memcpy</code>;</p>
+<ol start="2">
+<li>已经被忽略的文件如何添加到暂存区: <code>git add -f &lt;filename&gt;</code></li>
+<li>已经添加到暂存区中的文件如何忽略: <code>git rm --cached &lt;filename&gt;</code></li>
+</ol>
+<h2 id="场景-不小心提交了一个临时文件"><a href="#场景-不小心提交了一个临时文件" class="headerlink" title="场景: 不小心提交了一个临时文件"></a>场景: 不小心提交了一个临时文件</h2><p>我们对<strong>这个临时文件不想做版本跟踪</strong>，但是在<code>.gitignore</code>文件中添加该文件，这个文件仍然会被追踪。</p>
+<p>提出问题: 如何忽略一个已经被追踪的文件?</p>
+<p>解决方案：</p>
+<ol>
+<li><code>git rm filename</code>直接从仓库中删除该文件，并把该改动commit后，随后在<code>.gitignore</code>中添加该文件为忽略。</li>
+<li><code>git update-index --assume-unchanged &lt;filename&gt;</code>, 这个操作不会删除该文件，也不用提交，但命令太长</li>
+</ol>
+<h2 id="场景-需要标记一个特定的版本"><a href="#场景-需要标记一个特定的版本" class="headerlink" title="场景: 需要标记一个特定的版本"></a>场景: 需要标记一个特定的版本</h2><p>当我们的代码进入到比较稳定，或者开发出了一个功能，需要标记一个commit来作为稳定版本的基准。</p>
+<p>提出问题： 如何为commit添加标记和备注信息</p>
+<p>解决方案： 使用<code>git tag</code>为版本打标签</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -a vx.x.x -m &quot;message&quot;</span><br><span class="line">git push origin tags    ///&lt; 推送到远端</span><br></pre></td></tr></table></figure>
+
+<h2 id="场景-修改远端标签名称"><a href="#场景-修改远端标签名称" class="headerlink" title="场景: 修改远端标签名称"></a>场景: 修改远端标签名称</h2><p>修改tag名 v1.0重命名v2.0</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git tag 新tag名称 旧tag名称</span><br><span class="line">git tag -d 旧tag名称</span><br><span class="line">git push origin :refs/tags/旧tag名称</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+
+<h2 id="场景：-开发一个功能"><a href="#场景：-开发一个功能" class="headerlink" title="场景： 开发一个功能"></a>场景： 开发一个功能</h2><p>某项功能可能开发时间较久，但又想把未完成的代码上传到远端版本库，来实现多台电脑同步。</p>
+<p>例如：在开发随车通信需求时，在<code>linux</code>上编译<code>dis</code>，而我开发的环境在<code>windows</code>上, 当我在本地<code>window</code>开发的临时代码，想要放到<code>linux</code>机器上，这时我们需要分支来对代码的同步。</p>
+<p>提出问题： 怎样才能在不影响远端仓库的代码的情况下，在远端备份开发过程代码？</p>
+<p>解决方法： 使用 git branch<br>brunch 介绍:<br>brunch意味着你可以从主分支中，分叉出来一个分支来提交代码而不影响主分支的代码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/// 创建并切换到分支</span><br><span class="line">git checkout -b &lt;branch_name&gt;</span><br><span class="line"></span><br><span class="line">/// 做相应的提交，修改</span><br><span class="line">git add .</span><br><span class="line">git commit -m&quot;some comment&quot;</span><br><span class="line"></span><br><span class="line">/// 把本地分支上传到远端</span><br><span class="line">git push origin &lt;branch_name&gt;</span><br><span class="line"></span><br><span class="line">/// 切换到另一台电脑上，拉去自己的分支</span><br><span class="line">git pull origin &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>合并分支:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout develop    ///&lt; 当前处于develop分支下</span><br><span class="line">git merge master   ///&lt; 把master的东西合入到当前分支，方便在自己开发的分支上处理冲突</span><br><span class="line">git checkout master    ///&lt; 切换到master分支</span><br><span class="line">git merge develop    ///&lt; 把develop合并到当前分支</span><br><span class="line">git branch -d future    ///&lt; 把合并过的分支删除</span><br></pre></td></tr></table></figure>
+
+<h2 id="场景：临时切换分支"><a href="#场景：临时切换分支" class="headerlink" title="场景：临时切换分支"></a>场景：临时切换分支</h2><p>我们会遇到临时切换回主分支的情况。<br>例如： 当我在开发随车通信功能开发一半时，雷总让我在仓库中提交一个文档。如果我在自己的开发分支上上传该文档，那么在<code>master</code>分支上会没有这个文档，其他人也获取不到，所以只能切换回<code>master</code>分支上进行上传。</p>
+<p>提出问题： 快速切换分支，做完提交，切换回开发分支时，工作区应跟切换分支前一样。</p>
+<p>解决方案：<br>那么现在分为两种情况：</p>
+<ol>
+<li>我们工作区没有未被commit的文件，那么我们直接<code>git checkout &lt;branch_name&gt;</code>, 即可切换到相应的分支。</li>
+<li>我们工作区有很多未被commit的代码，这时我们可以选择，把工作区内代码全部commit或者选择使用<code>git stash</code>来临时把未被commit的代码给存储起来， 在我们切换回开发分支时，再把临时存储的代码拿出来。</li>
+</ol>
+<p><code>stash</code>介绍：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/// 把所有未commit的文件(工作区、暂存区里的文件)都放入一个临时的分支，使工作区可以切换分支</span><br><span class="line">git stash</span><br><span class="line">或</span><br><span class="line">git stash save &quot;some comment&quot;</span><br><span class="line"></span><br><span class="line">/// 切换到其他分支，并做一些提交, 并切换回自己的开发分支</span><br><span class="line">git checkout master</span><br><span class="line">git add .</span><br><span class="line">git commit -m&quot;some comment&quot;</span><br><span class="line">git checkout develop</span><br><span class="line"></span><br><span class="line">/// 把临时存储的代码给拿出来，放入工作区(之前暂存区的文件在pop后的状态是到工作区)</span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure>
+
+<p><code>git stash --include-untracked</code>或<code>git stash -u</code> 来存储未被跟踪的文件</p>
+<h2 id="场景：-某个commit，提交错分支了"><a href="#场景：-某个commit，提交错分支了" class="headerlink" title="场景： 某个commit，提交错分支了"></a>场景： 某个commit，提交错分支了</h2><p>开发过程中，突然出现了一个<code>BUG</code>需要立即修复，我们急着修复，把修复的代码放入了正在大改开发分支上。<br>提出问题： 我们需要怎样，把主分支上的<code>BUG</code>给修正过来<br>解决方案:</p>
+<ol>
+<li>切换到主分支，再次把刚才修改的文件，同样在主分支上进行修改，再次进行提交。</li>
+<li>切换到主分支，使用<code>git cherry-pick &lt;SHA&gt;</code>把特定提交给放到主分支中。</li>
+</ol>
+<p>方案一存在修改的不一致，当后面需要合并分支时，需要处理冲突。<br>方案二快速提交，不用再次使用手动修改文件。</p>
+<p><code>git cherry-pick &lt;SHA&gt;</code>用法示例：<br>该操作会把特定的commit给，放入当前所在的分支，并产生一个新的提交</p>
+<p>之前分支的情况：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a - b - c - d - f   Master</span><br><span class="line">        \</span><br><span class="line">        e - f - g Feature</span><br></pre></td></tr></table></figure>
+
+<p><code>cherry-pick</code>操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/// 切换到</span><br><span class="line">git checkout master</span><br><span class="line">/// 把提交f给提交到本分支</span><br><span class="line">git cherry-pick f</span><br></pre></td></tr></table></figure>
+
+<p>操作后的分支情况：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a - b - c - d - f   Master</span><br><span class="line">    \</span><br><span class="line">    e - f - g       Feature</span><br></pre></td></tr></table></figure>
+
+<h2 id="场景-commit的信息输入错了"><a href="#场景-commit的信息输入错了" class="headerlink" title="场景: commit的信息输入错了"></a>场景: commit的信息输入错了</h2><p>提出问题： 怎么修改提交的commit信息</p>
+<p>解决方案：</p>
+<ol>
+<li>修改最近一次提交的commit</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend</span><br><span class="line"></span><br><span class="line">/// 进入到提交的文件里面，默认使用vim打开</span><br><span class="line">/// 修改好提交信息，保存后退出</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>如果想要修改之前的commit</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3    ///&lt; 回退到HEAD前面第三个commit处</span><br><span class="line"></span><br><span class="line">/// 想要修改哪一个提交就把pick换成你想要的操作,edit</span><br><span class="line">git commit --amend</span><br><span class="line">/// 然后执行</span><br><span class="line">git rebase --continue</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>如果该 commit 已经 push 到远端</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend</span><br><span class="line">git push --force-with-lease origin &lt;分支名称&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="场景-开发到一半，发现修改的思路有误"><a href="#场景-开发到一半，发现修改的思路有误" class="headerlink" title="场景: 开发到一半，发现修改的思路有误"></a>场景: 开发到一半，发现修改的思路有误</h2><p>我们从远端仓库拉去最新代码，修改过程中，发现修改错误了，想再从已经提交的代码上重新开始。</p>
+<p>提出问题： 如何回退版本</p>
+<p>解决方案：</p>
+<ol>
+<li>没有commit想要回退， 只是清除工作区修改的代码, 如何让当前已经修改过的代码恢复到HEAD的最新提交代码一致, 即清除工作区修改的代码</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/// 清除所有没有被暂存的改动</span><br><span class="line">git checkout .</span><br><span class="line"></span><br><span class="line">/// 清除该文件没有被暂存的改动</span><br><span class="line">git checkout filename</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>想要撤销上一个commit</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/// 删除工作区改动的代码，撤销最近一次的commit，撤销git add .</span><br><span class="line">/// 注意完成这个操作后，就恢复到了上一次的commit状态。</span><br><span class="line">git reset --hard HEAD^</span><br><span class="line">/// HEAD 指向 commit_id 指向的提交</span><br><span class="line">git reset --hard &lt;commit_id&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>--hard</code>换成<code>--soft</code>, 则会保留已经暂存和修改的文件</li>
+<li><code>HEAD^</code>换成<code>HEAD~2</code>则可以回退两个commit</li>
+</ul>
+<h3 id="清除工作区的修改"><a href="#清除工作区的修改" class="headerlink" title="清除工作区的修改"></a>清除工作区的修改</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard &lt;commit_id&gt;    /// 返回到某个节点，不保留修改，已有的改动会丢失</span><br><span class="line">git reset --soft &lt;commit_id&gt;    /// 返回到某个节点，保留修改，已有的改动会保留，在未提交中， `git status` 或 `git diff` 查看</span><br><span class="line"></span><br><span class="line">git clean -df /// 返回到某个节点(未跟踪文件的删除)</span><br><span class="line">git clean -n  /// 不实际删除，展示即将哪些文件要被删除</span><br><span class="line">git clean -f  /// 不实际删除，展示即将哪些文件要被删除</span><br><span class="line">git clean -i  /// 显示将要删除的文件</span><br><span class="line">git clean -d  /// 递归删除目录及文件(未跟踪的文件)</span><br><span class="line">git clean -q  /// 仅显示错误，成功删除的文件不显示</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clean -nxdf /// 查看要删除的文件及目录，确认无误后再使用下面的命令进行删除</span><br><span class="line">git checkout . &amp;&amp; git clean -xdf</span><br></pre></td></tr></table></figure>
+
+<h3 id="revert-和-reset"><a href="#revert-和-reset" class="headerlink" title="revert 和 reset"></a>revert 和 reset</h3><ol>
+<li><p>revert<br>首先肯定的是 <code>revert</code>，<code>git revert commit_id</code> 能产生一个 与 <code>commit_id</code> 完全相反的提交，即 <code>commit_id</code> 里是添加， <code>revert</code> 提交里就是删除。<br><code>revert</code> 会生成一个新的提交记录，但不适合回退多个提交。</p>
+</li>
+<li><p>reset<br><code>reset</code> 的原理是把 <code>HEAD</code> 的指向，并删除回退后的版本之后的提交(被删除的提交可以通过 git reflog 查看)。<code>git reset --hard &lt;commit_id&gt;</code><br>但是由于是本地回退版本，所以在推送至远端时，需要使用 <code>git push -f origin master</code> 的命令象只覆盖远端分支。由于我们的远端仓库大部分都是对 <code>master</code> 分支进行保护不允许使用 <code>-f</code> 强制覆盖。我们可以先回退 <code>develop</code> 分支, 在 <code>develop</code> 分支上在创建一次提交(该提交已经领先于远端<code>master</code>分支), 再提交至远端 <code>develop</code> 分支后 <code>merge</code>。</p>
+</li>
+</ol>
+<h2 id="场景：-想要找到某个特定业务的所有提交"><a href="#场景：-想要找到某个特定业务的所有提交" class="headerlink" title="场景： 想要找到某个特定业务的所有提交"></a>场景： 想要找到某个特定业务的所有提交</h2><p>假设我们的commit的信息都是采用模板来填写的，且已经有大量的<code>commit</code>时候，需要过滤检索一些特定提交信息的<code>commit</code>。</p>
+<p>提出问题： 如何使用关键字搜索提交信息</p>
+<p>解决方案：<br>使用git自带的文字搜索功能<code>git log --all --grep=&#39;TrainPosCall&#39;</code>, 搜索提交信息中带有<code>TrainPosCall</code>的<code>commit</code>。</p>
+<h2 id="场景：-想要确认代码的改动"><a href="#场景：-想要确认代码的改动" class="headerlink" title="场景： 想要确认代码的改动"></a>场景： 想要确认代码的改动</h2><p>想要分步提交修改库函数的文件和修改业务逻辑的文件，需要确认每个文件的改动。</p>
+<p>提出问题： 怎么查看已修改的代码对比之前的版本</p>
+<p>解决方案：</p>
+<ol>
+<li>查看尚未缓存的改动：<code>git diff</code></li>
+<li>查看已缓存的改动： <code>git diff --cached</code>, <code>git diff --staged</code></li>
+<li>查看已缓存的与未缓存的所有改动：<code>git diff HEAD</code></li>
+<li>显示摘要而非整个 diff： <code>git diff --stat</code></li>
+<li>版本号与版本号之间的差别: <code>git diff &lt;SHA&gt; &lt;SHA&gt;</code></li>
+</ol>
+<h2 id="场景误删除分支"><a href="#场景误删除分支" class="headerlink" title="场景误删除分支"></a>场景误删除分支</h2><p>在误删除分支后，可以使用 <code>git reflog</code> 来查看分支的<code>commit id</code>并使用该<code>commit id</code>来创建一个新的分支<br><code>git branch recover-branch [commit id]</code></p>
+<h2 id="场景-git-账户修改密码"><a href="#场景-git-账户修改密码" class="headerlink" title="场景: git 账户修改密码"></a>场景: git 账户修改密码</h2><p>操作<code>git</code>时, 出现错误</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">remote: HTTP Basic: Access denied</span><br></pre></td></tr></table></figure>
+
+<p>管理员权限输入以下命令后在命令行中操作<code>git</code>，重新输入用户名，密码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --system --unset credential.helper</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://git-scm.com/docs">git Reference</a></p>
+<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2">Pro Git</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903965625155597">Git新手教程-添加忽略文件(十)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freecodecamp.org/news/git-cheat-sheet/">Git Cheat Sheet – 50 Git Commands You Should Know</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-diff.html">git diff 命令</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.atlassian.com/git/tutorials/saving-changes/git-diff">Git diff</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ibingshan/p/10783552.html">git clean 删除忽略文件 和 未被跟踪文件及文件夹</a></p>
+<p><a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-branch">git-branch - List, create, or delete branches</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/7124914/how-to-search-a-git-repository-by-commit-message/7124949#7124949">How to search a Git repository by commit message?</a></p>
 
       
     </div>
@@ -1782,6 +1709,79 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">IncreaseA</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    a++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">IncreaseB</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    b++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">IncreaseA</span>() || !<span class="built_in">IncreaseB</span>())</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="为空语句创建一个DoNothing-预处理宏或者内联函数"><a href="#为空语句创建一个DoNothing-预处理宏或者内联函数" class="headerlink" title="为空语句创建一个DoNothing()预处理宏或者内联函数"></a>为空语句创建一个DoNothing()预处理宏或者内联函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(recordArray.<span class="built_in">Read</span>(index++) != recordArray.<span class="built_in">EmptyRecord</span>())</span><br><span class="line">&#123;</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DoNothing()</span></span><br><span class="line"><span class="keyword">while</span>(...)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">DoNothing</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-05-09-C++%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%8D%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jiancong Li">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jiancong Li's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2021-05-09-C++%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%8D%E5%88%B6/" class="post-title-link" itemprop="url">C++ 关于对象的复制</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>通常我们使用对象内的拷贝构造函数和拷贝构造符来进行初始化和拷贝。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/// 拷贝构造函数</span></span><br><span class="line">    <span class="built_in">A</span>(<span class="type">const</span> A&amp; other)</span><br><span class="line">    &#123;</span><br><span class="line">        i = other.i;</span><br><span class="line">        vec = other.vec;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 拷贝赋值符</span></span><br><span class="line">    A&amp; <span class="keyword">operator</span>=(<span class="type">const</span> A&amp; other)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span> != &amp;other)</span><br><span class="line">        &#123;</span><br><span class="line">            i = other.i;</span><br><span class="line">            vec = other.vec;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">A foo;</span><br><span class="line"><span class="function">A <span class="title">bar</span><span class="params">(foo)</span></span>; <span class="comment">///&lt; 在这里调用拷贝构造函数</span></span><br><span class="line">A bar2;</span><br><span class="line">bar2 = foo; <span class="comment">///&lt; 这里调用拷贝赋值符</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="关于memset"><a href="#关于memset" class="headerlink" title="关于memset"></a>关于memset</h2><p>首先说结论，不推荐使用<code>memset</code>对某个对象进行擦写内存。因为可能导致未定义行为。<br>具体可以查看<code>stackflow</code>上的这个问题 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2481654/memset-for-initialization-in-c">memset for initialization in C++</a>和<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/6421818/c-use-memset-or-a-struct-constructor-whats-the-fastest">Use memset or a struct constructor? What’s the fastest?</a></p>
+<p>你可以使用构造函数进行初始化，也可以定义成员函数<code>clear()</code>， 或是使用<code>std::fill</code>, <code>std::fill_n</code>。<br>在使用函数<code>memset</code>时，有部分限定条件，只有目标对象为POD类型才可以使用。</p>
+<p>简单来说就是，该对象如果没有继承，都是基础类型(如: <code>int</code>、<code>char</code>或其他<code>POD</code>类型), 没有包含如<code>std::array</code>, <code>std::vector</code>等STL容器, 该对象可以称为<code>POD</code>类型。如下面示例</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">pod</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> ac[<span class="number">12</span>];</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="type">float</span> f;</span><br><span class="line">  <span class="type">long</span> l;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>关于<code>POD</code>具体查看<a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/named_req/PODType">C++ named requirements: PODType</a></p>
+<h2 id="关于memcpy"><a href="#关于memcpy" class="headerlink" title="关于memcpy"></a>关于memcpy</h2><p>结论是，不推荐使用，同样除了你能确保该对象为<code>POD</code>类型，否则则会导致未定义现象。<br>可以使用拷贝构造函数或拷贝赋值符，或是<code>std::copy</code>或<code>std::copy_n</code>来代替<code>memcpy</code>;</p>
+
       
     </div>
 
