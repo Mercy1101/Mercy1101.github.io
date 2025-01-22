@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="我们假设人是会出错的，所以我们需要调试找寻 BUG 我们假设框架和流程设计基本正确，所以找寻问题的时间远大于改正问题的时间 我们假设人是懒惰的，所以总是倾向于写更少的代码  PPT 调试日志打印类转换字符串 to_string应用场景: 想要把某种类型转换为字符串 简单的转换: 1printf(&quot;%d&quot;, i);  实际中可能用到的转换: 12345678910printf(">
+  <meta name="description" content="本文介绍了C++调试工具函数的设计与实现，重点围绕日志打印、时间管理、性能调优和业务辅助工具展开。通过封装to_string、string_stream、log_stream等工具，简化了日志打印和字符串拼接操作，提升了代码可读性和调试效率。时间管理工具如tick_count和stop_watch帮助开发者精确测量代码执行时间，性能调优工具如PROFILER和MEMORY_CHECK则用于优化代码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++调试工具函数介绍">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2022-09-13-C++%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="我们假设人是会出错的，所以我们需要调试找寻 BUG 我们假设框架和流程设计基本正确，所以找寻问题的时间远大于改正问题的时间 我们假设人是懒惰的，所以总是倾向于写更少的代码  PPT 调试日志打印类转换字符串 to_string应用场景: 想要把某种类型转换为字符串 简单的转换: 1printf(&quot;%d&quot;, i);  实际中可能用到的转换: 12345678910printf(">
+<meta property="og:description" content="本文介绍了C++调试工具函数的设计与实现，重点围绕日志打印、时间管理、性能调优和业务辅助工具展开。通过封装to_string、string_stream、log_stream等工具，简化了日志打印和字符串拼接操作，提升了代码可读性和调试效率。时间管理工具如tick_count和stop_watch帮助开发者精确测量代码执行时间，性能调优工具如PROFILER和MEMORY_CHECK则用于优化代码">
 <meta property="og:locale">
 <meta property="og:image" content="https://mercy1101.github.io/resource/2021_09_13_C++%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D_%E6%9D%8E%E5%BB%BA%E8%81%AA/Benchmark_gos_log.png">
 <meta property="og:image" content="https://mercy1101.github.io/resource/2021_09_13_C++%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D_%E6%9D%8E%E5%BB%BA%E8%81%AA/Benchmark_log_stream.png">
 <meta property="og:image" content="https://mercy1101.github.io/resource/2021_09_13_C++%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D_%E6%9D%8E%E5%BB%BA%E8%81%AA/log_stream.png">
 <meta property="article:published_time" content="2023-07-21T05:28:45.226Z">
-<meta property="article:modified_time" content="2023-10-28T06:29:44.899Z">
+<meta property="article:modified_time" content="2025-01-22T08:05:56.179Z">
 <meta property="article:author" content="Jiancong Li">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://mercy1101.github.io/resource/2021_09_13_C++%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D_%E6%9D%8E%E5%BB%BA%E8%81%AA/Benchmark_gos_log.png">
@@ -217,7 +217,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+                <time title="Modified: 2025-01-22 16:05:56" itemprop="dateModified" datetime="2025-01-22T16:05:56+08:00">2025-01-22</time>
               </span>
 
           
@@ -231,7 +231,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
+        <p>本文介绍了C++调试工具函数的设计与实现，重点围绕日志打印、时间管理、性能调优和业务辅助工具展开。通过封装to_string、string_stream、log_stream等工具，简化了日志打印和字符串拼接操作，提升了代码可读性和调试效率。时间管理工具如tick_count和stop_watch帮助开发者精确测量代码执行时间，性能调优工具如PROFILER和MEMORY_CHECK则用于优化代码性能和检测内存泄漏。此外，业务辅助工具如clamp、heartbeat和json_parser为常见业务场景提供了便捷的解决方案。整体设计基于“人易出错、懒惰”的假设，旨在减少调试时间，提升开发效率。</p>
+<span id="more"></span>
+
+<ul>
 <li>我们假设人是会出错的，所以我们需要调试找寻 BUG</li>
 <li>我们假设框架和流程设计基本正确，所以<strong>找寻问题的时间</strong>远大于<strong>改正问题的时间</strong></li>
 <li>我们假设人是懒惰的，所以总是倾向于写更少的代码</li>
@@ -681,7 +684,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -692,7 +695,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

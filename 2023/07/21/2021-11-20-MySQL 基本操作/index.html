@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="查询最简单的查询语句： 查询 dcuser 表中所有字段。 简单查询1SELECT * FROM dcuser;  以上语句在代码中禁止使用，因为在数据库扩展时，SELECT * 语句对应的结构体如果没有增加字段，则会出现未知错误。 指定字段查询1SELECT UserID, Name, DCType, DepotID FROM dcuser;  输出:    UserID Name DCType">
+  <meta name="description" content="本文详细介绍了SQL查询的基础与进阶操作，涵盖了简单查询、指定字段查询、条件过滤、模糊查询、排序、分组、聚合函数、子查询、连接查询等常用技巧。通过实例演示了如何高效地从数据库中提取数据，并深入探讨了WHERE与HAVING的区别、DISTINCT去重、CASE WHEN条件赋值等高级用法。此外，还介绍了表的操作（如重命名、删除、清空）以及插入数据时的主键冲突处理。文章内容实用，适合初学者和进阶者参">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL 基本操作">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2021-11-20-MySQL%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="查询最简单的查询语句： 查询 dcuser 表中所有字段。 简单查询1SELECT * FROM dcuser;  以上语句在代码中禁止使用，因为在数据库扩展时，SELECT * 语句对应的结构体如果没有增加字段，则会出现未知错误。 指定字段查询1SELECT UserID, Name, DCType, DepotID FROM dcuser;  输出:    UserID Name DCType">
+<meta property="og:description" content="本文详细介绍了SQL查询的基础与进阶操作，涵盖了简单查询、指定字段查询、条件过滤、模糊查询、排序、分组、聚合函数、子查询、连接查询等常用技巧。通过实例演示了如何高效地从数据库中提取数据，并深入探讨了WHERE与HAVING的区别、DISTINCT去重、CASE WHEN条件赋值等高级用法。此外，还介绍了表的操作（如重命名、删除、清空）以及插入数据时的主键冲突处理。文章内容实用，适合初学者和进阶者参">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-07-21T05:28:45.223Z">
-<meta property="article:modified_time" content="2023-10-28T06:29:44.907Z">
+<meta property="article:modified_time" content="2025-01-22T08:14:54.391Z">
 <meta property="article:author" content="Jiancong Li">
 <meta name="twitter:card" content="summary">
 
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+                <time title="Modified: 2025-01-22 16:14:54" itemprop="dateModified" datetime="2025-01-22T16:14:54+08:00">2025-01-22</time>
               </span>
 
           
@@ -227,7 +227,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>最简单的查询语句： 查询 <code>dcuser</code> 表中所有字段。</p>
+        <p>本文详细介绍了SQL查询的基础与进阶操作，涵盖了简单查询、指定字段查询、条件过滤、模糊查询、排序、分组、聚合函数、子查询、连接查询等常用技巧。通过实例演示了如何高效地从数据库中提取数据，并深入探讨了<code>WHERE</code>与<code>HAVING</code>的区别、<code>DISTINCT</code>去重、<code>CASE WHEN</code>条件赋值等高级用法。此外，还介绍了表的操作（如重命名、删除、清空）以及插入数据时的主键冲突处理。文章内容实用，适合初学者和进阶者参考，帮助读者掌握SQL查询的核心技能。</p>
+<span id="more"></span>
+
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>最简单的查询语句： 查询 <code>dcuser</code> 表中所有字段。</p>
 <h3 id="简单查询"><a href="#简单查询" class="headerlink" title="简单查询"></a>简单查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> dcuser;</span><br></pre></td></tr></table></figure>
 
 <p>以上语句在代码中禁止使用，因为在数据库扩展时，<code>SELECT *</code> 语句对应的结构体如果没有增加字段，则会出现未知错误。</p>
@@ -524,8 +527,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/07/21/2021-09-24-C++%E7%B1%BB%E5%9E%8B%E5%A4%A7%E5%B0%8F(32bit%E4%B8%8E64bit)/" rel="prev" title="C++ 类型大小(32bit 与 64bit)">
-      <i class="fa fa-chevron-left"></i> C++ 类型大小(32bit 与 64bit)
+    <a href="/2023/07/21/2021-06-26-Git-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/" rel="prev" title="Git使用场景">
+      <i class="fa fa-chevron-left"></i> Git使用场景
     </a></div>
       <div class="post-nav-item">
     <a href="/2023/07/21/2021-10-23-C++%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B/" rel="next" title="面对对象简介与 C++ 类的基本介绍">
@@ -603,7 +606,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -614,7 +617,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

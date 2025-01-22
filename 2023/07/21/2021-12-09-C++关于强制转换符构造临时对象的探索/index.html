@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="验证背景12345678#define TO_STR(x)   ((AnsiString)x).c_str()BOOL Dict::GetID(TcxComboBox *cb, UINT32 *pulID)&#123;    CHAR *szValue &#x3D; TO_STR(cb-&gt;Text);    return GetID(szValue, pulID);&#125;  上面的代码中 TO_">
+  <meta name="description" content="本文通过实验验证了C++中临时对象的生命周期问题，特别是UnicodeString和AnsiString之间的转换。实验结果表明，使用强制类型转换符时，编译器会构造临时对象，并在该行结束后立即析构。尽管从临时对象中获取的指针可能存在潜在问题，但在C++ Builder、VS2010、VS2019和g++中均未出现编译警告或运行崩溃。此外，获取临时对象的引用在某些编译器中会引发警告或错误。结论是，尽">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ 关于强制转换符构造临时对象的探索">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2021-12-09-C++%E5%85%B3%E4%BA%8E%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2%E7%AC%A6%E6%9E%84%E9%80%A0%E4%B8%B4%E6%97%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%8E%A2%E7%B4%A2/index.html">
 <meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="验证背景12345678#define TO_STR(x)   ((AnsiString)x).c_str()BOOL Dict::GetID(TcxComboBox *cb, UINT32 *pulID)&#123;    CHAR *szValue &#x3D; TO_STR(cb-&gt;Text);    return GetID(szValue, pulID);&#125;  上面的代码中 TO_">
+<meta property="og:description" content="本文通过实验验证了C++中临时对象的生命周期问题，特别是UnicodeString和AnsiString之间的转换。实验结果表明，使用强制类型转换符时，编译器会构造临时对象，并在该行结束后立即析构。尽管从临时对象中获取的指针可能存在潜在问题，但在C++ Builder、VS2010、VS2019和g++中均未出现编译警告或运行崩溃。此外，获取临时对象的引用在某些编译器中会引发警告或错误。结论是，尽">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-07-21T05:28:45.224Z">
-<meta property="article:modified_time" content="2023-10-28T06:29:44.905Z">
+<meta property="article:modified_time" content="2025-01-22T08:09:16.808Z">
 <meta property="article:author" content="Jiancong Li">
 <meta name="twitter:card" content="summary">
 
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+                <time title="Modified: 2025-01-22 16:09:16" itemprop="dateModified" datetime="2025-01-22T16:09:16+08:00">2025-01-22</time>
               </span>
 
           
@@ -227,7 +227,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="验证背景"><a href="#验证背景" class="headerlink" title="验证背景"></a>验证背景</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> TO_STR(x)   ((AnsiString)x).c_str()</span></span><br><span class="line"></span><br><span class="line"><span class="function">BOOL <span class="title">Dict::GetID</span><span class="params">(TcxComboBox *cb, UINT32 *pulID)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    CHAR *szValue = <span class="built_in">TO_STR</span>(cb-&gt;Text);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">GetID</span>(szValue, pulID);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>本文通过实验验证了C++中临时对象的生命周期问题，特别是UnicodeString和AnsiString之间的转换。实验结果表明，使用强制类型转换符时，编译器会构造临时对象，并在该行结束后立即析构。尽管从临时对象中获取的指针可能存在潜在问题，但在C++ Builder、VS2010、VS2019和g++中均未出现编译警告或运行崩溃。此外，获取临时对象的引用在某些编译器中会引发警告或错误。结论是，尽管临时对象的指针使用可能不安全，但在实际测试中并未导致崩溃。</p>
+<span id="more"></span>
+
+<h2 id="验证背景"><a href="#验证背景" class="headerlink" title="验证背景"></a>验证背景</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> TO_STR(x)   ((AnsiString)x).c_str()</span></span><br><span class="line"></span><br><span class="line"><span class="function">BOOL <span class="title">Dict::GetID</span><span class="params">(TcxComboBox *cb, UINT32 *pulID)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    CHAR *szValue = <span class="built_in">TO_STR</span>(cb-&gt;Text);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">GetID</span>(szValue, pulID);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上面的代码中 <code>TO_STR(x)</code> 宏定义，我理解为通过 <code>x</code> 构造出一个临时 <code>AnsiString</code> 的对象, 并对该临时对象调用成员函数 <code>c_str()</code> 获得指向其内部的 <code>const char *</code>。<br>由于匿名的临时对象的生命周期是该行结束即结束，所以获取到的 <code>const char *</code> 指针不可使用。<br>为了探究这个问题，使用以下代码来验证我的想法。</p>
 <h2 id="验证过程"><a href="#验证过程" class="headerlink" title="验证过程"></a>验证过程</h2><p>由于 UnicodeString 不是标准库的对象，其源码繁杂且找不到手册，所以猜测 <code>UnicodeString</code> 与 <code>AnsiString</code> 的实现，分为两种:</p>
@@ -299,8 +302,8 @@
       <i class="fa fa-chevron-left"></i> C++ 编程风格建议
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/07/21/2021-12-02-%E7%BD%91%E8%AF%BE%E3%80%8A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6%E6%9E%B6%E6%9E%84%E3%80%8B%E7%AC%94%E8%AE%B0/" rel="next" title="网课《从零开始学架构》摘录">
-      网课《从零开始学架构》摘录 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/07/21/2022-06-17-C++%E5%AE%B9%E5%99%A8%E7%9A%84%E7%89%B9%E6%80%A7%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/" rel="next" title="C++容器的特性与适用场景">
+      C++容器的特性与适用场景 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -374,7 +377,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -385,7 +388,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

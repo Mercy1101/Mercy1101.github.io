@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="华为C++语言编程规范 规则3.7.1 if&#x2F;循环语句必须使用大括号123456789if (...)&#123;    return false;   &#x2F;&#x2F;&#x2F;&lt; Good&#125;while(true)&#123;    DoSomething();  &#x2F;&#x2F;&#x2F;&lt; Good&#125;  4.4.3 不用的代码段直接删除，不要注释掉被注释掉的代码，无法被正常维护；当企图恢复">
+  <meta name="description" content="本文详细介绍了华为C++编程规范的核心内容，涵盖了代码风格、类型转换、内存管理、函数设计等多个方面。规范强调代码的可读性、安全性和可维护性，建议使用现代C++特性（如auto、nullptr、override等）提升代码质量，同时避免使用不安全的操作（如reinterpret_cast、const_cast等）。文章还提供了大量代码示例，帮助开发者理解并遵循规范，从而编写出高效、健壮的C++代码。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="华为C++编程规范摘录">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2021-05-17-%E5%8D%8E%E4%B8%BAC++%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%E6%91%98%E5%BD%95/index.html">
 <meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="华为C++语言编程规范 规则3.7.1 if&#x2F;循环语句必须使用大括号123456789if (...)&#123;    return false;   &#x2F;&#x2F;&#x2F;&lt; Good&#125;while(true)&#123;    DoSomething();  &#x2F;&#x2F;&#x2F;&lt; Good&#125;  4.4.3 不用的代码段直接删除，不要注释掉被注释掉的代码，无法被正常维护；当企图恢复">
+<meta property="og:description" content="本文详细介绍了华为C++编程规范的核心内容，涵盖了代码风格、类型转换、内存管理、函数设计等多个方面。规范强调代码的可读性、安全性和可维护性，建议使用现代C++特性（如auto、nullptr、override等）提升代码质量，同时避免使用不安全的操作（如reinterpret_cast、const_cast等）。文章还提供了大量代码示例，帮助开发者理解并遵循规范，从而编写出高效、健壮的C++代码。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-07-21T05:28:45.221Z">
-<meta property="article:modified_time" content="2023-10-28T06:29:44.898Z">
+<meta property="article:modified_time" content="2025-01-22T08:18:51.480Z">
 <meta property="article:author" content="Jiancong Li">
 <meta name="twitter:card" content="summary">
 
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+                <time title="Modified: 2025-01-22 16:18:51" itemprop="dateModified" datetime="2025-01-22T16:18:51+08:00">2025-01-22</time>
               </span>
 
           
@@ -227,7 +227,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/openharmony-1.0-zh-cn/contribute-OpenHarmony-cpp-coding-style-guide.md">华为C++语言编程规范</a></p>
+        <p>本文详细介绍了华为C++编程规范的核心内容，涵盖了代码风格、类型转换、内存管理、函数设计等多个方面。规范强调代码的可读性、安全性和可维护性，建议使用现代C++特性（如<code>auto</code>、<code>nullptr</code>、<code>override</code>等）提升代码质量，同时避免使用不安全的操作（如<code>reinterpret_cast</code>、<code>const_cast</code>等）。文章还提供了大量代码示例，帮助开发者理解并遵循规范，从而编写出高效、健壮的C++代码。</p>
+<span id="more"></span>
+
+<p><a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/openharmony-1.0-zh-cn/contribute-OpenHarmony-cpp-coding-style-guide.md">华为C++语言编程规范</a></p>
 <h2 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h2><h3 id="3-7-1-if-循环语句必须使用大括号"><a href="#3-7-1-if-循环语句必须使用大括号" class="headerlink" title="3.7.1 if&#x2F;循环语句必须使用大括号"></a>3.7.1 if&#x2F;循环语句必须使用大括号</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (...)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;   <span class="comment">///&lt; Good</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">DoSomething</span>();  <span class="comment">///&lt; Good</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="4-4-3-不用的代码段直接删除，不要注释掉"><a href="#4-4-3-不用的代码段直接删除，不要注释掉" class="headerlink" title="4.4.3 不用的代码段直接删除，不要注释掉"></a>4.4.3 不用的代码段直接删除，不要注释掉</h3><p>被注释掉的代码，无法被正常维护；当企图恢复使用这段代码时，极有可能引入容易被忽略的缺陷。正确的做法是，不需要的代码直接删除掉。若再需要时，考虑移植或重写这段代码。使用版本控制来，记录代码。</p>
@@ -413,12 +416,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/" rel="prev" title="UML语法简介">
-      <i class="fa fa-chevron-left"></i> UML语法简介
+    <a href="/2023/07/21/2021-04-28-C++POD%E7%9A%84%E4%BB%8B%E7%BB%8D/" rel="prev" title="C++ POD的介绍">
+      <i class="fa fa-chevron-left"></i> C++ POD的介绍
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/07/21/2021-05-09-C++%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%8D%E5%88%B6/" rel="next" title="C++ 关于对象的复制">
-      C++ 关于对象的复制 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="next" title="读书笔记-《代码大全》">
+      读书笔记-《代码大全》 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -492,7 +495,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -503,7 +506,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

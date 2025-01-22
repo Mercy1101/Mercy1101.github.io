@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="C++11 中有两种捕获模式： 按引用和按值。按引用的默认捕获模式可能导致空悬引用，按值的默认捕获模式也无法对空悬引用免疫，而且会让你认为你的闭包是独立的(事实上它们可能不是独立的)。 按引用捕获会导致闭包包含指涉到局部变量的引用，或者指涉到定义lambda式的作用域内的形参的引用。一旦由lambda式所创建的闭包越过了该局部变量或形参的生命周期，那么闭包内的引用就会空悬。 12345678910">
+  <meta name="description" content="C++11引入的lambda表达式提供了按引用和按值两种捕获模式。在使用按引用捕获时，需警惕空悬引用问题，即闭包内的引用可能指向已销毁的局部变量或形参。 按值捕获虽然避免了空悬引用，但在捕获类成员时，仅捕获this指针的副本，而非成员变量的副本。lambda表达式不能捕获static变量，只能按引用使用。 相比于std::bind，lambda表达式更灵活，特别是在处理函数重载和延迟计算时，lam">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ lambda表达式">
 <meta property="og:url" content="https://mercy1101.github.io/2020/12/09/2020-12-09-C++%20lambda%20%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="C++11 中有两种捕获模式： 按引用和按值。按引用的默认捕获模式可能导致空悬引用，按值的默认捕获模式也无法对空悬引用免疫，而且会让你认为你的闭包是独立的(事实上它们可能不是独立的)。 按引用捕获会导致闭包包含指涉到局部变量的引用，或者指涉到定义lambda式的作用域内的形参的引用。一旦由lambda式所创建的闭包越过了该局部变量或形参的生命周期，那么闭包内的引用就会空悬。 12345678910">
+<meta property="og:description" content="C++11引入的lambda表达式提供了按引用和按值两种捕获模式。在使用按引用捕获时，需警惕空悬引用问题，即闭包内的引用可能指向已销毁的局部变量或形参。 按值捕获虽然避免了空悬引用，但在捕获类成员时，仅捕获this指针的副本，而非成员变量的副本。lambda表达式不能捕获static变量，只能按引用使用。 相比于std::bind，lambda表达式更灵活，特别是在处理函数重载和延迟计算时，lam">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-12-09T12:48:47.000Z">
-<meta property="article:modified_time" content="2023-10-28T06:29:44.900Z">
+<meta property="article:modified_time" content="2025-01-22T08:56:23.493Z">
 <meta property="article:author" content="Jiancong Li">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
@@ -214,7 +214,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+                <time title="Modified: 2025-01-22 16:56:23" itemprop="dateModified" datetime="2025-01-22T16:56:23+08:00">2025-01-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,7 +237,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>C++11 中有两种捕获模式： 按引用和按值。按引用的默认捕获模式可能导致空悬引用，按值的默认捕获模式也无法对空悬引用免疫，而且会让你认为你的闭包是独立的(事实上它们可能不是独立的)。</p>
+        <p>C++11引入的lambda表达式提供了按引用和按值两种捕获模式。在使用按引用捕获时，需警惕空悬引用问题，即闭包内的引用可能指向已销毁的局部变量或形参。</p>
+<p>按值捕获虽然避免了空悬引用，但在捕获类成员时，仅捕获<code>this</code>指针的副本，而非成员变量的副本。lambda表达式不能捕获<code>static</code>变量，只能按引用使用。</p>
+<p>相比于<code>std::bind</code>，lambda表达式更灵活，特别是在处理函数重载和延迟计算时，lambda表达式更具优势，建议优先使用。</p>
+<span id="more"></span>
+
+<p>C++11 中有两种捕获模式： 按引用和按值。按引用的默认捕获模式可能导致空悬引用，按值的默认捕获模式也无法对空悬引用免疫，而且会让你认为你的闭包是独立的(事实上它们可能不是独立的)。</p>
 <p>按引用捕获会导致闭包包含指涉到局部变量的引用，或者指涉到定义<code>lambda</code>式的作用域内的形参的引用。一旦由<code>lambda</code>式所创建的闭包越过了该局部变量或形参的生命周期，那么闭包内的引用就会空悬。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;std::function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt;&gt; vec;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> divisor = <span class="number">0</span>;</span><br><span class="line">  vec.<span class="built_in">push_back</span>([&amp;](<span class="type">int</span> val)&#123; <span class="keyword">return</span> val / divisor;&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">auto</span> lamdba = vec.<span class="built_in">at</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">lambda</span>(<span class="number">1</span>);  <span class="comment">///&lt; 此处可能会出现空悬引用。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -347,7 +352,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -358,7 +363,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

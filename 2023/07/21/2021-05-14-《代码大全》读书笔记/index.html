@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="强制类型转换的应用C语言中void* 可以转换为任意指针size_t 到 unsigned 变量初始化  从未对变量赋值。它的值只是程序启动时变量所处内存区域的值 变量值已经过期。变量在某个地方曾经被赋值，但该值已经不再有效 变量的一部分被赋值，而另一部分没有  在声明变量的时候初始化理想情况下，在靠近第一次使用变量的位置声明和定义该变量 在有可能的情况下使用const， 定义常量，入参。 特别注">
+  <meta name="description" content="本文总结了《代码大全》中关于变量命名、初始化和使用的核心建议。强调了变量命名应清晰、准确，避免使用模糊的缩写或隐含含义；变量初始化应靠近首次使用位置，缩短变量存活时间以提高代码可读性和维护性；同时，避免使用硬编码和具有相似含义的变量名。文章还提供了布尔变量命名的具体指导，建议使用肯定的语义和一致的缩写规则，确保代码易于理解和维护。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="读书笔记-《代码大全》">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="强制类型转换的应用C语言中void* 可以转换为任意指针size_t 到 unsigned 变量初始化  从未对变量赋值。它的值只是程序启动时变量所处内存区域的值 变量值已经过期。变量在某个地方曾经被赋值，但该值已经不再有效 变量的一部分被赋值，而另一部分没有  在声明变量的时候初始化理想情况下，在靠近第一次使用变量的位置声明和定义该变量 在有可能的情况下使用const， 定义常量，入参。 特别注">
+<meta property="og:description" content="本文总结了《代码大全》中关于变量命名、初始化和使用的核心建议。强调了变量命名应清晰、准确，避免使用模糊的缩写或隐含含义；变量初始化应靠近首次使用位置，缩短变量存活时间以提高代码可读性和维护性；同时，避免使用硬编码和具有相似含义的变量名。文章还提供了布尔变量命名的具体指导，建议使用肯定的语义和一致的缩写规则，确保代码易于理解和维护。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-07-21T05:28:45.221Z">
-<meta property="article:modified_time" content="2023-10-28T06:29:44.898Z">
+<meta property="article:modified_time" content="2025-01-22T08:20:34.737Z">
 <meta property="article:author" content="Jiancong Li">
 <meta name="twitter:card" content="summary">
 
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+                <time title="Modified: 2025-01-22 16:20:34" itemprop="dateModified" datetime="2025-01-22T16:20:34+08:00">2025-01-22</time>
               </span>
 
           
@@ -227,7 +227,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="强制类型转换的应用"><a href="#强制类型转换的应用" class="headerlink" title="强制类型转换的应用"></a>强制类型转换的应用</h2><h2 id="C语言中void-可以转换为任意指针"><a href="#C语言中void-可以转换为任意指针" class="headerlink" title="C语言中void* 可以转换为任意指针"></a>C语言中void* 可以转换为任意指针</h2><p>size_t 到 unsigned</p>
+        <p>本文总结了《代码大全》中关于变量命名、初始化和使用的核心建议。强调了变量命名应清晰、准确，避免使用模糊的缩写或隐含含义；变量初始化应靠近首次使用位置，缩短变量存活时间以提高代码可读性和维护性；同时，避免使用硬编码和具有相似含义的变量名。文章还提供了布尔变量命名的具体指导，建议使用肯定的语义和一致的缩写规则，确保代码易于理解和维护。</p>
+<span id="more"></span>
+
+<h2 id="强制类型转换的应用"><a href="#强制类型转换的应用" class="headerlink" title="强制类型转换的应用"></a>强制类型转换的应用</h2><h2 id="C-语言中-void-可以转换为任意指针"><a href="#C-语言中-void-可以转换为任意指针" class="headerlink" title="C 语言中 void* 可以转换为任意指针"></a>C 语言中 void* 可以转换为任意指针</h2><p>size_t 到 unsigned</p>
 <p>变量初始化</p>
 <ul>
 <li>从未对变量赋值。它的值只是程序启动时变量所处内存区域的值</li>
@@ -335,12 +338,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/07/21/2021-05-09-C++%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%8D%E5%88%B6/" rel="prev" title="C++ 关于对象的复制">
-      <i class="fa fa-chevron-left"></i> C++ 关于对象的复制
+    <a href="/2023/07/21/2021-05-17-%E5%8D%8E%E4%B8%BAC++%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%E6%91%98%E5%BD%95/" rel="prev" title="华为C++编程规范摘录">
+      <i class="fa fa-chevron-left"></i> 华为C++编程规范摘录
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/07/21/2021-06-26-Git-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/" rel="next" title="Git使用场景">
-      Git使用场景 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/07/21/2021-05-09-C++%E5%85%B3%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%8D%E5%88%B6/" rel="next" title="C++ 关于对象的复制">
+      C++ 关于对象的复制 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -400,7 +403,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">强制类型转换的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%E8%AF%AD%E8%A8%80%E4%B8%ADvoid-%E5%8F%AF%E4%BB%A5%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BB%BB%E6%84%8F%E6%8C%87%E9%92%88"><span class="nav-number">2.</span> <span class="nav-text">C语言中void* 可以转换为任意指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F%E7%9A%84%E6%97%B6%E5%80%99%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">在声明变量的时候初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E6%83%B3%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E5%9C%A8%E9%9D%A0%E8%BF%91%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%8D%E7%BD%AE%E5%A3%B0%E6%98%8E%E5%92%8C%E5%AE%9A%E4%B9%89%E8%AF%A5%E5%8F%98%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">理想情况下，在靠近第一次使用变量的位置声明和定义该变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%BD%E5%8F%AF%E8%83%BD%E7%BC%A9%E7%9F%AD%E5%8F%98%E9%87%8F%E5%AD%98%E6%B4%BB%E6%97%B6%E9%97%B4"><span class="nav-number">5.</span> <span class="nav-text">尽可能缩短变量存活时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E5%8F%98%E9%87%8F%E6%8C%87%E5%AE%9A%E5%8D%95%E4%B8%80%E7%94%A8%E9%80%94"><span class="nav-number">6.</span> <span class="nav-text">为变量指定单一用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%90%8D%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">7.</span> <span class="nav-text">变量名的注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E7%94%A8%E6%AF%8F%E4%B8%AA%E5%8D%95%E8%AF%8D%E4%B8%AD%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9D%A5%E7%BC%A9%E5%86%99"><span class="nav-number">8.</span> <span class="nav-text">不要用每个单词中删除一个字符的方式来缩写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%A9%E5%86%99%E8%A6%81%E4%B8%80%E8%87%B4"><span class="nav-number">9.</span> <span class="nav-text">缩写要一致</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%BD%A0%E8%83%BD%E8%AF%BB%E5%87%BA%E6%9D%A5%E7%9A%84%E5%90%8D%E5%AD%97"><span class="nav-number">10.</span> <span class="nav-text">创建你能读出来的名字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E5%AD%97%E5%AF%B9%E4%BA%8E%E4%BB%A3%E7%A0%81%E7%9A%84%E8%AF%BB%E8%80%85%E7%9A%84%E6%84%8F%E4%B9%89%E8%A6%81%E6%AF%94%E5%AF%B9%E4%BD%9C%E8%80%85%E6%9B%B4%E9%87%8D%E8%A6%81"><span class="nav-number">11.</span> <span class="nav-text">名字对于代码的读者的意义要比对作者更重要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E4%BB%A4%E4%BA%BA%E8%AF%AF%E8%A7%A3%E7%9A%84%E5%90%8D%E5%AD%97%E6%88%96%E7%BC%A9%E5%86%99"><span class="nav-number">12.</span> <span class="nav-text">避免使用令人误解的名字或缩写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E5%85%B7%E6%9C%89%E7%9B%B8%E4%BC%BC%E5%90%AB%E4%B9%89%E7%9A%84%E5%90%8D%E5%AD%97"><span class="nav-number">13.</span> <span class="nav-text">避免使用具有相似含义的名字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%9C%A8%E5%90%8D%E5%AD%97%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%95%B0%E5%AD%97"><span class="nav-number">14.</span> <span class="nav-text">避免在名字中使用数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%9C%A8%E5%90%8D%E5%AD%97%E4%B8%AD%E6%8B%BC%E9%94%99%E5%8D%95%E8%AF%8D"><span class="nav-number">15.</span> <span class="nav-text">避免在名字中拼错单词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%9C%A8%E5%90%8D%E5%AD%97%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AE%B9%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E5%AD%97%E7%AC%A6"><span class="nav-number">16.</span> <span class="nav-text">避免在名字中使用容易混淆的字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B0%E9%87%8F%E7%BA%A7%E7%9B%B8%E5%B7%AE%E5%B7%A8%E5%A4%A7%E7%9A%84%E6%95%B0%E5%AD%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97"><span class="nav-number">17.</span> <span class="nav-text">避免浮点数的数量级相差巨大的数字之间的四则运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%AD%89%E9%87%8F%E6%AF%94%E8%BE%83"><span class="nav-number">18.</span> <span class="nav-text">避免浮点数的等量比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E7%A9%BA%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AADoNothing-%E9%A2%84%E5%A4%84%E7%90%86%E5%AE%8F%E6%88%96%E8%80%85%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="nav-number">19.</span> <span class="nav-text">为空语句创建一个DoNothing()预处理宏或者内联函数</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">强制类型转换的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E8%AF%AD%E8%A8%80%E4%B8%AD-void-%E5%8F%AF%E4%BB%A5%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BB%BB%E6%84%8F%E6%8C%87%E9%92%88"><span class="nav-number">2.</span> <span class="nav-text">C 语言中 void* 可以转换为任意指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F%E7%9A%84%E6%97%B6%E5%80%99%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">在声明变量的时候初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E6%83%B3%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E5%9C%A8%E9%9D%A0%E8%BF%91%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%8D%E7%BD%AE%E5%A3%B0%E6%98%8E%E5%92%8C%E5%AE%9A%E4%B9%89%E8%AF%A5%E5%8F%98%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">理想情况下，在靠近第一次使用变量的位置声明和定义该变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%BD%E5%8F%AF%E8%83%BD%E7%BC%A9%E7%9F%AD%E5%8F%98%E9%87%8F%E5%AD%98%E6%B4%BB%E6%97%B6%E9%97%B4"><span class="nav-number">5.</span> <span class="nav-text">尽可能缩短变量存活时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E5%8F%98%E9%87%8F%E6%8C%87%E5%AE%9A%E5%8D%95%E4%B8%80%E7%94%A8%E9%80%94"><span class="nav-number">6.</span> <span class="nav-text">为变量指定单一用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%90%8D%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">7.</span> <span class="nav-text">变量名的注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E7%94%A8%E6%AF%8F%E4%B8%AA%E5%8D%95%E8%AF%8D%E4%B8%AD%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9D%A5%E7%BC%A9%E5%86%99"><span class="nav-number">8.</span> <span class="nav-text">不要用每个单词中删除一个字符的方式来缩写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%A9%E5%86%99%E8%A6%81%E4%B8%80%E8%87%B4"><span class="nav-number">9.</span> <span class="nav-text">缩写要一致</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%BD%A0%E8%83%BD%E8%AF%BB%E5%87%BA%E6%9D%A5%E7%9A%84%E5%90%8D%E5%AD%97"><span class="nav-number">10.</span> <span class="nav-text">创建你能读出来的名字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E5%AD%97%E5%AF%B9%E4%BA%8E%E4%BB%A3%E7%A0%81%E7%9A%84%E8%AF%BB%E8%80%85%E7%9A%84%E6%84%8F%E4%B9%89%E8%A6%81%E6%AF%94%E5%AF%B9%E4%BD%9C%E8%80%85%E6%9B%B4%E9%87%8D%E8%A6%81"><span class="nav-number">11.</span> <span class="nav-text">名字对于代码的读者的意义要比对作者更重要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E4%BB%A4%E4%BA%BA%E8%AF%AF%E8%A7%A3%E7%9A%84%E5%90%8D%E5%AD%97%E6%88%96%E7%BC%A9%E5%86%99"><span class="nav-number">12.</span> <span class="nav-text">避免使用令人误解的名字或缩写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E5%85%B7%E6%9C%89%E7%9B%B8%E4%BC%BC%E5%90%AB%E4%B9%89%E7%9A%84%E5%90%8D%E5%AD%97"><span class="nav-number">13.</span> <span class="nav-text">避免使用具有相似含义的名字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%9C%A8%E5%90%8D%E5%AD%97%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%95%B0%E5%AD%97"><span class="nav-number">14.</span> <span class="nav-text">避免在名字中使用数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%9C%A8%E5%90%8D%E5%AD%97%E4%B8%AD%E6%8B%BC%E9%94%99%E5%8D%95%E8%AF%8D"><span class="nav-number">15.</span> <span class="nav-text">避免在名字中拼错单词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%9C%A8%E5%90%8D%E5%AD%97%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AE%B9%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E5%AD%97%E7%AC%A6"><span class="nav-number">16.</span> <span class="nav-text">避免在名字中使用容易混淆的字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%95%B0%E9%87%8F%E7%BA%A7%E7%9B%B8%E5%B7%AE%E5%B7%A8%E5%A4%A7%E7%9A%84%E6%95%B0%E5%AD%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97"><span class="nav-number">17.</span> <span class="nav-text">避免浮点数的数量级相差巨大的数字之间的四则运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%AD%89%E9%87%8F%E6%AF%94%E8%BE%83"><span class="nav-number">18.</span> <span class="nav-text">避免浮点数的等量比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E7%A9%BA%E8%AF%AD%E5%8F%A5%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AADoNothing-%E9%A2%84%E5%A4%84%E7%90%86%E5%AE%8F%E6%88%96%E8%80%85%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="nav-number">19.</span> <span class="nav-text">为空语句创建一个DoNothing()预处理宏或者内联函数</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -414,7 +417,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -425,7 +428,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

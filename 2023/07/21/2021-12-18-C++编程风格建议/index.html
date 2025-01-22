@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="C++ 编程风格建议 安全 引用和指针  引用不会为空 引用不会改变指向 引用不能进行+、-、++、–运算   宏定义多条语句  使用do…while(false)来包含   逻辑符号||的执行 假设我们要同时自增a和b，如果任意一个函数失败了，则执行某些操作 Bad     if(!IncreaseA() || !IncreaseB())         假设自增A函数失败了，则不会自增B Go">
+  <meta name="description" content="C++ 编程风格建议 本文总结了C++编程中的安全与效率优化建议。安全方面，强调使用引用而非指针、避免宏定义、缩短变量存活时间、禁止浮点数等量比较、类成员变量显式初始化、虚函数禁用缺省参数等。效率方面，建议优化循环嵌套、避免硬编码、使用强类型参数、避免布尔变量否定形式、删除无用代码等。此外，提倡使用std::string代替char*、避免void*、减少函数长度等，以提高代码可读性和维护性。这些">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ 编程风格建议">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2021-12-18-C++%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E5%BB%BA%E8%AE%AE/index.html">
 <meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="C++ 编程风格建议 安全 引用和指针  引用不会为空 引用不会改变指向 引用不能进行+、-、++、–运算   宏定义多条语句  使用do…while(false)来包含   逻辑符号||的执行 假设我们要同时自增a和b，如果任意一个函数失败了，则执行某些操作 Bad     if(!IncreaseA() || !IncreaseB())         假设自增A函数失败了，则不会自增B Go">
+<meta property="og:description" content="C++ 编程风格建议 本文总结了C++编程中的安全与效率优化建议。安全方面，强调使用引用而非指针、避免宏定义、缩短变量存活时间、禁止浮点数等量比较、类成员变量显式初始化、虚函数禁用缺省参数等。效率方面，建议优化循环嵌套、避免硬编码、使用强类型参数、避免布尔变量否定形式、删除无用代码等。此外，提倡使用std::string代替char*、避免void*、减少函数长度等，以提高代码可读性和维护性。这些">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-07-21T05:28:45.224Z">
-<meta property="article:modified_time" content="2023-10-28T06:29:44.906Z">
+<meta property="article:modified_time" content="2025-01-22T08:07:50.826Z">
 <meta property="article:author" content="Jiancong Li">
 <meta name="twitter:card" content="summary">
 
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+                <time title="Modified: 2025-01-22 16:07:50" itemprop="dateModified" datetime="2025-01-22T16:07:50+08:00">2025-01-22</time>
               </span>
 
           
@@ -228,6 +228,9 @@
 
       
         <p>C++ 编程风格建议</p>
+<p>本文总结了C++编程中的安全与效率优化建议。安全方面，强调使用引用而非指针、避免宏定义、缩短变量存活时间、禁止浮点数等量比较、类成员变量显式初始化、虚函数禁用缺省参数等。效率方面，建议优化循环嵌套、避免硬编码、使用强类型参数、避免布尔变量否定形式、删除无用代码等。此外，提倡使用<code>std::string</code>代替<code>char*</code>、避免<code>void*</code>、减少函数长度等，以提高代码可读性和维护性。这些建议旨在帮助开发者编写更安全、高效的C++代码。</p>
+<span id="more"></span>
+
 <h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><ol>
 <li><p>引用和指针</p>
 <ul>
@@ -371,8 +374,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/07/21/2021-10-23-C++%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B/" rel="prev" title="面对对象简介与 C++ 类的基本介绍">
-      <i class="fa fa-chevron-left"></i> 面对对象简介与 C++ 类的基本介绍
+    <a href="/2023/07/21/2021-12-02-%E7%BD%91%E8%AF%BE%E3%80%8A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6%E6%9E%B6%E6%9E%84%E3%80%8B%E7%AC%94%E8%AE%B0/" rel="prev" title="网课《从零开始学架构》摘录">
+      <i class="fa fa-chevron-left"></i> 网课《从零开始学架构》摘录
     </a></div>
       <div class="post-nav-item">
     <a href="/2023/07/21/2021-12-09-C++%E5%85%B3%E4%BA%8E%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2%E7%AC%A6%E6%9E%84%E9%80%A0%E4%B8%B4%E6%97%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%8E%A2%E7%B4%A2/" rel="next" title="C++ 关于强制转换符构造临时对象的探索">
@@ -450,7 +453,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -461,7 +464,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

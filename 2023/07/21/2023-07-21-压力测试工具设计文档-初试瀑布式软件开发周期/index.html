@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="用于集成测试时的模拟机器的硬件情况，如 cpu 占用率、内存占用率、磁盘占用率。 本文使用 MoSCoW (莫斯科) 法则, 对需求优先级进行排序。 需求分析5. 自动化测试应可以在跨平台的环境下，自动化测试。 6. 使用提示6.1 提示应具有良好的可读性Must have 6.2 重点文本，颜色高亮Could have 假设约束功能需求1. cpu 占用率模拟1.1 支持单核满载Should h">
+  <meta name="description" content="用于集成测试时的模拟机器的硬件情况，如 cpu 占用率、内存占用率、磁盘占用率。 本文使用 MoSCoW (莫斯科) 法则, 对需求优先级进行排序。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="压力测试工具设计-初试瀑布式软件开发周期">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2023-07-21-%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3-%E5%88%9D%E8%AF%95%E7%80%91%E5%B8%83%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%91%A8%E6%9C%9F/index.html">
 <meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="用于集成测试时的模拟机器的硬件情况，如 cpu 占用率、内存占用率、磁盘占用率。 本文使用 MoSCoW (莫斯科) 法则, 对需求优先级进行排序。 需求分析5. 自动化测试应可以在跨平台的环境下，自动化测试。 6. 使用提示6.1 提示应具有良好的可读性Must have 6.2 重点文本，颜色高亮Could have 假设约束功能需求1. cpu 占用率模拟1.1 支持单核满载Should h">
+<meta property="og:description" content="用于集成测试时的模拟机器的硬件情况，如 cpu 占用率、内存占用率、磁盘占用率。 本文使用 MoSCoW (莫斯科) 法则, 对需求优先级进行排序。">
 <meta property="og:locale">
 <meta property="og:image" content="https://mercy1101.github.io/resource/2023-07-21-stress_tool/xx.gif">
 <meta property="article:published_time" content="2023-07-21T02:38:51.686Z">
-<meta property="article:modified_time" content="2023-10-28T06:29:44.899Z">
+<meta property="article:modified_time" content="2025-01-22T08:03:43.351Z">
 <meta property="article:author" content="Jiancong Li">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://mercy1101.github.io/resource/2023-07-21-stress_tool/xx.gif">
@@ -215,7 +215,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+                <time title="Modified: 2025-01-22 16:03:43" itemprop="dateModified" datetime="2025-01-22T16:03:43+08:00">2025-01-22</time>
               </span>
 
           
@@ -231,6 +231,8 @@
       
         <p>用于集成测试时的模拟机器的硬件情况，如 cpu 占用率、内存占用率、磁盘占用率。</p>
 <p>本文使用 <a href="#moscow-%E8%8E%AB%E6%96%AF%E7%A7%91-%E6%B3%95%E5%88%99"><code>MoSCoW</code> (莫斯科)</a> 法则, 对需求优先级进行排序。</p>
+<span id="more"></span>
+
 <h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><h3 id="5-自动化测试"><a href="#5-自动化测试" class="headerlink" title="5. 自动化测试"></a>5. 自动化测试</h3><p>应可以在跨平台的环境下，自动化测试。</p>
 <h3 id="6-使用提示"><a href="#6-使用提示" class="headerlink" title="6. 使用提示"></a>6. 使用提示</h3><h4 id="6-1-提示应具有良好的可读性"><a href="#6-1-提示应具有良好的可读性" class="headerlink" title="6.1 提示应具有良好的可读性"></a>6.1 提示应具有良好的可读性</h4><p>Must have</p>
 <h4 id="6-2-重点文本，颜色高亮"><a href="#6-2-重点文本，颜色高亮" class="headerlink" title="6.2 重点文本，颜色高亮"></a>6.2 重点文本，颜色高亮</h4><p>Could have</p>
@@ -285,8 +287,8 @@
       <i class="fa fa-chevron-left"></i> EN50128中的基本要求
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/" rel="next" title="C++ 类内默认成员函数">
-      C++ 类内默认成员函数 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/07/21/2020-12-11-C++%20%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%AE%80%E4%BB%8B%E4%B8%8E%E9%94%99%E8%AF%AF%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/" rel="next" title="C++ 智能指针简介与错误使用情况">
+      C++ 智能指针简介与错误使用情况 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -360,7 +362,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -371,7 +373,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
