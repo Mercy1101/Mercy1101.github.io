@@ -20,12 +20,14 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Jiancong Li&#39;s Blog">
+  <meta name="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="李建聪的博客">
 <meta property="og:url" content="https://mercy1101.github.io/page/4/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
+<meta property="og:description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
 <meta property="og:locale">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://mercy1101.github.io/page/4/">
@@ -41,7 +43,7 @@
   };
 </script>
 
-  <title>Jiancong Li's Blog</title>
+  <title>李建聪的博客</title>
   
 
 
@@ -92,7 +94,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -178,21 +180,21 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-04-28-C++POD%E7%9A%84%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">UML语法简介</a>
+            <a href="/2023/07/21/2021-04-28-C++POD%E7%9A%84%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">C++ POD的介绍</a>
         </h2>
 
         <div class="post-meta">
@@ -209,7 +211,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 16:27:58" itemprop="dateModified" datetime="2025-01-22T16:27:58+08:00">2025-01-22</time>
+                <time title="Modified: 2025-01-22 16:23:53" itemprop="dateModified" datetime="2025-01-22T16:23:53+08:00">2025-01-22</time>
               </span>
 
           
@@ -223,10 +225,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>本文详细介绍了UML（统一建模语言）中的几种核心关系：泛化关系、实现关系、聚合关系、组合关系、关联关系和依赖关系。通过清晰的图示和实例，文章解释了每种关系的定义、表示方法及其在面向对象设计中的应用场景。例如，泛化关系表示类的继承，组合关系表示强依赖的整体与部分关系，而依赖关系则描述对象间的临时性调用关系。本文为开发者提供了UML关系的全面指南，帮助其在软件设计中更好地理解和应用这些概念。</p>
+          <p>本文详细介绍了C++中的POD（Plain Old Data）类型，解释了其定义、特性以及在编程中的特殊用途。POD类型包括标量类型、POD数组和符合特定条件的类类型，具有内存布局明确、生命周期简单等特点。文章还探讨了POD类型在内存操作（如<code>memcpy</code>）、<code>goto</code>语句和类型转换中的优势，并提供了相关标准定义的参考链接，帮助读者深入理解POD类型的重要性和应用场景。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/#more" rel="contents">
+              <a class="btn" href="/2023/07/21/2021-04-28-C++POD%E7%9A%84%E4%BB%8B%E7%BB%8D/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -254,12 +256,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -295,82 +297,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>本文深入探讨了《Effective Modern C++》中的关键概念，重点分析了C++11&#x2F;14中的初始化方式、特种成员函数生成机制以及<code>auto</code>和<code>decltype</code>的类型推导规则。文章详细介绍了大括号初始化的优势与陷阱，强调了其在阻止隐式窄化转换和避免解析歧义中的作用。同时，文章还解析了移动操作、复制操作和析构函数的生成条件，帮助读者理解如何正确管理资源。最后，文章对比了<code>auto</code>和模板类型推导的异同，并总结了<code>decltype</code>的行为特点，为现代C++编程提供了实用指导。</p>
+          <p>本文深入探讨了《Effective Modern C++》中的关键概念，重点分析了C++11/14中的初始化方式、特种成员函数生成机制以及<code>auto</code>和<code>decltype</code>的类型推导规则。文章详细介绍了大括号初始化的优势与陷阱，强调了其在阻止隐式窄化转换和避免解析歧义中的作用。同时，文章还解析了移动操作、复制操作和析构函数的生成条件，帮助读者理解如何正确管理资源。最后，文章对比了<code>auto</code>和模板类型推导的异同，并总结了<code>decltype</code>的行为特点，为现代C++编程提供了实用指导。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/07/21/2020-12-14-%20%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">C++ 观察者设计模式</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 16:28:18" itemprop="dateModified" datetime="2025-01-22T16:28:18+08:00">2025-01-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文介绍了C++中的观察者设计模式，通过代码示例展示了如何实现一个简单的观察者模式。观察者模式允许对象（观察者）订阅另一个对象（被观察者）的状态变化，并在状态变化时自动接收通知。文章通过<code>subscriber</code>和<code>observer</code>类的实现，演示了如何注册观察者、广播消息以及处理观察者的生命周期。该模式适用于需要解耦对象间依赖关系的场景，如事件处理系统。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -398,12 +328,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -466,21 +396,21 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">C++ 类内默认成员函数</a>
+            <a href="/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">C++ 观察者设计模式</a>
         </h2>
 
         <div class="post-meta">
@@ -497,7 +427,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 16:51:05" itemprop="dateModified" datetime="2025-01-22T16:51:05+08:00">2025-01-22</time>
+                <time title="Modified: 2025-01-22 16:28:18" itemprop="dateModified" datetime="2025-01-22T16:28:18+08:00">2025-01-22</time>
               </span>
 
           
@@ -511,10 +441,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在C++中，类的默认成员函数包括默认构造函数、析构函数、拷贝构造函数、移动构造函数、拷贝赋值运算符和移动赋值运算符。如果未显式定义，编译器会自动生成这些函数。默认函数的生成依赖于类成员的类型特性，特别是在涉及const或引用成员时。编译器不会为某些类合成移动操作，尤其是当类定义了自己的拷贝控制成员时。移动操作不同于拷贝操作，不会隐式定义为删除的函数，但在某些条件下可能被定义为删除的。理解这些默认函数的生成和依赖关系，有助于编写更高效和安全的C++代码。</p>
+          <p>本文介绍了C++中的观察者设计模式，通过代码示例展示了如何实现一个简单的观察者模式。观察者模式允许对象（观察者）订阅另一个对象（被观察者）的状态变化，并在状态变化时自动接收通知。文章通过<code>subscriber</code>和<code>observer</code>类的实现，演示了如何注册观察者、广播消息以及处理观察者的生命周期。该模式适用于需要解耦对象间依赖关系的场景，如事件处理系统。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/#more" rel="contents">
+              <a class="btn" href="/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -542,12 +472,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -624,16 +554,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">C++ 类内默认成员函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:51:05" itemprop="dateModified" datetime="2025-01-22T16:51:05+08:00">2025-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在C++中，类的默认成员函数包括默认构造函数、析构函数、拷贝构造函数、移动构造函数、拷贝赋值运算符和移动赋值运算符。如果未显式定义，编译器会自动生成这些函数。默认函数的生成依赖于类成员的类型特性，特别是在涉及const或引用成员时。编译器不会为某些类合成移动操作，尤其是当类定义了自己的拷贝控制成员时。移动操作不同于拷贝操作，不会隐式定义为删除的函数，但在某些条件下可能被定义为删除的。理解这些默认函数的生成和依赖关系，有助于编写更高效和安全的C++代码。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2023-07-21-%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3-%E5%88%9D%E8%AF%95%E7%80%91%E5%B8%83%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%91%A8%E6%9C%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -701,12 +703,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -786,12 +788,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -867,12 +869,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -917,7 +919,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>《Effective Modern C++》读书笔记中，作者详细讲解了C++11&#x2F;14中<code>std::move</code>与<code>std::forward</code>的使用。<code>T&amp;&amp;</code>在模板中有两种含义：右值引用和万能引用。万能引用可用于完美转发，但需谨慎使用<code>std::move</code>和<code>std::forward</code>，避免意外的左值改动。完美转发可能在大括号初始化、重载函数名、模板名及位域传参时失败。位域传参需传递副本。本文通过代码示例，深入探讨右值引用、万能引用的特性及其在实际应用中的注意事项，帮助读者更好地理解和应用现代C++特性。</p>
+          <p>《Effective Modern C++》读书笔记中，作者详细讲解了C++11/14中<code>std::move</code>与<code>std::forward</code>的使用。<code>T&amp;&amp;</code>在模板中有两种含义：右值引用和万能引用。万能引用可用于完美转发，但需谨慎使用<code>std::move</code>和<code>std::forward</code>，避免意外的左值改动。完美转发可能在大括号初始化、重载函数名、模板名及位域传参时失败。位域传参需传递副本。本文通过代码示例，深入探讨右值引用、万能引用的特性及其在实际应用中的注意事项，帮助读者更好地理解和应用现代C++特性。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/12/13/2020-12-13-%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%20/#more" rel="contents">
@@ -1001,8 +1003,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

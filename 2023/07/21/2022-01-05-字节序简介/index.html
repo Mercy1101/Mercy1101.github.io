@@ -24,17 +24,17 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="字节序简介">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2022-01-05-%E5%AD%97%E8%8A%82%E5%BA%8F%E7%AE%80%E4%BB%8B/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="高低位字节区分: 举例0x1234, 高位字节为 0x12, 低位字节为 0x34。">
 <meta property="og:locale">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/280px-Little-Endian.svg.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/280px-Big-Endian.svg.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/Snipaste_2022-01-07_15-57-25.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/280px-Little-Endian.svg.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/280px-Big-Endian.svg.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/Snipaste_2022-01-07_15-57-25.png">
 <meta property="article:published_time" content="2023-07-21T05:28:45.225Z">
 <meta property="article:modified_time" content="2025-01-22T08:07:12.049Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mercy1101.github.io/resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/280px-Little-Endian.svg.png">
+<meta name="twitter:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/280px-Little-Endian.svg.png">
 
 <link rel="canonical" href="https://mercy1101.github.io/2023/07/21/2022-01-05-%E5%AD%97%E8%8A%82%E5%BA%8F%E7%AE%80%E4%BB%8B/">
 
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>字节序简介 | Jiancong Li's Blog</title>
+  <title>字节序简介 | 李建聪的博客</title>
   
 
 
@@ -100,7 +100,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -191,12 +191,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -233,16 +233,16 @@
       
         <p>高低位字节区分: 举例<code>0x1234</code>, 高位字节为 <code>0x12</code>, 低位字节为 <code>0x34</code>。</p>
 <span id="more"></span>
-
 <ul>
 <li><strong>小端字节序</strong>：低位字节在低地址，高位字节在高地址，即<code>0x1234</code>以<code>0x3412</code>形式储存。<code>CPU</code>处理速度快。</li>
 </ul>
-<p><img src="/../resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/280px-Little-Endian.svg.png" alt="280px-Little-Endian.svg"></p>
+<p><img src="../resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/280px-Little-Endian.svg.png" alt="280px-Little-Endian.svg"></p>
 <ul>
 <li><strong>大端字节序</strong>：高位字节在低地址，低位字节在高地址，这是人类读写数值的方法。即<code>0x1234</code>以<code>0x1234</code>形式储存。</li>
 </ul>
-<p><img src="/../resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/280px-Big-Endian.svg.png" alt="280px-Big-Endian.svg"></p>
-<h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><p><img src="/../resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/Snipaste_2022-01-07_15-57-25.png" alt="Snipaste_2022-01-07_15-57-25"></p>
+<p><img src="../resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/280px-Big-Endian.svg.png" alt="280px-Big-Endian.svg"></p>
+<h2 id="对比">对比</h2>
+<p><img src="../resource/%E5%AD%97%E8%8A%82%E5%BA%8F%E4%BB%8B%E7%BB%8D/Snipaste_2022-01-07_15-57-25.png" alt="Snipaste_2022-01-07_15-57-25"></p>
 
     </div>
 
@@ -262,8 +262,8 @@
       <i class="fa fa-chevron-left"></i> 常见颜色与RGB值
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/07/21/2023-06-27-%E8%BD%AF%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%E5%92%8C%E6%8A%80%E6%9C%AF/" rel="next" title="软件自动化测试方法和技术">
-      软件自动化测试方法和技术 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/07/21/2022-09-13-C++%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" rel="next" title="C++调试工具函数介绍">
+      C++调试工具函数介绍 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -329,8 +329,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

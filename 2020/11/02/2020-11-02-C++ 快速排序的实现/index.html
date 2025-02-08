@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ 快速排序的实现">
 <meta property="og:url" content="https://mercy1101.github.io/2020/11/02/2020-11-02-C++%20%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="本文介绍了快速排序的并行版实现，通过C++标准库中的std::partition和并行执行策略std::execution::par，实现了高效的并行排序。代码展示了如何随机选择枢轴元素，并通过分区操作将数组分为小于和大于枢轴的两部分，然后递归地对子数组进行排序。文章还强调了实现快速排序的两个关键要求：必须使用前进迭代器，且元素必须支持比较操作或重载operator&lt;。本文为C++开发者提供">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-11-02T09:18:47.000Z">
 <meta property="article:modified_time" content="2025-01-22T09:06:24.761Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>C++ 快速排序的实现 | Jiancong Li's Blog</title>
+  <title>C++ 快速排序的实现 | 李建聪的博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -188,12 +188,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -239,10 +239,9 @@
       
         <p>本文介绍了快速排序的并行版实现，通过C++标准库中的<code>std::partition</code>和并行执行策略<code>std::execution::par</code>，实现了高效的并行排序。代码展示了如何随机选择枢轴元素，并通过分区操作将数组分为小于和大于枢轴的两部分，然后递归地对子数组进行排序。文章还强调了实现快速排序的两个关键要求：必须使用前进迭代器，且元素必须支持比较操作或重载<code>operator&lt;</code>。本文为C++开发者提供了并行排序的实用技巧，帮助提升排序算法的性能。</p>
 <span id="more"></span>
-
-<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>快速排序并行版实现</p>
+<h2 id="快速排序">快速排序</h2>
+<p>快速排序并行版实现</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ForwardIt&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">quick_sort</span><span class="params">(ForwardIt first, ForwardIt last)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(first == last) <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">decltype</span>(std::<span class="built_in">distance</span>(first, last)) temp = <span class="built_in">rand</span>() % std::<span class="built_in">distance</span>(first, last);</span><br><span class="line">  <span class="keyword">auto</span> pivot = *std::<span class="built_in">next</span>(first, temp);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">auto</span> middle1 = std::<span class="built_in">partition</span>(std::execution::par, first, last, [pivot](<span class="type">const</span> <span class="keyword">auto</span>&amp; em)&#123;</span><br><span class="line">    <span class="keyword">return</span> em &lt; pivot;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">auto</span> middle2 = std::<span class="built_in">partition</span>(std::execution::par, middle1, last, [pivot](<span class="type">const</span> <span class="keyword">auto</span>&amp; em)&#123;</span><br><span class="line">    <span class="keyword">return</span> !(pivot &lt; em);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">quick_sort</span>(first, middle1);</span><br><span class="line">  <span class="built_in">quick_sort</span>(middle2, last);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>使用要求：</p>
 <ol>
 <li>必须是前进迭代器</li>
@@ -337,8 +336,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

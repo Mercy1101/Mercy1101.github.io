@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ nullptr与NULL">
 <meta property="og:url" content="https://mercy1101.github.io/2020/12/15/2020-12-15-C++nullptr%E4%B8%8ENULL/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="本文探讨了C++中NULL与nullptr的区别。NULL是一个宏定义，通常被定义为0，在函数重载时可能导致歧义；而nullptr是一个特殊类型，专门用于表示空指针，能够明确调用指针类型的函数重载。通过代码示例，文章展示了nullptr在避免函数重载歧义中的优势，帮助读者理解其在现代C++编程中的重要性。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-12-15T10:58:39.000Z">
 <meta property="article:modified_time" content="2025-01-22T08:36:37.583Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>C++ nullptr与NULL | Jiancong Li's Blog</title>
+  <title>C++ nullptr与NULL | 李建聪的博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -188,12 +188,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -239,10 +239,9 @@
       
         <p>本文探讨了C++中<code>NULL</code>与<code>nullptr</code>的区别。<code>NULL</code>是一个宏定义，通常被定义为<code>0</code>，在函数重载时可能导致歧义；而<code>nullptr</code>是一个特殊类型，专门用于表示空指针，能够明确调用指针类型的函数重载。通过代码示例，文章展示了<code>nullptr</code>在避免函数重载歧义中的优势，帮助读者理解其在现代C++编程中的重要性。</p>
 <span id="more"></span>
-
-<h1 id="NULL-与-nullptr-的区别"><a href="#NULL-与-nullptr-的区别" class="headerlink" title="NULL 与 nullptr 的区别"></a>NULL 与 nullptr 的区别</h1><p>NULL 为宏定义</p>
+<h1>NULL 与 nullptr 的区别</h1>
+<p>NULL 为宏定义</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> NULL 0</span></span><br></pre></td></tr></table></figure>
-
 <p>NULL的类型不明显，而一下情况会出现函数重载不明确的情况</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">f1</span><span class="params">(<span class="type">int</span> i)</span></span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f1</span><span class="params">(<span class="type">int</span>* p)</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">f1</span>(<span class="literal">NULL</span>); <span class="comment">///&lt; 调用函数不确定，编译器警告或报错</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>而<code>nullptr</code>是一个特殊类型(<code>nullptr_t</code>)专门用来指代空指针。见下面代码</p>
@@ -329,14 +328,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NULL-%E4%B8%8E-nullptr-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">NULL 与 nullptr 的区别</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">NULL 与 nullptr 的区别</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

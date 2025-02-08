@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="数据结构字符串字符串是不可变字节(byte)序列，其本身是一个符合结构. 1234type stringStruct struct &#123;  str unsafe.Pointer  len int&#125; 头部指针指向字节数组，但没有NULL结尾。默认以UTF-8编码存储Unicode字符，字面量里允许使用十六进制、八进制和UTF编码格式。  内置函数len返回字节数组长度，cap不接受">
+  <meta name="description" content="数据结构 字符串 字符串是不可变字节(byte)序列，其本身是一个符合结构. 1234type stringStruct struct &#123;  str unsafe.Pointer  len int&#125; 头部指针指向字节数组，但没有NULL结尾。默认以UTF-8编码存储Unicode字符，字面量里允许使用十六进制、八进制和UTF编码格式。  内置函数len返回字节数组长度，cap不">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Go语言学习笔记》读书笔记(7)数据结构">
 <meta property="og:url" content="https://mercy1101.github.io/2020/08/31/2020-08-31-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(7)%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="数据结构字符串字符串是不可变字节(byte)序列，其本身是一个符合结构. 1234type stringStruct struct &#123;  str unsafe.Pointer  len int&#125; 头部指针指向字节数组，但没有NULL结尾。默认以UTF-8编码存储Unicode字符，字面量里允许使用十六进制、八进制和UTF编码格式。  内置函数len返回字节数组长度，cap不接受">
+<meta property="og:site_name" content="李建聪的博客">
+<meta property="og:description" content="数据结构 字符串 字符串是不可变字节(byte)序列，其本身是一个符合结构. 1234type stringStruct struct &#123;  str unsafe.Pointer  len int&#125; 头部指针指向字节数组，但没有NULL结尾。默认以UTF-8编码存储Unicode字符，字面量里允许使用十六进制、八进制和UTF编码格式。  内置函数len返回字节数组长度，cap不">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-08-31T12:38:47.000Z">
 <meta property="article:modified_time" content="2023-10-28T06:29:44.900Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta property="article:tag" content="Go 读书笔记">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>《Go语言学习笔记》读书笔记(7)数据结构 | Jiancong Li's Blog</title>
+  <title>《Go语言学习笔记》读书笔记(7)数据结构 | 李建聪的博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -188,12 +188,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -237,7 +237,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>字符串是不可变字节(<code>byte</code>)序列，其本身是一个符合结构.</p>
+        <h2 id="数据结构">数据结构</h2>
+<h3 id="字符串">字符串</h3>
+<p>字符串是不可变字节(<code>byte</code>)序列，其本身是一个符合结构.</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> stringStruct <span class="keyword">struct</span> &#123;</span><br><span class="line">  str unsafe.Pointer</span><br><span class="line">  <span class="built_in">len</span> <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>头部指针指向字节数组，但没有<code>NULL</code>结尾。默认以<code>UTF-8</code>编码存储<code>Unicode</code>字符，字面量里允许使用十六进制、八进制和<code>UTF</code>编码格式。</p>
 <blockquote>
@@ -246,16 +248,19 @@
 <p>字符串默认值不是<code>nil</code>, 而是<code>&quot;&quot;</code>.</p>
 <p>使用<code>for</code>遍历字符串是，分<code>byte</code>和<code>rune</code>两种方式。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span> <span class="params">()</span></span> &#123;	<span class="comment">// byte</span></span><br><span class="line">	s:=<span class="string">&quot;李建聪&quot;</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;%d: [%c]\n&quot;</span>, i, s[i])</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i, c := <span class="keyword">range</span> s &#123;	<span class="comment">// rune: 返回数组索引号，以及Unicode字符</span></span><br><span class="line">		fmt.Printf(<span class="string">&quot;%d: [%c]\n&quot;</span>, i, c)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">///0: [æ]</span></span><br><span class="line"><span class="comment">///1: [</span></span><br><span class="line"><span class="comment">///2: []</span></span><br><span class="line"><span class="comment">///3: [å]</span></span><br><span class="line"><span class="comment">///4: [»]</span></span><br><span class="line"><span class="comment">///5: [º]</span></span><br><span class="line"><span class="comment">///6: [è]</span></span><br><span class="line"><span class="comment">///7: []</span></span><br><span class="line"><span class="comment">///8: [ª]</span></span><br><span class="line"><span class="comment">///0: [李]</span></span><br><span class="line"><span class="comment">///3: [建]</span></span><br><span class="line"><span class="comment">///6: [聪]</span></span><br></pre></td></tr></table></figure>
-
 <p>要修改字符串，须将其转换为可变类型(<code>[]rune</code>或<code>[]byte</code>), 待完成后再转换回来。但不管怎么转换，都须重新分配内存，并复制数据。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">pp</span><span class="params">(format <span class="type">string</span>, ptr <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	p := reflect.ValueOf(ptr).Pointer()</span><br><span class="line">	h := (*<span class="type">uintptr</span>)(unsafe.Pointer(p))</span><br><span class="line">	fmt.Printf(format, *h)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span> <span class="params">()</span></span> &#123;	<span class="comment">// byte</span></span><br><span class="line">	s:=<span class="string">&quot;hello, world!&quot;</span></span><br><span class="line">	pp(<span class="string">&quot;s: %x\n&quot;</span>, &amp;s)</span><br><span class="line"></span><br><span class="line">	bs := []<span class="type">byte</span>(s)</span><br><span class="line">	s2 := <span class="type">string</span>(bs)</span><br><span class="line"></span><br><span class="line">	pp(<span class="string">&quot;string to []byte, bs:%x\n&quot;</span>, &amp;bs)</span><br><span class="line">	pp(<span class="string">&quot;[]byte to string, s2:%x\n&quot;</span>, &amp;s2)</span><br><span class="line"></span><br><span class="line">	rs := []<span class="type">rune</span>(s)</span><br><span class="line">	s3 := <span class="type">string</span>(rs)</span><br><span class="line"></span><br><span class="line">	pp(<span class="string">&quot;string to []byte, rs:%x\n&quot;</span>, &amp;rs)</span><br><span class="line">	pp(<span class="string">&quot;[]byte to string, s3:%x\n&quot;</span>, &amp;s3)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// s: 2bcc91</span></span><br><span class="line"><span class="comment">/// string to []byte, bs:c0000a20a0</span></span><br><span class="line"><span class="comment">/// []byte to string, s2:c0000a20b0</span></span><br><span class="line"><span class="comment">/// string to []byte, rs:c0000b80c0</span></span><br><span class="line"><span class="comment">/// []byte to string, s3:c0000a20d0</span></span><br></pre></td></tr></table></figure>
-
 <p>编译器会为了某些场合进行专门优化，避免额外分配和复制操作：</p>
 <ul>
 <li>将<code>[]byte</code>转换为<code>string key</code>, 去<code>map[string]</code>查询的时候。</li>
 <li>将<code>string</code>转换为<code>[]byte</code>, 进行<code>for range</code>迭代时，直接取字节赋值给局部变量。</li>
 </ul>
-<p>除了类型转换外，动态构建字符串也容易造成性能问题。<br>用加法操作符拼接字符串时，每次都须重新分配内存。如此，在构建超大字符串时，性能就显得极差。<br>改进思路时预分配i足够大的空间。常用方法是用<code>string.Join</code>函数，他会统计所有参数长度，并一次性完成内存分配操作。<br>另外<br>utf8.ValidString(s) 返回s是不是一个有效的字符串<br>utf8.RuneCountInString(s) 替代<code>len</code>返回<code>unicode</code>的字符数量</p>
+<p>除了类型转换外，动态构建字符串也容易造成性能问题。<br>
+用加法操作符拼接字符串时，每次都须重新分配内存。如此，在构建超大字符串时，性能就显得极差。<br>
+改进思路时预分配i足够大的空间。常用方法是用<code>string.Join</code>函数，他会统计所有参数长度，并一次性完成内存分配操作。<br>
+另外<br>
+utf8.ValidString(s) 返回s是不是一个有效的字符串<br>
+utf8.RuneCountInString(s) 替代<code>len</code>返回<code>unicode</code>的字符数量</p>
 
     </div>
 
@@ -345,8 +350,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="C++ 迭代器介绍迭代器概念Iterator(迭代器)是一种”能够迭代某序列内所有元素”的对象，可通过改变自寻常pointer的一致性接口来完成工作。Iterator奉行一个纯抽象概念：任何东西，只要行为类似iterator，就是一种iterator。然而不同的的iterator具有不同的行进能力。 迭代器种类   迭代器种类 能力 提供者    Output 迭代器 向前写入 Ostream,i">
+  <meta name="description" content="C++ 迭代器介绍 迭代器概念 Iterator(迭代器)是一种&quot;能够迭代某序列内所有元素&quot;的对象，可通过改变自寻常pointer的一致性接口来完成工作。Iterator奉行一个纯抽象概念：任何东西，只要行为类似iterator，就是一种iterator。然而不同的的iterator具有不同的行进能力。 迭代器种类    迭代器种类 能力 提供者     Output 迭代器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ 迭代器介绍">
 <meta property="og:url" content="https://mercy1101.github.io/2020/07/31/2020-07-31-C++%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%BB%8B%E7%BB%8D/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="C++ 迭代器介绍迭代器概念Iterator(迭代器)是一种”能够迭代某序列内所有元素”的对象，可通过改变自寻常pointer的一致性接口来完成工作。Iterator奉行一个纯抽象概念：任何东西，只要行为类似iterator，就是一种iterator。然而不同的的iterator具有不同的行进能力。 迭代器种类   迭代器种类 能力 提供者    Output 迭代器 向前写入 Ostream,i">
+<meta property="og:site_name" content="李建聪的博客">
+<meta property="og:description" content="C++ 迭代器介绍 迭代器概念 Iterator(迭代器)是一种&quot;能够迭代某序列内所有元素&quot;的对象，可通过改变自寻常pointer的一致性接口来完成工作。Iterator奉行一个纯抽象概念：任何东西，只要行为类似iterator，就是一种iterator。然而不同的的iterator具有不同的行进能力。 迭代器种类    迭代器种类 能力 提供者     Output 迭代器">
 <meta property="og:locale">
 <meta property="og:image" content="https://mercy1101.github.io/resource/C++%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%A7%8D%E7%B1%BB/%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png">
 <meta property="article:published_time" content="2020-07-31T14:56:03.000Z">
 <meta property="article:modified_time" content="2023-10-28T06:29:44.905Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://mercy1101.github.io/resource/C++%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%A7%8D%E7%B1%BB/%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>C++ 迭代器介绍 | Jiancong Li's Blog</title>
+  <title>C++ 迭代器介绍 | 李建聪的博客</title>
   
 
 
@@ -99,7 +99,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -190,12 +190,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -239,8 +239,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="C-迭代器介绍"><a href="#C-迭代器介绍" class="headerlink" title="C++ 迭代器介绍"></a>C++ 迭代器介绍</h1><h2 id="迭代器概念"><a href="#迭代器概念" class="headerlink" title="迭代器概念"></a>迭代器概念</h2><p><code>Iterator</code>(迭代器)是一种”能够迭代某序列内所有元素”的对象，可通过改变自寻常pointer的一致性接口来完成工作。<code>Iterator</code>奉行一个纯抽象概念：任何东西，只要行为类似iterator，就是一种iterator。然而不同的的iterator具有不同的行进能力。</p>
-<h2 id="迭代器种类"><a href="#迭代器种类" class="headerlink" title="迭代器种类"></a>迭代器种类</h2><table>
+        <h1>C++ 迭代器介绍</h1>
+<h2 id="迭代器概念">迭代器概念</h2>
+<p><code>Iterator</code>(迭代器)是一种&quot;能够迭代某序列内所有元素&quot;的对象，可通过改变自寻常pointer的一致性接口来完成工作。<code>Iterator</code>奉行一个纯抽象概念：任何东西，只要行为类似iterator，就是一种iterator。然而不同的的iterator具有不同的行进能力。</p>
+<h2 id="迭代器种类">迭代器种类</h2>
+<table>
 <thead>
 <tr>
 <th>迭代器种类</th>
@@ -248,7 +251,8 @@
 <th>提供者</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>Output 迭代器</td>
 <td>向前写入</td>
 <td>Ostream,inserter</td>
@@ -278,10 +282,13 @@
 <td></td>
 <td></td>
 </tr>
-</tbody></table>
-<h3 id="Output迭代器"><a href="#Output迭代器" class="headerlink" title="Output迭代器"></a>Output迭代器</h3><p>Output迭代器允许一步一步前行并搭配write动作。因此你可以一个一个元素地赋值，不能使用output迭代器对同一区间迭代两次。事实上，甚至不保证你可以将一个value复制两次而其迭代器不累进。我们的目标是将一个value以下列形式写入一个黑洞。</p>
+</tbody>
+</table>
+<h3 id="Output迭代器">Output迭代器</h3>
+<p>Output迭代器允许一步一步前行并搭配write动作。因此你可以一个一个元素地赋值，不能使用output迭代器对同一区间迭代两次。事实上，甚至不保证你可以将一个value复制两次而其迭代器不累进。我们的目标是将一个value以下列形式写入一个黑洞。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(...) &#123;</span><br><span class="line">  *pos = ...;</span><br><span class="line">  ++pos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Output 迭代器无需比较操作。你无法检验output迭代器是否有效，或写入是否成功。你唯一可做的就是写入。通常，一批写入动作是以一个”额外条件定义出”的”特定output迭代器”作为结束。<br>见下表Output迭代器操作</p>
+<p>Output 迭代器无需比较操作。你无法检验output迭代器是否有效，或写入是否成功。你唯一可做的就是写入。通常，一批写入动作是以一个&quot;额外条件定义出&quot;的&quot;特定output迭代器&quot;作为结束。<br>
+见下表Output迭代器操作</p>
 <table>
 <thead>
 <tr>
@@ -289,8 +296,9 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>*iter &#x3D; val</td>
+<tbody>
+<tr>
+<td>*iter = val</td>
 <td>将val写至迭代器所指的位置</td>
 </tr>
 <tr>
@@ -305,9 +313,13 @@
 <td>TYPE(iter)</td>
 <td>复制迭代器(copy 构造函数)</td>
 </tr>
-</tbody></table>
-<p>通常，迭代器可用来读，也可用来写; 几乎所有reading迭代器都有write的额外功能，这种情况下他们被称为<code>mutable</code>(可产生变化的)迭代器。<br>一个典型的<code>pure output</code>迭代器例子是：”将元素写至标准输出设备”。 如果采用两个output迭代器写至屏幕, 第二个字将跟在第一个字后面，而不是覆盖第一个字。另一个典型的例子是inserter, 那是一种用来将他插入容器。如果随后写入第二个value, 并不会覆盖第一个value, 而是安插进去。</p>
-<h3 id="Input迭代器"><a href="#Input迭代器" class="headerlink" title="Input迭代器"></a>Input迭代器</h3><p>Input迭代器只能一次一个以前行方向读取元素，按此顺序一个个返回元素值。<br>Input迭代器的各项操作</p>
+</tbody>
+</table>
+<p>通常，迭代器可用来读，也可用来写; 几乎所有reading迭代器都有write的额外功能，这种情况下他们被称为<code>mutable</code>(可产生变化的)迭代器。<br>
+一个典型的<code>pure output</code>迭代器例子是：“将元素写至标准输出设备”。 如果采用两个output迭代器写至屏幕, 第二个字将跟在第一个字后面，而不是覆盖第一个字。另一个典型的例子是inserter, 那是一种用来将他插入容器。如果随后写入第二个value, 并不会覆盖第一个value, 而是安插进去。</p>
+<h3 id="Input迭代器">Input迭代器</h3>
+<p>Input迭代器只能一次一个以前行方向读取元素，按此顺序一个个返回元素值。<br>
+Input迭代器的各项操作</p>
 <table>
 <thead>
 <tr>
@@ -315,7 +327,8 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>*iter</td>
 <td>读取实际元素</td>
 </tr>
@@ -332,25 +345,28 @@
 <td>向前步进(step forward), 返回旧位置</td>
 </tr>
 <tr>
-<td>iter1 &#x3D;&#x3D; iter2</td>
+<td>iter1 == iter2</td>
 <td>判断两个迭代器是否相等</td>
 </tr>
 <tr>
-<td>iter1 !&#x3D; iter2</td>
+<td>iter1 != iter2</td>
 <td>判断两个迭代器是否不相等</td>
 </tr>
 <tr>
 <td>TYPE(iter)</td>
 <td>复制迭代器(copy 构造函数)</td>
 </tr>
-</tbody></table>
-<p>Input迭代器只能读取元素一次。如果你复制input迭代器, 并令原input迭代器和新产生的拷贝都向前读取, 可能会遍历到不同的值。<br><strong>所有的迭代器都具备input迭代器的能力，而且往往更强。</strong><code>Pure input</code>迭代器的典型例子就是”从标准输入设备读取数据”。同一个值不会被读取两次。一旦从<code>input stream</code>读入一个字(离开input缓冲区), 下次读取时就会返回另一个字。</p>
-<p>对于input迭代器, 操作符&#x3D;&#x3D;和!&#x3D;只用来检查”某个迭代器是否等于一个past-the-end迭代器(指指向最末元素的下一个位置)”.这有其必要, 因为处理input迭代器的操作函数通常会有以下行为。</p>
+</tbody>
+</table>
+<p>Input迭代器只能读取元素一次。如果你复制input迭代器, 并令原input迭代器和新产生的拷贝都向前读取, 可能会遍历到不同的值。<br>
+<strong>所有的迭代器都具备input迭代器的能力，而且往往更强。</strong><code>Pure input</code>迭代器的典型例子就是&quot;从标准输入设备读取数据&quot;。同一个值不会被读取两次。一旦从<code>input stream</code>读入一个字(离开input缓冲区), 下次读取时就会返回另一个字。</p>
+<p>对于input迭代器, 操作符==和!=只用来检查&quot;某个迭代器是否等于一个past-the-end迭代器(指指向最末元素的下一个位置)&quot;.这有其必要, 因为处理input迭代器的操作函数通常会有以下行为。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">InputIterator pos, end;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (pos != end) &#123;</span><br><span class="line">  ... <span class="comment">// read-only access using *pos</span></span><br><span class="line">  ++pos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><strong>没有任何保证说，两个迭代器如果都不是past-the-end迭代器, 且指向不同位置，他们的比较结果会不相等</strong>(这个条件是和forward迭代器搭配引入的)。</p>
-<p>也请注意, input迭代器的后置式递增操作符(<code>++iter</code>)不一定会返回什么东西。不过通常它会返回旧位置。<br>你应该尽可能优先先选用前置式递增操作符(<code>++iter</code>)而非后置式递增操作符(<code>iter++</code>), 因为前者效能更好。因为后者会返回一个临时对象。</p>
-<h3 id="Forward-前向-迭代器"><a href="#Forward-前向-迭代器" class="headerlink" title="Forward(前向)迭代器"></a>Forward(前向)迭代器</h3><p>Forward迭代器是一种input迭代器且在前进读取时提供额外保证。</p>
+<p>也请注意, input迭代器的后置式递增操作符(<code>++iter</code>)不一定会返回什么东西。不过通常它会返回旧位置。<br>
+你应该尽可能优先先选用前置式递增操作符(<code>++iter</code>)而非后置式递增操作符(<code>iter++</code>), 因为前者效能更好。因为后者会返回一个临时对象。</p>
+<h3 id="Forward-前向-迭代器">Forward(前向)迭代器</h3>
+<p>Forward迭代器是一种input迭代器且在前进读取时提供额外保证。</p>
 <table>
 <thead>
 <tr>
@@ -358,7 +374,8 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>*iter</td>
 <td>访问实际元素</td>
 </tr>
@@ -375,11 +392,11 @@
 <td>向前步进(返回旧位置)</td>
 </tr>
 <tr>
-<td>iter1 &#x3D;&#x3D; iter2</td>
+<td>iter1 == iter2</td>
 <td>判断两个迭代器是否相等</td>
 </tr>
 <tr>
-<td>iter1 !&#x3D; iter2</td>
+<td>iter1 != iter2</td>
 <td>判断两个迭代器是否不等</td>
 </tr>
 <tr>
@@ -391,7 +408,7 @@
 <td>复制迭代器(拷贝构造函数)</td>
 </tr>
 <tr>
-<td>iter1 &#x3D; iter2</td>
+<td>iter1 = iter2</td>
 <td>对迭代器赋值(assign)</td>
 </tr>
 <tr>
@@ -402,14 +419,18 @@
 <td>例如：</td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ForwardIterator pos1, pos2;</span><br><span class="line"></span><br><span class="line">pos1 = pos2 = begin; <span class="comment">/// both iterator refer to the same element</span></span><br><span class="line"><span class="keyword">if</span>(pos1 != end) &#123;</span><br><span class="line">  ++pos1; <span class="comment">/// pos1 is one element ahead</span></span><br><span class="line">  <span class="keyword">while</span>(pos1 != end) &#123;</span><br><span class="line">    <span class="keyword">if</span>(*pos1 == *pos2) &#123;</span><br><span class="line">      ... <span class="comment">// precess adjacent duplicates</span></span><br><span class="line">      ++pos1;</span><br><span class="line">      ++pos2;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Forward迭代器由以下对象和类型提供：</p>
 <ul>
-<li>Class<forward_list></li>
-<li>Unordered container<br>然而标准库也允许<code>unordered</code>容器的实现提供<code>bidirectional</code>迭代器。<br>如果forward迭代器履行了output迭代器应有的条件, 那么它就是一个mutable forward迭代器, 即可用于读取，也可用于涂写。</li>
+<li>Class&lt;forward_list&gt;</li>
+<li>Unordered container<br>
+然而标准库也允许<code>unordered</code>容器的实现提供<code>bidirectional</code>迭代器。<br>
+如果forward迭代器履行了output迭代器应有的条件, 那么它就是一个mutable forward迭代器, 即可用于读取，也可用于涂写。</li>
 </ul>
-<h3 id="Bidirectional-双向-迭代器"><a href="#Bidirectional-双向-迭代器" class="headerlink" title="Bidirectional(双向)迭代器"></a>Bidirectional(双向)迭代器</h3><p><code>Bidirectional</code>迭代器在<code>forward</code>迭代器的基础上增加回头迭代(<code>iterate backward</code>)能力。</p>
+<h3 id="Bidirectional-双向-迭代器">Bidirectional(双向)迭代器</h3>
+<p><code>Bidirectional</code>迭代器在<code>forward</code>迭代器的基础上增加回头迭代(<code>iterate backward</code>)能力。</p>
 <p><code>Bidirectional</code> 迭代器的新增操作</p>
 <table>
 <thead>
@@ -418,7 +439,8 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>–iter</td>
 <td>步退(返回新位置)</td>
 </tr>
@@ -426,14 +448,18 @@
 <td>iter–</td>
 <td>步退(返回旧位置)</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p><code>Bidirectional</code>迭代器由以下的对象和类型提供：</p>
 <ul>
 <li>Class list&lt;&gt;.</li>
 <li>Associative(关联式) 关联式容器提供</li>
 </ul>
 <p>如果<code>bidirectional</code>迭代器履行了output迭代器应有的条件, 那么他就是个<code>mutable bidirectional</code>迭代器, 即可用于读取, 也可用于涂写。</p>
-<h3 id="Random-Access-随机访问-迭代器"><a href="#Random-Access-随机访问-迭代器" class="headerlink" title="Random-Access(随机访问)迭代器"></a>Random-Access(随机访问)迭代器</h3><p><code>Random-access</code>迭代器在<code>bidirectional</code>迭代器的基础上增加了随机访问能里。因此它必须提供<code>iterator</code>算数运算。也就是说，它能增减某个偏移量、<br>计算距离(<code>difference</code>), 并运用诸如&lt;和&gt;等管理操作符(<code>relational operator</code>)进行比较。<br>随机访问迭代器的新增操作:</p>
+<h3 id="Random-Access-随机访问-迭代器">Random-Access(随机访问)迭代器</h3>
+<p><code>Random-access</code>迭代器在<code>bidirectional</code>迭代器的基础上增加了随机访问能里。因此它必须提供<code>iterator</code>算数运算。也就是说，它能增减某个偏移量、<br>
+计算距离(<code>difference</code>), 并运用诸如&lt;和&gt;等管理操作符(<code>relational operator</code>)进行比较。<br>
+随机访问迭代器的新增操作:</p>
 <table>
 <thead>
 <tr>
@@ -441,16 +467,17 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>iter[n]</td>
 <td>访问索引位置为n的元素</td>
 </tr>
 <tr>
-<td>iter+&#x3D;n</td>
+<td>iter+=n</td>
 <td>前进n个元素(如果n是负数, 则改为回退)</td>
 </tr>
 <tr>
-<td>iter-&#x3D;n</td>
+<td>iter-=n</td>
 <td>回退n个元素(如果n是负数, 则改为前进)</td>
 </tr>
 <tr>
@@ -478,33 +505,38 @@
 <td>判断iter1是否在iter2之后</td>
 </tr>
 <tr>
-<td>iter1 &lt;&#x3D; iter2</td>
+<td>iter1 &lt;= iter2</td>
 <td>判断iter1是否不在iter2之后</td>
 </tr>
 <tr>
-<td>iter1 &gt;&#x3D; iter2</td>
+<td>iter1 &gt;= iter2</td>
 <td>判断iter1是否不在iter2之前</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p><code>Random-access</code>迭代器由以下对象和类型提供:</p>
 <ul>
 <li>可随机访问的容器(<code>array</code>、<code>vector</code>、<code>deque</code>)</li>
 <li>String(<code>string</code>、<code>wstring</code>)</li>
 <li>寻常的C-Style(<code>pointer</code>)</li>
 </ul>
-<h2 id="迭代器相关辅助函数"><a href="#迭代器相关辅助函数" class="headerlink" title="迭代器相关辅助函数"></a>迭代器相关辅助函数</h2><h3 id="std-advance"><a href="#std-advance" class="headerlink" title="std::advance()"></a>std::advance()</h3><p><code>std::advance()</code>可将迭代器的位置增加, 增加的幅度由实参决定, 也就是说它令迭代器一次前进(或后退)多个元素:</p>
+<h2 id="迭代器相关辅助函数">迭代器相关辅助函数</h2>
+<h3 id="std-advance">std::advance()</h3>
+<p><code>std::advance()</code>可将迭代器的位置增加, 增加的幅度由实参决定, 也就是说它令迭代器一次前进(或后退)多个元素:</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iterator&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">advance</span><span class="params">(InputIterator&amp; pos, Dist n)</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>令名称为pos的input迭代器前进(或后退)n个元素</li>
 <li>对<code>bidirectinal</code>迭代器和<code>random-access</code>迭代器而言, n可为负值, 表示后退</li>
 <li><code>Dist</code>是个template类型。通常它必须是个整数类型, 因为会调用诸如<code>&lt;</code>、<code>++</code>、<code>--</code>等操作, 还要和0做比较。</li>
-<li><code>std::advance()</code>并不检查迭代器是否超过序列的<code>end()</code>(因为迭代器通常不知道其所操作的容器, 因此并无检查)。所以, 调用<code>std::advance()</code>有可能导致不明确行为–因为”对序列尾端调用<code>operator++</code>“是一种未定义的行为。</li>
+<li><code>std::advance()</code>并不检查迭代器是否超过序列的<code>end()</code>(因为迭代器通常不知道其所操作的容器, 因此并无检查)。所以, 调用<code>std::advance()</code>有可能导致不明确行为–因为&quot;对序列尾端调用<code>operator++</code>&quot;是一种未定义的行为。</li>
 </ul>
-<p>对于<code>random-access</code>迭代器, 此函数只是简单地调用<code>pos+=n</code>, 因此具有常量复杂度。 对于其他任何类型的迭代器, 则调用<code>++pos</code>(或<code>--pos</code>如果n为负值)n次。因此，对于其他任何类型地迭代器, 本函数具有线性复杂度。<br><strong>如果你希望你的程序可以轻松地更换容器和迭代器种类, 你应该使用<code>std::advance()</code>而不是<code>operator+=</code></strong><br><strong>另外, 请注意<code>std::advance()</code>不具有返回值, 而<code>operator+=</code>会返回新位置, 所以后者可作为更大表达式的一部分。</strong></p>
+<p>对于<code>random-access</code>迭代器, 此函数只是简单地调用<code>pos+=n</code>, 因此具有常量复杂度。 对于其他任何类型的迭代器, 则调用<code>++pos</code>(或<code>--pos</code>如果n为负值)n次。因此，对于其他任何类型地迭代器, 本函数具有线性复杂度。<br>
+<strong>如果你希望你的程序可以轻松地更换容器和迭代器种类, 你应该使用<code>std::advance()</code>而不是<code>operator+=</code></strong><br>
+<strong>另外, 请注意<code>std::advance()</code>不具有返回值, 而<code>operator+=</code>会返回新位置, 所以后者可作为更大表达式的一部分。</strong></p>
 <p>下面是一个<code>std::advance()</code>的实现。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 输入迭代器的情况</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_InIt</span>, <span class="keyword">class</span> <span class="title class_">_Diff</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">advance_impl</span><span class="params">(_InIt&amp; _Where, _Diff _Off, std::input_iterator_tag)</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// 检查该偏移量不能为负值</span></span><br><span class="line">  <span class="keyword">if</span> (_Off &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">assert</span>(<span class="literal">false</span> &amp;&amp; <span class="string">&quot;negative offset in advance&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/// 使用自增运算符来计算</span></span><br><span class="line">  <span class="keyword">for</span> (; <span class="number">0</span> &lt; _Off; --_Off) ++_Where;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 双向迭代器</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_BidIt</span>, <span class="keyword">class</span> <span class="title class_">_Diff</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">advance_impl</span><span class="params">(_BidIt&amp; _Where, _Diff _Off,</span></span></span><br><span class="line"><span class="params"><span class="function">                         std::bidirectional_iterator_tag)</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// 使用自增运算符来计算</span></span><br><span class="line">  <span class="keyword">for</span> (; <span class="number">0</span> &lt; _Off; --_Off) ++_Where;</span><br><span class="line">  <span class="comment">/// 如果偏移量为负值则使用自减运算符</span></span><br><span class="line">  <span class="keyword">for</span> (; _Off &lt; <span class="number">0</span>; ++_Off) --_Where;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 随机访问迭代器</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_RanIt</span>, <span class="keyword">class</span> <span class="title class_">_Diff</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">advance_impl</span><span class="params">(_RanIt&amp; _Where, _Diff _Off,</span></span></span><br><span class="line"><span class="params"><span class="function">                         std::random_access_iterator_tag)</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// 使用operator += ，常量复杂度</span></span><br><span class="line">  _Where += _Off;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_InIt</span>, <span class="keyword">class</span> <span class="title class_">_Diff</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">advance</span><span class="params">(_InIt&amp; _Where, _Diff _Off)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">advance_impl</span>(_Where, _Off,</span><br><span class="line">               <span class="comment">/// 在萃取迭代器的特性时去掉其const的属性来提高性能</span></span><br><span class="line">               std::iterator_traits&lt;_Iter&gt;::iterator_category&lt;</span><br><span class="line">                   std::<span class="type">remove_const_t</span>&lt;_InIt&gt;&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="std-next-和std-prev"><a href="#std-next-和std-prev" class="headerlink" title="std::next()和std::prev()"></a>std::next()和std::prev()</h3><p>c++ 提供了两个新增的辅助函数, 允许你前进和后退移动迭代器的位置。</p>
+<h3 id="std-next-和std-prev">std::next()和std::prev()</h3>
+<p>c++ 提供了两个新增的辅助函数, 允许你前进和后退移动迭代器的位置。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iterator&gt;</span></span></span><br><span class="line"><span class="function">ForwardIterator <span class="title">next</span><span class="params">(ForwardIterator pos)</span></span></span><br><span class="line"><span class="function">ForwardIterator <span class="title">next</span><span class="params">(ForwardIterator pos, Dist n)</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>导致<code>forward</code>迭代器<code>pos</code>前进或n个位置</li>
@@ -523,8 +555,8 @@
 </ul>
 <p>下面写一个简单的实现：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_InIt</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> _InIt <span class="title">next</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _InIt _First,</span></span></span><br><span class="line"><span class="params"><span class="function">    std::iterator_traits&lt;_InIt&gt;::iterator_category&lt;_InIt&gt; _Off = <span class="number">1</span>)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">static_assert</span>(</span><br><span class="line">      std::is_base_of&lt;</span><br><span class="line">          std::input_iterator_tag,</span><br><span class="line">          <span class="keyword">typename</span> std::iterator_traits&lt;_InIt&gt;::iterator_category&gt;::value,</span><br><span class="line">      <span class="string">&quot;next requires input iterator&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">advance</span>(_First, _Off);</span><br><span class="line">  <span class="keyword">return</span> (_First);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_BidIt</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> _BidIt <span class="title">prev</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _BidIt _First,</span></span></span><br><span class="line"><span class="params"><span class="function">    std::iterator_traits&lt;_BidIt&gt;::iterator_category&lt;_BidIt&gt; _Off = <span class="number">1</span>)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">static_assert</span>(</span><br><span class="line">      std::is_base_of&lt;</span><br><span class="line">          std::bidirectional_iterator_tag,</span><br><span class="line">          <span class="keyword">typename</span> std::iterator_traits&lt;_BidIt&gt;::iterator_category&gt;::value,</span><br><span class="line">      <span class="string">&quot;prev requires bidirectional iterator&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">advance</span>(_First, -_Off);</span><br><span class="line">  <span class="keyword">return</span> (_First);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="std-distance"><a href="#std-distance" class="headerlink" title="std::distance()"></a>std::distance()</h3><p><code>std::distance()</code>用来处理两个迭代器之间的距离:</p>
+<h3 id="std-distance">std::distance()</h3>
+<p><code>std::distance()</code>用来处理两个迭代器之间的距离:</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Dist <span class="title">distance</span><span class="params">(InputIterator pos1, InputIterator pos2)</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>返回两个<code>input</code>迭代器<code>pos1</code>和<code>pos2</code>之间的距离。</li>
@@ -535,8 +567,8 @@
 <p>注意： 处理两个<code>non-random-access</code>迭代器之间的距离时, 必须十分小心。第一个迭代器所指的元素绝不能在第二个迭代器所指元素之后方, 否则会导致不明确的行为。<strong>如果不知道哪个迭代器在前, 你必须先算出两个迭代器分别至容器起点的距离, 在根据这两个距离来判断。</strong></p>
 <p>一个简单的实现：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> it&gt;</span><br><span class="line"><span class="keyword">typename</span> std::iterator_traits&lt;it&gt;::<span class="function">difference_type <span class="title">distance</span><span class="params">(it from, it to)</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">if</span> <span class="title">constexpr</span> <span class="params">(<span class="keyword">typename</span> std::iterator_traits&lt;it&gt;::iterator_category() ==</span></span></span><br><span class="line"><span class="params"><span class="function">                std::random_access_iterator_tag)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/// 随机访问迭代器</span></span><br><span class="line">    <span class="keyword">return</span> to - from;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">constexpr</span> (<span class="keyword">typename</span> std::iterator_traits&lt;it&gt;::<span class="built_in">iterator_category</span>() ==</span><br><span class="line">                       std::input_iterator_tag) &#123;</span><br><span class="line">    <span class="comment">/// input 迭代器</span></span><br><span class="line">    <span class="keyword">typename</span> std::iterator_traits&lt;it&gt;::difference_type res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (; from != to; ++from) &#123;</span><br><span class="line">      ++res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">static_assert</span>(<span class="string">&quot;unknow iterator type.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="std-iter-swap"><a href="#std-iter-swap" class="headerlink" title="std::iter_swap()"></a>std::iter_swap()</h3><p>这个简单的辅助函数用来交换两个迭代器所指的元素值</p>
+<h3 id="std-iter-swap">std::iter_swap()</h3>
+<p>这个简单的辅助函数用来交换两个迭代器所指的元素值</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">iter_swap</span><span class="params">(ForwardIterator1 pos1, ForwardIterator pos2)</span></span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>交换迭代器pos1和pos2所指的值</li>
@@ -625,14 +657,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">C++ 迭代器介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">迭代器概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">迭代器种类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Output%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">Output迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">Input迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forward-%E5%89%8D%E5%90%91-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">Forward(前向)迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bidirectional-%E5%8F%8C%E5%90%91-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.2.4.</span> <span class="nav-text">Bidirectional(双向)迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Random-Access-%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.2.5.</span> <span class="nav-text">Random-Access(随机访问)迭代器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9B%B8%E5%85%B3%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">迭代器相关辅助函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#std-advance"><span class="nav-number">1.3.1.</span> <span class="nav-text">std::advance()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-next-%E5%92%8Cstd-prev"><span class="nav-number">1.3.2.</span> <span class="nav-text">std::next()和std::prev()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-distance"><span class="nav-number">1.3.3.</span> <span class="nav-text">std::distance()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-iter-swap"><span class="nav-number">1.3.4.</span> <span class="nav-text">std::iter_swap()</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">C++ 迭代器介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">迭代器概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">迭代器种类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Output%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">Output迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">Input迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forward-%E5%89%8D%E5%90%91-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">Forward(前向)迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bidirectional-%E5%8F%8C%E5%90%91-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.2.4.</span> <span class="nav-text">Bidirectional(双向)迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Random-Access-%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.2.5.</span> <span class="nav-text">Random-Access(随机访问)迭代器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9B%B8%E5%85%B3%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">迭代器相关辅助函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#std-advance"><span class="nav-number">1.3.1.</span> <span class="nav-text">std::advance()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-next-%E5%92%8Cstd-prev"><span class="nav-number">1.3.2.</span> <span class="nav-text">std::next()和std::prev()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-distance"><span class="nav-number">1.3.3.</span> <span class="nav-text">std::distance()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-iter-swap"><span class="nav-number">1.3.4.</span> <span class="nav-text">std::iter_swap()</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

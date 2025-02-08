@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="LRU的简单实现">
 <meta property="og:url" content="https://mercy1101.github.io/2020/09/21/2020-09-21-C++%20LRU%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="本文介绍了最近最少使用缓存（LRU）的简单实现。LRU缓存通过键值对存储数据，并在达到容量上限时删除最近最少使用的项目。文章详细展示了如何使用C++实现LRU缓存，包括get和put操作的核心逻辑。通过std::list和std::unordered_map的结合，实现了高效的数据访问和更新。本文为开发者提供了LRU缓存的实用实现方法，适合需要高效缓存管理的场景。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-09-21T12:49:22.000Z">
 <meta property="article:modified_time" content="2025-01-22T09:07:43.647Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta property="article:tag" content="c++ 数据结构">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>LRU的简单实现 | Jiancong Li's Blog</title>
+  <title>LRU的简单实现 | 李建聪的博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -188,12 +188,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -239,8 +239,8 @@
       
         <p>本文介绍了最近最少使用缓存（LRU）的简单实现。LRU缓存通过键值对存储数据，并在达到容量上限时删除最近最少使用的项目。文章详细展示了如何使用C++实现LRU缓存，包括<code>get</code>和<code>put</code>操作的核心逻辑。通过<code>std::list</code>和<code>std::unordered_map</code>的结合，实现了高效的数据访问和更新。本文为开发者提供了LRU缓存的实用实现方法，适合需要高效缓存管理的场景。</p>
 <span id="more"></span>
-
-<h2 id="LRU的简单实现"><a href="#LRU的简单实现" class="headerlink" title="LRU的简单实现"></a>LRU的简单实现</h2><p>最近最少使用缓存(LRU)，该缓存会删除最近最少使用的项目。缓存应该从键映射到值(允许你插入和检索特定键对应的值)，并在初始化时指定最大容量。当缓存被填满时，它应该删除最近最少使用的项目。</p>
+<h2 id="LRU的简单实现">LRU的简单实现</h2>
+<p>最近最少使用缓存(LRU)，该缓存会删除最近最少使用的项目。缓存应该从键映射到值(允许你插入和检索特定键对应的值)，并在初始化时指定最大容量。当缓存被填满时，它应该删除最近最少使用的项目。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 最近最少使用缓存(LRU)，该缓存会删除最近最少使用的项目。缓存应该从键映射到值(允许你插入和检索特定键对应的值)，并在初始化时指定最大容量。当缓存被填满时，它应该删除最近最少使用的项目。</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LRUCache</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LRUCache</span>(<span class="type">int</span> capacity) : <span class="built_in">max_size</span>(capacity) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">///  获取数据 get(key) - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">get</span><span class="params">(<span class="type">int</span> key)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">auto</span> res = map.<span class="built_in">find</span>(key);</span><br><span class="line">      <span class="keyword">if</span>(res != map.<span class="built_in">end</span>())&#123;</span><br><span class="line">        list.<span class="built_in">splice</span>(list.<span class="built_in">begin</span>(), list, res-&gt;second);</span><br><span class="line">        <span class="keyword">return</span> res-&gt;second-&gt;second;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 写入数据 put(key, value) - 如果密钥不存在，则写入其数据值。当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">put</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">auto</span> res = map.<span class="built_in">find</span>(key);</span><br><span class="line">      list.<span class="built_in">push_front</span>(std::<span class="built_in">make_pair</span>(key, value));</span><br><span class="line">      <span class="keyword">if</span>(res != map.<span class="built_in">end</span>())&#123;</span><br><span class="line">        list.<span class="built_in">erase</span>(res-&gt;second);</span><br><span class="line">        map.<span class="built_in">erase</span>(res);</span><br><span class="line">      &#125;</span><br><span class="line">      map[key] = list.<span class="built_in">begin</span>();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span>(map.<span class="built_in">size</span>() &gt; max_size)&#123;</span><br><span class="line">        <span class="keyword">auto</span> last = list.<span class="built_in">end</span>();</span><br><span class="line">        --last;</span><br><span class="line">        map.<span class="built_in">erase</span>(last-&gt;first);</span><br><span class="line">        list.<span class="built_in">pop_back</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    std::unordered_map&lt;<span class="type">int</span>, std::list&lt;std::pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt;::iterator&gt; map;</span><br><span class="line">    std::list&lt;std::pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt; list;</span><br><span class="line">    <span class="type">int</span> max_size = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     </div>
 
@@ -330,8 +330,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

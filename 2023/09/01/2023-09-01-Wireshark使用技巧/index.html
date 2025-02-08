@@ -24,18 +24,18 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Wireshark使用技巧">
 <meta property="og:url" content="https://mercy1101.github.io/2023/09/01/2023-09-01-Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="Wireshark 是一款开源的网络协议分析工具，用于捕获和分析网络数据包。它可以在各种操作系统上运行，包括Windows、Mac和Linux。">
 <meta property="og:locale">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-30-58.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-34-11.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-40-21.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_18-00-37.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-30-58.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-34-11.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-40-21.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_18-00-37.png">
 <meta property="article:published_time" content="2023-09-01T08:15:48.256Z">
 <meta property="article:modified_time" content="2025-01-22T08:01:55.261Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mercy1101.github.io/resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-30-58.png">
+<meta name="twitter:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-30-58.png">
 
 <link rel="canonical" href="https://mercy1101.github.io/2023/09/01/2023-09-01-Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">
 
@@ -50,7 +50,7 @@
   };
 </script>
 
-  <title>Wireshark使用技巧 | Jiancong Li's Blog</title>
+  <title>Wireshark使用技巧 | 李建聪的博客</title>
   
 
 
@@ -101,7 +101,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -192,12 +192,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -234,33 +234,40 @@
       
         <p>Wireshark 是一款开源的网络协议分析工具，用于捕获和分析网络数据包。它可以在各种操作系统上运行，包括Windows、Mac和Linux。</p>
 <span id="more"></span>
-
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Wireshark 的主要功能包括：</p>
+<h2 id="简介">简介</h2>
+<p>Wireshark 的主要功能包括：</p>
 <ol>
-<li><p>数据包捕获：Wireshark 可以捕获计算机网络上的数据包，包括传输层和网络层的数据。它可以监听网络接口，捕获经过该接口的数据包，并显示它们的详细信息。</p>
+<li>
+<p>数据包捕获：Wireshark 可以捕获计算机网络上的数据包，包括传输层和网络层的数据。它可以监听网络接口，捕获经过该接口的数据包，并显示它们的详细信息。</p>
 </li>
-<li><p>数据包分析：Wireshark 可以解析捕获的数据包，并以易于理解的方式显示各个协议层的字段和值。它支持多种协议，包括以太网、IP、TCP、UDP、HTTP、DNS等。通过分析数据包，可以检查网络通信中的问题、识别潜在的安全漏洞，并进行性能优化。</p>
+<li>
+<p>数据包分析：Wireshark 可以解析捕获的数据包，并以易于理解的方式显示各个协议层的字段和值。它支持多种协议，包括以太网、IP、TCP、UDP、HTTP、DNS等。通过分析数据包，可以检查网络通信中的问题、识别潜在的安全漏洞，并进行性能优化。</p>
 </li>
-<li><p>过滤和搜索：Wireshark 提供了强大的过滤和搜索功能，以帮助用户快速定位感兴趣的数据包。用户可以使用过滤器来过滤特定协议、源&#x2F;目标IP地址、端口号等。此外，Wireshark 还提供了高级搜索功能，可以根据特定的字段值或表达式搜索数据包。</p>
+<li>
+<p>过滤和搜索：Wireshark 提供了强大的过滤和搜索功能，以帮助用户快速定位感兴趣的数据包。用户可以使用过滤器来过滤特定协议、源/目标IP地址、端口号等。此外，Wireshark 还提供了高级搜索功能，可以根据特定的字段值或表达式搜索数据包。</p>
 </li>
-<li><p>统计和报告：Wireshark 可以生成各种统计信息和报告，以帮助用户分析网络流量和性能。它可以提供关于数据包数量、协议分布、流量图表、响应时间等方面的统计数据，并支持导出报告到不同的格式。</p>
+<li>
+<p>统计和报告：Wireshark 可以生成各种统计信息和报告，以帮助用户分析网络流量和性能。它可以提供关于数据包数量、协议分布、流量图表、响应时间等方面的统计数据，并支持导出报告到不同的格式。</p>
 </li>
 </ol>
-<h2 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h2><h3 id="报文着色"><a href="#报文着色" class="headerlink" title="报文着色"></a>报文着色</h3><p>我们可以自定义报文的颜色高亮，操作如下：</p>
+<h2 id="使用技巧">使用技巧</h2>
+<h3 id="报文着色">报文着色</h3>
+<p>我们可以自定义报文的颜色高亮，操作如下：</p>
 <p>点击 <code>视图</code> -&gt; <code>着色规则</code></p>
-<p><img src="/../resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-30-58.png" alt="image"></p>
+<p><img src="../resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-30-58.png" alt="image"></p>
 <p>见到如下界面, 点击新建着色规则</p>
-<p><img src="/../resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-34-11.png" alt="image"></p>
+<p><img src="../resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-34-11.png" alt="image"></p>
 <p>输入对应的过滤规则，则可以看到对应的报文着色</p>
 <p>过滤规则与过滤报文规则相同，例如：</p>
 <ol>
 <li><code>tcp.port == 62001</code>, 查看使用 <code>62001</code> 端口的 <code>tcp</code> 协议的报文</li>
 <li><code>frame contain &quot;MsgID: 112&quot;</code>: 查看包含字符串 <code>MsgID: 112</code> 的报文</li>
 </ol>
-<p><img src="/../resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-40-21.png" alt="image"></p>
-<h3 id="自定义协议"><a href="#自定义协议" class="headerlink" title="自定义协议"></a>自定义协议</h3><p>我们可以使用 <code>lua</code> 插件来实现 <code>wireshark</code> 自动解析二进制报文的功能，见如下操作：</p>
+<p><img src="../resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_16-40-21.png" alt="image"></p>
+<h3 id="自定义协议">自定义协议</h3>
+<p>我们可以使用 <code>lua</code> 插件来实现 <code>wireshark</code> 自动解析二进制报文的功能，见如下操作：</p>
 <p>其中需要编写 <a href="../resource/2023-09-01-wireshark-skills/PROJECT_TEST.lua"><code>PROJECT_TEST.lua</code></a> 文件放置到<code>wireshark</code>的 <code>plugin</code> 目录下(例如: <code>C:\Program Files\Wireshark\plugins</code>)</p>
-<p><img src="/../resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_18-00-37.png" alt="image"></p>
+<p><img src="../resource/2023-09-01-wireshark-skills/Snipaste_2023-09-01_18-00-37.png" alt="image"></p>
 <p>可以对照文件修改对应的私有协议，方便现场抓包分析</p>
 
     </div>
@@ -348,8 +355,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

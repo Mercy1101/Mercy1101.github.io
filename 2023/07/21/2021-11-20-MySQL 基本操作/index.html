@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL 基本操作">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2021-11-20-MySQL%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="本文详细介绍了SQL查询的基础与进阶操作，涵盖了简单查询、指定字段查询、条件过滤、模糊查询、排序、分组、聚合函数、子查询、连接查询等常用技巧。通过实例演示了如何高效地从数据库中提取数据，并深入探讨了WHERE与HAVING的区别、DISTINCT去重、CASE WHEN条件赋值等高级用法。此外，还介绍了表的操作（如重命名、删除、清空）以及插入数据时的主键冲突处理。文章内容实用，适合初学者和进阶者参">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-07-21T05:28:45.223Z">
 <meta property="article:modified_time" content="2025-01-22T08:14:54.391Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://mercy1101.github.io/2023/07/21/2021-11-20-MySQL%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>MySQL 基本操作 | Jiancong Li's Blog</title>
+  <title>MySQL 基本操作 | 李建聪的博客</title>
   
 
 
@@ -96,7 +96,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -187,12 +187,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -229,289 +229,323 @@
       
         <p>本文详细介绍了SQL查询的基础与进阶操作，涵盖了简单查询、指定字段查询、条件过滤、模糊查询、排序、分组、聚合函数、子查询、连接查询等常用技巧。通过实例演示了如何高效地从数据库中提取数据，并深入探讨了<code>WHERE</code>与<code>HAVING</code>的区别、<code>DISTINCT</code>去重、<code>CASE WHEN</code>条件赋值等高级用法。此外，还介绍了表的操作（如重命名、删除、清空）以及插入数据时的主键冲突处理。文章内容实用，适合初学者和进阶者参考，帮助读者掌握SQL查询的核心技能。</p>
 <span id="more"></span>
-
-<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><p>最简单的查询语句： 查询 <code>dcuser</code> 表中所有字段。</p>
-<h3 id="简单查询"><a href="#简单查询" class="headerlink" title="简单查询"></a>简单查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> dcuser;</span><br></pre></td></tr></table></figure>
-
+<h2 id="查询">查询</h2>
+<p>最简单的查询语句： 查询 <code>dcuser</code> 表中所有字段。</p>
+<h3 id="简单查询">简单查询</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> dcuser;</span><br></pre></td></tr></table></figure>
 <p>以上语句在代码中禁止使用，因为在数据库扩展时，<code>SELECT *</code> 语句对应的结构体如果没有增加字段，则会出现未知错误。</p>
-<h3 id="指定字段查询"><a href="#指定字段查询" class="headerlink" title="指定字段查询"></a>指定字段查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> UserID, Name, DCType, DepotID <span class="keyword">FROM</span> dcuser;</span><br></pre></td></tr></table></figure>
-
+<h3 id="指定字段查询">指定字段查询</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> UserID, Name, DCType, DepotID <span class="keyword">FROM</span> dcuser;</span><br></pre></td></tr></table></figure>
 <p>输出:</p>
 <table>
 <thead>
 <tr>
-<th align="center">UserID</th>
-<th align="center">Name</th>
-<th align="center">DCType</th>
-<th align="center">DepotID</th>
+<th style="text-align:center">UserID</th>
+<th style="text-align:center">Name</th>
+<th style="text-align:center">DCType</th>
+<th style="text-align:center">DepotID</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">3000</td>
-<td align="center">dis01</td>
-<td align="center">65535</td>
-<td align="center">1</td>
+<tbody>
+<tr>
+<td style="text-align:center">3000</td>
+<td style="text-align:center">dis01</td>
+<td style="text-align:center">65535</td>
+<td style="text-align:center">1</td>
 </tr>
 <tr>
-<td align="center">3001</td>
-<td align="center">dis02</td>
-<td align="center">65535</td>
-<td align="center">1</td>
+<td style="text-align:center">3001</td>
+<td style="text-align:center">dis02</td>
+<td style="text-align:center">65535</td>
+<td style="text-align:center">1</td>
 </tr>
 <tr>
-<td align="center">3002</td>
-<td align="center">dis03</td>
-<td align="center">65535</td>
-<td align="center">1</td>
+<td style="text-align:center">3002</td>
+<td style="text-align:center">dis03</td>
+<td style="text-align:center">65535</td>
+<td style="text-align:center">1</td>
 </tr>
 <tr>
-<td align="center">3003</td>
-<td align="center">dis04</td>
-<td align="center">65535</td>
-<td align="center">1</td>
+<td style="text-align:center">3003</td>
+<td style="text-align:center">dis04</td>
+<td style="text-align:center">65535</td>
+<td style="text-align:center">1</td>
 </tr>
 <tr>
-<td align="center">9999</td>
-<td align="center">test</td>
-<td align="center">2</td>
-<td align="center">1</td>
+<td style="text-align:center">9999</td>
+<td style="text-align:center">test</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">1</td>
 </tr>
-</tbody></table>
-<h3 id="查询添加过滤条件"><a href="#查询添加过滤条件" class="headerlink" title="查询添加过滤条件"></a>查询添加过滤条件</h3><p>查询 <code>dcuser</code> 表中具有行车调度权限(<code>DCType = 1</code>)的记录。</p>
+</tbody>
+</table>
+<h3 id="查询添加过滤条件">查询添加过滤条件</h3>
+<p>查询 <code>dcuser</code> 表中具有行车调度权限(<code>DCType = 1</code>)的记录。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> UserID, Name, DCType, DepotID <span class="keyword">FROM</span> dcuser <span class="keyword">WHERE</span> DCType <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-
 <p>查询 <code>groupcallinfo</code> 表中 <code>DCUserID</code> 为 <code>13003</code> 或 <code>13004</code></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DCUserID, GroupID, <span class="type">Time</span>, CallType <span class="keyword">FROM</span> groupcallinfo <span class="keyword">WHERE</span> DCUserID <span class="keyword">IN</span> (<span class="number">13003</span>, <span class="number">13004</span>);</span><br></pre></td></tr></table></figure>
-
-<h4 id="BETWEEN-AND"><a href="#BETWEEN-AND" class="headerlink" title="BETWEEN AND"></a>BETWEEN AND</h4><p>查询 <code>groupcallinfo</code> 表中 <code>DCUserID</code> 介于 <code>13003</code> 到 <code>13005</code></p>
+<h4 id="BETWEEN-AND">BETWEEN AND</h4>
+<p>查询 <code>groupcallinfo</code> 表中 <code>DCUserID</code> 介于 <code>13003</code> 到 <code>13005</code></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DCUserID, GroupID, Time, CallType FROM groupcallinfo WHERE DCUserID BETWEEN <span class="number">13003</span> AND <span class="number">13005</span>;</span><br><span class="line">SELECT DCUserID, GroupID, Time, CallType FROM groupcallinfo WHERE DCUserID &gt;= <span class="number">13003</span> AND DCUserID &lt;= <span class="number">13005</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h3><p>查询 <code>dcuser</code> 表中所有以 <code>Name</code> 字段以 <code>dis</code> 开头的内容。 <code>%</code> 代替任意数量字符。</p>
+<h3 id="模糊查询">模糊查询</h3>
+<p>查询 <code>dcuser</code> 表中所有以 <code>Name</code> 字段以 <code>dis</code> 开头的内容。 <code>%</code> 代替任意数量字符。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> UserID, Name, DCType, DepotID <span class="keyword">FROM</span> dcuser <span class="keyword">WHERE</span> Name <span class="keyword">LIKE</span> <span class="string">&#x27;dis%&#x27;</span></span><br></pre></td></tr></table></figure>
-
 <p>查询 <code>dcuser</code> 表中所有以 <code>Name</code> 字段以 <code>dis0</code> + 任意一个字符的内容。 <code>_</code> 代替一个任意字符。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> UserID, Name, DCType, DepotID <span class="keyword">FROM</span> dcuser <span class="keyword">WHERE</span> Name <span class="keyword">LIKE</span> <span class="string">&#x27;dis0_&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="查询结果排序"><a href="#查询结果排序" class="headerlink" title="查询结果排序"></a>查询结果排序</h3><p>按时间降序查询 <code>groupcallinfo</code> 表中的数据。</p>
-<p>升序(<code>ASC</code>): 数值小的记录在前。<br>降序(<code>DESC</code>): 数值大的记录在前。</p>
+<h3 id="查询结果排序">查询结果排序</h3>
+<p>按时间降序查询 <code>groupcallinfo</code> 表中的数据。</p>
+<p>升序(<code>ASC</code>): 数值小的记录在前。<br>
+降序(<code>DESC</code>): 数值大的记录在前。</p>
 <p>如果不写关键字, 则默认使用 升序<code>ASC</code></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SeqID, DCUserID, GroupID, <span class="type">Time</span> <span class="keyword">FROM</span> groupcallinfo <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="type">Time</span> <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
-
 <p>也可以使用多字段排序。 按照 <code>Time</code> 字段降序， <code>ASC</code> 字段升序排列。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SeqID, DCUserID, GroupID, <span class="type">Time</span> <span class="keyword">FROM</span> groupcallinfo <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="type">Time</span> <span class="keyword">DESC</span>, SeqID <span class="keyword">ASC</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="查询总数量"><a href="#查询总数量" class="headerlink" title="查询总数量"></a>查询总数量</h3><p>查询 <code>dcuser</code> 表中有几个全功能调度员的账号。</p>
+<h3 id="查询总数量">查询总数量</h3>
+<p>查询 <code>dcuser</code> 表中有几个全功能调度员的账号。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> <span class="string">&#x27;记录数&#x27;</span> <span class="keyword">FROM</span> dcuser <span class="keyword">WHERE</span> DCType <span class="operator">=</span> <span class="number">65535</span>;</span><br></pre></td></tr></table></figure>
-
 <p>输出:</p>
 <table>
 <thead>
 <tr>
-<th align="center">记录数</th>
+<th style="text-align:center">记录数</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">2</td>
+<tbody>
+<tr>
+<td style="text-align:center">2</td>
 </tr>
-</tbody></table>
-<h3 id="限制查询记录条数"><a href="#限制查询记录条数" class="headerlink" title="限制查询记录条数"></a>限制查询记录条数</h3><p>查询组呼记录，只显示100条。</p>
+</tbody>
+</table>
+<h3 id="限制查询记录条数">限制查询记录条数</h3>
+<p>查询组呼记录，只显示100条。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DCUserID, GroupID, <span class="type">Time</span>, CallType <span class="keyword">FROM</span> groupcallinfo LIMIT <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h3><p>查询组呼记录表中所有具有行车调度权限调度台处理的记录。</p>
+<h3 id="子查询">子查询</h3>
+<p>查询组呼记录表中所有具有行车调度权限调度台处理的记录。</p>
 <p>翻译为 <code>SQL</code> 语句:</p>
 <p>查询 <code>groupcallinfo</code> 表中， <code>DCUserID</code> 等于 <code>dcuser</code> 表中 <code>DCType</code> 等于 <code>1</code> 记录的 <code>UserID</code> 字段的值</p>
 <p>三句话等价:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DCUserID, GroupID, <span class="type">Time</span>, CallType <span class="keyword">FROM</span> groupcallinfo <span class="keyword">WHERE</span> DCUserID <span class="keyword">IN</span> (<span class="keyword">SELECT</span> UserID <span class="keyword">FROM</span> dcuser <span class="keyword">WHERE</span> DCType <span class="operator">=</span> <span class="number">1</span>);</span><br><span class="line"><span class="keyword">SELECT</span> DCUserID, GroupID, <span class="type">Time</span>, CallType <span class="keyword">FROM</span> groupcallinfo <span class="keyword">WHERE</span> DCUserID <span class="operator">=</span> <span class="keyword">ANY</span>(<span class="keyword">SELECT</span> UserID <span class="keyword">FROM</span> dcuser <span class="keyword">WHERE</span> DCType <span class="operator">=</span> <span class="number">1</span>);</span><br><span class="line"><span class="keyword">SELECT</span> A.DCUserID, A.GroupID, A.Time, A.CallType <span class="keyword">FROM</span> groupcallinfo A <span class="keyword">WHERE</span> A.DCUserID <span class="keyword">IN</span> (<span class="keyword">SELECT</span> B.UserID <span class="keyword">FROM</span> dcuser B <span class="keyword">WHERE</span> B.DCType <span class="operator">=</span> <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> contacts <span class="keyword">WHERE</span> (surname, firstname) <span class="keyword">IN</span> (<span class="keyword">SELECT</span> surname, firstname <span class="keyword">FROM</span> customer);</span><br></pre></td></tr></table></figure>
-
-<h3 id="ALL-与-ANY-关键字"><a href="#ALL-与-ANY-关键字" class="headerlink" title="ALL 与 ANY 关键字:"></a>ALL 与 ANY 关键字:</h3><p>找出 class1 中比 class2 所有 source 都高的学生信息。</p>
+<h3 id="ALL-与-ANY-关键字">ALL 与 ANY 关键字:</h3>
+<p>找出 class1 中比 class2 所有 source 都高的学生信息。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> class1 <span class="keyword">WHERE</span> source <span class="operator">&gt;</span> <span class="keyword">ALL</span>(<span class="keyword">SELECT</span> source <span class="keyword">FROM</span> class2);</span><br></pre></td></tr></table></figure>
-
 <p>找出 class1 中 second_name 与 class2 中的重名的学生信息。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> class1 <span class="keyword">WHERE</span> second_name <span class="operator">=</span> <span class="keyword">ANY</span>(<span class="keyword">SELECT</span> second_name <span class="keyword">FROM</span> class2);</span><br></pre></td></tr></table></figure>
-
-<h3 id="查询最大、最小、平均值"><a href="#查询最大、最小、平均值" class="headerlink" title="查询最大、最小、平均值"></a>查询最大、最小、平均值</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">MAX</span>(EndTime<span class="operator">-</span>StartTime) <span class="keyword">AS</span> <span class="string">&#x27;最大通话时长&#x27;</span>, <span class="built_in">MIN</span>(EndTime<span class="operator">-</span>StartTime) <span class="keyword">AS</span> <span class="string">&#x27;最小通话时长&#x27;</span>, <span class="built_in">AVG</span>(EndTime<span class="operator">-</span>StartTime) <span class="keyword">AS</span> <span class="string">&#x27;平均通话时长&#x27;</span> <span class="keyword">FROM</span> trainposcallinfo;</span><br></pre></td></tr></table></figure>
-
+<h3 id="查询最大、最小、平均值">查询最大、最小、平均值</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">MAX</span>(EndTime<span class="operator">-</span>StartTime) <span class="keyword">AS</span> <span class="string">&#x27;最大通话时长&#x27;</span>, <span class="built_in">MIN</span>(EndTime<span class="operator">-</span>StartTime) <span class="keyword">AS</span> <span class="string">&#x27;最小通话时长&#x27;</span>, <span class="built_in">AVG</span>(EndTime<span class="operator">-</span>StartTime) <span class="keyword">AS</span> <span class="string">&#x27;平均通话时长&#x27;</span> <span class="keyword">FROM</span> trainposcallinfo;</span><br></pre></td></tr></table></figure>
 <p>输出:</p>
 <table>
 <thead>
 <tr>
-<th align="center">最大通话时长</th>
-<th align="center">最小通话时长</th>
-<th align="center">平均通话时长</th>
+<th style="text-align:center">最大通话时长</th>
+<th style="text-align:center">最小通话时长</th>
+<th style="text-align:center">平均通话时长</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">48</td>
-<td align="center">2</td>
-<td align="center">14.667</td>
+<tbody>
+<tr>
+<td style="text-align:center">48</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">14.667</td>
 </tr>
-</tbody></table>
-<h3 id="查询数据分组"><a href="#查询数据分组" class="headerlink" title="查询数据分组"></a>查询数据分组</h3><p>统计不同的 <code>DCUserID</code> 都有多少条组呼记录。</p>
+</tbody>
+</table>
+<h3 id="查询数据分组">查询数据分组</h3>
+<p>统计不同的 <code>DCUserID</code> 都有多少条组呼记录。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DCUserID, <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> &quot;总数&quot; <span class="keyword">FROM</span> groupcallinfo <span class="keyword">GROUP</span> <span class="keyword">BY</span> DCUserID;</span><br></pre></td></tr></table></figure>
-
 <p>输出:</p>
 <table>
 <thead>
 <tr>
-<th align="center">DCUserID</th>
-<th align="center">总数</th>
+<th style="text-align:center">DCUserID</th>
+<th style="text-align:center">总数</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">13001</td>
-<td align="center">13</td>
+<tbody>
+<tr>
+<td style="text-align:center">13001</td>
+<td style="text-align:center">13</td>
 </tr>
 <tr>
-<td align="center">13003</td>
-<td align="center">662</td>
+<td style="text-align:center">13003</td>
+<td style="text-align:center">662</td>
 </tr>
 <tr>
-<td align="center">13005</td>
-<td align="center">53</td>
+<td style="text-align:center">13005</td>
+<td style="text-align:center">53</td>
 </tr>
 <tr>
-<td align="center">13006</td>
-<td align="center">131</td>
+<td style="text-align:center">13006</td>
+<td style="text-align:center">131</td>
 </tr>
-</tbody></table>
-<h4 id="WITH-ROLLUP"><a href="#WITH-ROLLUP" class="headerlink" title="WITH ROLLUP"></a>WITH ROLLUP</h4><p><code>WITH ROLLUP</code> 用来在 <code>GROUP BY</code> 统计的基础上再加一行总数的统计行。</p>
+</tbody>
+</table>
+<h4 id="WITH-ROLLUP">WITH ROLLUP</h4>
+<p><code>WITH ROLLUP</code> 用来在 <code>GROUP BY</code> 统计的基础上再加一行总数的统计行。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DCUserID, <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> &quot;总数&quot; <span class="keyword">FROM</span> groupcallinfo <span class="keyword">GROUP</span> <span class="keyword">BY</span> DCUserID <span class="keyword">WITH</span> <span class="keyword">ROLLUP</span>;</span><br></pre></td></tr></table></figure>
-
 <p>输出:</p>
 <table>
 <thead>
 <tr>
-<th align="center">DCUserID</th>
-<th align="center">总数</th>
+<th style="text-align:center">DCUserID</th>
+<th style="text-align:center">总数</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">13001</td>
-<td align="center">13</td>
+<tbody>
+<tr>
+<td style="text-align:center">13001</td>
+<td style="text-align:center">13</td>
 </tr>
 <tr>
-<td align="center">13003</td>
-<td align="center">662</td>
+<td style="text-align:center">13003</td>
+<td style="text-align:center">662</td>
 </tr>
 <tr>
-<td align="center">13005</td>
-<td align="center">53</td>
+<td style="text-align:center">13005</td>
+<td style="text-align:center">53</td>
 </tr>
 <tr>
-<td align="center">13006</td>
-<td align="center">131</td>
+<td style="text-align:center">13006</td>
+<td style="text-align:center">131</td>
 </tr>
 <tr>
-<td align="center"></td>
-<td align="center">859</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">859</td>
 </tr>
-</tbody></table>
-<h4 id="HAVING-与-WHERE-区别"><a href="#HAVING-与-WHERE-区别" class="headerlink" title="HAVING 与 WHERE 区别"></a>HAVING 与 WHERE 区别</h4><p>having子句与where都是设定条件筛选的语句，有相似之处也有区别。</p>
-<p>having与where的区别:<br>having是在分组后对数据进行过滤<br>where是在分组前对数据进行过滤<br>having后面可以使用聚合函数<br>where后面不可以使用聚合</p>
+</tbody>
+</table>
+<h4 id="HAVING-与-WHERE-区别">HAVING 与 WHERE 区别</h4>
+<p>having子句与where都是设定条件筛选的语句，有相似之处也有区别。</p>
+<p>having与where的区别:<br>
+having是在分组后对数据进行过滤<br>
+where是在分组前对数据进行过滤<br>
+having后面可以使用聚合函数<br>
+where后面不可以使用聚合</p>
 <p>在查询过程中执行顺序：from&gt;where&gt;group（含聚合）&gt;having&gt;order&gt;select。</p>
-<p>所以聚合语句(sum,min,max,avg,count)要比having子句优先执行，而where子句在查询过程中执行优先级别优先于聚合语句(sum,min,max,avg,count)。<br>where子句：<br>select sum(num) as rmb from order where id&gt;10<br>&#x2F;&#x2F;只有先查询出id大于10的记录才能进行聚合语句</p>
+<p>所以聚合语句(sum,min,max,avg,count)要比having子句优先执行，而where子句在查询过程中执行优先级别优先于聚合语句(sum,min,max,avg,count)。<br>
+where子句：<br>
+select sum(num) as rmb from order where id&gt;10<br>
+//只有先查询出id大于10的记录才能进行聚合语句</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ryan007liu/article/details/91441479">Mysql中having和where的区别</a></p>
-<h3 id="查询过滤重复数据"><a href="#查询过滤重复数据" class="headerlink" title="查询过滤重复数据"></a>查询过滤重复数据</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> DCType <span class="keyword">FROM</span> dcuser;</span><br></pre></td></tr></table></figure>
-
+<h3 id="查询过滤重复数据">查询过滤重复数据</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> DCType <span class="keyword">FROM</span> dcuser;</span><br></pre></td></tr></table></figure>
 <p>输出:</p>
 <table>
 <thead>
 <tr>
-<th align="center">DCType</th>
+<th style="text-align:center">DCType</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">65535</td>
+<tbody>
+<tr>
+<td style="text-align:center">65535</td>
 </tr>
 <tr>
-<td align="center">2</td>
+<td style="text-align:center">2</td>
 </tr>
-</tbody></table>
-<p>说明: <code>DISTINCT</code> 关键词修饰的是语句整体，不能对单独字段修饰，并查询其他字段内容。<br>如:</p>
+</tbody>
+</table>
+<p>说明: <code>DISTINCT</code> 关键词修饰的是语句整体，不能对单独字段修饰，并查询其他字段内容。<br>
+如:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> DCType, UserID <span class="keyword">FROM</span> dcuser;</span><br></pre></td></tr></table></figure>
-
 <p>如上语句意义为查询 DCType 且 UserID 同时不重复的列。</p>
 <p>输出:</p>
 <table>
 <thead>
 <tr>
-<th align="center">DCType</th>
-<th align="center">UserID</th>
+<th style="text-align:center">DCType</th>
+<th style="text-align:center">UserID</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">65535</td>
-<td align="center">3000</td>
+<tbody>
+<tr>
+<td style="text-align:center">65535</td>
+<td style="text-align:center">3000</td>
 </tr>
 <tr>
-<td align="center">65535</td>
-<td align="center">3001</td>
+<td style="text-align:center">65535</td>
+<td style="text-align:center">3001</td>
 </tr>
 <tr>
-<td align="center">65535</td>
-<td align="center">3002</td>
+<td style="text-align:center">65535</td>
+<td style="text-align:center">3002</td>
 </tr>
 <tr>
-<td align="center">65535</td>
-<td align="center">3003</td>
+<td style="text-align:center">65535</td>
+<td style="text-align:center">3003</td>
 </tr>
 <tr>
-<td align="center">2</td>
-<td align="center">9999</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">9999</td>
 </tr>
-</tbody></table>
-<h3 id="替换特定字段查询结果"><a href="#替换特定字段查询结果" class="headerlink" title="替换特定字段查询结果"></a>替换特定字段查询结果</h3><p>查询 <code>dcuser</code> 表中所有数据， <code>DCType</code> 字段等于 <code>65535</code> 的显示全功能调度员, 等于 <code>1</code> 的显示行车调度员, 其他取值显示原本的值, 该字段结果显示为<code>调度员类型</code></p>
+</tbody>
+</table>
+<h3 id="替换特定字段查询结果">替换特定字段查询结果</h3>
+<p>查询 <code>dcuser</code> 表中所有数据， <code>DCType</code> 字段等于 <code>65535</code> 的显示全功能调度员, 等于 <code>1</code> 的显示行车调度员, 其他取值显示原本的值, 该字段结果显示为<code>调度员类型</code></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CASE</span> DCType <span class="keyword">WHEN</span> <span class="number">65535</span> <span class="keyword">THEN</span> &quot;全功能调度员&quot; <span class="keyword">WHEN</span> <span class="number">1</span> <span class="keyword">THEN</span> &quot;行车调度员&quot; <span class="keyword">ELSE</span> UserID <span class="keyword">END</span> <span class="keyword">AS</span> &quot;调度员类型&quot; <span class="keyword">FROM</span> dcuser;</span><br></pre></td></tr></table></figure>
-
 <p>分段看:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CASE</span> DCType</span><br><span class="line"><span class="keyword">WHEN</span> <span class="number">65535</span> <span class="keyword">THEN</span></span><br><span class="line">	&quot;全功能调度员&quot;</span><br><span class="line"><span class="keyword">WHEN</span> <span class="number">1</span> <span class="keyword">THEN</span></span><br><span class="line">	&quot;行车调度员&quot;</span><br><span class="line"><span class="keyword">ELSE</span></span><br><span class="line">	UserID</span><br><span class="line"><span class="keyword">END</span></span><br><span class="line"><span class="keyword">AS</span> &quot;调度员类型&quot;</span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">	dcuser;</span><br></pre></td></tr></table></figure>
-
 <p>输出:</p>
 <table>
 <thead>
 <tr>
-<th align="center">调度员类型</th>
+<th style="text-align:center">调度员类型</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">全功能调度员</td>
+<tbody>
+<tr>
+<td style="text-align:center">全功能调度员</td>
 </tr>
 <tr>
-<td align="center">14004</td>
+<td style="text-align:center">14004</td>
 </tr>
 <tr>
-<td align="center">行车调度员</td>
+<td style="text-align:center">行车调度员</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>关于 <code>CASE... WHEN...</code> 更多用法见下面链接</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63333847">SQL之CASE WHEN用法详解</a><br><a target="_blank" rel="noopener" href="https://www.gairuo.com/p/sql-select-case-when-then">SQL 查询：SELECT CASE 条件赋值</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_31071543/article/details/79666427">关于case when复杂sql语句查询</a></p>
-<h3 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lxf512666/article/details/52812146">SQL SELECT(复杂查询)之 自连接 &amp; 子查询 解析</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Hadley-pu/p/sql_selfconnect.html">sql中自连接的使用</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110891010">010-MySQL：自连接查询</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1665642">算法工程师-SQL进阶：神奇的自连接与子查询</a></p>
-<h3 id="重命名表"><a href="#重命名表" class="headerlink" title="重命名表"></a>重命名表</h3><p>改变 dcuser 表名称到 dcuser_new</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63333847">SQL之CASE WHEN用法详解</a><br>
+<a target="_blank" rel="noopener" href="https://www.gairuo.com/p/sql-select-case-when-then">SQL 查询：SELECT CASE 条件赋值</a><br>
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_31071543/article/details/79666427">关于case when复杂sql语句查询</a></p>
+<h3 id="自连接">自连接</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lxf512666/article/details/52812146">SQL SELECT(复杂查询)之 自连接 &amp; 子查询 解析</a><br>
+<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Hadley-pu/p/sql_selfconnect.html">sql中自连接的使用</a><br>
+<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110891010">010-MySQL：自连接查询</a><br>
+<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1665642">算法工程师-SQL进阶：神奇的自连接与子查询</a></p>
+<h3 id="重命名表">重命名表</h3>
+<p>改变 dcuser 表名称到 dcuser_new</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RENAME <span class="keyword">TABLE</span> dcuser <span class="keyword">TO</span> dcuser_new;</span><br></pre></td></tr></table></figure>
-
-<h3 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h3><p>删除整个 dcuser 表。</p>
+<h3 id="删除表">删除表</h3>
+<p>删除整个 dcuser 表。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> dcuser;</span><br></pre></td></tr></table></figure>
-
-<h3 id="清空表"><a href="#清空表" class="headerlink" title="清空表"></a>清空表</h3><p>删除表信息的方式有两种 :</p>
+<h3 id="清空表">清空表</h3>
+<p>删除表信息的方式有两种 :</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">TRUNCATE</span> <span class="keyword">TABLE</span> dcuser;</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> dcuser;</span><br></pre></td></tr></table></figure>
-
 <p>注 : truncate操作中的table可以省略，delete操作中的*可以省略</p>
-<p>truncate、delete 清空表数据的区别 :<br>1&gt; truncate 是整体删除 (速度较快)，delete是逐条删除 (速度较慢)<br>2&gt; truncate 不写服务器 log，delete 写服务器 log，也就是 truncate 效率比 delete高的原因<br>3&gt; truncate 不激活trigger (触发器)，但是会重置Identity (标识列、自增字段)，相当于自增列会被置为初始值，又重新从1开始记录，而不是接着原来的 ID数。而 delete 删除以后，identity 依旧是接着被删除的最近的那一条记录ID加1后进行记录。如果只需删除表中的部分记录，只能使用 DELETE语句配合 where条件</p>
-<p>参考资料:<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/chenshun123/article/details/79676446">MySQL 清空表(truncate)与删除表中数据(delete) 详解</a></p>
-<h3 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> runoob_tbl <span class="keyword">SET</span> runoob_title<span class="operator">=</span><span class="string">&#x27;学习 C++&#x27;</span> <span class="keyword">WHERE</span> runoob_id<span class="operator">=</span><span class="number">3</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="过程、函数"><a href="#过程、函数" class="headerlink" title="过程、函数"></a>过程、函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER <span class="operator">/</span><span class="operator">/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">PROCEDURE</span> IF <span class="keyword">EXISTS</span>  Create10K<span class="operator">/</span><span class="operator">/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> `Create10K`(<span class="keyword">IN</span> `for_time` <span class="type">INT</span>, <span class="keyword">IN</span> `type_int` <span class="type">INT</span>, <span class="keyword">IN</span> `info_text` <span class="type">VARCHAR</span>(<span class="number">255</span>))</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	<span class="keyword">DECLARE</span> i <span class="type">INT</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>;</span><br><span class="line">    WHILE i <span class="operator">&lt;</span> for_time <span class="operator">*</span> <span class="number">10000</span> DO</span><br><span class="line">    <span class="keyword">INSERT INTO</span> test_table(Type, Info) <span class="keyword">VALUES</span>(type_int, info_text);</span><br><span class="line">    <span class="keyword">SET</span> i <span class="operator">=</span> i <span class="operator">+</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">END</span> WHILE;</span><br><span class="line"><span class="keyword">END</span><span class="operator">/</span><span class="operator">/</span></span><br><span class="line"></span><br><span class="line">DELIMITER ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CALL</span> Create10K(<span class="number">500</span>, <span class="number">1</span>, &quot;1&quot;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sunada2005/p/3411873.html">常用SQL查询语句</a></p>
-<h3 id="插入主键重复的数据"><a href="#插入主键重复的数据" class="headerlink" title="插入主键重复的数据"></a>插入主键重复的数据</h3><p>插入 <code>dcuser</code> 表中一条数据，如果主键重复则更新原数据的 <code>StationList</code> 字段。</p>
+<p>truncate、delete 清空表数据的区别 :<br>
+1&gt; truncate 是整体删除 (速度较快)，delete是逐条删除 (速度较慢)<br>
+2&gt; truncate 不写服务器 log，delete 写服务器 log，也就是 truncate 效率比 delete高的原因<br>
+3&gt; truncate 不激活trigger (触发器)，但是会重置Identity (标识列、自增字段)，相当于自增列会被置为初始值，又重新从1开始记录，而不是接着原来的 ID数。而 delete 删除以后，identity 依旧是接着被删除的最近的那一条记录ID加1后进行记录。如果只需删除表中的部分记录，只能使用 DELETE语句配合 where条件</p>
+<p>参考资料:<br>
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/chenshun123/article/details/79676446">MySQL 清空表(truncate)与删除表中数据(delete) 详解</a></p>
+<h3 id="Update">Update</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> runoob_tbl <span class="keyword">SET</span> runoob_title<span class="operator">=</span><span class="string">&#x27;学习 C++&#x27;</span> <span class="keyword">WHERE</span> runoob_id<span class="operator">=</span><span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="过程、函数">过程、函数</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER <span class="operator">/</span><span class="operator">/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">PROCEDURE</span> IF <span class="keyword">EXISTS</span>  Create10K<span class="operator">/</span><span class="operator">/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> `Create10K`(<span class="keyword">IN</span> `for_time` <span class="type">INT</span>, <span class="keyword">IN</span> `type_int` <span class="type">INT</span>, <span class="keyword">IN</span> `info_text` <span class="type">VARCHAR</span>(<span class="number">255</span>))</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	<span class="keyword">DECLARE</span> i <span class="type">INT</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>;</span><br><span class="line">    WHILE i <span class="operator">&lt;</span> for_time <span class="operator">*</span> <span class="number">10000</span> DO</span><br><span class="line">    <span class="keyword">INSERT INTO</span> test_table(Type, Info) <span class="keyword">VALUES</span>(type_int, info_text);</span><br><span class="line">    <span class="keyword">SET</span> i <span class="operator">=</span> i <span class="operator">+</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">END</span> WHILE;</span><br><span class="line"><span class="keyword">END</span><span class="operator">/</span><span class="operator">/</span></span><br><span class="line"></span><br><span class="line">DELIMITER ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CALL</span> Create10K(<span class="number">500</span>, <span class="number">1</span>, &quot;1&quot;);</span><br></pre></td></tr></table></figure>
+<h3 id="参考资料">参考资料</h3>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sunada2005/p/3411873.html">常用SQL查询语句</a></p>
+<h3 id="插入主键重复的数据">插入主键重复的数据</h3>
+<p>插入 <code>dcuser</code> 表中一条数据，如果主键重复则更新原数据的 <code>StationList</code> 字段。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT INTO</span> dcuser(UserID, Name, DCType, DepotID, StationList) <span class="keyword">VALUES</span>(<span class="number">14005</span>, <span class="string">&#x27;14005&#x27;</span>, <span class="number">1</span>, <span class="number">1</span>, &quot;1,2,3,4&quot;) <span class="keyword">ON</span> DUPLICATE KEY <span class="keyword">UPDATE</span> StationList <span class="operator">=</span> &quot;1,2,3,4&quot;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="按天查询数量"><a href="#按天查询数量" class="headerlink" title="按天查询数量"></a>按天查询数量</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> UNIX_TIMESTAMP(date_format(FROM_UNIXTIME(SendTime),<span class="string">&#x27;%y-%m-%d 0:0:0&#x27;</span>)), <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">FROM</span> sds_info <span class="keyword">GROUP</span> <span class="keyword">BY</span> date_format(FROM_UNIXTIME(SendTime),<span class="string">&#x27;%y-%m-%d&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考资料-1"><a href="#参考资料-1" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/">MySQL 8.0 Reference Manual</a><br><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/mysql-tutorial-excerpt/8.0/en/examples.html">Chapter 7 Examples of Common Queries</a><br><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/replace.html">13.2.9 REPLACE Statement</a></p>
-<p>TODO: 合并查询、分页查询、空值判断、Contact 拼接查询结果、REPLACE INTO、多条插入、事务、存储过程、视图、批量插入、my.ini 的配置项的研究、中间表查询<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zengen/archive/2011/08/10/2133423.html">SQL中的循环、for循环、游标</a></p>
+<h3 id="按天查询数量">按天查询数量</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> UNIX_TIMESTAMP(date_format(FROM_UNIXTIME(SendTime),<span class="string">&#x27;%y-%m-%d 0:0:0&#x27;</span>)), <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">FROM</span> sds_info <span class="keyword">GROUP</span> <span class="keyword">BY</span> date_format(FROM_UNIXTIME(SendTime),<span class="string">&#x27;%y-%m-%d&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料-2">参考资料</h2>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/">MySQL 8.0 Reference Manual</a><br>
+<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/mysql-tutorial-excerpt/8.0/en/examples.html">Chapter 7 Examples of Common Queries</a><br>
+<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/replace.html">13.2.9 REPLACE Statement</a></p>
+<p>TODO: 合并查询、分页查询、空值判断、Contact 拼接查询结果、REPLACE INTO、多条插入、事务、存储过程、视图、批量插入、my.ini 的配置项的研究、中间表查询<br>
+<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zengen/archive/2011/08/10/2133423.html">SQL中的循环、for循环、游标</a></p>
 
     </div>
 
@@ -592,14 +626,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.</span> <span class="nav-text">查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.1.</span> <span class="nav-text">简单查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%AD%97%E6%AE%B5%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.</span> <span class="nav-text">指定字段查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%B7%BB%E5%8A%A0%E8%BF%87%E6%BB%A4%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">查询添加过滤条件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BETWEEN-AND"><span class="nav-number">1.3.1.</span> <span class="nav-text">BETWEEN AND</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.4.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%8E%92%E5%BA%8F"><span class="nav-number">1.5.</span> <span class="nav-text">查询结果排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%80%BB%E6%95%B0%E9%87%8F"><span class="nav-number">1.6.</span> <span class="nav-text">查询总数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E6%9F%A5%E8%AF%A2%E8%AE%B0%E5%BD%95%E6%9D%A1%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">限制查询记录条数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.8.</span> <span class="nav-text">子查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ALL-%E4%B8%8E-ANY-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.9.</span> <span class="nav-text">ALL 与 ANY 关键字:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9C%80%E5%A4%A7%E3%80%81%E6%9C%80%E5%B0%8F%E3%80%81%E5%B9%B3%E5%9D%87%E5%80%BC"><span class="nav-number">1.10.</span> <span class="nav-text">查询最大、最小、平均值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E5%88%86%E7%BB%84"><span class="nav-number">1.11.</span> <span class="nav-text">查询数据分组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WITH-ROLLUP"><span class="nav-number">1.11.1.</span> <span class="nav-text">WITH ROLLUP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HAVING-%E4%B8%8E-WHERE-%E5%8C%BA%E5%88%AB"><span class="nav-number">1.11.2.</span> <span class="nav-text">HAVING 与 WHERE 区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E8%BF%87%E6%BB%A4%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE"><span class="nav-number">1.12.</span> <span class="nav-text">查询过滤重复数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E7%89%B9%E5%AE%9A%E5%AD%97%E6%AE%B5%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C"><span class="nav-number">1.13.</span> <span class="nav-text">替换特定字段查询结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.14.</span> <span class="nav-text">自连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E8%A1%A8"><span class="nav-number">1.15.</span> <span class="nav-text">重命名表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="nav-number">1.16.</span> <span class="nav-text">删除表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E7%A9%BA%E8%A1%A8"><span class="nav-number">1.17.</span> <span class="nav-text">清空表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update"><span class="nav-number">1.18.</span> <span class="nav-text">Update</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B%E3%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">1.19.</span> <span class="nav-text">过程、函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.20.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E4%B8%BB%E9%94%AE%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.21.</span> <span class="nav-text">插入主键重复的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E5%A4%A9%E6%9F%A5%E8%AF%A2%E6%95%B0%E9%87%8F"><span class="nav-number">1.22.</span> <span class="nav-text">按天查询数量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99-1"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.</span> <span class="nav-text">查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.1.</span> <span class="nav-text">简单查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%AD%97%E6%AE%B5%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.</span> <span class="nav-text">指定字段查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%B7%BB%E5%8A%A0%E8%BF%87%E6%BB%A4%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">查询添加过滤条件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BETWEEN-AND"><span class="nav-number">1.3.1.</span> <span class="nav-text">BETWEEN AND</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.4.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%8E%92%E5%BA%8F"><span class="nav-number">1.5.</span> <span class="nav-text">查询结果排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%80%BB%E6%95%B0%E9%87%8F"><span class="nav-number">1.6.</span> <span class="nav-text">查询总数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E6%9F%A5%E8%AF%A2%E8%AE%B0%E5%BD%95%E6%9D%A1%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">限制查询记录条数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.8.</span> <span class="nav-text">子查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ALL-%E4%B8%8E-ANY-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.9.</span> <span class="nav-text">ALL 与 ANY 关键字:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9C%80%E5%A4%A7%E3%80%81%E6%9C%80%E5%B0%8F%E3%80%81%E5%B9%B3%E5%9D%87%E5%80%BC"><span class="nav-number">1.10.</span> <span class="nav-text">查询最大、最小、平均值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E5%88%86%E7%BB%84"><span class="nav-number">1.11.</span> <span class="nav-text">查询数据分组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WITH-ROLLUP"><span class="nav-number">1.11.1.</span> <span class="nav-text">WITH ROLLUP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HAVING-%E4%B8%8E-WHERE-%E5%8C%BA%E5%88%AB"><span class="nav-number">1.11.2.</span> <span class="nav-text">HAVING 与 WHERE 区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E8%BF%87%E6%BB%A4%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE"><span class="nav-number">1.12.</span> <span class="nav-text">查询过滤重复数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E7%89%B9%E5%AE%9A%E5%AD%97%E6%AE%B5%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C"><span class="nav-number">1.13.</span> <span class="nav-text">替换特定字段查询结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.14.</span> <span class="nav-text">自连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E8%A1%A8"><span class="nav-number">1.15.</span> <span class="nav-text">重命名表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="nav-number">1.16.</span> <span class="nav-text">删除表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E7%A9%BA%E8%A1%A8"><span class="nav-number">1.17.</span> <span class="nav-text">清空表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update"><span class="nav-number">1.18.</span> <span class="nav-text">Update</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B%E3%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">1.19.</span> <span class="nav-text">过程、函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.20.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E4%B8%BB%E9%94%AE%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.21.</span> <span class="nav-text">插入主键重复的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E5%A4%A9%E6%9F%A5%E8%AF%A2%E6%95%B0%E9%87%8F"><span class="nav-number">1.22.</span> <span class="nav-text">按天查询数量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99-2"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

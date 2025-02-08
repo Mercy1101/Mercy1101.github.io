@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="11. 测试标准库自带单元测试框架  测试代码须放在当前包以”_test.go”结尾的文件中 测试函数以Test为名称前缀 测试命令(go test) 忽略以”_” 或 “.” 开头的测试文件 正常编译操作(go build&#x2F;install)会忽略测试文件  12345678910111213141516171819202122232425262728293031323334353637">
+  <meta name="description" content="11. 测试 标准库自带单元测试框架  测试代码须放在当前包以&quot;_test.go&quot;结尾的文件中 测试函数以Test为名称前缀 测试命令(go test) 忽略以&quot;_&quot; 或 “.” 开头的测试文件 正常编译操作(go build&#x2F;install)会忽略测试文件  1234567891011121314151617181920212223242526272829">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Go语言学习笔记》读书笔记(1)测试">
 <meta property="og:url" content="https://mercy1101.github.io/2020/08/19/2020-08-19-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%E6%B5%8B%E8%AF%95/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="11. 测试标准库自带单元测试框架  测试代码须放在当前包以”_test.go”结尾的文件中 测试函数以Test为名称前缀 测试命令(go test) 忽略以”_” 或 “.” 开头的测试文件 正常编译操作(go build&#x2F;install)会忽略测试文件  12345678910111213141516171819202122232425262728293031323334353637">
+<meta property="og:site_name" content="李建聪的博客">
+<meta property="og:description" content="11. 测试 标准库自带单元测试框架  测试代码须放在当前包以&quot;_test.go&quot;结尾的文件中 测试函数以Test为名称前缀 测试命令(go test) 忽略以&quot;_&quot; 或 “.” 开头的测试文件 正常编译操作(go build&#x2F;install)会忽略测试文件  1234567891011121314151617181920212223242526272829">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-08-19T12:24:47.000Z">
 <meta property="article:modified_time" content="2023-10-28T06:29:44.902Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta property="article:tag" content="Go 读书笔记">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>《Go语言学习笔记》读书笔记(1)测试 | Jiancong Li's Blog</title>
+  <title>《Go语言学习笔记》读书笔记(1)测试 | 李建聪的博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -188,12 +188,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -237,15 +237,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="11-测试"><a href="#11-测试" class="headerlink" title="11. 测试"></a>11. 测试</h2><p>标准库自带单元测试框架</p>
+        <h2 id="11-测试">11. 测试</h2>
+<p>标准库自带单元测试框架</p>
 <ul>
-<li>测试代码须放在当前包以”_test.go”结尾的文件中</li>
+<li>测试代码须放在当前包以&quot;_test.go&quot;结尾的文件中</li>
 <li>测试函数以Test为名称前缀</li>
-<li>测试命令(go test) 忽略以”_” 或 “.” 开头的测试文件</li>
-<li>正常编译操作(go build&#x2F;install)会忽略测试文件</li>
+<li>测试命令(go test) 忽略以&quot;_&quot; 或 “.” 开头的测试文件</li>
+<li>正常编译操作(go build/install)会忽略测试文件</li>
 </ul>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;testing&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(x, y <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> x + y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> tests = []<span class="keyword">struct</span> &#123;</span><br><span class="line">		x	<span class="type">int</span></span><br><span class="line">		y	<span class="type">int</span></span><br><span class="line">		expect	<span class="type">int</span></span><br><span class="line">	&#125; &#123;</span><br><span class="line">		&#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>&#125;,</span><br><span class="line">		&#123;<span class="number">2</span>, <span class="number">2</span>, <span class="number">4</span>&#125;,</span><br><span class="line">		&#123;<span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, tt := <span class="keyword">range</span> tests &#123;</span><br><span class="line">		actual := add(tt.x, tt.y)</span><br><span class="line">		<span class="keyword">if</span> actual != tt.expect &#123;</span><br><span class="line">			t.Errorf(<span class="string">&quot;add(%d, %d): expect %d, actual %d&quot;</span>, tt.x, tt.y, tt.expect, actual)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestA</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">	t.Parallel()</span><br><span class="line">	time.Sleep(time.Second * <span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestB</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">	t.Parallel()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	time.Sleep(time.Second * <span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <table>
 <thead>
 <tr>
@@ -254,7 +254,8 @@
 <th>示例</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>-arg</td>
 <td>命令行参数</td>
 <td></td>
@@ -284,17 +285,22 @@
 <td>重复测试次数，默认次数为1</td>
 <td></td>
 </tr>
-</tbody></table>
-<h3 id="test-main"><a href="#test-main" class="headerlink" title="test main"></a>test main</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestMain</span><span class="params">(m * testing.M)</span></span>&#123;</span><br><span class="line">	<span class="comment">// setup</span></span><br><span class="line">	code := m.Run()	<span class="comment">// 调用测试函数</span></span><br><span class="line">	<span class="comment">// tear down</span></span><br><span class="line">	os.Exit(code)	<span class="comment">// 注意： os.Exit 不会执行defer</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</tbody>
+</table>
+<h3 id="test-main">test main</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestMain</span><span class="params">(m * testing.M)</span></span>&#123;</span><br><span class="line">	<span class="comment">// setup</span></span><br><span class="line">	code := m.Run()	<span class="comment">// 调用测试函数</span></span><br><span class="line">	<span class="comment">// tear down</span></span><br><span class="line">	os.Exit(code)	<span class="comment">// 注意： os.Exit 不会执行defer</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>多测试用例</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestMain</span><span class="params">(m * testing.M)</span></span> &#123;</span><br><span class="line">	match := <span class="function"><span class="keyword">func</span><span class="params">(pat, str <span class="type">string</span>)</span></span> (<span class="type">bool</span>, <span class="type">error</span>) &#123;	<span class="comment">// pat: 命令行参数-run 提供的过滤条件</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>, <span class="literal">nil</span>	<span class="comment">// str: InternalTest.Name</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	tests := []testing.InternalTest &#123;</span><br><span class="line">		&#123;<span class="string">&quot;b&quot;</span>, TestB&#125;,</span><br><span class="line">		&#123;<span class="string">&quot;a&quot;</span>, TestA&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	benchmarks := []testing.InternalBenchmark&#123;&#125;</span><br><span class="line">	examples := []testing.InternalExample&#123;&#125;</span><br><span class="line"></span><br><span class="line">	m = testing.MainStart(match, tests, benchmarks, examples)</span><br><span class="line"></span><br><span class="line">	os.Exit(m.Run())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="example"><a href="#example" class="headerlink" title="example"></a>example</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ExampleAdd</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(add(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">	fmt.Println(add(<span class="number">2</span>, <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Output:</span></span><br><span class="line">	<span class="comment">// 3</span></span><br><span class="line">	<span class="comment">// 4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意：如果没有output注释，该示例就不会被执行。另外，不能使用内置函数print&#x2F;printIn, 因为他们输出到stderr</p>
-<h3 id="benchmark"><a href="#benchmark" class="headerlink" title="benchmark"></a>benchmark</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkAdd</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="example">example</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ExampleAdd</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(add(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">	fmt.Println(add(<span class="number">2</span>, <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Output:</span></span><br><span class="line">	<span class="comment">// 3</span></span><br><span class="line">	<span class="comment">// 4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：如果没有output注释，该示例就不会被执行。另外，不能使用内置函数print/printIn, 因为他们输出到stderr</p>
+<h3 id="benchmark">benchmark</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkAdd</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>go test -bench .</p>
 </blockquote>
-<p>如果希望仅执行性能测试，那么可以用<code>run=NONE</code>忽略所有测试用例。<br>性能测试默认以并发方式进行测试，但可用cpu参数设定多个并发限制来观察结果。</p>
+<p>如果希望仅执行性能测试，那么可以用<code>run=NONE</code>忽略所有测试用例。<br>
+性能测试默认以并发方式进行测试，但可用cpu参数设定多个并发限制来观察结果。</p>
 <blockquote>
 <p>go test -bench . -cpu 1,2,4</p>
 </blockquote>
@@ -302,35 +308,38 @@
 <blockquote>
 <p>go test -bench . -benchtime 5s</p>
 </blockquote>
-<h3 id="timer"><a href="#timer" class="headerlink" title="timer"></a>timer</h3><p>如果在测试函数中要执行一些额外的操作，那么应该临时i组织计时器工作。</p>
+<h3 id="timer">timer</h3>
+<p>如果在测试函数中要执行一些额外的操作，那么应该临时i组织计时器工作。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkAdd</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line">	time.Sleep(time.Second)</span><br><span class="line">	b.ResetTimer()	<span class="comment">// 重置</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">		<span class="keyword">if</span> i == <span class="number">1</span> &#123;</span><br><span class="line">			b.StopTimer()	<span class="comment">// 暂停</span></span><br><span class="line">			time.Sleep(time.Second)</span><br><span class="line">			b.StartTimer()	<span class="comment">// 恢复</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h3><p>性能测试查看内存情况</p>
+<h3 id="memory">memory</h3>
+<p>性能测试查看内存情况</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">heap</span><span class="params">()</span></span> []<span class="type">byte</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="number">1024</span>*<span class="number">10</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkHeap</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span> ; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = heap()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>go test -bench . -benchmem -gcflags “-N -l” # 禁止内联和优化， 以便观察结果</p>
 </blockquote>
 <p>也可将测试函数设置为总是输出内存分配信息，无论使用benchmem参数与否</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">func <span class="title">BenchmarkHeap</span><span class="params">(b *testing.B)</span> </span>&#123;</span><br><span class="line">	b.<span class="built_in">ReportAllocs</span>()</span><br><span class="line">	b.<span class="built_in">ReportTimer</span>()</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span> ; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = <span class="built_in">heap</span>()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="代码覆盖率"><a href="#代码覆盖率" class="headerlink" title="代码覆盖率"></a>代码覆盖率</h3><blockquote>
+<h3 id="代码覆盖率">代码覆盖率</h3>
+<blockquote>
 <p>go test -cover</p>
 </blockquote>
 <p>为获取更详细信息，可指定covermode 和coverprofile 参数</p>
 <ul>
 <li>set: 是否执行</li>
 <li>count: 执行次数</li>
-<li>atomic: 执行次数，支持并发模式<blockquote>
+<li>atomic: 执行次数，支持并发模式</li>
+</ul>
+<blockquote>
 <p>go test -cover -covermode count -coverprofile cover.out</p>
 </blockquote>
-</li>
-</ul>
 <p>还可以在浏览器中查看包括具体的执行次数等信息</p>
 <blockquote>
-<p>go tool cover -html&#x3D;cover.out</p>
+<p>go tool cover -html=cover.out</p>
 </blockquote>
-<h3 id="性能监控"><a href="#性能监控" class="headerlink" title="性能监控"></a>性能监控</h3><p>引发性能问题的原因无外乎执行时间过长、内存占用过多，以及意外阻塞。通过捕获或监控相关执行状态数据，就可定位引发问题的原因，从而针对性改进算法。</p>
+<h3 id="性能监控">性能监控</h3>
+<p>引发性能问题的原因无外乎执行时间过长、内存占用过多，以及意外阻塞。通过捕获或监控相关执行状态数据，就可定位引发问题的原因，从而针对性改进算法。</p>
 <blockquote>
-<p>go test -run NONE -bench . -memprofile mem.out -cpuprofile cpu.out net&#x2F;http</p>
+<p>go test -run NONE -bench . -memprofile mem.out -cpuprofile cpu.out net/http</p>
 </blockquote>
 <table>
 <thead>
@@ -340,7 +349,8 @@
 <th>示例</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>-cpuprofile</td>
 <td>保存执行时间采样到指定文件</td>
 <td>-cpuprofile cpu.out</td>
@@ -365,28 +375,33 @@
 <td>阻塞时间采样起始值，单位为：ns</td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>如果执行性能测试，可能需要设置<code>benchtime</code>参数，以确保有足够的采样时间</p>
 <p>可使用交互模式查看，或用命令行直接输出单向结果。</p>
 <blockquote>
-<p>go tool pprof http.test mem.out<br>(pprof) top5</p>
+<p>go tool pprof http.test mem.out<br>
+(pprof) top5</p>
 </blockquote>
 <ul>
 <li>flat: 仅当前函数，不包括它调用的其他函数。</li>
 <li>sum: 列表前几行所占百分比的总和。</li>
 <li>cum: 当前函数调用堆栈累计。</li>
 </ul>
-<p>top命令可指定排序字段，比如<code>top5 -cum</code><br>找出需要进一步查看的目标，使用<code>peek</code>命令列出调用来源<br>也可用list命令输出源码统计样式，以便更直观的定位<br>除文字模式以外，还可输出svg图形，将其保存或用浏览器查看</p>
+<p>top命令可指定排序字段，比如<code>top5 -cum</code><br>
+找出需要进一步查看的目标，使用<code>peek</code>命令列出调用来源<br>
+也可用list命令输出源码统计样式，以便更直观的定位<br>
+除文字模式以外，还可输出svg图形，将其保存或用浏览器查看</p>
 <p>在线采集数据须诸如 <code>http/pprof</code>包</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;net/http&quot;</span></span><br><span class="line">  _ <span class="string">&quot;net/http/pprof&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  http.ListenAndServe(<span class="string">&quot;:8080&quot;</span>, http.DefaultServeMux)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>用浏览器访问指定路径，就可看到不同的检测项。</p>
 <blockquote>
 <p>go tool pprof <a target="_blank" rel="noopener" href="http://localhost:8080/debug/pprof/heap?debug=1">http://localhost:8080/debug/pprof/heap?debug=1</a></p>
 </blockquote>
 <p>必要时还可抓取数据，进行离线分析。</p>
 <blockquote>
-<p>curl <a target="_blank" rel="noopener" href="http://localhost:8080/debug/pprof/heap?debug=1">http://localhost:8080/debug/pprof/heap?debug=1</a> &gt; mem.out<br>go tool pprof test mem.out</p>
+<p>curl <a target="_blank" rel="noopener" href="http://localhost:8080/debug/pprof/heap?debug=1">http://localhost:8080/debug/pprof/heap?debug=1</a> &gt; mem.out<br>
+go tool pprof test mem.out</p>
 </blockquote>
 
     </div>
@@ -477,8 +492,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

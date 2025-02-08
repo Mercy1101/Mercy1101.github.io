@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ 二叉树的遍历">
 <meta property="og:url" content="https://mercy1101.github.io/2020/08/26/2020-08-26-C++%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="前序遍历： 遍历的顺序是：根节点-左节点-右节点 递归代码： 1234567891011121314class Solution &#123;public:    vector&lt;int&gt; preorderTraversal(TreeNode* root) &#123;      std::vector&lt;int&gt; res;      std::function&lt;void">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-08-26T13:52:09.000Z">
 <meta property="article:modified_time" content="2023-10-28T06:29:44.902Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta property="article:tag" content="c++ 数据结构">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>C++ 二叉树的遍历 | Jiancong Li's Blog</title>
+  <title>C++ 二叉树的遍历 | 李建聪的博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -188,12 +188,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -243,21 +243,16 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">      std::function&lt;<span class="type">void</span>(TreeNode*)&gt; order = [&amp;](TreeNode* node)&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line">        res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">        <span class="built_in">order</span>(node-&gt;left);</span><br><span class="line">        <span class="built_in">order</span>(node-&gt;right);</span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="built_in">order</span>(root);</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>迭代代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">      std::stack&lt;TreeNode*&gt; s;</span><br><span class="line">      s.<span class="built_in">push</span>(root);</span><br><span class="line">      <span class="keyword">while</span>(!s.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        root = s.<span class="built_in">top</span>();</span><br><span class="line">        s.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">continue</span>;</span><br><span class="line">        res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">        s.<span class="built_in">push</span>(root-&gt;right);</span><br><span class="line">        s.<span class="built_in">push</span>(root-&gt;left);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
 <p>中序遍历：</p>
 <p>遍历的顺序是：左节点-根节点-右节点</p>
 <p>递归代码</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        std::function&lt;<span class="type">void</span>(TreeNode*)&gt; order = [&amp;](TreeNode* node)&#123;</span><br><span class="line">          <span class="keyword">if</span>(node == <span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line">          <span class="built_in">order</span>(node-&gt;left);</span><br><span class="line">          res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">          <span class="built_in">order</span>(node-&gt;right);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="built_in">order</span>(root);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>迭代代码</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">      std::stack&lt;TreeNode*&gt; s;</span><br><span class="line">      <span class="keyword">while</span>(root != <span class="literal">nullptr</span> || !s.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        <span class="keyword">while</span>(root != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">          s.<span class="built_in">push</span>(root);</span><br><span class="line">          root = root-&gt;left;</span><br><span class="line">        &#125;</span><br><span class="line">        root = s.<span class="built_in">top</span>();</span><br><span class="line">        s.<span class="built_in">pop</span>();</span><br><span class="line">        res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">        root = root-&gt;right;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>后序遍历：</p>
 <p>遍历的顺序是：左节点-右节点-根节点</p>
 <p>递归代码</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        std::function&lt;<span class="type">void</span>(TreeNode*)&gt; order = [&amp;](TreeNode* node)&#123;</span><br><span class="line">          <span class="keyword">if</span>(node == <span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line">          <span class="built_in">order</span>(node-&gt;left);</span><br><span class="line">          <span class="built_in">order</span>(node-&gt;right);</span><br><span class="line">          res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="built_in">order</span>(root);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>迭代代码</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">      <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> res;</span><br><span class="line">      std::stack&lt;TreeNode*&gt; s;</span><br><span class="line">      s.<span class="built_in">push</span>(root);</span><br><span class="line">      <span class="keyword">while</span>(!s.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        root = s.<span class="built_in">top</span>();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">          s.<span class="built_in">pop</span>();</span><br><span class="line">          res.<span class="built_in">push_back</span>(s.<span class="built_in">top</span>()-&gt;val);</span><br><span class="line">          s.<span class="built_in">pop</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          s.<span class="built_in">push</span>(<span class="literal">nullptr</span>);</span><br><span class="line">          <span class="keyword">if</span>(root-&gt;right) s.<span class="built_in">push</span>(root-&gt;right);</span><br><span class="line">          <span class="keyword">if</span>(root-&gt;left) s.<span class="built_in">push</span>(root-&gt;left);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     </div>
@@ -347,8 +342,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

@@ -24,15 +24,15 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="压力测试工具设计-初试瀑布式软件开发周期">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2023-07-21-%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3-%E5%88%9D%E8%AF%95%E7%80%91%E5%B8%83%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%91%A8%E6%9C%9F/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="用于集成测试时的模拟机器的硬件情况，如 cpu 占用率、内存占用率、磁盘占用率。 本文使用 MoSCoW (莫斯科) 法则, 对需求优先级进行排序。">
 <meta property="og:locale">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-07-21-stress_tool/xx.gif">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/2023-07-21-stress_tool/xx.gif">
 <meta property="article:published_time" content="2023-07-21T02:38:51.686Z">
 <meta property="article:modified_time" content="2025-01-22T08:03:43.351Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mercy1101.github.io/resource/2023-07-21-stress_tool/xx.gif">
+<meta name="twitter:image" content="https://mercy1101.github.io/2023/07/21/resource/2023-07-21-stress_tool/xx.gif">
 
 <link rel="canonical" href="https://mercy1101.github.io/2023/07/21/2023-07-21-%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3-%E5%88%9D%E8%AF%95%E7%80%91%E5%B8%83%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%91%A8%E6%9C%9F/">
 
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>压力测试工具设计-初试瀑布式软件开发周期 | Jiancong Li's Blog</title>
+  <title>压力测试工具设计-初试瀑布式软件开发周期 | 李建聪的博客</title>
   
 
 
@@ -98,7 +98,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -189,12 +189,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -232,34 +232,74 @@
         <p>用于集成测试时的模拟机器的硬件情况，如 cpu 占用率、内存占用率、磁盘占用率。</p>
 <p>本文使用 <a href="#moscow-%E8%8E%AB%E6%96%AF%E7%A7%91-%E6%B3%95%E5%88%99"><code>MoSCoW</code> (莫斯科)</a> 法则, 对需求优先级进行排序。</p>
 <span id="more"></span>
-
-<h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><h3 id="5-自动化测试"><a href="#5-自动化测试" class="headerlink" title="5. 自动化测试"></a>5. 自动化测试</h3><p>应可以在跨平台的环境下，自动化测试。</p>
-<h3 id="6-使用提示"><a href="#6-使用提示" class="headerlink" title="6. 使用提示"></a>6. 使用提示</h3><h4 id="6-1-提示应具有良好的可读性"><a href="#6-1-提示应具有良好的可读性" class="headerlink" title="6.1 提示应具有良好的可读性"></a>6.1 提示应具有良好的可读性</h4><p>Must have</p>
-<h4 id="6-2-重点文本，颜色高亮"><a href="#6-2-重点文本，颜色高亮" class="headerlink" title="6.2 重点文本，颜色高亮"></a>6.2 重点文本，颜色高亮</h4><p>Could have</p>
-<h2 id="假设约束"><a href="#假设约束" class="headerlink" title="假设约束"></a>假设约束</h2><h2 id="功能需求"><a href="#功能需求" class="headerlink" title="功能需求"></a>功能需求</h2><h3 id="1-cpu-占用率模拟"><a href="#1-cpu-占用率模拟" class="headerlink" title="1. cpu 占用率模拟"></a>1. cpu 占用率模拟</h3><h4 id="1-1-支持单核满载"><a href="#1-1-支持单核满载" class="headerlink" title="1.1 支持单核满载"></a>1.1 支持单核满载</h4><p>Should have</p>
-<h4 id="1-2-支持多核满载"><a href="#1-2-支持多核满载" class="headerlink" title="1.2 支持多核满载"></a>1.2 支持多核满载</h4><p>Must have</p>
-<h4 id="1-3-CPU-占用率区间"><a href="#1-3-CPU-占用率区间" class="headerlink" title="1.3 CPU 占用率区间"></a>1.3 CPU 占用率区间</h4><p>不限制最低 CPU 占用率，限制最高 CPU 占用率为 95%([x%, 95%]).</p>
-<h4 id="1-4-关闭程序后，CPU-占用率恢复到运行前水平"><a href="#1-4-关闭程序后，CPU-占用率恢复到运行前水平" class="headerlink" title="1.4 关闭程序后，CPU 占用率恢复到运行前水平"></a>1.4 关闭程序后，CPU 占用率恢复到运行前水平</h4><p>Must have</p>
-<h3 id="2-内存占用率模拟"><a href="#2-内存占用率模拟" class="headerlink" title="2. 内存占用率模拟"></a>2. 内存占用率模拟</h3><p>TODO(lijiancong): 需要确认内存占用率的计算方式。</p>
-<h4 id="2-1-支持内存占用率区间"><a href="#2-1-支持内存占用率区间" class="headerlink" title="2.1 支持内存占用率区间"></a>2.1 支持内存占用率区间</h4><p>不限制最低内存占用率，限制最高内存占用率为 95%([x%, 95%]).</p>
-<h4 id="2-2-关闭程序后，内存占用率恢复到运行前水平"><a href="#2-2-关闭程序后，内存占用率恢复到运行前水平" class="headerlink" title="2.2 关闭程序后，内存占用率恢复到运行前水平"></a>2.2 关闭程序后，内存占用率恢复到运行前水平</h4><h3 id="3-磁盘占用率模拟"><a href="#3-磁盘占用率模拟" class="headerlink" title="3. 磁盘占用率模拟"></a>3. 磁盘占用率模拟</h3><h4 id="3-1-支持磁盘占用率区间"><a href="#3-1-支持磁盘占用率区间" class="headerlink" title="3.1 支持磁盘占用率区间"></a>3.1 支持磁盘占用率区间</h4><p>Must have</p>
+<h2 id="需求分析">需求分析</h2>
+<h3 id="5-自动化测试">5. 自动化测试</h3>
+<p>应可以在跨平台的环境下，自动化测试。</p>
+<h3 id="6-使用提示">6. 使用提示</h3>
+<h4 id="6-1-提示应具有良好的可读性">6.1 提示应具有良好的可读性</h4>
+<p>Must have</p>
+<h4 id="6-2-重点文本，颜色高亮">6.2 重点文本，颜色高亮</h4>
+<p>Could have</p>
+<h2 id="假设约束">假设约束</h2>
+<h2 id="功能需求">功能需求</h2>
+<h3 id="1-cpu-占用率模拟">1. cpu 占用率模拟</h3>
+<h4 id="1-1-支持单核满载">1.1 支持单核满载</h4>
+<p>Should have</p>
+<h4 id="1-2-支持多核满载">1.2 支持多核满载</h4>
+<p>Must have</p>
+<h4 id="1-3-CPU-占用率区间">1.3 CPU 占用率区间</h4>
+<p>不限制最低 CPU 占用率，限制最高 CPU 占用率为 95%([x%, 95%]).</p>
+<h4 id="1-4-关闭程序后，CPU-占用率恢复到运行前水平">1.4 关闭程序后，CPU 占用率恢复到运行前水平</h4>
+<p>Must have</p>
+<h3 id="2-内存占用率模拟">2. 内存占用率模拟</h3>
+<p>TODO(lijiancong): 需要确认内存占用率的计算方式。</p>
+<h4 id="2-1-支持内存占用率区间">2.1 支持内存占用率区间</h4>
+<p>不限制最低内存占用率，限制最高内存占用率为 95%([x%, 95%]).</p>
+<h4 id="2-2-关闭程序后，内存占用率恢复到运行前水平">2.2 关闭程序后，内存占用率恢复到运行前水平</h4>
+<h3 id="3-磁盘占用率模拟">3. 磁盘占用率模拟</h3>
+<h4 id="3-1-支持磁盘占用率区间">3.1 支持磁盘占用率区间</h4>
+<p>Must have</p>
 <p>不限制最低磁盘占用率，限制最高磁盘占用率为 95%([x%, 95%]).</p>
-<h4 id="3-2-关闭程序后，磁盘占用率恢复到运行前水平"><a href="#3-2-关闭程序后，磁盘占用率恢复到运行前水平" class="headerlink" title="3.2 关闭程序后，磁盘占用率恢复到运行前水平"></a>3.2 关闭程序后，磁盘占用率恢复到运行前水平</h4><p>Should have</p>
-<h4 id="3-3-支持运行当前运行磁盘的占用率模拟"><a href="#3-3-支持运行当前运行磁盘的占用率模拟" class="headerlink" title="3.3 支持运行当前运行磁盘的占用率模拟"></a>3.3 支持运行当前运行磁盘的占用率模拟</h4><p>Must have</p>
-<h4 id="3-4-支持指定磁盘的占用率模拟"><a href="#3-4-支持指定磁盘的占用率模拟" class="headerlink" title="3.4 支持指定磁盘的占用率模拟"></a>3.4 支持指定磁盘的占用率模拟</h4><p>Won’t have</p>
-<h2 id="非功能需求"><a href="#非功能需求" class="headerlink" title="非功能需求"></a>非功能需求</h2><h3 id="4-跨平台支持"><a href="#4-跨平台支持" class="headerlink" title="4. 跨平台支持"></a>4. 跨平台支持</h3><h3 id="4-1-跨系统支持"><a href="#4-1-跨系统支持" class="headerlink" title="4.1 跨系统支持"></a>4.1 跨系统支持</h3><h4 id="4-1-1-Windows11"><a href="#4-1-1-Windows11" class="headerlink" title="4.1.1. Windows11"></a>4.1.1. Windows11</h4><p>Must have</p>
-<h4 id="4-1-2-Windows10"><a href="#4-1-2-Windows10" class="headerlink" title="4.1.2. Windows10"></a>4.1.2. Windows10</h4><p>Must have</p>
-<h4 id="4-1-3-Centos7"><a href="#4-1-3-Centos7" class="headerlink" title="4.1.3. Centos7"></a>4.1.3. Centos7</h4><p>Should have</p>
-<h4 id="4-1-4-Ubuntu"><a href="#4-1-4-Ubuntu" class="headerlink" title="4.1.4. Ubuntu"></a>4.1.4. Ubuntu</h4><p>Should have</p>
-<h4 id="4-1-5-openEuler"><a href="#4-1-5-openEuler" class="headerlink" title="4.1.5. openEuler"></a>4.1.5. openEuler</h4><p>Should have</p>
-<h4 id="4-1-6-MacOS"><a href="#4-1-6-MacOS" class="headerlink" title="4.1.6. MacOS"></a>4.1.6. MacOS</h4><p>Could have</p>
-<h3 id="4-2-多编译器支持"><a href="#4-2-多编译器支持" class="headerlink" title="4.2 多编译器支持"></a>4.2 多编译器支持</h3><h4 id="4-2-1-G-12"><a href="#4-2-1-G-12" class="headerlink" title="4.2.1. G++12"></a>4.2.1. G++12</h4><p>Must have</p>
-<h4 id="4-2-2-Visual-Studio-2022"><a href="#4-2-2-Visual-Studio-2022" class="headerlink" title="4.2.2. Visual Studio 2022"></a>4.2.2. Visual Studio 2022</h4><p>Must have</p>
-<h4 id="4-2-3-Visual-Studio-2010"><a href="#4-2-3-Visual-Studio-2010" class="headerlink" title="4.2.3. Visual Studio 2010"></a>4.2.3. Visual Studio 2010</h4><p>Could have</p>
-<h4 id="4-2-4-clang14"><a href="#4-2-4-clang14" class="headerlink" title="4.2.4. clang14"></a>4.2.4. clang14</h4><p>Could have</p>
-<h4 id="4-2-5-G-3-8-及以上"><a href="#4-2-5-G-3-8-及以上" class="headerlink" title="4.2.5. G++3.8 及以上"></a>4.2.5. G++3.8 及以上</h4><p>Could have</p>
-<h3 id="7-安全要求"><a href="#7-安全要求" class="headerlink" title="7. 安全要求"></a>7. 安全要求</h3><p>以不损害硬件为原则，运行本软件后恢复硬件环境到运行前水平。</p>
-<h4 id="7-1-cpu-高负载"><a href="#7-1-cpu-高负载" class="headerlink" title="7.1 cpu 高负载"></a>7.1 cpu 高负载</h4><h5 id="7-1-1-高负载限制-95"><a href="#7-1-1-高负载限制-95" class="headerlink" title="7.1.1 高负载限制 95%"></a>7.1.1 高负载限制 95%</h5><h5 id="7-1-2-高负载时间限制-20min"><a href="#7-1-2-高负载时间限制-20min" class="headerlink" title="7.1.2 高负载时间限制 20min"></a>7.1.2 高负载时间限制 20min</h5><h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="MoSCoW-莫斯科-法则"><a href="#MoSCoW-莫斯科-法则" class="headerlink" title="MoSCoW (莫斯科) 法则"></a>MoSCoW (莫斯科) 法则</h3><p><code>MoSCoW</code> 法则是一种优先级排序法则，用于项目管理定义范围、确定功能质量、变更管理中常用的工具法则，以便用户、项目主管、项目经理、供应商对纳入项目中的每个需求交付的重要性和紧急性达成共识。</p>
+<h4 id="3-2-关闭程序后，磁盘占用率恢复到运行前水平">3.2 关闭程序后，磁盘占用率恢复到运行前水平</h4>
+<p>Should have</p>
+<h4 id="3-3-支持运行当前运行磁盘的占用率模拟">3.3 支持运行当前运行磁盘的占用率模拟</h4>
+<p>Must have</p>
+<h4 id="3-4-支持指定磁盘的占用率模拟">3.4 支持指定磁盘的占用率模拟</h4>
+<p>Won’t have</p>
+<h2 id="非功能需求">非功能需求</h2>
+<h3 id="4-跨平台支持">4. 跨平台支持</h3>
+<h3 id="4-1-跨系统支持">4.1 跨系统支持</h3>
+<h4 id="4-1-1-Windows11">4.1.1. Windows11</h4>
+<p>Must have</p>
+<h4 id="4-1-2-Windows10">4.1.2. Windows10</h4>
+<p>Must have</p>
+<h4 id="4-1-3-Centos7">4.1.3. Centos7</h4>
+<p>Should have</p>
+<h4 id="4-1-4-Ubuntu">4.1.4. Ubuntu</h4>
+<p>Should have</p>
+<h4 id="4-1-5-openEuler">4.1.5. openEuler</h4>
+<p>Should have</p>
+<h4 id="4-1-6-MacOS">4.1.6. MacOS</h4>
+<p>Could have</p>
+<h3 id="4-2-多编译器支持">4.2 多编译器支持</h3>
+<h4 id="4-2-1-G-12">4.2.1. G++12</h4>
+<p>Must have</p>
+<h4 id="4-2-2-Visual-Studio-2022">4.2.2. Visual Studio 2022</h4>
+<p>Must have</p>
+<h4 id="4-2-3-Visual-Studio-2010">4.2.3. Visual Studio 2010</h4>
+<p>Could have</p>
+<h4 id="4-2-4-clang14">4.2.4. clang14</h4>
+<p>Could have</p>
+<h4 id="4-2-5-G-3-8-及以上">4.2.5. G++3.8 及以上</h4>
+<p>Could have</p>
+<h3 id="7-安全要求">7. 安全要求</h3>
+<p>以不损害硬件为原则，运行本软件后恢复硬件环境到运行前水平。</p>
+<h4 id="7-1-cpu-高负载">7.1 cpu 高负载</h4>
+<h5 id="7-1-1-高负载限制-95">7.1.1 高负载限制 95%</h5>
+<h5 id="7-1-2-高负载时间限制-20min">7.1.2 高负载时间限制 20min</h5>
+<h2 id="附录">附录</h2>
+<h3 id="MoSCoW-莫斯科-法则">MoSCoW (莫斯科) 法则</h3>
+<p><code>MoSCoW</code> 法则是一种优先级排序法则，用于项目管理定义范围、确定功能质量、变更管理中常用的工具法则，以便用户、项目主管、项目经理、供应商对纳入项目中的每个需求交付的重要性和紧急性达成共识。</p>
 <p><code>MoSCoW</code> 代表四个优先级别的首字母的缩写，再加上O使之能够形成便于记忆的名称——<code>MoSCoW</code>。</p>
 <ol>
 <li><code>Must have</code>: 必须有。 如果不包含，则产品不可行。 <code>Must Have</code> 的功能，通常就是最小可行产品（<code>MVP</code>）的功能。</li>
@@ -267,7 +307,7 @@
 <li><code>Could have</code>: 可以有。 这些要求是客户期望的，但不是必需的。 可以提高用户体验，或提高客户满意度。 如果时间充足，资源允许，通常会包括这些功能。 但如果交付时间紧张，通常现阶段不会做，会挪到下一阶段或者下一期做。</li>
 <li><code>Won’t have</code>:这次不会有。 最不重要，最低回报的事项，或在当下是不适合的要求。 不会被计划到当前交货计划中。 “不会有”会被要求删除，或重新考虑。</li>
 </ol>
-<p><img src="/../resource/2023-07-21-stress_tool/xx.gif" alt="image"></p>
+<p><img src="../resource/2023-07-21-stress_tool/xx.gif" alt="image"></p>
 
     </div>
 
@@ -287,8 +327,8 @@
       <i class="fa fa-chevron-left"></i> EN50128中的基本要求
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/07/21/2020-12-11-C++%20%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%AE%80%E4%BB%8B%E4%B8%8E%E9%94%99%E8%AF%AF%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/" rel="next" title="C++ 智能指针简介与错误使用情况">
-      C++ 智能指针简介与错误使用情况 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/" rel="next" title="C++ 类内默认成员函数">
+      C++ 类内默认成员函数 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -354,8 +394,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ 编程风格建议">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2021-12-18-C++%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E5%BB%BA%E8%AE%AE/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="C++ 编程风格建议 本文总结了C++编程中的安全与效率优化建议。安全方面，强调使用引用而非指针、避免宏定义、缩短变量存活时间、禁止浮点数等量比较、类成员变量显式初始化、虚函数禁用缺省参数等。效率方面，建议优化循环嵌套、避免硬编码、使用强类型参数、避免布尔变量否定形式、删除无用代码等。此外，提倡使用std::string代替char*、避免void*、减少函数长度等，以提高代码可读性和维护性。这些">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-07-21T05:28:45.224Z">
 <meta property="article:modified_time" content="2025-01-22T08:07:50.826Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://mercy1101.github.io/2023/07/21/2021-12-18-C++%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E5%BB%BA%E8%AE%AE/">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>C++ 编程风格建议 | Jiancong Li's Blog</title>
+  <title>C++ 编程风格建议 | 李建聪的博客</title>
   
 
 
@@ -96,7 +96,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -187,12 +187,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -230,46 +230,67 @@
         <p>C++ 编程风格建议</p>
 <p>本文总结了C++编程中的安全与效率优化建议。安全方面，强调使用引用而非指针、避免宏定义、缩短变量存活时间、禁止浮点数等量比较、类成员变量显式初始化、虚函数禁用缺省参数等。效率方面，建议优化循环嵌套、避免硬编码、使用强类型参数、避免布尔变量否定形式、删除无用代码等。此外，提倡使用<code>std::string</code>代替<code>char*</code>、避免<code>void*</code>、减少函数长度等，以提高代码可读性和维护性。这些建议旨在帮助开发者编写更安全、高效的C++代码。</p>
 <span id="more"></span>
-
-<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><ol>
-<li><p>引用和指针</p>
+<h2 id="安全">安全</h2>
+<ol>
+<li>
+<p>引用和指针</p>
 <ul>
 <li>引用不会为空</li>
 <li>引用不会改变指向</li>
 <li>引用不能进行+、-、++、–运算</li>
 </ul>
 </li>
-<li><p>宏定义多条语句</p>
+<li>
+<p>宏定义多条语句</p>
 <ul>
 <li>使用do…while(false)来包含</li>
 </ul>
 </li>
-<li><p>逻辑符号||的执行<br> 假设我们要同时自增a和b，如果任意一个函数失败了，则执行某些操作<br> Bad<br>     if(!IncreaseA() || !IncreaseB())<br>         假设自增A函数失败了，则不会自增B<br> Good<br>     分开写</p>
+<li>
+<p>逻辑符号||的执行<br>
+假设我们要同时自增a和b，如果任意一个函数失败了，则执行某些操作<br>
+Bad<br>
+if(!IncreaseA() || !IncreaseB())<br>
+假设自增A函数失败了，则不会自增B<br>
+Good<br>
+分开写</p>
 </li>
-<li><p>尽可能缩短变量的存活时间</p>
+<li>
+<p>尽可能缩短变量的存活时间</p>
 <ul>
 <li>短的变量存活时间减少了初始化错误的可能</li>
 <li>阅读者同一时间需要阅读的代码变少，便于理解</li>
 <li>当需要把一个大的函数分拆，短的存活时间方便拆分</li>
 </ul>
 </li>
-<li><p>避免浮点数的数量级相差巨大的数字之间的四则运算<br> double d &#x3D; 100000000.0 + 0.1;</p>
+<li>
+<p>避免浮点数的数量级相差巨大的数字之间的四则运算<br>
+double d = 100000000.0 + 0.1;</p>
 </li>
-<li><p>避免浮点数的等量比较</p>
+<li>
+<p>避免浮点数的等量比较</p>
 </li>
-<li><p>if&#x2F;循环语句必须使用大括号</p>
+<li>
+<p>if/循环语句必须使用大括号</p>
 </li>
-<li><p>禁止通过声明的方式引用外部函数接口、变量<br> 通过extern声明的方式使用外部函数接口、变量，容易在外部接口改变时可能导致声明和定义不一致。</p>
+<li>
+<p>禁止通过声明的方式引用外部函数接口、变量<br>
+通过extern声明的方式使用外部函数接口、变量，容易在外部接口改变时可能导致声明和定义不一致。</p>
 </li>
-<li><p>类的成员变量必须显式初始化</p>
+<li>
+<p>类的成员变量必须显式初始化</p>
 </li>
-<li><p>基类的析构函数必须声明为virtual</p>
+<li>
+<p>基类的析构函数必须声明为virtual</p>
 </li>
-<li><p>禁止虚函数使用缺省参数值</p>
+<li>
+<p>禁止虚函数使用缺省参数值</p>
 </li>
-<li><p>禁止重新定义继承而来的非虚函数</p>
+<li>
+<p>禁止重新定义继承而来的非虚函数</p>
 </li>
-<li><p>不允许使用宏来表示常量</p>
+<li>
+<p>不允许使用宏来表示常量</p>
 <ul>
 <li>宏是简单的文本替换，在预处理阶段时完成，运行报错时直接报相应的值</li>
 <li>跟踪调试时也是显示值，而不是宏名</li>
@@ -277,70 +298,105 @@
 <li>宏没有作用域</li>
 </ul>
 </li>
-<li><p>禁止用memcpy_s、memset_s初始化非POD对象</p>
+<li>
+<p>禁止用memcpy_s、memset_s初始化非POD对象</p>
 <ul>
-<li>POD类型主要包括int, char, float, double, enumeration, void, pointer等原始类ing以及聚合类型，不能使用封装和面向对象特性(如用户定义的构造&#x2F;赋值&#x2F;析构函数、基类、虚函数)</li>
+<li>POD类型主要包括int, char, float, double, enumeration, void, pointer等原始类ing以及聚合类型，不能使用封装和面向对象特性(如用户定义的构造/赋值/析构函数、基类、虚函数)</li>
 <li>由于非POD类型比如非聚合类型的class对象，可能存在虚函数，内存布局不确定，跟编译器有关，滥用内存拷贝可能会导致严重的问题。</li>
 <li>即使对聚合类型的class,使用直接的内存拷贝和比较，破坏了信息隐蔽和数据保护的作用，也不提倡使用memcpy_s、memset_s</li>
 </ul>
 </li>
-<li><p>含有变量自增或自减运算的表达式中禁止再次引用该变量<br>x &#x3D; b[i] + i++;</p>
+<li>
+<p>含有变量自增或自减运算的表达式中禁止再次引用该变量<br>
+x = b[i] + i++;</p>
 </li>
-<li><p>不要保存std::string的c_str()返回的指针</p>
+<li>
+<p>不要保存std::string的c_str()返回的指针</p>
 </li>
-<li><p>对于指针和引用类型的形参，如果是不需要修改的，请使用const</p>
+<li>
+<p>对于指针和引用类型的形参，如果是不需要修改的，请使用const</p>
 </li>
-<li><p>使用强类型参数，避免使用void*</p>
+<li>
+<p>使用强类型参数，避免使用void*</p>
 </li>
-<li><p>使用std::string代替char*</p>
+<li>
+<p>使用std::string代替char*</p>
 <ul>
 <li>不用考虑结尾的’\0’</li>
-<li>可以直接使用+, &#x3D;, &#x3D;&#x3D;等运算符以及其他字符串操作函数</li>
+<li>可以直接使用+, =, ==等运算符以及其他字符串操作函数</li>
 <li>不需要考虑内存分配操作，避免了显式的new、delete, 以及由此导致的错误</li>
 </ul>
 </li>
 </ol>
-<h2 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h2><ol>
-<li><p>循环嵌套, 把大循环写在里面</p>
+<h2 id="效率">效率</h2>
+<ol>
+<li>
+<p>循环嵌套, 把大循环写在里面</p>
 </li>
-<li><p>strcmp的判断<br> Bad<br> if(!strcmp(str1, str2))<br> Good<br> if(strcmp(str1, str2) &#x3D;&#x3D; 0)</p>
+<li>
+<p>strcmp的判断<br>
+Bad<br>
+if(!strcmp(str1, str2))<br>
+Good<br>
+if(strcmp(str1, str2) == 0)</p>
 </li>
-<li><p>肯定语句比双重否定容易理解<br> Good<br> if(SomethingDone)<br> Bad<br> if(!NotDone)</p>
+<li>
+<p>肯定语句比双重否定容易理解<br>
+Good<br>
+if(SomethingDone)<br>
+Bad<br>
+if(!NotDone)</p>
 </li>
-<li><p>条件判断语句<br> 常量在右，变量在左<br> 让编译器去检查误赋值的情况</p>
+<li>
+<p>条件判断语句<br>
+常量在右，变量在左<br>
+让编译器去检查误赋值的情况</p>
 </li>
-<li><p>使用小括号，避免优先级问题<br> Bad<br> if(a &lt; b &#x3D;&#x3D; c &#x3D;&#x3D; d)<br> Good<br> if((a &lt; b) &#x3D;&#x3D; (c &#x3D;&#x3D; d))</p>
+<li>
+<p>使用小括号，避免优先级问题<br>
+Bad<br>
+if(a &lt; b == c == d)<br>
+Good<br>
+if((a &lt; b) == (c == d))</p>
 </li>
-<li><p>为变量指定唯一用途。避免采用不同取值区间来区分不同内容, 如，Account小于5000时表示老用户ID，大于5000时表示新用户ID</p>
+<li>
+<p>为变量指定唯一用途。避免采用不同取值区间来区分不同内容, 如，Account小于5000时表示老用户ID，大于5000时表示新用户ID</p>
 </li>
-<li><p>避免采用硬编码</p>
+<li>
+<p>避免采用硬编码</p>
 </li>
-<li><p>布尔变量的命名</p>
+<li>
+<p>布尔变量的命名</p>
 <ul>
 <li>避免采用status、sourcefile等模糊的布尔变量名，采用statusOK、sourcefileFound</li>
-<li>避免采用否定形式的布尔变量<br>  if(!NotSuccess)</li>
+<li>避免采用否定形式的布尔变量<br>
+if(!NotSuccess)</li>
 </ul>
 </li>
-<li><p>避免在变量名中使用数字</p>
+<li>
+<p>避免在变量名中使用数字</p>
 <ul>
 <li>考虑使用数组代替</li>
 <li>如果数组不适合，那么数字更不适合</li>
 </ul>
 </li>
-<li><p>定义变量的作用域</p>
+<li>
+<p>定义变量的作用域</p>
 <ul>
 <li>开始采用最严格的可见性，然后根据需求扩展变量的作用域</li>
 <li>循环内的变量挪动到循环外，比反过来简单</li>
 <li>把private变量变为public, 比反过来简单</li>
 </ul>
 </li>
-<li><p>不用的代码段直接删除，不要注释掉</p>
+<li>
+<p>不用的代码段直接删除，不要注释掉</p>
 <ul>
 <li>被注释掉的代码，无法被正常维护；当企图恢复使用这段代码时，极有可能引入容易被忽略的缺陷</li>
 <li>使用版本控制来，记录代码。</li>
 </ul>
 </li>
-<li><p>避免在变量名中使用容易混淆的字符</p>
+<li>
+<p>避免在变量名中使用容易混淆的字符</p>
 <ul>
 <li>数字<code>1</code>和小写的<code>l</code></li>
 <li>数字<code>1</code>和大写的<code>L</code></li>
@@ -349,9 +405,11 @@
 <li>数字<code>6</code>和大写的<code>G</code></li>
 </ul>
 </li>
-<li><p>为空语句创建一个DoNothing()预处理宏或者内联函数</p>
+<li>
+<p>为空语句创建一个DoNothing()预处理宏或者内联函数</p>
 </li>
-<li><p>避免函数过长，函数不超过50行(非空非注释)</p>
+<li>
+<p>避免函数过长，函数不超过50行(非空非注释)</p>
 <ul>
 <li>函数应该可以一屏显示完(50行以内), 只做一件事情，而且把它做好。</li>
 <li>过长的函数往往意味着函数功能不单一，过于复杂，或过分呈现细节，未进行进一步抽象。</li>
@@ -374,8 +432,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/07/21/2021-12-02-%E7%BD%91%E8%AF%BE%E3%80%8A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6%E6%9E%B6%E6%9E%84%E3%80%8B%E7%AC%94%E8%AE%B0/" rel="prev" title="网课《从零开始学架构》摘录">
-      <i class="fa fa-chevron-left"></i> 网课《从零开始学架构》摘录
+    <a href="/2023/07/21/2021-10-23-C++%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B/" rel="prev" title="面对对象简介与 C++ 类的基本介绍">
+      <i class="fa fa-chevron-left"></i> 面对对象简介与 C++ 类的基本介绍
     </a></div>
       <div class="post-nav-item">
     <a href="/2023/07/21/2021-12-09-C++%E5%85%B3%E4%BA%8E%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2%E7%AC%A6%E6%9E%84%E9%80%A0%E4%B8%B4%E6%97%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%8E%A2%E7%B4%A2/" rel="next" title="C++ 关于强制转换符构造临时对象的探索">
@@ -445,8 +503,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

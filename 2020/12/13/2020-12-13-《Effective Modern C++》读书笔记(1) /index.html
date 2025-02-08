@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="《Effective Modern C++》读书笔记中，作者详细讲解了C++11&#x2F;14中std::move与std::forward的使用。T&amp;&amp;在模板中有两种含义：右值引用和万能引用。万能引用可用于完美转发，但需谨慎使用std::move和std::forward，避免意外的左值改动。完美转发可能在大括号初始化、重载函数名、模板名及位域传参时失败。位域传参需传递副本。本">
+  <meta name="description" content="《Effective Modern C++》读书笔记中，作者详细讲解了C++11&#x2F;14中std::move与std::forward的使用。T&amp;&amp;在模板中有两种含义：右值引用和万能引用。万能引用可用于完美转发，但需谨慎使用std::move和std::forward，避免意外的左值改动。完美转发可能在大括号初始化、重载函数名、模板名及位域传参时失败。位域传参需传递副本。本文通过代码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Effective Modern C++》读书笔记(1)">
 <meta property="og:url" content="https://mercy1101.github.io/2020/12/13/2020-12-13-%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%20/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
-<meta property="og:description" content="《Effective Modern C++》读书笔记中，作者详细讲解了C++11&#x2F;14中std::move与std::forward的使用。T&amp;&amp;在模板中有两种含义：右值引用和万能引用。万能引用可用于完美转发，但需谨慎使用std::move和std::forward，避免意外的左值改动。完美转发可能在大括号初始化、重载函数名、模板名及位域传参时失败。位域传参需传递副本。本">
+<meta property="og:site_name" content="李建聪的博客">
+<meta property="og:description" content="《Effective Modern C++》读书笔记中，作者详细讲解了C++11&#x2F;14中std::move与std::forward的使用。T&amp;&amp;在模板中有两种含义：右值引用和万能引用。万能引用可用于完美转发，但需谨慎使用std::move和std::forward，避免意外的左值改动。完美转发可能在大括号初始化、重载函数名、模板名及位域传参时失败。位域传参需传递副本。本文通过代码">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-12-13T02:19:33.000Z">
 <meta property="article:modified_time" content="2025-01-22T08:50:04.989Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta property="article:tag" content="c++ 读书笔记">
 <meta name="twitter:card" content="summary">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>《Effective Modern C++》读书笔记(1) | Jiancong Li's Blog</title>
+  <title>《Effective Modern C++》读书笔记(1) | 李建聪的博客</title>
   
 
 
@@ -97,7 +97,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -188,12 +188,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -237,12 +237,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>《Effective Modern C++》读书笔记中，作者详细讲解了C++11&#x2F;14中<code>std::move</code>与<code>std::forward</code>的使用。<code>T&amp;&amp;</code>在模板中有两种含义：右值引用和万能引用。万能引用可用于完美转发，但需谨慎使用<code>std::move</code>和<code>std::forward</code>，避免意外的左值改动。完美转发可能在大括号初始化、重载函数名、模板名及位域传参时失败。位域传参需传递副本。本文通过代码示例，深入探讨右值引用、万能引用的特性及其在实际应用中的注意事项，帮助读者更好地理解和应用现代C++特性。</p>
+        <p>《Effective Modern C++》读书笔记中，作者详细讲解了C++11/14中<code>std::move</code>与<code>std::forward</code>的使用。<code>T&amp;&amp;</code>在模板中有两种含义：右值引用和万能引用。万能引用可用于完美转发，但需谨慎使用<code>std::move</code>和<code>std::forward</code>，避免意外的左值改动。完美转发可能在大括号初始化、重载函数名、模板名及位域传参时失败。位域传参需传递副本。本文通过代码示例，深入探讨右值引用、万能引用的特性及其在实际应用中的注意事项，帮助读者更好地理解和应用现代C++特性。</p>
 <span id="more"></span>
-
-<h1 id="《Effective-Modern-C-》读书笔记-1"><a href="#《Effective-Modern-C-》读书笔记-1" class="headerlink" title="《Effective Modern C++》读书笔记(1)"></a>《Effective Modern C++》读书笔记(1)</h1><p>在运行期， <code>std::move</code>和<code>std::forward</code>都不会做任何操作。</p>
+<h1>《Effective Modern C++》读书笔记(1)</h1>
+<p>在运行期， <code>std::move</code>和<code>std::forward</code>都不会做任何操作。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(Widget&amp;&amp; param)</span></span>; <span class="comment">///&lt; 右值引用</span></span><br><span class="line">Widget&amp;&amp; var1 = <span class="built_in">Widget</span>(); <span class="comment">///&lt; 右值引用</span></span><br><span class="line"><span class="keyword">auto</span>&amp;&amp; var2 = var1; <span class="comment">///&lt; 非右值引用</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(std::vector&lt;T&gt;&amp;&amp; param)</span>  <span class="comment">///&lt; 右值引用</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(T&amp;&amp; param)</span> <span class="comment">///&lt; 非右值引用</span></span></span><br></pre></td></tr></table></figure>
-
 <p><code>T&amp;&amp;</code>有两种不同的含义</p>
 <ol>
 <li>右值引用</li>
@@ -251,22 +250,19 @@
 <p>万能引用会在两个地方现身</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(T&amp;&amp; param)</span></span>;  <span class="comment">///&lt; param是个万能引用</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span>&amp;&amp; var2 = var1; <span class="comment">///&lt; var2是个万能引用</span></span><br></pre></td></tr></table></figure>
-
 <p>而不涉及型别推导<code>&amp;&amp;</code>就是右值引用</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(Widget&amp;&amp; param)</span></span>; <span class="comment">///&lt; 不涉及型别推导</span></span><br></pre></td></tr></table></figure>
 <p><code>const</code>关键字也可以确定<code>const T&amp;&amp;</code>是右值引用</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">const</span> T&amp;&amp; param)</span></span>;</span><br></pre></td></tr></table></figure>
-
 <p>在一个模板中的<code>T&amp;&amp;</code>也不一定是万能引用， 见下面。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>, <span class="keyword">class</span> <span class="title class_">Allocator</span> = allocator&lt;T&gt;&gt;</span><br><span class="line"><span class="keyword">class</span> vector &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="type">void</span> <span class="built_in">push_back</span>(T&amp;&amp; x);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>因为<code>push_back</code>是<code>vector</code>的成员函数， 如果<code>vector</code>实例存在的话就一定有确定的类型，所以并不存在型别推导。</p>
 <p>另外，声明<code>auto&amp;&amp;</code>都是万能引用。</p>
 <p>针对右值引用实施<code>std::move</code>，针对万能引用实施<code>std::forward</code></p>
-<p>当转发右值引用给其他函数是，应当对其实施向右值的无条件强制型别转换(通过<code>std::move</code>)，因为它们一定绑定到右值，而当转发万能引用时，应当对其实施向右值的有条件强制型别转换(通过<code>std::forward</code>), 因为它们不一定绑定到右值。<br>应当避免针对右值引用实施<code>std::forward</code>。而另一方面，针对万能引用使用<code>std::move</code>的想法更为糟糕，因为那样做的后果是某些左值会遭到意外改动(例如某些临时变量)。</p>
+<p>当转发右值引用给其他函数是，应当对其实施向右值的无条件强制型别转换(通过<code>std::move</code>)，因为它们一定绑定到右值，而当转发万能引用时，应当对其实施向右值的有条件强制型别转换(通过<code>std::forward</code>), 因为它们不一定绑定到右值。<br>
+应当避免针对右值引用实施<code>std::forward</code>。而另一方面，针对万能引用使用<code>std::move</code>的想法更为糟糕，因为那样做的后果是某些左值会遭到意外改动(例如某些临时变量)。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function">  <span class="type">void</span> <span class="title">setName</span><span class="params">(T&amp;&amp; newName)</span> </span>&#123;</span><br><span class="line">    name = std::<span class="built_in">move</span>(newName);  <span class="comment">///&lt; 可以编译但糟糕透顶</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  std::string name;</span><br><span class="line">  std::shared_ptr&lt;SomeDataStructure&gt; p;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">std::string <span class="title">getWidgetName</span><span class="params">()</span></span>;  <span class="comment">///&lt; 工厂函数</span></span><br><span class="line"></span><br><span class="line">Widget w;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> n = <span class="built_in">getWidgetName</span>(); <span class="comment">///&lt; n是个局部变量</span></span><br><span class="line"></span><br><span class="line">w.<span class="built_in">setName</span>(n); <span class="comment">///&lt; 将n移入了w</span></span><br><span class="line"></span><br><span class="line">... <span class="comment">///&lt; n的值变得未知了</span></span><br></pre></td></tr></table></figure>
-
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Widget <span class="title">makeWidget</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Widget w;</span><br><span class="line">  ... <span class="comment">///&lt; 对w进行操作</span></span><br><span class="line">  <span class="keyword">return</span> w; <span class="comment">///&lt; 没有任何东西被复制</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Widget <span class="title">makeWidget</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Widget w;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">move</span>(w);  <span class="comment">///&lt; 将w移入返回值, 千万不要这么做</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><code>RVO</code>(return value optimization): 编译器若要在一个按值返回的函数里省略对局部对象的复制（或者移动）, 则需要满足两个前提条件： 1. 局部对象型别和函数返回值型别相同. 2. 返回的就是局部对象本身。即使实施<code>RVO</code>的前提条件满足，但编译器选择不执行复制省略的时候，返回对象必须作为右值处理。当<code>RVO</code>的前提条件允许时，要么发生复制省略，要么<code>std::move</code>隐式地被实施于返回的局部对象。</p>
 <ul>
 <li>针对右值引用的最后一次使用实施<code>std::move</code>, 针对万能引用的最后一次使用实施<code>std::forward</code>。</li>
@@ -276,19 +272,18 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">logAndAdd</span><span class="params">(T&amp;&amp; name)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">logAndAddImpl</span>(std::forward&lt;T&gt;(name), std::<span class="built_in">is_integral</span>&lt;T&gt;());  <span class="comment">///&lt; std::is_integral不够正确</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>std::is_integral&lt;&gt;</code>不够正确是因为如果传给万能引用<code>name</code>实参是个左值，那么<code>T</code>就会被推导为左值引用。因为<code>int&amp;</code>不是<code>int</code>.</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">logAndAdd</span><span class="params">(T&amp;&amp; name)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">logAndAddImpl</span>(std::forward&lt;T&gt;(name), std::is_integral&lt;std::<span class="type">remove_reference_t</span>&lt;T&gt;&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>完美转发的含义是我们不仅转发对象，还转发其显著特征：型别、左值还是右值，以及是否带有<code>const</code>和<code>volation</code>饰词等等。</p>
-<p>大括号初始化物<br>假设<code>f</code>的声明如下：</p>
+<p>大括号初始化物<br>
+假设<code>f</code>的声明如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">const</span> std:vector&lt;<span class="type">int</span>&gt;&amp; v)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>在此情况下，以大括号初始化物调用<code>f</code>可以通过编译：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">f</span>(&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;)</span><br></pre></td></tr></table></figure>
 <p>但如果把同一大括号初始化物的运用，就是一种完美转发失败的情形。编译器采用推导的手法来取得传递给<code>fwd</code>实参的型别结果，而后它会比较推导型别结果和<code>f</code>声明的形参型别。完美转发会在下面两个条件中的任何一个成立时失败：</p>
 <ul>
 <li>编译器无法为一个或多个<code>fwd</code>的形参推导出型别结果。编译器无法编译通过。</li>
-<li>编译器为一个或多个<code>fwd</code>的形参推导出了”错误的”型别结果。</li>
+<li>编译器为一个或多个<code>fwd</code>的形参推导出了&quot;错误的&quot;型别结果。</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fwd</span><span class="params">(Ts&amp;&amp;... params)</span></span>&#123;</span><br><span class="line">  <span class="built_in">f</span>(std::forward&lt;Ts&gt;(params)...);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span>&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  <span class="type">static</span> <span class="type">const</span> std::<span class="type">size_t</span> MinVals = <span class="number">28</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">f</span>(Widget::MinVals); <span class="comment">///&lt; 没问题, 当f(28)处理</span></span><br><span class="line"><span class="built_in">fwd</span>(Widget::MinVals); <span class="comment">///&lt; 错误，无法链接</span></span><br></pre></td></tr></table></figure>
 <p>无法链接的原因是，完美转发，转发的是入参(<code>Widget::MinVals</code>)的引用，而引用在编译器底层是指针实现的。由于<code>static</code>变量并没有被分配实际的地址，所以产生了链接错误。</p>
 <p>完美转发的失败情形还包括：重载的函数名字和模板名字。</p>
@@ -296,12 +291,11 @@
 <p>上面在调用函数<code>f</code>的时候，其中<code>processVal</code>仅仅只是函数的名字，但编译器知道匹配的是单入参版本的函数。</p>
 <p>而使用完美转发时，编译器是无法知道使用的是什么版本。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">fwd</span>(processVal);  <span class="comment">///&lt; 编译不过</span></span><br></pre></td></tr></table></figure>
-
-<p>最后一种完美转发失败的情形是位域被用作函数实参的时候。<br>标准中：非<code>const</code>引用不得绑定到位域。既然没有办法创建指涉到任意比特的指针(C++标准规定，可以指涉的最小实体是单个char)，那自然没有办法把引用绑定到任意比特上了。</p>
+<p>最后一种完美转发失败的情形是位域被用作函数实参的时候。<br>
+标准中：非<code>const</code>引用不得绑定到位域。既然没有办法创建指涉到任意比特的指针(C++标准规定，可以指涉的最小实体是单个char)，那自然没有办法把引用绑定到任意比特上了。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">IPV4Header</span> &#123;</span><br><span class="line">  std::<span class="type">uint32_t</span> version:<span class="number">4</span>,</span><br><span class="line">  IHL:<span class="number">4</span>,</span><br><span class="line">  DSCP:<span class="number">6</span>,</span><br><span class="line">  ECN:<span class="number">2</span>,</span><br><span class="line">  totalLength:<span class="number">16</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">f</span>(h.totalLength); <span class="comment">///&lt; 没问题</span></span><br><span class="line"><span class="built_in">fwd</span>(h.totalLength); <span class="comment">///&lt; 错误！</span></span><br></pre></td></tr></table></figure>
 <p>把位域传递给完美转发函数的关键，就是利用转发目的函数接收的总是位域值的副本这一事实。可以自己复制一份，并以该副本调用。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> length = <span class="built_in">static_cast</span>&lt;std::<span class="type">uint16_t</span>&gt;(h.totalLength);</span><br><span class="line"><span class="built_in">fwd</span>(length);</span><br></pre></td></tr></table></figure>
-
 
     </div>
 
@@ -385,14 +379,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8AEffective-Modern-C-%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-1"><span class="nav-number">1.</span> <span class="nav-text">《Effective Modern C++》读书笔记(1)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">《Effective Modern C++》读书笔记(1)</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

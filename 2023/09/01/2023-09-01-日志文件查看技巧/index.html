@@ -24,20 +24,20 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="日志文件查看技巧">
 <meta property="og:url" content="https://mercy1101.github.io/2023/09/01/2023-09-01-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B%E6%8A%80%E5%B7%A7/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="日志文件通常包含大量打印，如何快速定位问题，是每个程序员所需要掌握的技能。 本篇文章教你使用 VSCode 及其插件来查看日志。">
 <meta property="og:locale">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-09-01-log-skills/Snipaste_2023-09-01_18-55-40.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-09-01-log-skills/Snipaste_2023-09-01_18-59-48.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-09-01-log-skills/Snipaste_2023-09-01_19-15-49.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-28-42.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-30-08.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-26-04.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-log-skills/Snipaste_2023-09-01_18-55-40.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-log-skills/Snipaste_2023-09-01_18-59-48.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-log-skills/Snipaste_2023-09-01_19-15-49.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-28-42.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-30-08.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-26-04.png">
 <meta property="article:published_time" content="2023-09-01T10:52:12.331Z">
 <meta property="article:modified_time" content="2025-01-22T08:01:49.907Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mercy1101.github.io/resource/2023-09-01-log-skills/Snipaste_2023-09-01_18-55-40.png">
+<meta name="twitter:image" content="https://mercy1101.github.io/2023/09/01/resource/2023-09-01-log-skills/Snipaste_2023-09-01_18-55-40.png">
 
 <link rel="canonical" href="https://mercy1101.github.io/2023/09/01/2023-09-01-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B%E6%8A%80%E5%B7%A7/">
 
@@ -52,7 +52,7 @@
   };
 </script>
 
-  <title>日志文件查看技巧 | Jiancong Li's Blog</title>
+  <title>日志文件查看技巧 | 李建聪的博客</title>
   
 
 
@@ -103,7 +103,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -194,12 +194,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -237,30 +237,31 @@
         <p>日志文件通常包含大量打印，如何快速定位问题，是每个程序员所需要掌握的技能。</p>
 <p>本篇文章教你使用 VSCode 及其插件来查看日志。</p>
 <span id="more"></span>
-
-<h2 id="日志文件查看"><a href="#日志文件查看" class="headerlink" title="日志文件查看"></a>日志文件查看</h2><h3 id="多日志文件查看"><a href="#多日志文件查看" class="headerlink" title="多日志文件查看"></a>多日志文件查看</h3><p>通常一个问题包含多个文件，所以多文件搜索变得很重要。</p>
+<h2 id="日志文件查看">日志文件查看</h2>
+<h3 id="多日志文件查看">多日志文件查看</h3>
+<p>通常一个问题包含多个文件，所以多文件搜索变得很重要。</p>
 <p>我通常会使用 issue 号的名称来创建专门的日志文件夹，如下图：</p>
-<p><img src="/../resource/2023-09-01-log-skills/Snipaste_2023-09-01_18-55-40.png" alt="image"></p>
+<p><img src="../resource/2023-09-01-log-skills/Snipaste_2023-09-01_18-55-40.png" alt="image"></p>
 <p>在文件夹内使用 VSCode 打开即可在文件夹内查看日志, 搜索也是可以默认搜索文件夹内所有文件</p>
-<p><img src="/../resource/2023-09-01-log-skills/Snipaste_2023-09-01_18-59-48.png" alt="image"></p>
-<h3 id="错误日志太多-难以搜索真正错误"><a href="#错误日志太多-难以搜索真正错误" class="headerlink" title="错误日志太多, 难以搜索真正错误"></a>错误日志太多, 难以搜索真正错误</h3><p>我们经常遇到一个 error 日志打印出来其实并不意味着错误(首先我们应该先把错误日志改为警告等级，或者直接删除该条打印)，但该条日志疯狂打印，导致掩盖了原有的信息。</p>
+<p><img src="../resource/2023-09-01-log-skills/Snipaste_2023-09-01_18-59-48.png" alt="image"></p>
+<h3 id="错误日志太多-难以搜索真正错误">错误日志太多, 难以搜索真正错误</h3>
+<p>我们经常遇到一个 error 日志打印出来其实并不意味着错误(首先我们应该先把错误日志改为警告等级，或者直接删除该条打印)，但该条日志疯狂打印，导致掩盖了原有的信息。</p>
 <p>如果我们把刷屏的日志删除掉就可以直接搜索 error，来查看真正的错误信息了。</p>
 <p>那我们有办法删除它么？当然有，使用正则表达式来选中这些日志</p>
 <p>正则表达式</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">^.*你想要匹配的字符串.*\r?\n?</span><br><span class="line"></span><br><span class="line">例:</span><br><span class="line">^.*retry send app msg failed.*\r?\n?</span><br><span class="line">^.*Find no position.*\r?\n?</span><br><span class="line">^.*SetRegisterStatus: strLongNum.*\r?\n?</span><br></pre></td></tr></table></figure>
-
 <p>在 VsCode 中勾选<strong>正则表达式查找</strong>，<strong>替换所有</strong>找到的日志为空字符串，即可达到删除重复日志的目的。</p>
-<p><img src="/../resource/2023-09-01-log-skills/Snipaste_2023-09-01_19-15-49.png" alt="image"></p>
-<h3 id="想要突出显示特定的日志"><a href="#想要突出显示特定的日志" class="headerlink" title="想要突出显示特定的日志"></a>想要突出显示特定的日志</h3><p>可以使用日志高亮插件 “Log File Highlighter”, 在 VSCode 插件商店搜索安装即可。</p>
+<p><img src="../resource/2023-09-01-log-skills/Snipaste_2023-09-01_19-15-49.png" alt="image"></p>
+<h3 id="想要突出显示特定的日志">想要突出显示特定的日志</h3>
+<p>可以使用日志高亮插件 “Log File Highlighter”, 在 VSCode 插件商店搜索安装即可。</p>
 <p>该插件可以使用配置来制定高亮的日志：</p>
-<p><img src="/../resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-28-42.png" alt="image"></p>
-<p><img src="/../resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-30-08.png" alt="image"></p>
+<p><img src="../resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-28-42.png" alt="image"></p>
+<p><img src="../resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-30-08.png" alt="image"></p>
 <p>使用如下配置：</p>
 <p>可以让 ERROR， error 等文本，在日志文件中被显示为红色</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;logFileHighlighter.customPatterns&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">/// 错误，必须处理的信息</span></span><br><span class="line">    <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ERROR|error|FATAL|fatal|critical|FAILED&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#FF0000&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
-
 <p>使用效果：</p>
-<p><img src="/../resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-26-04.png" alt="image"></p>
+<p><img src="../resource/2023-09-01-log-skills/Snipaste_2023-09-04_13-26-04.png" alt="image"></p>
 <p>根据我自己的使用习惯，我把日志的高亮进行分类：</p>
 <ol>
 <li>错误，必须处理的信息</li>
@@ -272,8 +273,6 @@
 </ol>
 <p>以下是我的配置：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;logFileHighlighter.customPatterns&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">/// 错误，必须处理的问题</span></span><br><span class="line">    <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ERROR|error|FATAL|fatal|critical|FAILED&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#FF0000&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">/// 警告，必须注意的信息</span></span><br><span class="line">    <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;WARN|warn|warning|percent: 99.|percent: 100|\\b(?:9\\d(?:\\.\\d&#123;1,2&#125;)?|100(?:\\.0&#123;1,2&#125;)?)%|\\(s\\)&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#FFFF00&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">/// 信息，值得注意的信息</span></span><br><span class="line">    <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;(\&quot;DCCapacityPos\&quot;:｜get APP request call|INFO  |info |RUN|OK|PASSED|Send DC handle req call which have ulDCCapaCity|spPID-&gt;usInstID|spPID-&gt;usTaskID|link auth successful, client|RequestCallReq|Dialling is handle as link call.|Function Avg Time:|frequency count|get SA msg:|server_close_connect|OnServerDisconnectClient usClientID|tcp_send: send failed, Socket|SetButtonStatus|get request call|is not need save link group call|handle auto pick up group|Dialling is handle as group call.|eSDK_SendSMS|Skip not auto pick up group|is not auto pick up!|get app request call|Group Call Speaker Change:|OnRequestCallReq|\\(31\\)|\\(34\\)|\\(36\\))&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#42B883&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">/// 调试，用于调试程序的信息</span></span><br><span class="line">    <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;debug|Debug|DEBUG|Spend Time|Memory Change|Total Time|interval_time_factory&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#007FFF&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">/// 详细信息，可以忽略的信息</span></span><br><span class="line">    <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;DETAIL|detail&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#2F90B9&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">/// 当前关注的信息（需要每次更新）</span></span><br><span class="line">    <span class="attr">&quot;pattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;6021102&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#000000&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;background&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#19F334&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
-
-
 
     </div>
 
@@ -360,8 +359,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

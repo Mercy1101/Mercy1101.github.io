@@ -24,12 +24,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="SIL2 认证工作总结">
 <meta property="og:url" content="https://mercy1101.github.io/2023/09/01/2023-09-01-SIL2%E8%AE%A4%E8%AF%81%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="SIL2（Safety Integrity Level 2） 是一种安全完整性级别，用于评估和确定安全相关系统的可靠性和性能。SIL是根据国际标准IEC 61508（功能安全）和相关行业标准（如IEC 61511、ISO 26262等）定义的。 SIL2认证是指通过对特定系统或设备进行评估和验证，确认其满足SIL2级别的要求。SIL2级别通常适用于具有中等安全风险的系统，要求系统在设计、实施和操作">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-09-01T08:41:32.743Z">
 <meta property="article:modified_time" content="2025-01-22T08:02:19.216Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://mercy1101.github.io/2023/09/01/2023-09-01-SIL2%E8%AE%A4%E8%AF%81%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>SIL2 认证工作总结 | Jiancong Li's Blog</title>
+  <title>SIL2 认证工作总结 | 李建聪的博客</title>
   
 
 
@@ -96,7 +96,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -187,12 +187,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -230,13 +230,12 @@
         <p><code>SIL2（Safety Integrity Level 2）</code> 是一种安全完整性级别，用于评估和确定安全相关系统的可靠性和性能。SIL是根据国际标准IEC 61508（功能安全）和相关行业标准（如IEC 61511、ISO 26262等）定义的。</p>
 <p><code>SIL2</code>认证是指通过对特定系统或设备进行评估和验证，确认其满足SIL2级别的要求。SIL2级别通常适用于具有中等安全风险的系统，要求系统在设计、实施和操作过程中采取特定的安全措施和功能，以确保其能够达到预期的安全性能。</p>
 <span id="more"></span>
-
-
 <p>本次我参与的 <code>SIL2</code> 认证是只做软件部分的认证，其中设计的标准为 <code>EN50128-2011</code>。</p>
 <p>目前 <code>SIL2</code> 认证工作已经基本完成，现总结此次认证工作的经验。</p>
-<h2 id="EN50128-整体脉络"><a href="#EN50128-整体脉络" class="headerlink" title="EN50128 整体脉络"></a>EN50128 整体脉络</h2><p>EN50128 更多的是在强调软件质量保障。</p>
+<h2 id="EN50128-整体脉络">EN50128 整体脉络</h2>
+<p>EN50128 更多的是在强调软件质量保障。</p>
 <p>软件质量保障是以计划为指导，计划指导实践。</p>
-<p>EN50128 推荐&#x2F;要求的整体流程为：</p>
+<p>EN50128 推荐/要求的整体流程为：</p>
 <ol>
 <li>计划阶段</li>
 <li>需求阶段</li>
@@ -249,19 +248,28 @@
 <li>软件维护</li>
 </ol>
 <p>其中 2 ～ 7 作为软件研发的主要流程，1和8 ～ 9 作为软件工程管理过程。</p>
-<h3 id="计划阶段"><a href="#计划阶段" class="headerlink" title="计划阶段"></a>计划阶段</h3><p>所有计划的制定，独立于研发过程。</p>
-<h3 id="需求阶段"><a href="#需求阶段" class="headerlink" title="需求阶段"></a>需求阶段</h3><p>研发的第一个过程，准确定义需求和需求对应的测试。</p>
-<h3 id="架构与设计阶段"><a href="#架构与设计阶段" class="headerlink" title="架构与设计阶段"></a>架构与设计阶段</h3><p>对整个系统进行定义，分为哪几个组件，网络拓扑怎么搭建，使用什么硬件，使用什么数据库。</p>
+<h3 id="计划阶段">计划阶段</h3>
+<p>所有计划的制定，独立于研发过程。</p>
+<h3 id="需求阶段">需求阶段</h3>
+<p>研发的第一个过程，准确定义需求和需求对应的测试。</p>
+<h3 id="架构与设计阶段">架构与设计阶段</h3>
+<p>对整个系统进行定义，分为哪几个组件，网络拓扑怎么搭建，使用什么硬件，使用什么数据库。</p>
 <p>定义组件之间的接口。</p>
-<h3 id="组件实现与测试阶段"><a href="#组件实现与测试阶段" class="headerlink" title="组件实现与测试阶段"></a>组件实现与测试阶段</h3><p>编码与调试阶段。</p>
-<h3 id="集成阶段"><a href="#集成阶段" class="headerlink" title="集成阶段"></a>集成阶段</h3><p>对软件组件进行集成，对真实的硬件进行集成。</p>
-<h3 id="总体测试与最后确认"><a href="#总体测试与最后确认" class="headerlink" title="总体测试与最后确认"></a>总体测试与最后确认</h3><p>对已经集成好的整体系统，对照软件需求测试用例进行测试并记录。发行说明，总体测试报告与软件确认报告。</p>
-<h3 id="软件部署"><a href="#软件部署" class="headerlink" title="软件部署"></a>软件部署</h3><p>软件发布计划隶属于配置管理计划，规定了每个基线版本包含什么功能，什么时候发布。</p>
+<h3 id="组件实现与测试阶段">组件实现与测试阶段</h3>
+<p>编码与调试阶段。</p>
+<h3 id="集成阶段">集成阶段</h3>
+<p>对软件组件进行集成，对真实的硬件进行集成。</p>
+<h3 id="总体测试与最后确认">总体测试与最后确认</h3>
+<p>对已经集成好的整体系统，对照软件需求测试用例进行测试并记录。发行说明，总体测试报告与软件确认报告。</p>
+<h3 id="软件部署">软件部署</h3>
+<p>软件发布计划隶属于配置管理计划，规定了每个基线版本包含什么功能，什么时候发布。</p>
 <p>而跟随着软件发布的就是软件部署。</p>
 <p>软件部署分为：部署计划、部署操作手册、部署记录、部署记录报告。</p>
-<h3 id="软件维护"><a href="#软件维护" class="headerlink" title="软件维护"></a>软件维护</h3><p>运维阶段（升级）。</p>
+<h3 id="软件维护">软件维护</h3>
+<p>运维阶段（升级）。</p>
 <p>软件维护计划、软件变更记录、软件维护记录。</p>
-<h2 id="此次认证过程得到的收获"><a href="#此次认证过程得到的收获" class="headerlink" title="此次认证过程得到的收获"></a>此次认证过程得到的收获</h2><p>西方主导思想：计划指导实践。</p>
+<h2 id="此次认证过程得到的收获">此次认证过程得到的收获</h2>
+<p>西方主导思想：计划指导实践。</p>
 <p>但是在没有计划时，没有构思后面工作流程的能力。</p>
 <p>在计划不成熟或不合理时，经常会出现无视规定，灵活应对。</p>
 <p>那有的人有心，在实施后会更新计划。但更多的人没有能力将自己的经验推广给每个部门内的人，也没有管理者来主导更新流程。</p>
@@ -274,7 +282,8 @@
 <p>判断一个人的工作是否完成，应该以计划中的规定来判定，比如测试通过了，那是如何通过的。</p>
 <p>版本发布了，那版本中有哪些功能，那些缺陷，那些更改。</p>
 <p>软件部署了，部署的什么版本，哪些升级，哪些没有升级。</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>只讲 SIL2 的要求，给出生命周期，以及要干的事情。</p>
+<h2 id="思路">思路</h2>
+<p>只讲 SIL2 的要求，给出生命周期，以及要干的事情。</p>
 <p>压缩 SIL2 的要求到我们的生命周期中。</p>
 <p>为每个周期设立检查点。</p>
 <p>对部分代码的查看总结</p>
@@ -364,8 +373,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">

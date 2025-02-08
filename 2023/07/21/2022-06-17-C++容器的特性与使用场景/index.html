@@ -24,49 +24,49 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++容器的特性与适用场景">
 <meta property="og:url" content="https://mercy1101.github.io/2023/07/21/2022-06-17-C++%E5%AE%B9%E5%99%A8%E7%9A%84%E7%89%B9%E6%80%A7%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/index.html">
-<meta property="og:site_name" content="Jiancong Li&#39;s Blog">
+<meta property="og:site_name" content="李建聪的博客">
 <meta property="og:description" content="本文详细介绍了C++中各类容器的特性与适用场景，涵盖序列式容器（如std::vector、std::list）、关联式容器（如std::set、std::map）和无序容器（如std::unordered_set、std::unordered_map）。文章分析了每种容器的内部实现、性能特点、适用场景及常见操作，如std::vector的动态数组特性、std::list的双向链表结构、std::m">
 <meta property="og:locale">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/STL_Container_Types.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/ContainerSelect.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/ContainerTypes.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/array_base.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/vector_base.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/iterator.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/reverse_iterator.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/size()%E4%B8%8Ecapacity().png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/resize.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/reserve.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/shrink_to_fit.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/push_back.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/push_front.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/insert.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/erase.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/deque_base0.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/deque_base1.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_base.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_insert.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_splice.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/forward_list_base.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/forward_insert_begin.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/set_base.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/set_datastruct.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/map_base.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/map_datastruct.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/unordered_map_base.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/unordered_map_datastruct.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/put.jpg">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/stack_base.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/stack_base1.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/queue_base.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/queue_base1.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/priority_queue_base.png">
-<meta property="og:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/iterator_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/STL_Container_Types.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/ContainerSelect.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/ContainerTypes.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/array_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/vector_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/iterator.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/reverse_iterator.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/size()%E4%B8%8Ecapacity().png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/resize.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/reserve.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/shrink_to_fit.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/push_back.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/push_front.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/insert.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/erase.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/deque_base0.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/deque_base1.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_insert.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_splice.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/forward_list_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/forward_insert_begin.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/set_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/set_datastruct.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/map_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/map_datastruct.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/unordered_map_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/unordered_map_datastruct.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/put.jpg">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/stack_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/stack_base1.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/queue_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/queue_base1.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/priority_queue_base.png">
+<meta property="og:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/iterator_base.png">
 <meta property="article:published_time" content="2023-07-21T05:28:45.225Z">
 <meta property="article:modified_time" content="2025-01-22T08:06:57.626Z">
-<meta property="article:author" content="Jiancong Li">
+<meta property="article:author" content="李建聪">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://mercy1101.github.io/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/STL_Container_Types.png">
+<meta name="twitter:image" content="https://mercy1101.github.io/2023/07/21/resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/STL_Container_Types.png">
 
 <link rel="canonical" href="https://mercy1101.github.io/2023/07/21/2022-06-17-C++%E5%AE%B9%E5%99%A8%E7%9A%84%E7%89%B9%E6%80%A7%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/">
 
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>C++容器的特性与适用场景 | Jiancong Li's Blog</title>
+  <title>C++容器的特性与适用场景 | 李建聪的博客</title>
   
 
 
@@ -132,7 +132,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Jiancong Li's Blog</h1>
+      <h1 class="site-title">李建聪的博客</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -223,12 +223,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jiancong Li">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jiancong Li's Blog">
+      <meta itemprop="name" content="李建聪的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -265,41 +265,56 @@
       
         <p>本文详细介绍了C++中各类容器的特性与适用场景，涵盖序列式容器（如<code>std::vector</code>、<code>std::list</code>）、关联式容器（如<code>std::set</code>、<code>std::map</code>）和无序容器（如<code>std::unordered_set</code>、<code>std::unordered_map</code>）。文章分析了每种容器的内部实现、性能特点、适用场景及常见操作，如<code>std::vector</code>的动态数组特性、<code>std::list</code>的双向链表结构、<code>std::map</code>的键值对管理等。此外，还探讨了迭代器的种类及其失效场景，帮助开发者根据具体需求选择合适的容器，优化代码性能。</p>
 <span id="more"></span>
-
 <p>C++容器的特性与适用场景, <a href="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/C++%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF.pptx">PPT</a></p>
-<h2 id="容器类别"><a href="#容器类别" class="headerlink" title="容器类别"></a>容器类别</h2><p>首先放上一张来自《C++标准库》中的图片。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/STL_Container_Types.png" alt="STL Container Types"></p>
-<h3 id="序列式容器（Sequence-container）"><a href="#序列式容器（Sequence-container）" class="headerlink" title="序列式容器（Sequence container）"></a>序列式容器（Sequence container）</h3><p>这是一种有序(ordered)集合，其内每个元素均有确凿的位置—-取决于插入时机和地点，与元素值无关。如果你以追加方式对一个集和置入6个元素，他们的排列次序将和置入次序一致。STL提供了5个定义好的序列式容器：array、vector、deque、list和forward_list。</p>
-<h3 id="关联式容器-Associative-container"><a href="#关联式容器-Associative-container" class="headerlink" title="关联式容器(Associative container)"></a>关联式容器(Associative container)</h3><p>这是一种已排序(sorted)集合，元素位置取决于其value(或key—-如果元素是个key&#x2F;value pair)和给定的某个排序准则。如果将六个元素置入这样的集合中，他们的值将决定他们的次序，和插入次序无关。STL提供了4个关联式容器：set、multiset、map和multimap。</p>
-<h3 id="无序容器（Unordered-associative-container）"><a href="#无序容器（Unordered-associative-container）" class="headerlink" title="无序容器（Unordered (associative) container）"></a>无序容器（Unordered (associative) container）</h3><p>这是一种无序集合(unordered collection), 其内每个元素的每个位置无关紧要，唯一重要的是某特定元素是否位于此集合内。元素值或其安插顺序，都不影响元素的位置，而且元素的位置有可能在容器生命周期中被改变。如果你放6个元素到这种集合内，它们的次序不明确，并且可能随时间而改变。STL内含4个预定义的无序容器：unordered_set、unordered_multiset、unordered_map和unordered_multimap。</p>
+<h2 id="容器类别">容器类别</h2>
+<p>首先放上一张来自《C++标准库》中的图片。</p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/STL_Container_Types.png" alt="STL Container Types"></p>
+<h3 id="序列式容器（Sequence-container）">序列式容器（Sequence container）</h3>
+<p>这是一种有序(ordered)集合，其内每个元素均有确凿的位置----取决于插入时机和地点，与元素值无关。如果你以追加方式对一个集和置入6个元素，他们的排列次序将和置入次序一致。STL提供了5个定义好的序列式容器：array、vector、deque、list和forward_list。</p>
+<h3 id="关联式容器-Associative-container">关联式容器(Associative container)</h3>
+<p>这是一种已排序(sorted)集合，元素位置取决于其value(或key----如果元素是个key/value pair)和给定的某个排序准则。如果将六个元素置入这样的集合中，他们的值将决定他们的次序，和插入次序无关。STL提供了4个关联式容器：set、multiset、map和multimap。</p>
+<h3 id="无序容器（Unordered-associative-container）">无序容器（Unordered (associative) container）</h3>
+<p>这是一种无序集合(unordered collection), 其内每个元素的每个位置无关紧要，唯一重要的是某特定元素是否位于此集合内。元素值或其安插顺序，都不影响元素的位置，而且元素的位置有可能在容器生命周期中被改变。如果你放6个元素到这种集合内，它们的次序不明确，并且可能随时间而改变。STL内含4个预定义的无序容器：unordered_set、unordered_multiset、unordered_map和unordered_multimap。</p>
 <ul>
-<li><p><strong>Sequence</strong>容器通常被实现为array或linked list</p>
+<li>
+<p><strong>Sequence</strong>容器通常被实现为array或linked list</p>
 </li>
-<li><p><strong>Associative</strong>容器通常被实现为binary tree</p>
+<li>
+<p><strong>Associative</strong>容器通常被实现为binary tree</p>
 </li>
-<li><p><strong>Unordered</strong>容器通常被实现为hash table</p>
+<li>
+<p><strong>Unordered</strong>容器通常被实现为hash table</p>
 </li>
 </ul>
-<h2 id="各种容器使用时机"><a href="#各种容器使用时机" class="headerlink" title="各种容器使用时机"></a>各种容器使用时机</h2><p>  <img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/ContainerSelect.png" alt="ContainerSelect"></p>
+<h2 id="各种容器使用时机">各种容器使用时机</h2>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/ContainerSelect.png" alt="ContainerSelect"></p>
 <ul>
-<li><p>默认情况下应该使用<code>std::vector</code>。<code>std::vector</code>的内部构造最简单，并允许随机访问，所以数据的访问十分方便灵活，数据的处理也够快。</p>
+<li>
+<p>默认情况下应该使用<code>std::vector</code>。<code>std::vector</code>的内部构造最简单，并允许随机访问，所以数据的访问十分方便灵活，数据的处理也够快。</p>
 </li>
-<li><p>如果经常要在<strong>序列头部和尾部安插和一处元素</strong>，应该采用<code>std::deque</code>。如果你希望元素被移除时，容器能够自动缩减内部用量，那么也该使用<code>std::deque</code>。此外，由于<code>std::vector</code>通常采用一个内存区块来存放元素，而<code>std::deque</code>采用<strong>多个区块</strong>，所以后者可内含更多元素。</p>
+<li>
+<p>如果经常要在<strong>序列头部和尾部安插和一处元素</strong>，应该采用<code>std::deque</code>。如果你希望元素被移除时，容器能够自动缩减内部用量，那么也该使用<code>std::deque</code>。此外，由于<code>std::vector</code>通常采用一个内存区块来存放元素，而<code>std::deque</code>采用<strong>多个区块</strong>，所以后者可内含更多元素。</p>
 </li>
-<li><p>如果需要经常<strong>在容器中段执行元素安插、移除和移动</strong>，可考虑使用<code>std::list</code>。<code>std::list</code>提供特殊的成员函数，可在<strong>常量时间内将元素从A容器转移到B容器</strong>。但由于<code>std::list</code><strong>不支持随机访问</strong>，所以如果只知道list的头部却要造访list的中端元素，效能会大打折扣。和所有“以节点为基础”的容器相似，<strong>只要元素仍是容器的一部分，list就不会令指向那些元素的迭代器失效</strong>。<code>std::vector</code>则不然，一旦超过其容量，它的所有<code>iterator</code>、<code>pointer</code>和<code>reference</code>失效。至于<code>std::deque</code>，当它的大小改变，所有<code>iterator</code>、<code>pointer</code>和<code>reference</code>都会失效。</p>
+<li>
+<p>如果需要经常<strong>在容器中段执行元素安插、移除和移动</strong>，可考虑使用<code>std::list</code>。<code>std::list</code>提供特殊的成员函数，可在<strong>常量时间内将元素从A容器转移到B容器</strong>。但由于<code>std::list</code><strong>不支持随机访问</strong>，所以如果只知道list的头部却要造访list的中端元素，效能会大打折扣。和所有“以节点为基础”的容器相似，<strong>只要元素仍是容器的一部分，list就不会令指向那些元素的迭代器失效</strong>。<code>std::vector</code>则不然，一旦超过其容量，它的所有<code>iterator</code>、<code>pointer</code>和<code>reference</code>失效。至于<code>std::deque</code>，当它的大小改变，所有<code>iterator</code>、<code>pointer</code>和<code>reference</code>都会失效。</p>
 </li>
-<li><p>如果你要的容器对异常处理使得“<strong>每次操作若不成功便无任何作用</strong>”，那么应该选用<code>std::list</code>(但是不调用其assignment操作符和sort(), 而且如果元素比较过程中会抛出异常，就不要调用merge()、remove()、remove_if()和unique()，或选用associative&#x2F;unordered容器（但不调用多元素安插动作，而且<strong>如果比较准则的复制&#x2F;赋值动作可能抛出异常，就不要调用swap()或erase()</strong>）)。</p>
+<li>
+<p>如果你要的容器对异常处理使得“<strong>每次操作若不成功便无任何作用</strong>”，那么应该选用<code>std::list</code>(但是不调用其assignment操作符和sort(), 而且如果元素比较过程中会抛出异常，就不要调用merge()、remove()、remove_if()和unique()，或选用associative/unordered容器（但不调用多元素安插动作，而且<strong>如果比较准则的复制/赋值动作可能抛出异常，就不要调用swap()或erase()</strong>）)。</p>
 </li>
-<li><p>如果你经常需要根据某个准则<strong>查找元素</strong>，应当使用“依据该准则进行hash”的<code>std::unordered_set</code> 或<code>std::multiset</code>。然而，hash容器内是无序的，所以如果你必须以来元素的次序(order),应该使用<code>std::set</code>或<code>std::multiset</code>，他们根据查找准则对元素排序。</p>
+<li>
+<p>如果你经常需要根据某个准则<strong>查找元素</strong>，应当使用“依据该准则进行hash”的<code>std::unordered_set</code> 或<code>std::multiset</code>。然而，hash容器内是无序的，所以如果你必须以来元素的次序(order),应该使用<code>std::set</code>或<code>std::multiset</code>，他们根据查找准则对元素排序。</p>
 </li>
-<li><p>如果想处理key&#x2F;value pair，请采用<code>unordered_map</code>或<code>std::unordered_multimap</code>。如果元素次序很重要，可采用<code>std::map</code>或<code>std::multimap</code>。</p>
+<li>
+<p>如果想处理key/value pair，请采用<code>unordered_map</code>或<code>std::unordered_multimap</code>。如果元素次序很重要，可采用<code>std::map</code>或<code>std::multimap</code>。</p>
 </li>
-<li><p>如果需要关联式数组(associative array), 应采用unordered map。如果元素次序很重要，可采用 <code>std::map</code>。</p>
+<li>
+<p>如果需要关联式数组(associative array), 应采用unordered map。如果元素次序很重要，可采用 <code>std::map</code>。</p>
 </li>
-<li><p>如果需要字典结构，应采用<code>unordered std::multimap</code>。如果元素次序很重要，可采用<code>std::multimap</code>。</p>
+<li>
+<p>如果需要字典结构，应采用<code>unordered std::multimap</code>。如果元素次序很重要，可采用<code>std::multimap</code>。</p>
 </li>
 </ul>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/ContainerTypes.png" alt="ContainerTypes"></p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/ContainerTypes.png" alt="ContainerTypes"></p>
 <table>
 <thead>
 <tr>
@@ -313,7 +328,8 @@
 <th>无序容器</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>可用标准</td>
 <td>TR1</td>
 <td>C++98</td>
@@ -340,8 +356,8 @@
 <td>value</td>
 <td>value</td>
 <td>value</td>
-<td>set: value <br> map: key&#x2F;value</td>
-<td>set: value <br> map: key&#x2F;value</td>
+<td>set: value <br> map: key/value</td>
+<td>set: value <br> map: key/value</td>
 </tr>
 <tr>
 <td>是否允许重复</td>
@@ -364,8 +380,8 @@
 <td>单向迭代器</td>
 </tr>
 <tr>
-<td>增长&#x2F;缩小方式</td>
-<td>不会增长&#x2F;缩小</td>
+<td>增长/缩小方式</td>
+<td>不会增长/缩小</td>
 <td>在一端末尾增长</td>
 <td>在两端末尾增长</td>
 <td>到处增长</td>
@@ -436,16 +452,18 @@
 <tr>
 <td>事务安全(成功或没有影响)</td>
 <td>No</td>
-<td>在尾部<code>push</code>&#x2F;<code>pop</code>事务安全</td>
-<td>在头部和尾部<code>push</code>&#x2F;<code>pop</code>安全</td>
+<td>在尾部<code>push</code>/<code>pop</code>事务安全</td>
+<td>在头部和尾部<code>push</code>/<code>pop</code>安全</td>
 <td>所有的插入和擦除</td>
 <td>所有的插入和擦除</td>
 <td>假如比较函数没有出现异常，那么单个元素的插入和所有擦除操作都是事务安全的</td>
 <td>假如比较函数和哈希函数没有出现异常，那么单个元素的插入和所有擦除操作都是事务安全的</td>
 </tr>
-</tbody></table>
-<h2 id="容器的共同能力"><a href="#容器的共同能力" class="headerlink" title="容器的共同能力"></a>容器的共同能力</h2><ol>
-<li>所有容器提供的都是 “value 语义” 而非 “reference 语义”。容器进行元素的安插动作是，内部实施的是 <code>copy</code> 和&#x2F;或 <code>move</code> 动作, 而不是管理元素的 <code>reference</code>。 如果不想要复制，那么只能使用 <code>std::move</code> 或 保存元素指针(不能使用引用来规避复制)。</li>
+</tbody>
+</table>
+<h2 id="容器的共同能力">容器的共同能力</h2>
+<ol>
+<li>所有容器提供的都是 “value 语义” 而非 “reference 语义”。容器进行元素的安插动作是，内部实施的是 <code>copy</code> 和/或 <code>move</code> 动作, 而不是管理元素的 <code>reference</code>。 如果不想要复制，那么只能使用 <code>std::move</code> 或 保存元素指针(不能使用引用来规避复制)。</li>
 <li>元素在容器内有其特定顺序。每一种容器会提供若干返回迭代器的操作函数，这些迭代器可以用来遍历各个元素。如果你在元素之间迭代多次，你会获得相同的次序(不调用增删函数)</li>
 <li>一般而言，各项操作并非绝对安全，也就是说他们不会检查每一个可能发生的错误。调用者必须确保传给操作函数的实参符合条件。</li>
 <li>都提供如下成员函数</li>
@@ -453,110 +471,118 @@
 <table>
 <thead>
 <tr>
-<th align="center">函数</th>
-<th align="center">注解</th>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">注解</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">default construct</td>
-<td align="center"></td>
+<tbody>
+<tr>
+<td style="text-align:center">default construct</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">copy construct</td>
-<td align="center"></td>
+<td style="text-align:center">copy construct</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">destructor</td>
-<td align="center"></td>
+<td style="text-align:center">destructor</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">begin()</td>
-<td align="center"></td>
+<td style="text-align:center">begin()</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">end()</td>
-<td align="center"></td>
+<td style="text-align:center">end()</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">cbegin()</td>
-<td align="center">after C++11</td>
+<td style="text-align:center">cbegin()</td>
+<td style="text-align:center">after C++11</td>
 </tr>
 <tr>
-<td align="center">cend()</td>
-<td align="center">after C++11</td>
+<td style="text-align:center">cend()</td>
+<td style="text-align:center">after C++11</td>
 </tr>
 <tr>
-<td align="center">clear()</td>
-<td align="center"></td>
+<td style="text-align:center">clear()</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">swap()</td>
-<td align="center">std::array: O(n), 其他容器: O(1)</td>
+<td style="text-align:center">swap()</td>
+<td style="text-align:center">std::array: O(n), 其他容器: O(1)</td>
 </tr>
 <tr>
-<td align="center">empty()</td>
-<td align="center">empty() 的实现可能比 size() &#x3D;&#x3D; 0 更有效率，尽可能使用该函数</td>
+<td style="text-align:center">empty()</td>
+<td style="text-align:center">empty() 的实现可能比 size() == 0 更有效率，尽可能使用该函数</td>
 </tr>
 <tr>
-<td align="center">size()</td>
-<td align="center"></td>
+<td style="text-align:center">size()</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">max_size()</td>
-<td align="center"></td>
+<td style="text-align:center">max_size()</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">empty()</td>
-<td align="center"></td>
+<td style="text-align:center">empty()</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">operator&#x3D;&#x3D;</td>
-<td align="center"></td>
+<td style="text-align:center">operator==</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">operator!&#x3D;</td>
-<td align="center"></td>
+<td style="text-align:center">operator!=</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td align="center">operator&lt;</td>
-<td align="center">除了无序容器</td>
+<td style="text-align:center">operator&lt;</td>
+<td style="text-align:center">除了无序容器</td>
 </tr>
 <tr>
-<td align="center">operator&lt;&#x3D;</td>
-<td align="center">除了无序容器</td>
+<td style="text-align:center">operator&lt;=</td>
+<td style="text-align:center">除了无序容器</td>
 </tr>
 <tr>
-<td align="center">operator&gt;</td>
-<td align="center">除了无序容器</td>
+<td style="text-align:center">operator&gt;</td>
+<td style="text-align:center">除了无序容器</td>
 </tr>
 <tr>
-<td align="center">operator&gt;&#x3D;</td>
-<td align="center">除了无序容器</td>
+<td style="text-align:center">operator&gt;=</td>
+<td style="text-align:center">除了无序容器</td>
 </tr>
-</tbody></table>
-<h2 id="容器遍历方式"><a href="#容器遍历方式" class="headerlink" title="容器遍历方式"></a>容器遍历方式</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// After C++11</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> element : container)</span><br><span class="line">&#123;</span><br><span class="line">    element;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 只对拥有随机访问迭代器的容器使用</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; container.<span class="built_in">size</span>(); i++)</span><br><span class="line">&#123;</span><br><span class="line">    container[i]/container.<span class="built_in">at</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 所有元素通用</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it = container.<span class="built_in">begin</span>(); it != container.<span class="built_in">end</span>(); ++it)</span><br><span class="line">&#123;</span><br><span class="line">    *it;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="size-0-与-empty"><a href="#size-0-与-empty" class="headerlink" title="size() &#x3D;&#x3D; 0 与 empty()"></a>size() &#x3D;&#x3D; 0 与 empty()</h3><p>在 <code>C++11</code> 之前 <code>std::list::empty()</code> 函数的时间复杂度可能是 <code>O(n)</code> 也可能是 <code>O(1)</code>.</p>
+</tbody>
+</table>
+<h2 id="容器遍历方式">容器遍历方式</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// After C++11</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> element : container)</span><br><span class="line">&#123;</span><br><span class="line">    element;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 只对拥有随机访问迭代器的容器使用</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; container.<span class="built_in">size</span>(); i++)</span><br><span class="line">&#123;</span><br><span class="line">    container[i]/container.<span class="built_in">at</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 所有元素通用</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it = container.<span class="built_in">begin</span>(); it != container.<span class="built_in">end</span>(); ++it)</span><br><span class="line">&#123;</span><br><span class="line">    *it;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="size-0-与-empty">size() == 0 与 empty()</h3>
+<p>在 <code>C++11</code> 之前 <code>std::list::empty()</code> 函数的时间复杂度可能是 <code>O(n)</code> 也可能是 <code>O(1)</code>.</p>
 <div STYLE="page-break-after: always;"></div>
-
-<h2 id="std-array-C-11"><a href="#std-array-C-11" class="headerlink" title="std::array C++11"></a><code>std::array</code> C++11</h2><p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/array_base.png" alt="array"></p>
+<h2 id="std-array-C-11"><code>std::array</code> C++11</h2>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/array_base.png" alt="array"></p>
 <ul>
 <li>随机访问</li>
 <li>固定大小, 编译期确定</li>
 <li>大小可为零</li>
 </ul>
-<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 作为返回值返回</span></span><br><span class="line"><span class="function">std::array&lt;<span class="type">int</span>, 5&gt; <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::array&lt;<span class="type">int</span>, 5&gt; a;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 作为入参时确定入参大小，不会降级为指针</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f1</span><span class="params">(<span class="type">const</span> std::array&lt;<span class="type">int</span>, <span class="number">5</span>&gt;&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(i &lt; a.<span class="built_in">size</span>())&#123;&#125;</span><br><span class="line">    <span class="keyword">while</span>(i &lt; <span class="number">5</span>)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 搭配模板灵活使用</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="type">size_t</span> N&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f2</span><span class="params">(<span class="type">const</span> std::array&lt;<span class="type">int</span>, N&gt;&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(i &lt; a.<span class="built_in">size</span>())&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">std::array&lt;<span class="type">int</span>, 6&gt; a;</span><br><span class="line"><span class="built_in">f2</span>(a);</span><br></pre></td></tr></table></figure>
-
+<h3 id="应用场景">应用场景</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 作为返回值返回</span></span><br><span class="line"><span class="function">std::array&lt;<span class="type">int</span>, 5&gt; <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::array&lt;<span class="type">int</span>, 5&gt; a;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 作为入参时确定入参大小，不会降级为指针</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f1</span><span class="params">(<span class="type">const</span> std::array&lt;<span class="type">int</span>, <span class="number">5</span>&gt;&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(i &lt; a.<span class="built_in">size</span>())&#123;&#125;</span><br><span class="line">    <span class="keyword">while</span>(i &lt; <span class="number">5</span>)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 搭配模板灵活使用</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="type">size_t</span> N&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f2</span><span class="params">(<span class="type">const</span> std::array&lt;<span class="type">int</span>, N&gt;&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(i &lt; a.<span class="built_in">size</span>())&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">std::array&lt;<span class="type">int</span>, 6&gt; a;</span><br><span class="line"><span class="built_in">f2</span>(a);</span><br></pre></td></tr></table></figure>
 <div STYLE="page-break-after: always;"></div>
-
-<h2 id="std-vector"><a href="#std-vector" class="headerlink" title="std::vector"></a><code>std::vector</code></h2><p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/vector_base.png" alt="vector"></p>
-<h3 id="迭代器示意"><a href="#迭代器示意" class="headerlink" title="迭代器示意"></a>迭代器示意</h3><p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/iterator.png" alt="iterator"></p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/reverse_iterator.png" alt="reserve_iterator"></p>
-<h3 id="at-与-operator"><a href="#at-与-operator" class="headerlink" title="at() 与 operator[]"></a>at() 与 operator[]</h3><p><code>at()</code> 成员函数提供边界检查，超出边界时会抛出异常 <code>std::out_of_range</code></p>
-<h3 id="size-与-capacity"><a href="#size-与-capacity" class="headerlink" title="size() 与 capacity()"></a>size() 与 capacity()</h3><p>size() 查看当前有几个元素</p>
+<h2 id="std-vector"><code>std::vector</code></h2>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/vector_base.png" alt="vector"></p>
+<h3 id="迭代器示意">迭代器示意</h3>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/iterator.png" alt="iterator"></p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/reverse_iterator.png" alt="reserve_iterator"></p>
+<h3 id="at-与-operator">at() 与 operator[]</h3>
+<p><code>at()</code> 成员函数提供边界检查，超出边界时会抛出异常 <code>std::out_of_range</code></p>
+<h3 id="size-与-capacity">size() 与 capacity()</h3>
+<p>size() 查看当前有几个元素</p>
 <p>capacity() 查看预分配几个元素的空间</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/size()%E4%B8%8Ecapacity().png" alt="size"></p>
-<h3 id="resize-与-reserve"><a href="#resize-与-reserve" class="headerlink" title="resize() 与 reserve()"></a>resize() 与 reserve()</h3><h4 id="resize-count"><a href="#resize-count" class="headerlink" title="resize(count)"></a>resize(count)</h4><blockquote>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/size()%E4%B8%8Ecapacity().png" alt="size"></p>
+<h3 id="resize-与-reserve">resize() 与 reserve()</h3>
+<h4 id="resize-count">resize(count)</h4>
+<blockquote>
 <p>重设容器大小以容纳 count 个元素。</p>
 <p>若当前大小大于 count ，则减小容器为其首 count 个元素。</p>
 <p>若当前大小小于 count ，</p>
@@ -565,36 +591,41 @@
 <li>则后附额外的 value 的副本</li>
 </ol>
 </blockquote>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/resize.png" alt="resize"></p>
-<h4 id="reserve-new-cap"><a href="#reserve-new-cap" class="headerlink" title="reserve(new_cap)"></a>reserve(new_cap)</h4><blockquote>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/resize.png" alt="resize"></p>
+<h4 id="reserve-new-cap">reserve(new_cap)</h4>
+<blockquote>
 <p>增加 vector 的容量到大于或等于 new_cap 的值。若 new_cap 大于当前的 capacity() ，则分配新存储，否则该方法不做任何事。</p>
 <p>reserve() 不更改 vector 的 size 。</p>
 <p>若 new_cap 大于 capacity() ，则所有迭代器，包含尾后迭代器和所有到元素的引用都被非法化。否则，没有迭代器或引用被非法化。</p>
 </blockquote>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/reserve.png" alt="reserve"></p>
-<h3 id="shrink-to-fit-C-11"><a href="#shrink-to-fit-C-11" class="headerlink" title="shrink_to_fit() (C++11)"></a>shrink_to_fit() (C++11)</h3><blockquote>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/reserve.png" alt="reserve"></p>
+<h3 id="shrink-to-fit-C-11">shrink_to_fit() (C++11)</h3>
+<blockquote>
 <p>请求移除未使用的容量。</p>
 <p>它是减少 capacity() 到 size()非强制性请求。请求是否达成依赖于实现。</p>
 <p>若发生重分配，则所有迭代器，包含尾后迭代器，和所有到元素的引用都被非法化。若不发生重分配，则没有迭代器或引用被非法化。</p>
 </blockquote>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/shrink_to_fit.png" alt="shrink_to_fit"></p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/shrink_to_fit.png" alt="shrink_to_fit"></p>
 <p>C++11 之前可以使用如下方式，缩减空间</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ShrinkCapacity</span><span class="params">(<span class="type">const</span> std::vector&lt;T&gt;&amp; v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">std::vector&lt;T&gt; <span class="title">tmp</span><span class="params">(v)</span></span>;</span><br><span class="line">    v.<span class="built_in">swap</span>(tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="push-back-与-push-front"><a href="#push-back-与-push-front" class="headerlink" title="push_back() 与 push_front()"></a>push_back() 与 push_front()</h3><p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/push_back.png" alt="push_back()"></p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/push_front.png" alt="push_front()"></p>
-<h3 id="insert"><a href="#insert" class="headerlink" title="insert()"></a>insert()</h3><p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/insert.png" alt="insert()"></p>
-<h3 id="erase"><a href="#erase" class="headerlink" title="erase()"></a>erase()</h3><p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/erase.png" alt="erase()"></p>
+<h3 id="push-back-与-push-front">push_back() 与 push_front()</h3>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/push_back.png" alt="push_back()"></p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/push_front.png" alt="push_front()"></p>
+<h3 id="insert">insert()</h3>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/insert.png" alt="insert()"></p>
+<h3 id="erase">erase()</h3>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/erase.png" alt="erase()"></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt;::iterator it = vec.<span class="built_in">begin</span>();</span><br><span class="line"><span class="keyword">while</span>(it != vec.<span class="built_in">end</span>())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(condition)</span><br><span class="line">    &#123;</span><br><span class="line">        it = vec.<span class="built_in">erase</span>(it);</span><br><span class="line">        <span class="comment">/// 下面这句话为错误</span></span><br><span class="line">        <span class="comment">/// vec.erase(it++);</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="data"><a href="#data" class="headerlink" title="data()"></a>data()</h3><blockquote>
+<h3 id="data">data()</h3>
+<blockquote>
 <p>返回指向作为元素存储工作的底层数组的指针。指针满足范围 [data(); data() + size()) 始终是合法范围，即使容器为空（该情况下 data() 不可解引用）。</p>
 </blockquote>
 <p>拷贝 <code>vector</code> 中的数据到缓冲区</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">char</span> auc[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// unsigned char 数组转换为 vector</span></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">unsigned</span> <span class="type">char</span>&gt; <span class="title">vec</span><span class="params">(auc, auc+<span class="keyword">sizeof</span>(auc))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// vector 转换为 unsigned char 数组</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span>* puc = <span class="keyword">new</span> <span class="type">unsigned</span> <span class="type">char</span>[vec.<span class="built_in">size</span>()];</span><br><span class="line"><span class="built_in">memcpy</span>(puc, vec.<span class="built_in">data</span>(), vec.<span class="built_in">size</span>());</span><br></pre></td></tr></table></figure>
-
-<h3 id="std-vector-bool"><a href="#std-vector-bool" class="headerlink" title="std::vector &lt; bool &gt;"></a>std::vector &lt; bool &gt;</h3><p>该容器不是 布尔类型的 <code>std::vector</code>, 而是有单独的实现，不应看作普通的 <code>std::vector</code> 使用。</p>
-<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><ol>
+<h3 id="std-vector-bool">std::vector &lt; bool &gt;</h3>
+<p>该容器不是 布尔类型的 <code>std::vector</code>, 而是有单独的实现，不应看作普通的 <code>std::vector</code> 使用。</p>
+<h3 id="异常处理">异常处理</h3>
+<ol>
 <li>如果 <code>push_back()</code> 安插元素时发生异常，函数将不会产生效用。</li>
 <li>如果元素的 <code>copy/move</code> 操作(包括构造函数和赋值运算符)不抛出异常，这意味着 <code>insert()</code>、<code>emplace()</code>、<code>emplace_back()</code>、<code>push_back()</code>要么成功，要么什么也不发生。</li>
 <li><code>pop_back()</code> 不会抛出任何异常</li>
@@ -604,16 +635,19 @@
 </ol>
 <p>以上所有保证都基于一个条件: 析构函数不得抛出异常。</p>
 <div STYLE="page-break-after: always;"></div>
-
-<h2 id="std-deque"><a href="#std-deque" class="headerlink" title="std::deque"></a><code>std::deque</code></h2><p>提供随机访问，接口与 <code>std::vector</code> 几乎一致。可以在首尾快速安插和删除。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/deque_base0.png" alt="deque_base"></p>
+<h2 id="std-deque"><code>std::deque</code></h2>
+<p>提供随机访问，接口与 <code>std::vector</code> 几乎一致。可以在首尾快速安插和删除。</p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/deque_base0.png" alt="deque_base"></p>
 <p>通常实现为一组独立的区块，第一区块往一个方向发展，最末的区块往另一个方向发展。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/deque_base1.png" alt="deque_base"></p>
-<h3 id="std-deque-与-std-vector-比较"><a href="#std-deque-与-std-vector-比较" class="headerlink" title="std::deque 与 std::vector 比较"></a><code>std::deque</code> 与 <code>std::vector</code> 比较</h3><h4 id="相同之处"><a href="#相同之处" class="headerlink" title="相同之处"></a>相同之处</h4><ul>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/deque_base1.png" alt="deque_base"></p>
+<h3 id="std-deque-与-std-vector-比较"><code>std::deque</code> 与 <code>std::vector</code> 比较</h3>
+<h4 id="相同之处">相同之处</h4>
+<ul>
 <li>在中段安插、移除元素的速度相对较慢，因为所有元素都需移动以腾出或填补空间。</li>
 <li>迭代器属于随机访问迭代器，可以使用 <code>operator[]</code> \ <code>at()</code></li>
 </ul>
-<h4 id="不同之处"><a href="#不同之处" class="headerlink" title="不同之处"></a>不同之处</h4><ul>
+<h4 id="不同之处">不同之处</h4>
+<ul>
 <li><code>std::deque</code> 可在常量时间内快速在首尾增删元素。 <code>std::vector</code> 只能在尾部。</li>
 <li>访问元素时， <code>std::deque</code> 多了一个跳转的过程(在各个区块跳转)</li>
 <li><code>std::deque</code> 的迭代器不是原始指针(因为各个区块之间不连续), 更没有 <code>data</code> 的成员函数</li>
@@ -624,23 +658,27 @@
 <li><code>std::deque</code> 不提供容量操作 <code>capacity()</code> 和 <code>reserve()</code></li>
 <li>在内存区块大小有限制的系统中, <code>std::deque</code> 的 <code>max_size()</code> 可能比 <code>std::vector</code> 的 <code>max_size()</code> 要大。 因为 <code>std::deque</code> 使用的不止一块内存。</li>
 </ul>
-<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ul>
+<h3 id="适用场景">适用场景</h3>
+<ul>
 <li>需要在两端安插和移除元素</li>
 <li>无须指向容器内的元素</li>
 <li>要求使用内存会自动缩小</li>
 </ul>
-<h3 id="异常处理-1"><a href="#异常处理-1" class="headerlink" title="异常处理"></a>异常处理</h3><p>原则上 <code>std::deque</code> 提供的异常处理和 <code>std::vector</code> 提供的一样</p>
+<h3 id="异常处理-2">异常处理</h3>
+<p>原则上 <code>std::deque</code> 提供的异常处理和 <code>std::vector</code> 提供的一样</p>
 <ul>
 <li><code>push_front()</code> 和 <code>push_back()</code> 安插元素时发生异常，则该操作不带来任何效应。</li>
 <li><code>pop_front()</code> 和 <code>pop_back()</code> 不会抛出任何异常。</li>
 </ul>
-<h2 id="std-list"><a href="#std-list" class="headerlink" title="std::list"></a><code>std::list</code></h2><p>双向链表。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_base.png" alt="list"></p>
+<h2 id="std-list"><code>std::list</code></h2>
+<p>双向链表。</p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_base.png" alt="list"></p>
 <p><code>std::list</code> 的内部结构完全迥异于 <code>std::array</code>、<code>std::vector</code>、<code>std::deque</code>。 <code>std::list</code> 自身提供了两个指针，分别指向第一个元素和最后一个元素，如果操纵对应的指针即可。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_insert.png" alt="list_insert"></p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_insert.png" alt="list_insert"></p>
 <p>成员函数 <code>splice</code> 示意</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_splice.png" alt="list_splice"></p>
-<h3 id="容器特性"><a href="#容器特性" class="headerlink" title="容器特性"></a>容器特性</h3><ul>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/list_splice.png" alt="list_splice"></p>
+<h3 id="容器特性">容器特性</h3>
+<ul>
 <li>提供 <code>front()</code>、<code>push_front()</code>、<code>pop_front()</code>、<code>back()</code>、<code>push_back()</code>和<code>pop_back()</code> 等操作函数。</li>
 <li>不提供 <code>operator[]</code> 或 <code>at()</code></li>
 <li>不支持随机访问。O(n)</li>
@@ -651,70 +689,80 @@
 <li>空间最优。没有空间重新分配和预分配内存, 没有冗余内存占用</li>
 <li>拥有较多的特殊成员函数，相较于 <code>STL</code> 中通用的同名函数，更具有效率。如 <code>merge</code>、<code>splice</code>、<code>remove</code>、<code>reverse</code>、<code>unique</code>、<code>sort</code>。</li>
 </ul>
-<h3 id="应用场景-1"><a href="#应用场景-1" class="headerlink" title="应用场景"></a>应用场景</h3><p>特性: 前向迭代器</p>
+<h3 id="应用场景-2">应用场景</h3>
+<p>特性: 前向迭代器</p>
 <ul>
 <li>排序</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::list&lt;<span class="type">int</span>&gt; list;</span><br><span class="line">list.<span class="built_in">sort</span>();</span><br><span class="line"><span class="comment">/// 错误用法: std::sort(list.begin(), list.end());</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>特殊的排序后显示</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::list&lt;<span class="type">int</span>&gt; list;</span><br><span class="line">list.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">list.<span class="built_in">push_back</span>(<span class="number">7</span>);</span><br><span class="line">list.<span class="built_in">push_back</span>(<span class="number">2</span>);</span><br><span class="line">list.<span class="built_in">push_back</span>(<span class="number">1</span>);</span><br><span class="line">list.<span class="built_in">push_back</span>(<span class="number">8</span>);</span><br><span class="line">list.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">std::vector&lt;std::reference_wrapper&lt;<span class="type">int</span>&gt; &gt; <span class="built_in">Observer</span>(l.<span class="built_in">begin</span>(), l.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">std::<span class="built_in">sort</span>(Observer.<span class="built_in">begin</span>(), Observer.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
-
 <p>特性: 迭代器永不失效</p>
 <ul>
 <li>双键结构</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">LEFT_KEY</span>, <span class="keyword">class</span> <span class="title class_">RIGHT_KEY</span>, <span class="keyword">class</span> <span class="title class_">VALUE</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">bimap</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    std::list&lt;VALUE&gt; m_Value;                     <span class="comment">///&lt; 用于存放值</span></span><br><span class="line">    std::map&lt;LEFT_KEY, iterator&gt; m_LeftKeyMap;    <span class="comment">///&lt; 用于保存左键与值得映射关系的map</span></span><br><span class="line">    std::map&lt;RIGHT_KEY, iterator&gt; m_RightKeyMap;  <span class="comment">///&lt; 用于保存右键与值得映射关系的map</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <div STYLE="page-break-after: always;"></div>
-
-<h2 id="std-forward-list-C-11"><a href="#std-forward-list-C-11" class="headerlink" title="std::forward_list (C++11)"></a><code>std::forward_list</code> (C++11)</h2><p>标准描述</p>
+<h2 id="std-forward-list-C-11"><code>std::forward_list</code> (C++11)</h2>
+<p>标准描述</p>
 <blockquote>
 <p><code>std::forward_list</code> 是支持从容器中的任何位置快速插入和移除元素的容器。不支持快速随机访问。它实现为单链表，且实质上与其在 <code>C</code> 中实现相比无任何开销。与 <code>std::list</code> 相比，此容器在不需要双向迭代时提供更有效地利用空间的存储。</p>
 </blockquote>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/forward_list_base.png" alt="forward_list"></p>
-<h3 id="与-std-list-比较"><a href="#与-std-list-比较" class="headerlink" title="与 std::list 比较"></a>与 <code>std::list</code> 比较</h3><ul>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/forward_list_base.png" alt="forward_list"></p>
+<h3 id="与-std-list-比较">与 <code>std::list</code> 比较</h3>
+<ul>
 <li><code>std::forward_list</code> 只提供前向迭代器，而不是双向迭代器。没有成员函数<code>rbegin()</code>、<code>rend()</code>、<code>crbegin()</code>和<code>crend()</code></li>
 <li><code>std::forward_list</code> 不提供成员函数 <code>size()</code>。</li>
 <li><code>std::forward_list</code> 没有指向最末元素的指针。所以没有成员函数如<code>back()</code>、<code>push_back()</code>和<code>pop_back()</code></li>
 <li>对于所有令元素被安插在或删除于的某特定位置上的成员函数， <code>std::forward_list</code> 都提供特殊版本。原因是你必须传递第一个被处理元素的前一位置，前向迭代器不能回头。</li>
 <li><code>insert_after()</code> 代替 <code>insert()</code>, 也额外提供 <code>before_begin()</code> 和 <code>cbefore_begin()</code></li>
 </ul>
-<h3 id="在起始处安插元素"><a href="#在起始处安插元素" class="headerlink" title="在起始处安插元素"></a>在起始处安插元素</h3><p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/forward_insert_begin.png" alt="forward_insert_begin"></p>
+<h3 id="在起始处安插元素">在起始处安插元素</h3>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/forward_insert_begin.png" alt="forward_insert_begin"></p>
 <div STYLE="page-break-after: always;"></div>
-
-<h2 id="std-set-和-std-multiset"><a href="#std-set-和-std-multiset" class="headerlink" title="std::set 和 std::multiset"></a><code>std::set</code> 和 <code>std::multiset</code></h2><p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/set_base.png" alt="set"></p>
+<h2 id="std-set-和-std-multiset"><code>std::set</code> 和 <code>std::multiset</code></h2>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/set_base.png" alt="set"></p>
 <p><code>std::set</code> 和 <code>std::multiset</code> 会根据特定的排序准则，自动将元素排序。两者不同之处在于 <code>std::multiset</code> 允许元素重复而 <code>std::set</code> 不允许。</p>
 <p>如果没有传入某个排序准则，就采用默认准则 <code>std::less</code> 以 <code>operator&lt;</code> 对元素进行比较。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/set_datastruct.png" alt="set"></p>
-<h3 id="排序准则符合-严格弱序"><a href="#排序准则符合-严格弱序" class="headerlink" title="排序准则符合: 严格弱序"></a>排序准则符合: 严格弱序</h3><h4 id="详细定义"><a href="#详细定义" class="headerlink" title="详细定义"></a>详细定义</h4><blockquote>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/set_datastruct.png" alt="set"></p>
+<h3 id="排序准则符合-严格弱序">排序准则符合: 严格弱序</h3>
+<h4 id="详细定义">详细定义</h4>
+<blockquote>
 <ol>
-<li><p>必须是<strong>非对称的</strong>（antisymmetric）。</p>
-<p> 对<code>operator&lt; </code>而言， 如果x &lt; y为true， 则y &lt; x为false。</p>
-<p> 对判断式(predicate) <code>op()</code>而言，如果op(x, y)为true，则op(y, x)为false。</p>
+<li>
+<p>必须是<strong>非对称的</strong>（antisymmetric）。</p>
+<p>对<code>operator&lt; </code>而言， 如果x &lt; y为true， 则y &lt; x为false。</p>
+<p>对判断式(predicate) <code>op()</code>而言，如果op(x, y)为true，则op(y, x)为false。</p>
 </li>
-<li><p>必须是<strong>可传递的</strong>（transitive）。</p>
+<li>
+<p>必须是<strong>可传递的</strong>（transitive）。</p>
 </li>
 </ol>
-<p>  对<code>operator&lt; </code>而言，如果x &lt; y 为true且y &lt; z为true， 则x &lt; z 为false。</p>
-<p>  对判断式(predicate) <code>op()</code>而言，如果op(x, y)为true且op(y, z)为tru，则op(x, z)为true。</p>
+<p>对<code>operator&lt; </code>而言，如果x &lt; y 为true且y &lt; z为true， 则x &lt; z 为false。</p>
+<p>对判断式(predicate) <code>op()</code>而言，如果op(x, y)为true且op(y, z)为tru，则op(x, z)为true。</p>
 <ol start="3">
-<li><p>必须是<strong>非自反的</strong>（irreflexive）</p>
-<p> 对<code>operator&lt; </code>而言，x &lt; x 永远是false</p>
-<p> 对判断式(predicate) <code>op()</code>而言，op(x, x)永远是false。</p>
+<li>
+<p>必须是<strong>非自反的</strong>（irreflexive）</p>
+<p>对<code>operator&lt; </code>而言，x &lt; x 永远是false</p>
+<p>对判断式(predicate) <code>op()</code>而言，op(x, x)永远是false。</p>
 </li>
-<li><p>必须有<strong>等效传递性</strong>（transitivity of equivalence）</p>
+<li>
+<p>必须有<strong>等效传递性</strong>（transitivity of equivalence）</p>
 </li>
 </ol>
-<p>对<code>operator&lt; </code>而言，假如 !(a&lt;b) &amp;&amp; !(b&lt;a) 为true且 !(b&lt;c) &amp;&amp; !(c&lt;b) 为 true<br>那么!(a&lt;c) &amp;&amp; !(c&lt;a) 也为true.<br>对判断式(predicate) <code>op()</code>而言， 假如 op(a,b), op(b,a), op(b,c), 和op(c,b) 都为<br>false, 那么op(a,c) and op(c,a) 也为false.</p>
+<p>对<code>operator&lt; </code>而言，假如 !(a&lt;b) &amp;&amp; !(b&lt;a) 为true且 !(b&lt;c) &amp;&amp; !(c&lt;b) 为 true<br>
+那么!(a&lt;c) &amp;&amp; !(c&lt;a) 也为true.<br>
+对判断式(predicate) <code>op()</code>而言， 假如 op(a,b), op(b,a), op(b,c), 和op(c,b) 都为<br>
+false, 那么op(a,c) and op(c,a) 也为false.</p>
 </blockquote>
-<p><strong>简单的来说就是a&lt;b返回true，a&#x3D;b和a&gt;b返回false。</strong></p>
-<h4 id="定制排序规则-operator"><a href="#定制排序规则-operator" class="headerlink" title="定制排序规则 operator&lt;"></a>定制排序规则 <code>operator&lt;</code></h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CALL_INFO_C</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    std::string y;</span><br><span class="line"></span><br><span class="line">    <span class="type">bool</span> <span class="keyword">operator</span>&lt;(<span class="type">const</span> CALL_INFO_C&amp; stOther) <span class="type">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> x &lt; stOther.x || (x == stOther.x &amp;&amp; y &lt; stOther.y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">std::set&lt;CALL_INFO_C&gt; set;</span><br></pre></td></tr></table></figure>
-
+<p><strong>简单的来说就是a&lt;b返回true，a=b和a&gt;b返回false。</strong></p>
+<h4 id="定制排序规则-operator">定制排序规则 <code>operator&lt;</code></h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CALL_INFO_C</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    std::string y;</span><br><span class="line"></span><br><span class="line">    <span class="type">bool</span> <span class="keyword">operator</span>&lt;(<span class="type">const</span> CALL_INFO_C&amp; stOther) <span class="type">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> x &lt; stOther.x || (x == stOther.x &amp;&amp; y &lt; stOther.y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">std::set&lt;CALL_INFO_C&gt; set;</span><br></pre></td></tr></table></figure>
 <p>其中 <code>std::multiset</code> 的等效元素的次序是随机但稳定的。(C++11以后标准保证新插入的元素，会被放在等效元素群的末尾)</p>
-<h3 id="std-set-和-std-multiset-的能力"><a href="#std-set-和-std-multiset-的能力" class="headerlink" title="std::set 和 std::multiset 的能力"></a><code>std::set</code> 和 <code>std::multiset</code> 的能力</h3><ul>
+<h3 id="std-set-和-std-multiset-的能力"><code>std::set</code> 和 <code>std::multiset</code> 的能力</h3>
+<ul>
 <li>通常以平衡二叉树完成。</li>
 <li>自动排序的主要优点在于令二叉树于查找元素时拥有良好的性能。其查找函数具有 <code>O(logn)</code> 的时间复杂度。</li>
 <li>不能随意改变元素值，因为这会打乱原本正确的顺序。</li>
@@ -724,41 +772,41 @@
 <li>其迭代器是双向迭代器(不能使用 <code>std::sort()</code>)</li>
 </ul>
 <div STYLE="page-break-after: always;"></div>
-
-<h2 id="std-map-和-std-multimap"><a href="#std-map-和-std-multimap" class="headerlink" title="std::map 和 std::multimap"></a><code>std::map</code> 和 <code>std::multimap</code></h2><p><code>std::map</code> 和 <code>std::multimap</code> 将 <code>key/value pair</code> 当作元素进行管理。它们可根据 <code>key</code> 的排序准则自动为元素排序。 <code>std::multimap</code> 允许重复元素, <code>std::map</code> 不允许。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/map_base.png" alt="map"></p>
+<h2 id="std-map-和-std-multimap"><code>std::map</code> 和 <code>std::multimap</code></h2>
+<p><code>std::map</code> 和 <code>std::multimap</code> 将 <code>key/value pair</code> 当作元素进行管理。它们可根据 <code>key</code> 的排序准则自动为元素排序。 <code>std::multimap</code> 允许重复元素, <code>std::map</code> 不允许。</p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/map_base.png" alt="map"></p>
 <p>同样 <code>key</code> 需要可比较且遵循严格弱序。</p>
 <p><code>std::map</code> 和 <code>std::multimap</code> 通常以平衡二叉树完成。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/map_datastruct.png" alt="map"></p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/map_datastruct.png" alt="map"></p>
 <p><code>std::map</code> 和 <code>std::multimap</code> 也无法改变 <code>key</code> 的值。只能删除再插入。</p>
-<h3 id="operator"><a href="#operator" class="headerlink" title="operator[]"></a>operator[]</h3><p>若<code>key</code>不存在, 构造该元素后，返回元素的引用<br>若<code>key</code>存在, 返回元素的引用</p>
+<h3 id="operator">operator[]</h3>
+<p>若<code>key</code>不存在, 构造该元素后，返回元素的引用<br>
+若<code>key</code>存在, 返回元素的引用</p>
 <p>所以要警惕如下语句:</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::map&lt;std::string, <span class="type">int</span>&gt; map;</span><br><span class="line">std::cout &lt;&lt; map[<span class="string">&quot;string&quot;</span>]; <span class="comment">///&lt; 这里会默认插入一个元素 (&quot;string&quot;, 0)</span></span><br></pre></td></tr></table></figure>
-
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::map&lt;std::string, <span class="type">int</span>&gt; map;</span><br><span class="line">map[<span class="string">&quot;string&quot;</span>] = <span class="number">1</span>;</span><br><span class="line">map[<span class="string">&quot;string&quot;</span>] = <span class="number">2</span>;  <span class="comment">///&lt; 会覆盖前面的值</span></span><br></pre></td></tr></table></figure>
-
 <p>也可以利用这一特性用来计数:</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">std::map&lt;<span class="type">char</span>, <span class="type">int</span>&gt; map;</span><br><span class="line"><span class="function">std::string <span class="title">str</span><span class="params">(<span class="string">&quot;Hello World!&quot;</span>)</span></span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">unsigned</span> i = <span class="number">0</span>; i &lt; str.<span class="built_in">size</span>(); ++i)</span><br><span class="line">&#123;</span><br><span class="line">    map[str.<span class="built_in">at</span>(i)]++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <div STYLE="page-break-after: always;"></div>
-
-<h2 id="无序容器-Unordered-Container-C-11"><a href="#无序容器-Unordered-Container-C-11" class="headerlink" title="无序容器 (Unordered Container) C++11"></a>无序容器 (Unordered Container) C++11</h2><p>C++11 之前因为标准库中没有哈希表类的数据结构，所以很多程序库自己实现了诸如 <code>hash_set</code>、<code>hash_multiset</code>、<code>hash_map</code>、<code>hash_multimap</code>。</p>
+<h2 id="无序容器-Unordered-Container-C-11">无序容器 (Unordered Container) C++11</h2>
+<p>C++11 之前因为标准库中没有哈希表类的数据结构，所以很多程序库自己实现了诸如 <code>hash_set</code>、<code>hash_multiset</code>、<code>hash_map</code>、<code>hash_multimap</code>。</p>
 <p>为了避免名称冲突，C++11 标准采用了不一样的名称，使用统一前缀 <code>unordered_</code>, 即<code>unordered_set</code>、 <code>unordered_multiset</code>、<code>unordered_map</code>、<code>unordered_multimap</code>。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/unordered_map_base.png" alt="unordered_map"></p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/unordered_map_base.png" alt="unordered_map"></p>
 <p><code>unordered_set</code>、 <code>unordered_multiset</code>、<code>unordered_map</code>、<code>unordered_multimap</code> 底层实现都是哈希表，所以 <code>key</code> 需要可哈希。</p>
 <p>但是在链表是单链还是双链(意味着其迭代器可能不是双向迭代器)，重新哈希的时机这些都没有指定，根据实现而定。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/unordered_map_datastruct.png" alt="unordered_map"></p>
-<h3 id="定制哈希示例"><a href="#定制哈希示例" class="headerlink" title="定制哈希示例"></a>定制哈希示例</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MY_HASH</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">std::<span class="type">size_t</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> CALL_INFO_C&amp; st)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ...;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">std::unordered_map&lt;CALL_INFO_C, <span class="type">int</span>, MY_HASH&gt; map;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="容器特性-1"><a href="#容器特性-1" class="headerlink" title="容器特性"></a>容器特性</h3><p>安插、删除、查找元素大部分是 O(1), 但偶尔发生的重新哈希时间复杂度变为 O(n)</p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/unordered_map_datastruct.png" alt="unordered_map"></p>
+<h3 id="定制哈希示例">定制哈希示例</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MY_HASH</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">std::<span class="type">size_t</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> CALL_INFO_C&amp; st)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ...;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">std::unordered_map&lt;CALL_INFO_C, <span class="type">int</span>, MY_HASH&gt; map;</span><br></pre></td></tr></table></figure>
+<h3 id="容器特性-2">容器特性</h3>
+<p>安插、删除、查找元素大部分是 O(1), 但偶尔发生的重新哈希时间复杂度变为 O(n)</p>
 <p>由于其迭代器只保证至少为前向迭代器，因此不提供包括 <code>rbegin()</code>、 <code>rend()</code>以及不能使用要求双向迭代器的的 STL 函数如<code>std::sort()</code>、<code>std::binary_search()</code></p>
 <p>你可以手动强制重新哈希。</p>
 <p>重新哈希可能发生在以下调用之后: <code>insert()</code>、<code>rehash()</code>、<code>rehash()</code> 或 <code>clear()</code>。</p>
 <p><code>erase()</code> 函数并不会令指向其他元素的指针、引用和迭代器失效。</p>
 <p><code>insert()</code> 和 <code>emplace()</code> 可能令所有迭代器失效。但不会影响引用的有效性。</p>
 <p>当重新哈希过程发生，元素的引用仍然有效。</p>
-<h3 id="应用场景-2"><a href="#应用场景-2" class="headerlink" title="应用场景"></a>应用场景</h3><p>假如缓存中，我们缓存若干最近访问和删除的记录至内存用于快速访问，使得插入记录和读取最近的记录的时间复杂度为 <code>O(1)</code>。</p>
+<h3 id="应用场景-3">应用场景</h3>
+<p>假如缓存中，我们缓存若干最近访问和删除的记录至内存用于快速访问，使得插入记录和读取最近的记录的时间复杂度为 <code>O(1)</code>。</p>
 <ul>
 <li>LRU (Least recently used)</li>
 </ul>
@@ -769,64 +817,60 @@
 <li><code>void put(int key, int value)</code> 如果关键字 <code>key</code> 已经存在，则变更其数据值 <code>value</code> ；如果不存在，则向缓存中插入该组 <code>key-value</code> 。如果插入操作导致关键字数量超过 <code>capacity</code> ，则应该擦除最久未使用的关键字。</li>
 <li>函数 <code>get</code> 和 <code>put</code> 必须以 <code>O(1)</code> 的平均时间复杂度运行。</li>
 </ul>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/put.jpg" alt="put"></p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/put.jpg" alt="put"></p>
 <p>设计思路:</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> std::pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; KEY_VALUE;</span><br><span class="line"></span><br><span class="line">std::unordered_map&lt;<span class="type">int</span>, std::list&lt;KEY_VALUE&gt;::iterator&gt; map;</span><br><span class="line">std::list&lt;KEY_VALUE&gt; list;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p><code>std::unordered_map</code> 特性: 单向迭代器, 增删元素 O(1), 增删元素后迭代器可能失效</p>
 <p><code>std::list</code> 特性: 迭代器永不失效，任意位置插入常量时间 O(1), 访问首尾元素 O(1)</p>
 <p>完整代码</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LRUCache</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LRUCache</span>(<span class="type">int</span> capacity) : <span class="built_in">max_size</span>(capacity) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">get</span><span class="params">(<span class="type">int</span> key)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> res = map.<span class="built_in">find</span>(key);</span><br><span class="line">        <span class="keyword">if</span> (res != map.<span class="built_in">end</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            list.<span class="built_in">splice</span>(list.<span class="built_in">begin</span>(), list, res-&gt;second);</span><br><span class="line">            <span class="keyword">return</span> res-&gt;second-&gt;second;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">put</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> res = map.<span class="built_in">find</span>(key);</span><br><span class="line">        list.<span class="built_in">push_front</span>(std::<span class="built_in">make_pair</span>(key, value));</span><br><span class="line">        <span class="keyword">if</span> (res != map.<span class="built_in">end</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            list.<span class="built_in">erase</span>(res-&gt;second);</span><br><span class="line">            map.<span class="built_in">erase</span>(res);</span><br><span class="line">        &#125;</span><br><span class="line">        map[key] = list.<span class="built_in">begin</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/// 检查是否超出了最大数量</span></span><br><span class="line">        <span class="keyword">if</span> (map.<span class="built_in">size</span>() &gt; max_size)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">auto</span> last = list.<span class="built_in">end</span>();</span><br><span class="line">            --last;</span><br><span class="line">            map.<span class="built_in">erase</span>(last-&gt;first);</span><br><span class="line">            list.<span class="built_in">pop_back</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">typedef</span> std::pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; KEY_VALUE;</span><br><span class="line"></span><br><span class="line">    std::unordered_map&lt;<span class="type">int</span>, std::list&lt;KEY_VALUE&gt;::iterator&gt; map;</span><br><span class="line">    std::list&lt;KEY_VALUE&gt; list;</span><br><span class="line">    <span class="type">int</span> max_size = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <div STYLE="page-break-after: always;"></div>
-
-<h2 id="特殊容器"><a href="#特殊容器" class="headerlink" title="特殊容器"></a>特殊容器</h2><h3 id="std-string"><a href="#std-string" class="headerlink" title="std::string"></a><code>std::string</code></h3><p>其被定义为: <code>std::basic_string&lt;char&gt;</code></p>
+<h2 id="特殊容器">特殊容器</h2>
+<h3 id="std-string"><code>std::string</code></h3>
+<p>其被定义为: <code>std::basic_string&lt;char&gt;</code></p>
 <p>其中模板入参 <code>char</code> 可以换为 <code>unsigned char</code> 或 <code>wchar</code></p>
-<h3 id="std-stack"><a href="#std-stack" class="headerlink" title="std::stack"></a><code>std::stack</code></h3><p>后进先出</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/stack_base.png" alt="stack"></p>
+<h3 id="std-stack"><code>std::stack</code></h3>
+<p>后进先出</p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/stack_base.png" alt="stack"></p>
 <p><code>std::stack</code> 定义如下:</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T,</span><br><span class="line"><span class="keyword">typename</span> Container = deque&lt;T&gt;&gt;</span><br><span class="line"><span class="keyword">class</span> stack;</span><br></pre></td></tr></table></figure>
-
 <p>其底层类型默认为 <code>std::deque</code></p>
 <p>之所以不选择 <code>std::vector</code> 是因为在内存管理上 <code>std::deque</code> 比 <code>std::vector</code> 更有效率。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/stack_base1.png" alt="stack"></p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/stack_base1.png" alt="stack"></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T,</span><br><span class="line"><span class="keyword">typename</span> Container = deque&lt;T&gt;&gt;</span><br><span class="line"><span class="keyword">class</span> stack</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    T&amp; <span class="built_in">top</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> m_deque.<span class="built_in">front</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(<span class="type">const</span> T&amp; value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        m_deque.<span class="built_in">push_front</span>(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">pop</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        c.<span class="built_in">pop_front</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Container m_deque;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <div STYLE="page-break-after: always;"></div>
-
-<h3 id="std-queue"><a href="#std-queue" class="headerlink" title="std::queue"></a><code>std::queue</code></h3><p>先进先出</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/queue_base.png" alt="queue"></p>
+<h3 id="std-queue"><code>std::queue</code></h3>
+<p>先进先出</p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/queue_base.png" alt="queue"></p>
 <p>底层实现默认采用 <code>std::queue</code></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T,</span><br><span class="line"><span class="keyword">typename</span> Container = deque&lt;T&gt;&gt;</span><br><span class="line"><span class="keyword">class</span> queue;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/queue_base1.png" alt="queue"></p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/queue_base1.png" alt="queue"></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T,</span><br><span class="line"><span class="keyword">typename</span> Container = deque&lt;T&gt;&gt;</span><br><span class="line"><span class="keyword">class</span> queue</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    T&amp; <span class="built_in">top</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> m_deque.<span class="built_in">front</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(<span class="type">const</span> T&amp; value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        m_deque.<span class="built_in">push_back</span>(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">pop</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        c.<span class="built_in">pop_front</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Container m_deque;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <div STYLE="page-break-after: always;"></div>
-
-<h3 id="std-priority-queue"><a href="#std-priority-queue" class="headerlink" title="std::priority_queue"></a><code>std::priority_queue</code></h3><p>实现出一个队列，其中的元素按优先级存储。</p>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/priority_queue_base.png" alt="queue"></p>
+<h3 id="std-priority-queue"><code>std::priority_queue</code></h3>
+<p>实现出一个队列，其中的元素按优先级存储。</p>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/priority_queue_base.png" alt="queue"></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T,</span><br><span class="line"><span class="keyword">typename</span> Container = vector&lt;T&gt;,</span><br><span class="line"><span class="keyword">typename</span> Compare = less&lt;<span class="keyword">typename</span> Container::value_type&gt;&gt;</span><br><span class="line"><span class="keyword">class</span> priority_queue;</span><br></pre></td></tr></table></figure>
-
 <p>应用实例:</p>
 <p>求数据流中的中位数</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MedianFinder</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addNum</span><span class="params">(<span class="type">int</span> num)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cnt % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            mi.<span class="built_in">push</span>(num);</span><br><span class="line">            num = mi.<span class="built_in">top</span>();</span><br><span class="line">            mi.<span class="built_in">pop</span>();</span><br><span class="line">            mx.<span class="built_in">push</span>(num);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            mx.<span class="built_in">push</span>(num);</span><br><span class="line">            num = mx.<span class="built_in">top</span>();</span><br><span class="line">            mx.<span class="built_in">pop</span>();</span><br><span class="line">            mi.<span class="built_in">push</span>(num);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">findMedian</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cnt &amp; <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">double</span>)mx.<span class="built_in">top</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">return</span> (mx.<span class="built_in">top</span>() + mi.<span class="built_in">top</span>()) / <span class="number">2.0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    std::priority_queue&lt;<span class="type">int</span>, std::vector&lt;<span class="type">int</span>&gt;, std::less&lt;<span class="type">int</span>&gt; &gt; mx;</span><br><span class="line">    std::priority_queue&lt;<span class="type">int</span>, std::vector&lt;<span class="type">int</span>&gt;, std::greater&lt;<span class="type">int</span>&gt; &gt; mi;</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <div STYLE="page-break-after: always;"></div>
-
-<h3 id="std-bitset"><a href="#std-bitset" class="headerlink" title="std::bitset"></a><code>std::bitset</code></h3><p><code>std::bitset</code> 内含一个元素值为 <code>bit</code> 或 <code>bool</code> 值且大小固定的 <code>array</code>。当你需要管理各式<code>flag</code>, 并以 <code>flag</code> 的任意组合来表现变量时, 就可运用 <code>std::bitset</code>。</p>
+<h3 id="std-bitset"><code>std::bitset</code></h3>
+<p><code>std::bitset</code> 内含一个元素值为 <code>bit</code> 或 <code>bool</code> 值且大小固定的 <code>array</code>。当你需要管理各式<code>flag</code>, 并以 <code>flag</code> 的任意组合来表现变量时, 就可运用 <code>std::bitset</code>。</p>
 <p>可容纳任意个数的标志位(编译期确定数量)</p>
 <p><code>std::bitset</code> 编译期确定大小 <code>std::vector&lt;bool&gt;</code> 可动态增长。</p>
-<h4 id="桶式排序"><a href="#桶式排序" class="headerlink" title="桶式排序"></a>桶式排序</h4><p>给 1000 个数字排序, 数字范围 [0, 99]</p>
+<h4 id="桶式排序">桶式排序</h4>
+<p>给 1000 个数字排序, 数字范围 [0, 99]</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> a[<span class="number">1000</span>] = &#123;<span class="number">10</span>, <span class="number">99</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;;</span><br><span class="line">std::bitset&lt;100&gt; bitset;</span><br><span class="line"><span class="type">int</span> length = <span class="built_in">sizeof</span>(a) / <span class="built_in">sizeof</span>(a[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">unsigned</span> i = <span class="number">0</span>; i &lt; length; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">unsigned</span> pos = a[i];</span><br><span class="line">    bitset.<span class="built_in">set</span>(pos);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">unsigned</span> i = <span class="number">0</span>; i &lt; bitset.<span class="built_in">size</span>(); ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (bitset[i])</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; i &lt;&lt; <span class="string">&quot;, &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>给 40 亿个 <code>unsigned</code> 数字([0, 99])中寻找不存在的数值</p>
-<h4 id="汉明距离"><a href="#汉明距离" class="headerlink" title="汉明距离"></a><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB">汉明距离</a></h4><p>两个整数之间的 汉明距离 指的是这两个数字对应二进制位不同的位置的数目。多用于数据传输中的差错控制。</p>
+<h4 id="汉明距离"><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB">汉明距离</a></h4>
+<p>两个整数之间的 汉明距离 指的是这两个数字对应二进制位不同的位置的数目。多用于数据传输中的差错控制。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 0 &lt;= x, y &lt;= 2^31 - 1</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">hammingDistance</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">std::bitset&lt;32&gt; <span class="title">temp</span><span class="params">(x^y)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> temp.<span class="built_in">count</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <div STYLE="page-break-after: always;"></div>
-
-<h2 id="迭代器介绍"><a href="#迭代器介绍" class="headerlink" title="迭代器介绍"></a>迭代器介绍</h2><p><code>Iterator</code>(迭代器)是一种”能够迭代某序列内所有元素”的对象，可通过改变自寻常pointer的一致性接口来完成工作。<code>Iterator</code>奉行一个纯抽象概念：任何东西，只要行为类似iterator，就是一种iterator。然而不同的的iterator具有不同的行进能力。</p>
-<h3 id="迭代器种类"><a href="#迭代器种类" class="headerlink" title="迭代器种类"></a>迭代器种类</h3><table>
+<h2 id="迭代器介绍">迭代器介绍</h2>
+<p><code>Iterator</code>(迭代器)是一种&quot;能够迭代某序列内所有元素&quot;的对象，可通过改变自寻常pointer的一致性接口来完成工作。<code>Iterator</code>奉行一个纯抽象概念：任何东西，只要行为类似iterator，就是一种iterator。然而不同的的iterator具有不同的行进能力。</p>
+<h3 id="迭代器种类">迭代器种类</h3>
+<table>
 <thead>
 <tr>
 <th>迭代器种类</th>
@@ -834,7 +878,8 @@
 <th>提供者</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>Output 迭代器</td>
 <td>向前写入</td>
 <td>Ostream,inserter</td>
@@ -859,11 +904,13 @@
 <td>以随机访问方式读取</td>
 <td>Array、vector、deque、string、C-style array</td>
 </tr>
-</tbody></table>
-<p><img src="/../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/iterator_base.png" alt="iterator"></p>
+</tbody>
+</table>
+<p><img src="../resource/%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF/iterator_base.png" alt="iterator"></p>
 <p>Output迭代器允许一步一步前行并搭配write动作。因此你可以一个一个元素地赋值，不能使用output迭代器对同一区间迭代两次。事实上，甚至不保证你可以将一个value复制两次而其迭代器不累进。我们的目标是将一个value以下列形式写入一个黑洞。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(...) &#123;</span><br><span class="line">  *pos = ...;</span><br><span class="line">  ++pos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Output 迭代器无需比较操作。你无法检验output迭代器是否有效，或写入是否成功。你唯一可做的就是写入。通常，一批写入动作是以一个”额外条件定义出”的”特定output迭代器”作为结束。<br>见下表Output迭代器操作</p>
+<p>Output 迭代器无需比较操作。你无法检验output迭代器是否有效，或写入是否成功。你唯一可做的就是写入。通常，一批写入动作是以一个&quot;额外条件定义出&quot;的&quot;特定output迭代器&quot;作为结束。<br>
+见下表Output迭代器操作</p>
 <table>
 <thead>
 <tr>
@@ -871,8 +918,9 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>*iter &#x3D; val</td>
+<tbody>
+<tr>
+<td>*iter = val</td>
 <td>将val写至迭代器所指的位置</td>
 </tr>
 <tr>
@@ -887,8 +935,10 @@
 <td>TYPE(iter)</td>
 <td>复制迭代器(copy 构造函数)</td>
 </tr>
-</tbody></table>
-<h3 id="Input迭代器"><a href="#Input迭代器" class="headerlink" title="Input迭代器"></a>Input迭代器</h3><p>Input迭代器只能一次一个以前行方向读取元素，按此顺序一个个返回元素值。</p>
+</tbody>
+</table>
+<h3 id="Input迭代器">Input迭代器</h3>
+<p>Input迭代器只能一次一个以前行方向读取元素，按此顺序一个个返回元素值。</p>
 <p>Input迭代器的各项操作</p>
 <table>
 <thead>
@@ -897,7 +947,8 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>*iter</td>
 <td>读取实际元素</td>
 </tr>
@@ -914,25 +965,28 @@
 <td>向前步进(step forward), 返回旧位置</td>
 </tr>
 <tr>
-<td>iter1 &#x3D;&#x3D; iter2</td>
+<td>iter1 == iter2</td>
 <td>判断两个迭代器是否相等</td>
 </tr>
 <tr>
-<td>iter1 !&#x3D; iter2</td>
+<td>iter1 != iter2</td>
 <td>判断两个迭代器是否不相等</td>
 </tr>
 <tr>
 <td>TYPE(iter)</td>
 <td>复制迭代器(copy 构造函数)</td>
 </tr>
-</tbody></table>
-<p>Input迭代器只能读取元素一次。如果你复制input迭代器, 并令原input迭代器和新产生的拷贝都向前读取, 可能会遍历到不同的值。<br><strong>所有的迭代器都具备input迭代器的能力，而且往往更强。</strong><code>Pure input</code>迭代器的典型例子就是”从标准输入设备读取数据”。同一个值不会被读取两次。一旦从<code>input stream</code>读入一个字(离开input缓冲区), 下次读取时就会返回另一个字。</p>
-<p>对于input迭代器, 操作符&#x3D;&#x3D;和!&#x3D;只用来检查”某个迭代器是否等于一个past-the-end迭代器(指指向最末元素的下一个位置)”.这有其必要, 因为处理input迭代器的操作函数通常会有以下行为。</p>
+</tbody>
+</table>
+<p>Input迭代器只能读取元素一次。如果你复制input迭代器, 并令原input迭代器和新产生的拷贝都向前读取, 可能会遍历到不同的值。<br>
+<strong>所有的迭代器都具备input迭代器的能力，而且往往更强。</strong><code>Pure input</code>迭代器的典型例子就是&quot;从标准输入设备读取数据&quot;。同一个值不会被读取两次。一旦从<code>input stream</code>读入一个字(离开input缓冲区), 下次读取时就会返回另一个字。</p>
+<p>对于input迭代器, 操作符==和!=只用来检查&quot;某个迭代器是否等于一个past-the-end迭代器(指指向最末元素的下一个位置)&quot;.这有其必要, 因为处理input迭代器的操作函数通常会有以下行为。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">InputIterator pos, end;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (pos != end) &#123;</span><br><span class="line">  ... <span class="comment">// read-only access using *pos</span></span><br><span class="line">  ++pos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><strong>没有任何保证说，两个迭代器如果都不是past-the-end迭代器, 且指向不同位置，他们的比较结果会不相等</strong>(这个条件是和forward迭代器搭配引入的)。</p>
-<p>也请注意, input迭代器的后置式递增操作符(<code>++iter</code>)不一定会返回什么东西。不过通常它会返回旧位置。<br>你应该尽可能优先先选用前置式递增操作符(<code>++iter</code>)而非后置式递增操作符(<code>iter++</code>), 因为前者效能更好。因为后者会返回一个临时对象。</p>
-<h3 id="Forward-前向-迭代器"><a href="#Forward-前向-迭代器" class="headerlink" title="Forward(前向)迭代器"></a>Forward(前向)迭代器</h3><p>Forward迭代器是一种input迭代器且在前进读取时提供额外保证。</p>
+<p>也请注意, input迭代器的后置式递增操作符(<code>++iter</code>)不一定会返回什么东西。不过通常它会返回旧位置。<br>
+你应该尽可能优先先选用前置式递增操作符(<code>++iter</code>)而非后置式递增操作符(<code>iter++</code>), 因为前者效能更好。因为后者会返回一个临时对象。</p>
+<h3 id="Forward-前向-迭代器">Forward(前向)迭代器</h3>
+<p>Forward迭代器是一种input迭代器且在前进读取时提供额外保证。</p>
 <table>
 <thead>
 <tr>
@@ -940,7 +994,8 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>*iter</td>
 <td>访问实际元素</td>
 </tr>
@@ -957,11 +1012,11 @@
 <td>向前步进(返回旧位置)</td>
 </tr>
 <tr>
-<td>iter1 &#x3D;&#x3D; iter2</td>
+<td>iter1 == iter2</td>
 <td>判断两个迭代器是否相等</td>
 </tr>
 <tr>
-<td>iter1 !&#x3D; iter2</td>
+<td>iter1 != iter2</td>
 <td>判断两个迭代器是否不等</td>
 </tr>
 <tr>
@@ -973,7 +1028,7 @@
 <td>复制迭代器(拷贝构造函数)</td>
 </tr>
 <tr>
-<td>iter1 &#x3D; iter2</td>
+<td>iter1 = iter2</td>
 <td>对迭代器赋值(assign)</td>
 </tr>
 <tr>
@@ -984,14 +1039,19 @@
 <td>例如：</td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ForwardIterator pos1, pos2;</span><br><span class="line"></span><br><span class="line">pos1 = pos2 = begin; <span class="comment">/// both iterator refer to the same element</span></span><br><span class="line"><span class="keyword">if</span>(pos1 != end) &#123;</span><br><span class="line">  ++pos1; <span class="comment">/// pos1 is one element ahead</span></span><br><span class="line">  <span class="keyword">while</span>(pos1 != end) &#123;</span><br><span class="line">    <span class="keyword">if</span>(*pos1 == *pos2) &#123;</span><br><span class="line">      ... <span class="comment">// precess adjacent duplicates</span></span><br><span class="line">      ++pos1;</span><br><span class="line">      ++pos2;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Forward迭代器由以下对象和类型提供：</p>
 <ul>
-<li>Class<forward_list></li>
-<li>Unordered container<br>然而标准库也允许<code>unordered</code>容器的实现提供<code>bidirectional</code>迭代器。<br>如果forward迭代器履行了output迭代器应有的条件, 那么它就是一个mutable forward迭代器, 即可用于读取，也可用于涂写。</li>
+<li>Class&lt;forward_list&gt;</li>
+<li>Unordered container<br>
+然而标准库也允许<code>unordered</code>容器的实现提供<code>bidirectional</code>迭代器。<br>
+如果forward迭代器履行了output迭代器应有的条件, 那么它就是一个mutable forward迭代器, 即可用于读取，也可用于涂写。</li>
 </ul>
-<h3 id="Random-Access-随机访问-迭代器"><a href="#Random-Access-随机访问-迭代器" class="headerlink" title="Random-Access(随机访问)迭代器"></a>Random-Access(随机访问)迭代器</h3><p><code>Random-access</code>迭代器在<code>bidirectional</code>迭代器的基础上增加了随机访问能里。因此它必须提供<code>iterator</code>算数运算。也就是说，它能增减某个偏移量、<br>计算距离(<code>difference</code>), 并运用诸如&lt;和&gt;等管理操作符(<code>relational operator</code>)进行比较。</p>
+<h3 id="Random-Access-随机访问-迭代器">Random-Access(随机访问)迭代器</h3>
+<p><code>Random-access</code>迭代器在<code>bidirectional</code>迭代器的基础上增加了随机访问能里。因此它必须提供<code>iterator</code>算数运算。也就是说，它能增减某个偏移量、<br>
+计算距离(<code>difference</code>), 并运用诸如&lt;和&gt;等管理操作符(<code>relational operator</code>)进行比较。</p>
 <p>随机访问迭代器的新增操作:</p>
 <table>
 <thead>
@@ -1000,16 +1060,17 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>iter[n]</td>
 <td>访问索引位置为n的元素</td>
 </tr>
 <tr>
-<td>iter+&#x3D;n</td>
+<td>iter+=n</td>
 <td>前进n个元素(如果n是负数, 则改为回退)</td>
 </tr>
 <tr>
-<td>iter-&#x3D;n</td>
+<td>iter-=n</td>
 <td>回退n个元素(如果n是负数, 则改为前进)</td>
 </tr>
 <tr>
@@ -1037,14 +1098,15 @@
 <td>判断iter1是否在iter2之后</td>
 </tr>
 <tr>
-<td>iter1 &lt;&#x3D; iter2</td>
+<td>iter1 &lt;= iter2</td>
 <td>判断iter1是否不在iter2之后</td>
 </tr>
 <tr>
-<td>iter1 &gt;&#x3D; iter2</td>
+<td>iter1 &gt;= iter2</td>
 <td>判断iter1是否不在iter2之前</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p><code>Random-access</code>迭代器由以下对象和类型提供:</p>
 <ul>
 <li>可随机访问的容器(<code>array</code>、<code>vector</code>、<code>deque</code>)</li>
@@ -1052,13 +1114,12 @@
 <li>寻常的C-Style(<code>pointer</code>)</li>
 </ul>
 <div STYLE="page-break-after: always;"></div>
-
-<h3 id="迭代器应用"><a href="#迭代器应用" class="headerlink" title="迭代器应用"></a>迭代器应用</h3><p>判断字符串是否为回文。</p>
+<h3 id="迭代器应用">迭代器应用</h3>
+<p>判断字符串是否为回文。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">constexpr</span> <span class="type">bool</span> <span class="title">is_palindrome</span><span class="params">(<span class="type">const</span> std::string_view&amp; s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> std::<span class="built_in">equal</span>(s.<span class="built_in">begin</span>(), s.<span class="built_in">begin</span>() + s.<span class="built_in">size</span>()/<span class="number">2</span>, s.<span class="built_in">rbegin</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">is_palindrome</span>(<span class="string">&quot;1000000000个字符&quot;</span>); <span class="comment">///&lt; 时间复杂度: O(1)</span></span><br><span class="line"><span class="built_in">is_palindrome</span>(str); <span class="comment">///&lt; 时间复杂度: O(n)。 n = str.size();</span></span><br></pre></td></tr></table></figure>
-
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">is_palindrome</span><span class="params">(<span class="type">const</span> std::string&amp; s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> std::<span class="built_in">equal</span>(s.<span class="built_in">begin</span>(), s.<span class="built_in">begin</span>() + s.<span class="built_in">size</span>()/<span class="number">2</span>, s.<span class="built_in">rbegin</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="迭代器失效场景"><a href="#迭代器失效场景" class="headerlink" title="迭代器失效场景"></a>迭代器失效场景</h3><p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/container">迭代器非法化</a></p>
+<h3 id="迭代器失效场景">迭代器失效场景</h3>
+<p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/container">迭代器非法化</a></p>
 
     </div>
 
@@ -1074,8 +1135,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/07/21/2021-12-09-C++%E5%85%B3%E4%BA%8E%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2%E7%AC%A6%E6%9E%84%E9%80%A0%E4%B8%B4%E6%97%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%8E%A2%E7%B4%A2/" rel="prev" title="C++ 关于强制转换符构造临时对象的探索">
-      <i class="fa fa-chevron-left"></i> C++ 关于强制转换符构造临时对象的探索
+    <a href="/2023/07/21/2021-12-02-%E7%BD%91%E8%AF%BE%E3%80%8A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6%E6%9E%B6%E6%9E%84%E3%80%8B%E7%AC%94%E8%AE%B0/" rel="prev" title="网课《从零开始学架构》摘录">
+      <i class="fa fa-chevron-left"></i> 网课《从零开始学架构》摘录
     </a></div>
       <div class="post-nav-item">
     <a href="/2023/07/21/2022-02-28-%E5%B8%B8%E8%A7%81%E9%A2%9C%E8%89%B2%E4%B8%8ERGB%E5%80%BC/" rel="next" title="常见颜色与RGB值">
@@ -1139,14 +1200,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">容器类别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%BC%8F%E5%AE%B9%E5%99%A8%EF%BC%88Sequence-container%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">序列式容器（Sequence container）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8-Associative-container"><span class="nav-number">1.2.</span> <span class="nav-text">关联式容器(Associative container)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E5%BA%8F%E5%AE%B9%E5%99%A8%EF%BC%88Unordered-associative-container%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">无序容器（Unordered (associative) container）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8%E6%97%B6%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">各种容器使用时机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E5%85%B1%E5%90%8C%E8%83%BD%E5%8A%9B"><span class="nav-number">3.</span> <span class="nav-text">容器的共同能力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">容器遍历方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#size-0-%E4%B8%8E-empty"><span class="nav-number">4.1.</span> <span class="nav-text">size() &#x3D;&#x3D; 0 与 empty()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-array-C-11"><span class="nav-number">5.</span> <span class="nav-text">std::array C++11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">5.1.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-vector"><span class="nav-number">6.</span> <span class="nav-text">std::vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%A4%BA%E6%84%8F"><span class="nav-number">6.1.</span> <span class="nav-text">迭代器示意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#at-%E4%B8%8E-operator"><span class="nav-number">6.2.</span> <span class="nav-text">at() 与 operator[]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#size-%E4%B8%8E-capacity"><span class="nav-number">6.3.</span> <span class="nav-text">size() 与 capacity()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resize-%E4%B8%8E-reserve"><span class="nav-number">6.4.</span> <span class="nav-text">resize() 与 reserve()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#resize-count"><span class="nav-number">6.4.1.</span> <span class="nav-text">resize(count)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reserve-new-cap"><span class="nav-number">6.4.2.</span> <span class="nav-text">reserve(new_cap)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shrink-to-fit-C-11"><span class="nav-number">6.5.</span> <span class="nav-text">shrink_to_fit() (C++11)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#push-back-%E4%B8%8E-push-front"><span class="nav-number">6.6.</span> <span class="nav-text">push_back() 与 push_front()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#insert"><span class="nav-number">6.7.</span> <span class="nav-text">insert()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#erase"><span class="nav-number">6.8.</span> <span class="nav-text">erase()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data"><span class="nav-number">6.9.</span> <span class="nav-text">data()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-vector-bool"><span class="nav-number">6.10.</span> <span class="nav-text">std::vector &lt; bool &gt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">6.11.</span> <span class="nav-text">异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-deque"><span class="nav-number">7.</span> <span class="nav-text">std::deque</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#std-deque-%E4%B8%8E-std-vector-%E6%AF%94%E8%BE%83"><span class="nav-number">7.1.</span> <span class="nav-text">std::deque 与 std::vector 比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E5%90%8C%E4%B9%8B%E5%A4%84"><span class="nav-number">7.1.1.</span> <span class="nav-text">相同之处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E4%B9%8B%E5%A4%84"><span class="nav-number">7.1.2.</span> <span class="nav-text">不同之处</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">7.2.</span> <span class="nav-text">适用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-1"><span class="nav-number">7.3.</span> <span class="nav-text">异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-list"><span class="nav-number">8.</span> <span class="nav-text">std::list</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7"><span class="nav-number">8.1.</span> <span class="nav-text">容器特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="nav-number">8.2.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-forward-list-C-11"><span class="nav-number">9.</span> <span class="nav-text">std::forward_list (C++11)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E-std-list-%E6%AF%94%E8%BE%83"><span class="nav-number">9.1.</span> <span class="nav-text">与 std::list 比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E8%B5%B7%E5%A7%8B%E5%A4%84%E5%AE%89%E6%8F%92%E5%85%83%E7%B4%A0"><span class="nav-number">9.2.</span> <span class="nav-text">在起始处安插元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-set-%E5%92%8C-std-multiset"><span class="nav-number">10.</span> <span class="nav-text">std::set 和 std::multiset</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F%E5%87%86%E5%88%99%E7%AC%A6%E5%90%88-%E4%B8%A5%E6%A0%BC%E5%BC%B1%E5%BA%8F"><span class="nav-number">10.1.</span> <span class="nav-text">排序准则符合: 严格弱序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E5%AE%9A%E4%B9%89"><span class="nav-number">10.1.1.</span> <span class="nav-text">详细定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E6%8E%92%E5%BA%8F%E8%A7%84%E5%88%99-operator"><span class="nav-number">10.1.2.</span> <span class="nav-text">定制排序规则 operator&lt;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-set-%E5%92%8C-std-multiset-%E7%9A%84%E8%83%BD%E5%8A%9B"><span class="nav-number">10.2.</span> <span class="nav-text">std::set 和 std::multiset 的能力</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-map-%E5%92%8C-std-multimap"><span class="nav-number">11.</span> <span class="nav-text">std::map 和 std::multimap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#operator"><span class="nav-number">11.1.</span> <span class="nav-text">operator[]</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E5%BA%8F%E5%AE%B9%E5%99%A8-Unordered-Container-C-11"><span class="nav-number">12.</span> <span class="nav-text">无序容器 (Unordered Container) C++11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%93%88%E5%B8%8C%E7%A4%BA%E4%BE%8B"><span class="nav-number">12.1.</span> <span class="nav-text">定制哈希示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7-1"><span class="nav-number">12.2.</span> <span class="nav-text">容器特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-2"><span class="nav-number">12.3.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%AE%B9%E5%99%A8"><span class="nav-number">13.</span> <span class="nav-text">特殊容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#std-string"><span class="nav-number">13.1.</span> <span class="nav-text">std::string</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-stack"><span class="nav-number">13.2.</span> <span class="nav-text">std::stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-queue"><span class="nav-number">13.3.</span> <span class="nav-text">std::queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-priority-queue"><span class="nav-number">13.4.</span> <span class="nav-text">std::priority_queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-bitset"><span class="nav-number">13.5.</span> <span class="nav-text">std::bitset</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%B6%E5%BC%8F%E6%8E%92%E5%BA%8F"><span class="nav-number">13.5.1.</span> <span class="nav-text">桶式排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB"><span class="nav-number">13.5.2.</span> <span class="nav-text">汉明距离</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="nav-number">14.</span> <span class="nav-text">迭代器介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%A7%8D%E7%B1%BB"><span class="nav-number">14.1.</span> <span class="nav-text">迭代器种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">14.2.</span> <span class="nav-text">Input迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forward-%E5%89%8D%E5%90%91-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">14.3.</span> <span class="nav-text">Forward(前向)迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Random-Access-%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">14.4.</span> <span class="nav-text">Random-Access(随机访问)迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%BA%94%E7%94%A8"><span class="nav-number">14.5.</span> <span class="nav-text">迭代器应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF"><span class="nav-number">14.6.</span> <span class="nav-text">迭代器失效场景</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">容器类别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%BC%8F%E5%AE%B9%E5%99%A8%EF%BC%88Sequence-container%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">序列式容器（Sequence container）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8-Associative-container"><span class="nav-number">1.2.</span> <span class="nav-text">关联式容器(Associative container)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E5%BA%8F%E5%AE%B9%E5%99%A8%EF%BC%88Unordered-associative-container%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">无序容器（Unordered (associative) container）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8%E6%97%B6%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">各种容器使用时机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E5%85%B1%E5%90%8C%E8%83%BD%E5%8A%9B"><span class="nav-number">3.</span> <span class="nav-text">容器的共同能力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">容器遍历方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#size-0-%E4%B8%8E-empty"><span class="nav-number">4.1.</span> <span class="nav-text">size() &#x3D;&#x3D; 0 与 empty()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-array-C-11"><span class="nav-number">5.</span> <span class="nav-text">std::array C++11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">5.1.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-vector"><span class="nav-number">6.</span> <span class="nav-text">std::vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%A4%BA%E6%84%8F"><span class="nav-number">6.1.</span> <span class="nav-text">迭代器示意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#at-%E4%B8%8E-operator"><span class="nav-number">6.2.</span> <span class="nav-text">at() 与 operator[]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#size-%E4%B8%8E-capacity"><span class="nav-number">6.3.</span> <span class="nav-text">size() 与 capacity()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resize-%E4%B8%8E-reserve"><span class="nav-number">6.4.</span> <span class="nav-text">resize() 与 reserve()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#resize-count"><span class="nav-number">6.4.1.</span> <span class="nav-text">resize(count)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reserve-new-cap"><span class="nav-number">6.4.2.</span> <span class="nav-text">reserve(new_cap)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shrink-to-fit-C-11"><span class="nav-number">6.5.</span> <span class="nav-text">shrink_to_fit() (C++11)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#push-back-%E4%B8%8E-push-front"><span class="nav-number">6.6.</span> <span class="nav-text">push_back() 与 push_front()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#insert"><span class="nav-number">6.7.</span> <span class="nav-text">insert()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#erase"><span class="nav-number">6.8.</span> <span class="nav-text">erase()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data"><span class="nav-number">6.9.</span> <span class="nav-text">data()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-vector-bool"><span class="nav-number">6.10.</span> <span class="nav-text">std::vector &lt; bool &gt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">6.11.</span> <span class="nav-text">异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-deque"><span class="nav-number">7.</span> <span class="nav-text">std::deque</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#std-deque-%E4%B8%8E-std-vector-%E6%AF%94%E8%BE%83"><span class="nav-number">7.1.</span> <span class="nav-text">std::deque 与 std::vector 比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E5%90%8C%E4%B9%8B%E5%A4%84"><span class="nav-number">7.1.1.</span> <span class="nav-text">相同之处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E4%B9%8B%E5%A4%84"><span class="nav-number">7.1.2.</span> <span class="nav-text">不同之处</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">7.2.</span> <span class="nav-text">适用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-2"><span class="nav-number">7.3.</span> <span class="nav-text">异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-list"><span class="nav-number">8.</span> <span class="nav-text">std::list</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7"><span class="nav-number">8.1.</span> <span class="nav-text">容器特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-2"><span class="nav-number">8.2.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-forward-list-C-11"><span class="nav-number">9.</span> <span class="nav-text">std::forward_list (C++11)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E-std-list-%E6%AF%94%E8%BE%83"><span class="nav-number">9.1.</span> <span class="nav-text">与 std::list 比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E8%B5%B7%E5%A7%8B%E5%A4%84%E5%AE%89%E6%8F%92%E5%85%83%E7%B4%A0"><span class="nav-number">9.2.</span> <span class="nav-text">在起始处安插元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-set-%E5%92%8C-std-multiset"><span class="nav-number">10.</span> <span class="nav-text">std::set 和 std::multiset</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F%E5%87%86%E5%88%99%E7%AC%A6%E5%90%88-%E4%B8%A5%E6%A0%BC%E5%BC%B1%E5%BA%8F"><span class="nav-number">10.1.</span> <span class="nav-text">排序准则符合: 严格弱序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E5%AE%9A%E4%B9%89"><span class="nav-number">10.1.1.</span> <span class="nav-text">详细定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E6%8E%92%E5%BA%8F%E8%A7%84%E5%88%99-operator"><span class="nav-number">10.1.2.</span> <span class="nav-text">定制排序规则 operator&lt;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-set-%E5%92%8C-std-multiset-%E7%9A%84%E8%83%BD%E5%8A%9B"><span class="nav-number">10.2.</span> <span class="nav-text">std::set 和 std::multiset 的能力</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#std-map-%E5%92%8C-std-multimap"><span class="nav-number">11.</span> <span class="nav-text">std::map 和 std::multimap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#operator"><span class="nav-number">11.1.</span> <span class="nav-text">operator[]</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E5%BA%8F%E5%AE%B9%E5%99%A8-Unordered-Container-C-11"><span class="nav-number">12.</span> <span class="nav-text">无序容器 (Unordered Container) C++11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%93%88%E5%B8%8C%E7%A4%BA%E4%BE%8B"><span class="nav-number">12.1.</span> <span class="nav-text">定制哈希示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%89%B9%E6%80%A7-2"><span class="nav-number">12.2.</span> <span class="nav-text">容器特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-3"><span class="nav-number">12.3.</span> <span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%AE%B9%E5%99%A8"><span class="nav-number">13.</span> <span class="nav-text">特殊容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#std-string"><span class="nav-number">13.1.</span> <span class="nav-text">std::string</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-stack"><span class="nav-number">13.2.</span> <span class="nav-text">std::stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-queue"><span class="nav-number">13.3.</span> <span class="nav-text">std::queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-priority-queue"><span class="nav-number">13.4.</span> <span class="nav-text">std::priority_queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-bitset"><span class="nav-number">13.5.</span> <span class="nav-text">std::bitset</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%B6%E5%BC%8F%E6%8E%92%E5%BA%8F"><span class="nav-number">13.5.1.</span> <span class="nav-text">桶式排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB"><span class="nav-number">13.5.2.</span> <span class="nav-text">汉明距离</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="nav-number">14.</span> <span class="nav-text">迭代器介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%A7%8D%E7%B1%BB"><span class="nav-number">14.1.</span> <span class="nav-text">迭代器种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">14.2.</span> <span class="nav-text">Input迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forward-%E5%89%8D%E5%90%91-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">14.3.</span> <span class="nav-text">Forward(前向)迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Random-Access-%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE-%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">14.4.</span> <span class="nav-text">Random-Access(随机访问)迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%BA%94%E7%94%A8"><span class="nav-number">14.5.</span> <span class="nav-text">迭代器应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF"><span class="nav-number">14.6.</span> <span class="nav-text">迭代器失效场景</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Jiancong Li</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
