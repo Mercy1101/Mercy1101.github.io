@@ -180,6 +180,414 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/07/31/2020-07-31-C++%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/31/2020-07-31-C++%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">C++ 迭代器介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-31 22:56:03" itemprop="dateCreated datePublished" datetime="2020-07-31T22:56:03+08:00">2020-07-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1>C++ 迭代器介绍</h1>
+<h2 id="迭代器概念">迭代器概念</h2>
+<p><code>Iterator</code>(迭代器)是一种&quot;能够迭代某序列内所有元素&quot;的对象，可通过改变自寻常pointer的一致性接口来完成工作。<code>Iterator</code>奉行一个纯抽象概念：任何东西，只要行为类似iterator，就是一种iterator。然而不同的的iterator具有不同的行进能力。</p>
+<h2 id="迭代器种类">迭代器种类</h2>
+<table>
+<thead>
+<tr>
+<th>迭代器种类</th>
+<th>能力</th>
+<th>提供者</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Output 迭代器</td>
+<td>向前写入</td>
+<td>Ostream,inserter</td>
+</tr>
+<tr>
+<td>Input 迭代器</td>
+<td>向前读取一次</td>
+<td>Istream</td>
+</tr>
+<tr>
+<td>Forward 迭代器</td>
+<td>向前读取</td>
+<td>Forward list、unordered containers</td>
+</tr>
+<tr>
+<td>Bidirectional 迭代器</td>
+<td>向前和向后读取</td>
+<td>List、set、multiset、map、multimap</td>
+</tr>
+<tr>
+<td>Random-access 迭代器</td>
+<td>以随机访问方式读取</td>
+<td>Array、vector、deque、string、C-style array</td>
+</tr>
+<tr>
+<td><img src="/resource/C++%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%A7%8D%E7%B1%BB/%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png" alt="迭代器种类"></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="Output迭代器">Output迭代器</h3>
+<p>Output迭代器允许一步一步前行并搭配write动作。因此你可以一个一个元素地赋值，不能使用output迭代器对同一区间迭代两次。事实上，甚至不保证你可以将一个value复制两次而其迭代器不累进。我们的目标是将一个value以下列形式写入一个黑洞。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(...) &#123;</span><br><span class="line">  *pos = ...;</span><br><span class="line">  ++pos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Output 迭代器无需比较操作。你无法检验output迭代器是否有效，或写入是否成功。你唯一可做的就是写入。通常，一批写入动作是以一个&quot;额外条件定义出&quot;的&quot;特定output迭代器&quot;作为结束。<br>
+见下表Output迭代器操作</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*iter = val</td>
+<td>将val写至迭代器所指的位置</td>
+</tr>
+<tr>
+<td>++iter</td>
+<td>向前步进(step forward), 返回新位置</td>
+</tr>
+<tr>
+<td>iter++</td>
+<td>向前步进(step forward), 返回旧位置</td>
+</tr>
+<tr>
+<td>TYPE(iter)</td>
+<td>复制迭代器(copy 构造函数)</td>
+</tr>
+</tbody>
+</table>
+<p>通常，迭代器可用来读，也可用来写; 几乎所有reading迭代器都有write的额外功能，这种情况下他们被称为<code>mutable</code>(可产生变化的)迭代器。<br>
+一个典型的<code>pure output</code>迭代器例子是：“将元素写至标准输出设备”。 如果采用两个output迭代器写至屏幕, 第二个字将跟在第一个字后面，而不是覆盖第一个字。另一个典型的例子是inserter, 那是一种用来将他插入容器。如果随后写入第二个value, 并不会覆盖第一个value, 而是安插进去。</p>
+<h3 id="Input迭代器">Input迭代器</h3>
+<p>Input迭代器只能一次一个以前行方向读取元素，按此顺序一个个返回元素值。<br>
+Input迭代器的各项操作</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*iter</td>
+<td>读取实际元素</td>
+</tr>
+<tr>
+<td>iter-&gt;member</td>
+<td>读取实际元素的成员(如果有的话)</td>
+</tr>
+<tr>
+<td>++iter</td>
+<td>向前步进(step forward), 返回新位置</td>
+</tr>
+<tr>
+<td>iter++</td>
+<td>向前步进(step forward), 返回旧位置</td>
+</tr>
+<tr>
+<td>iter1 == iter2</td>
+<td>判断两个迭代器是否相等</td>
+</tr>
+<tr>
+<td>iter1 != iter2</td>
+<td>判断两个迭代器是否不相等</td>
+</tr>
+<tr>
+<td>TYPE(iter)</td>
+<td>复制迭代器(copy 构造函数)</td>
+</tr>
+</tbody>
+</table>
+<p>Input迭代器只能读取元素一次。如果你复制input迭代器, 并令原input迭代器和新产生的拷贝都向前读取, 可能会遍历到不同的值。<br>
+<strong>所有的迭代器都具备input迭代器的能力，而且往往更强。</strong><code>Pure input</code>迭代器的典型例子就是&quot;从标准输入设备读取数据&quot;。同一个值不会被读取两次。一旦从<code>input stream</code>读入一个字(离开input缓冲区), 下次读取时就会返回另一个字。</p>
+<p>对于input迭代器, 操作符==和!=只用来检查&quot;某个迭代器是否等于一个past-the-end迭代器(指指向最末元素的下一个位置)&quot;.这有其必要, 因为处理input迭代器的操作函数通常会有以下行为。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">InputIterator pos, end;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (pos != end) &#123;</span><br><span class="line">  ... <span class="comment">// read-only access using *pos</span></span><br><span class="line">  ++pos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>没有任何保证说，两个迭代器如果都不是past-the-end迭代器, 且指向不同位置，他们的比较结果会不相等</strong>(这个条件是和forward迭代器搭配引入的)。</p>
+<p>也请注意, input迭代器的后置式递增操作符(<code>++iter</code>)不一定会返回什么东西。不过通常它会返回旧位置。<br>
+你应该尽可能优先先选用前置式递增操作符(<code>++iter</code>)而非后置式递增操作符(<code>iter++</code>), 因为前者效能更好。因为后者会返回一个临时对象。</p>
+<h3 id="Forward-前向-迭代器">Forward(前向)迭代器</h3>
+<p>Forward迭代器是一种input迭代器且在前进读取时提供额外保证。</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*iter</td>
+<td>访问实际元素</td>
+</tr>
+<tr>
+<td>iter-&gt;member</td>
+<td>访问实际元素的成员</td>
+</tr>
+<tr>
+<td>++iter</td>
+<td>向前步进(返回新位置)</td>
+</tr>
+<tr>
+<td>iter++</td>
+<td>向前步进(返回旧位置)</td>
+</tr>
+<tr>
+<td>iter1 == iter2</td>
+<td>判断两个迭代器是否相等</td>
+</tr>
+<tr>
+<td>iter1 != iter2</td>
+<td>判断两个迭代器是否不等</td>
+</tr>
+<tr>
+<td>TYPE()</td>
+<td>创建迭代器(default构造函数)</td>
+</tr>
+<tr>
+<td>TYPE(iter)</td>
+<td>复制迭代器(拷贝构造函数)</td>
+</tr>
+<tr>
+<td>iter1 = iter2</td>
+<td>对迭代器赋值(assign)</td>
+</tr>
+<tr>
+<td>和input迭代器不同的是, 两个forward迭代器如果指向同一元素, <code>operator==</code>会获得<code>true</code>, 如果两者都递增, 会再次指向同一元素。</td>
+<td></td>
+</tr>
+<tr>
+<td>例如：</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ForwardIterator pos1, pos2;</span><br><span class="line"></span><br><span class="line">pos1 = pos2 = begin; <span class="comment">/// both iterator refer to the same element</span></span><br><span class="line"><span class="keyword">if</span>(pos1 != end) &#123;</span><br><span class="line">  ++pos1; <span class="comment">/// pos1 is one element ahead</span></span><br><span class="line">  <span class="keyword">while</span>(pos1 != end) &#123;</span><br><span class="line">    <span class="keyword">if</span>(*pos1 == *pos2) &#123;</span><br><span class="line">      ... <span class="comment">// precess adjacent duplicates</span></span><br><span class="line">      ++pos1;</span><br><span class="line">      ++pos2;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Forward迭代器由以下对象和类型提供：</p>
+<ul>
+<li>Class&lt;forward_list&gt;</li>
+<li>Unordered container<br>
+然而标准库也允许<code>unordered</code>容器的实现提供<code>bidirectional</code>迭代器。<br>
+如果forward迭代器履行了output迭代器应有的条件, 那么它就是一个mutable forward迭代器, 即可用于读取，也可用于涂写。</li>
+</ul>
+<h3 id="Bidirectional-双向-迭代器">Bidirectional(双向)迭代器</h3>
+<p><code>Bidirectional</code>迭代器在<code>forward</code>迭代器的基础上增加回头迭代(<code>iterate backward</code>)能力。</p>
+<p><code>Bidirectional</code> 迭代器的新增操作</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–iter</td>
+<td>步退(返回新位置)</td>
+</tr>
+<tr>
+<td>iter–</td>
+<td>步退(返回旧位置)</td>
+</tr>
+</tbody>
+</table>
+<p><code>Bidirectional</code>迭代器由以下的对象和类型提供：</p>
+<ul>
+<li>Class list&lt;&gt;.</li>
+<li>Associative(关联式) 关联式容器提供</li>
+</ul>
+<p>如果<code>bidirectional</code>迭代器履行了output迭代器应有的条件, 那么他就是个<code>mutable bidirectional</code>迭代器, 即可用于读取, 也可用于涂写。</p>
+<h3 id="Random-Access-随机访问-迭代器">Random-Access(随机访问)迭代器</h3>
+<p><code>Random-access</code>迭代器在<code>bidirectional</code>迭代器的基础上增加了随机访问能里。因此它必须提供<code>iterator</code>算数运算。也就是说，它能增减某个偏移量、<br>
+计算距离(<code>difference</code>), 并运用诸如&lt;和&gt;等管理操作符(<code>relational operator</code>)进行比较。<br>
+随机访问迭代器的新增操作:</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iter[n]</td>
+<td>访问索引位置为n的元素</td>
+</tr>
+<tr>
+<td>iter+=n</td>
+<td>前进n个元素(如果n是负数, 则改为回退)</td>
+</tr>
+<tr>
+<td>iter-=n</td>
+<td>回退n个元素(如果n是负数, 则改为前进)</td>
+</tr>
+<tr>
+<td>iter+n</td>
+<td>返回iter之后的第n个元素</td>
+</tr>
+<tr>
+<td>n+iter</td>
+<td>返回iter之后的第n个元素</td>
+</tr>
+<tr>
+<td>iter-n</td>
+<td>返回iter之前的第n个元素</td>
+</tr>
+<tr>
+<td>iter1-iter2</td>
+<td>返回iter1和iter2之间的距离</td>
+</tr>
+<tr>
+<td>iter1 &lt; iter2</td>
+<td>判断iter1是否在iter2之前</td>
+</tr>
+<tr>
+<td>iter1 &gt; iter2</td>
+<td>判断iter1是否在iter2之后</td>
+</tr>
+<tr>
+<td>iter1 &lt;= iter2</td>
+<td>判断iter1是否不在iter2之后</td>
+</tr>
+<tr>
+<td>iter1 &gt;= iter2</td>
+<td>判断iter1是否不在iter2之前</td>
+</tr>
+</tbody>
+</table>
+<p><code>Random-access</code>迭代器由以下对象和类型提供:</p>
+<ul>
+<li>可随机访问的容器(<code>array</code>、<code>vector</code>、<code>deque</code>)</li>
+<li>String(<code>string</code>、<code>wstring</code>)</li>
+<li>寻常的C-Style(<code>pointer</code>)</li>
+</ul>
+<h2 id="迭代器相关辅助函数">迭代器相关辅助函数</h2>
+<h3 id="std-advance">std::advance()</h3>
+<p><code>std::advance()</code>可将迭代器的位置增加, 增加的幅度由实参决定, 也就是说它令迭代器一次前进(或后退)多个元素:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iterator&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">advance</span><span class="params">(InputIterator&amp; pos, Dist n)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>令名称为pos的input迭代器前进(或后退)n个元素</li>
+<li>对<code>bidirectinal</code>迭代器和<code>random-access</code>迭代器而言, n可为负值, 表示后退</li>
+<li><code>Dist</code>是个template类型。通常它必须是个整数类型, 因为会调用诸如<code>&lt;</code>、<code>++</code>、<code>--</code>等操作, 还要和0做比较。</li>
+<li><code>std::advance()</code>并不检查迭代器是否超过序列的<code>end()</code>(因为迭代器通常不知道其所操作的容器, 因此并无检查)。所以, 调用<code>std::advance()</code>有可能导致不明确行为–因为&quot;对序列尾端调用<code>operator++</code>&quot;是一种未定义的行为。</li>
+</ul>
+<p>对于<code>random-access</code>迭代器, 此函数只是简单地调用<code>pos+=n</code>, 因此具有常量复杂度。 对于其他任何类型的迭代器, 则调用<code>++pos</code>(或<code>--pos</code>如果n为负值)n次。因此，对于其他任何类型地迭代器, 本函数具有线性复杂度。<br>
+<strong>如果你希望你的程序可以轻松地更换容器和迭代器种类, 你应该使用<code>std::advance()</code>而不是<code>operator+=</code></strong><br>
+<strong>另外, 请注意<code>std::advance()</code>不具有返回值, 而<code>operator+=</code>会返回新位置, 所以后者可作为更大表达式的一部分。</strong></p>
+<p>下面是一个<code>std::advance()</code>的实现。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 输入迭代器的情况</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_InIt</span>, <span class="keyword">class</span> <span class="title class_">_Diff</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">advance_impl</span><span class="params">(_InIt&amp; _Where, _Diff _Off, std::input_iterator_tag)</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// 检查该偏移量不能为负值</span></span><br><span class="line">  <span class="keyword">if</span> (_Off &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">assert</span>(<span class="literal">false</span> &amp;&amp; <span class="string">&quot;negative offset in advance&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/// 使用自增运算符来计算</span></span><br><span class="line">  <span class="keyword">for</span> (; <span class="number">0</span> &lt; _Off; --_Off) ++_Where;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 双向迭代器</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_BidIt</span>, <span class="keyword">class</span> <span class="title class_">_Diff</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">advance_impl</span><span class="params">(_BidIt&amp; _Where, _Diff _Off,</span></span></span><br><span class="line"><span class="params"><span class="function">                         std::bidirectional_iterator_tag)</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// 使用自增运算符来计算</span></span><br><span class="line">  <span class="keyword">for</span> (; <span class="number">0</span> &lt; _Off; --_Off) ++_Where;</span><br><span class="line">  <span class="comment">/// 如果偏移量为负值则使用自减运算符</span></span><br><span class="line">  <span class="keyword">for</span> (; _Off &lt; <span class="number">0</span>; ++_Off) --_Where;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 随机访问迭代器</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_RanIt</span>, <span class="keyword">class</span> <span class="title class_">_Diff</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">advance_impl</span><span class="params">(_RanIt&amp; _Where, _Diff _Off,</span></span></span><br><span class="line"><span class="params"><span class="function">                         std::random_access_iterator_tag)</span> </span>&#123;</span><br><span class="line">  <span class="comment">/// 使用operator += ，常量复杂度</span></span><br><span class="line">  _Where += _Off;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_InIt</span>, <span class="keyword">class</span> <span class="title class_">_Diff</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">advance</span><span class="params">(_InIt&amp; _Where, _Diff _Off)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">advance_impl</span>(_Where, _Off,</span><br><span class="line">               <span class="comment">/// 在萃取迭代器的特性时去掉其const的属性来提高性能</span></span><br><span class="line">               std::iterator_traits&lt;_Iter&gt;::iterator_category&lt;</span><br><span class="line">                   std::<span class="type">remove_const_t</span>&lt;_InIt&gt;&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="std-next-和std-prev">std::next()和std::prev()</h3>
+<p>c++ 提供了两个新增的辅助函数, 允许你前进和后退移动迭代器的位置。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iterator&gt;</span></span></span><br><span class="line"><span class="function">ForwardIterator <span class="title">next</span><span class="params">(ForwardIterator pos)</span></span></span><br><span class="line"><span class="function">ForwardIterator <span class="title">next</span><span class="params">(ForwardIterator pos, Dist n)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>导致<code>forward</code>迭代器<code>pos</code>前进或n个位置</li>
+<li>如果处理的是<code>bidirectional</code>和<code>random-access</code>迭代器, n可为负值, 导致后退移动</li>
+<li><code>Dist</code>是类型<code>std::iterator_traits&lt;ForwardIterator&gt;::difference_type</code></li>
+<li>其内部将对一个临时对象调用<code>std::advance(pos, n)</code></li>
+<li>注意, <code>std::next()</code>并不检查是否会跨越序列的<code>end()</code>。因此调用者必须自行担保其结果有效。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iterator&gt;</span></span></span><br><span class="line"><span class="function">BidirectionalIterator <span class="title">prev</span><span class="params">(BidirectionalIterator pos)</span></span></span><br><span class="line"><span class="function">BidirectionalIterator <span class="title">prev</span><span class="params">(BidirectionalIterator pos, Dist n)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>导致<code>bidirectional</code>迭代器<code>pos</code>后退一个或n个位置</li>
+<li>n可为负值, 导致向前移动</li>
+<li><code>Dist</code>是类型<code>std::iterator_traits&lt;ForwardIterator&gt;::difference_type</code></li>
+<li>其内部将对一个临时对象调用<code>std::advance(pos, -n)</code></li>
+<li>注意, <code>std::prev()</code>并不检查是否会跨越序列的<code>begin()</code>。因此调用者必须自行担保其结果有效。</li>
+</ul>
+<p>下面写一个简单的实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_InIt</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> _InIt <span class="title">next</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _InIt _First,</span></span></span><br><span class="line"><span class="params"><span class="function">    std::iterator_traits&lt;_InIt&gt;::iterator_category&lt;_InIt&gt; _Off = <span class="number">1</span>)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">static_assert</span>(</span><br><span class="line">      std::is_base_of&lt;</span><br><span class="line">          std::input_iterator_tag,</span><br><span class="line">          <span class="keyword">typename</span> std::iterator_traits&lt;_InIt&gt;::iterator_category&gt;::value,</span><br><span class="line">      <span class="string">&quot;next requires input iterator&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">advance</span>(_First, _Off);</span><br><span class="line">  <span class="keyword">return</span> (_First);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">_BidIt</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> _BidIt <span class="title">prev</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    _BidIt _First,</span></span></span><br><span class="line"><span class="params"><span class="function">    std::iterator_traits&lt;_BidIt&gt;::iterator_category&lt;_BidIt&gt; _Off = <span class="number">1</span>)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">static_assert</span>(</span><br><span class="line">      std::is_base_of&lt;</span><br><span class="line">          std::bidirectional_iterator_tag,</span><br><span class="line">          <span class="keyword">typename</span> std::iterator_traits&lt;_BidIt&gt;::iterator_category&gt;::value,</span><br><span class="line">      <span class="string">&quot;prev requires bidirectional iterator&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">advance</span>(_First, -_Off);</span><br><span class="line">  <span class="keyword">return</span> (_First);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="std-distance">std::distance()</h3>
+<p><code>std::distance()</code>用来处理两个迭代器之间的距离:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Dist <span class="title">distance</span><span class="params">(InputIterator pos1, InputIterator pos2)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>返回两个<code>input</code>迭代器<code>pos1</code>和<code>pos2</code>之间的距离。</li>
+<li>两个迭代器必须指向同一个容器</li>
+<li>如果不是<code>random-access</code>迭代器, 则从<code>pos1</code>开始前进必须能够到达<code>pos2</code>, 亦即<code>pos2</code>的位置必须与<code>pos1</code>相同或在其后。</li>
+<li>返回类型<code>Dist</code>是类型<code>std::iterator_traits&lt;ForwardIterator&gt;::difference_type</code></li>
+</ul>
+<p>注意： 处理两个<code>non-random-access</code>迭代器之间的距离时, 必须十分小心。第一个迭代器所指的元素绝不能在第二个迭代器所指元素之后方, 否则会导致不明确的行为。<strong>如果不知道哪个迭代器在前, 你必须先算出两个迭代器分别至容器起点的距离, 在根据这两个距离来判断。</strong></p>
+<p>一个简单的实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> it&gt;</span><br><span class="line"><span class="keyword">typename</span> std::iterator_traits&lt;it&gt;::<span class="function">difference_type <span class="title">distance</span><span class="params">(it from, it to)</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">if</span> <span class="title">constexpr</span> <span class="params">(<span class="keyword">typename</span> std::iterator_traits&lt;it&gt;::iterator_category() ==</span></span></span><br><span class="line"><span class="params"><span class="function">                std::random_access_iterator_tag)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/// 随机访问迭代器</span></span><br><span class="line">    <span class="keyword">return</span> to - from;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">constexpr</span> (<span class="keyword">typename</span> std::iterator_traits&lt;it&gt;::<span class="built_in">iterator_category</span>() ==</span><br><span class="line">                       std::input_iterator_tag) &#123;</span><br><span class="line">    <span class="comment">/// input 迭代器</span></span><br><span class="line">    <span class="keyword">typename</span> std::iterator_traits&lt;it&gt;::difference_type res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (; from != to; ++from) &#123;</span><br><span class="line">      ++res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">static_assert</span>(<span class="string">&quot;unknow iterator type.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="std-iter-swap">std::iter_swap()</h3>
+<p>这个简单的辅助函数用来交换两个迭代器所指的元素值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">iter_swap</span><span class="params">(ForwardIterator1 pos1, ForwardIterator pos2)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>交换迭代器pos1和pos2所指的值</li>
+<li>迭代器的类型不必相同, 但其所指的两个值必须<strong>可以相互赋值</strong></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/07/22/2020-07-22-C++%20integer_sequence%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1017,86 +1425,6 @@ Qt支持这些信号槽的连接方式：</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/07/04/2020-07-04-C++20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E7%AC%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/04/2020-07-04-C++20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E7%AC%A6/" class="post-title-link" itemprop="url">C++20三路比较符</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-07-04 11:05:05" itemprop="dateCreated datePublished" datetime="2020-07-04T11:05:05+08:00">2020-07-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>三路比较符（C++20）</h1>
-<p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/utility/compare/compare_three_way">官网解释</a></p>
-<p><a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/cppblog/simplify-your-code-with-rocket-science-c20s-spaceship-operator/">微软技术博客介绍</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1186r3.html">When do you actually use <code>&lt;=&gt;</code>?</a></p>
-<p>例子1：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;compare&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Rational_2</span> &#123;</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line">    <span class="type">int</span> den; <span class="comment">// &gt; 0</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">constexpr</span> std::weak_ordering <span class="built_in">operator</span>&lt;=&gt;(Rational_2 lhs, Rational_2 rhs)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> lhs.num * rhs.den &lt;=&gt; rhs.num * lhs.den;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">(std::weak_ordering value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value == <span class="number">0</span>)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;equal\n&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (value &lt; <span class="number">0</span>)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;less\n&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;greater\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Rational_2 c&#123;<span class="number">6</span>,<span class="number">5</span>&#125;;</span><br><span class="line">    Rational_2 d&#123;<span class="number">8</span>,<span class="number">7</span>&#125;;</span><br><span class="line">    <span class="built_in">print</span>(c &lt;=&gt; d);</span><br><span class="line">    <span class="built_in">print</span>(std::compare_three_way&#123;&#125;(c,d));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>例子2：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;compare&gt;</span></span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Basics</span> &#123;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="type">char</span> c;</span><br><span class="line">  <span class="type">float</span> f;</span><br><span class="line">  <span class="type">double</span> d;</span><br><span class="line">  <span class="keyword">auto</span> <span class="built_in">operator</span>&lt;=&gt;(<span class="type">const</span> Basics&amp;) <span class="type">const</span> = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Arrays</span> &#123;</span><br><span class="line">  <span class="type">int</span> ai[<span class="number">1</span>];</span><br><span class="line">  <span class="type">char</span> ac[<span class="number">2</span>];</span><br><span class="line">  <span class="type">float</span> af[<span class="number">3</span>];</span><br><span class="line">  <span class="type">double</span> ad[<span class="number">2</span>][<span class="number">2</span>];</span><br><span class="line">  <span class="keyword">auto</span> <span class="built_in">operator</span>&lt;=&gt;(<span class="type">const</span> Arrays&amp;) <span class="type">const</span> = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Bases</span> : Basics, Arrays &#123;</span><br><span class="line">  <span class="keyword">auto</span> <span class="built_in">operator</span>&lt;=&gt;(<span class="type">const</span> Bases&amp;) <span class="type">const</span> = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constexpr</span> Bases a = &#123; &#123; <span class="number">0</span>, <span class="string">&#x27;c&#x27;</span>, <span class="number">1.f</span>, <span class="number">1.</span> &#125;,</span><br><span class="line">                        &#123; &#123; <span class="number">1</span> &#125;, &#123; <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span> &#125;, &#123; <span class="number">1.f</span>, <span class="number">2.f</span>, <span class="number">3.f</span> &#125;, &#123; &#123; <span class="number">1.</span>, <span class="number">2.</span> &#125;, &#123; <span class="number">3.</span>, <span class="number">4.</span> &#125; &#125; &#125; &#125;;</span><br><span class="line">  <span class="keyword">constexpr</span> Bases b = &#123; &#123; <span class="number">0</span>, <span class="string">&#x27;c&#x27;</span>, <span class="number">1.f</span>, <span class="number">1.</span> &#125;,</span><br><span class="line">                        &#123; &#123; <span class="number">1</span> &#125;, &#123; <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span> &#125;, &#123; <span class="number">1.f</span>, <span class="number">2.f</span>, <span class="number">3.f</span> &#125;, &#123; &#123; <span class="number">1.</span>, <span class="number">2.</span> &#125;, &#123; <span class="number">3.</span>, <span class="number">4.</span> &#125; &#125; &#125; &#125;;</span><br><span class="line">  <span class="built_in">static_assert</span>(a == b);</span><br><span class="line">  <span class="built_in">static_assert</span>(!(a != b));</span><br><span class="line">  <span class="built_in">static_assert</span>(!(a &lt; b));</span><br><span class="line">  <span class="built_in">static_assert</span>(a &lt;= b);</span><br><span class="line">  <span class="built_in">static_assert</span>(!(a &gt; b));</span><br><span class="line">  <span class="built_in">static_assert</span>(a &gt;= b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1166,7 +1494,7 @@ Qt支持这些信号槽的连接方式：</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1177,7 +1505,7 @@ Qt支持这些信号槽的连接方式：</p>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

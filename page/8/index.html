@@ -180,6 +180,86 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/07/04/2020-07-04-C++20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E7%AC%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/04/2020-07-04-C++20%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E7%AC%A6/" class="post-title-link" itemprop="url">C++20三路比较符</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-04 11:05:05" itemprop="dateCreated datePublished" datetime="2020-07-04T11:05:05+08:00">2020-07-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1>三路比较符（C++20）</h1>
+<p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/utility/compare/compare_three_way">官网解释</a></p>
+<p><a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/cppblog/simplify-your-code-with-rocket-science-c20s-spaceship-operator/">微软技术博客介绍</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1186r3.html">When do you actually use <code>&lt;=&gt;</code>?</a></p>
+<p>例子1：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;compare&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Rational_2</span> &#123;</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line">    <span class="type">int</span> den; <span class="comment">// &gt; 0</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">constexpr</span> std::weak_ordering <span class="built_in">operator</span>&lt;=&gt;(Rational_2 lhs, Rational_2 rhs)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> lhs.num * rhs.den &lt;=&gt; rhs.num * lhs.den;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">(std::weak_ordering value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value == <span class="number">0</span>)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;equal\n&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (value &lt; <span class="number">0</span>)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;less\n&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;greater\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Rational_2 c&#123;<span class="number">6</span>,<span class="number">5</span>&#125;;</span><br><span class="line">    Rational_2 d&#123;<span class="number">8</span>,<span class="number">7</span>&#125;;</span><br><span class="line">    <span class="built_in">print</span>(c &lt;=&gt; d);</span><br><span class="line">    <span class="built_in">print</span>(std::compare_three_way&#123;&#125;(c,d));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>例子2：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;compare&gt;</span></span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Basics</span> &#123;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="type">char</span> c;</span><br><span class="line">  <span class="type">float</span> f;</span><br><span class="line">  <span class="type">double</span> d;</span><br><span class="line">  <span class="keyword">auto</span> <span class="built_in">operator</span>&lt;=&gt;(<span class="type">const</span> Basics&amp;) <span class="type">const</span> = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Arrays</span> &#123;</span><br><span class="line">  <span class="type">int</span> ai[<span class="number">1</span>];</span><br><span class="line">  <span class="type">char</span> ac[<span class="number">2</span>];</span><br><span class="line">  <span class="type">float</span> af[<span class="number">3</span>];</span><br><span class="line">  <span class="type">double</span> ad[<span class="number">2</span>][<span class="number">2</span>];</span><br><span class="line">  <span class="keyword">auto</span> <span class="built_in">operator</span>&lt;=&gt;(<span class="type">const</span> Arrays&amp;) <span class="type">const</span> = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Bases</span> : Basics, Arrays &#123;</span><br><span class="line">  <span class="keyword">auto</span> <span class="built_in">operator</span>&lt;=&gt;(<span class="type">const</span> Bases&amp;) <span class="type">const</span> = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constexpr</span> Bases a = &#123; &#123; <span class="number">0</span>, <span class="string">&#x27;c&#x27;</span>, <span class="number">1.f</span>, <span class="number">1.</span> &#125;,</span><br><span class="line">                        &#123; &#123; <span class="number">1</span> &#125;, &#123; <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span> &#125;, &#123; <span class="number">1.f</span>, <span class="number">2.f</span>, <span class="number">3.f</span> &#125;, &#123; &#123; <span class="number">1.</span>, <span class="number">2.</span> &#125;, &#123; <span class="number">3.</span>, <span class="number">4.</span> &#125; &#125; &#125; &#125;;</span><br><span class="line">  <span class="keyword">constexpr</span> Bases b = &#123; &#123; <span class="number">0</span>, <span class="string">&#x27;c&#x27;</span>, <span class="number">1.f</span>, <span class="number">1.</span> &#125;,</span><br><span class="line">                        &#123; &#123; <span class="number">1</span> &#125;, &#123; <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span> &#125;, &#123; <span class="number">1.f</span>, <span class="number">2.f</span>, <span class="number">3.f</span> &#125;, &#123; &#123; <span class="number">1.</span>, <span class="number">2.</span> &#125;, &#123; <span class="number">3.</span>, <span class="number">4.</span> &#125; &#125; &#125; &#125;;</span><br><span class="line">  <span class="built_in">static_assert</span>(a == b);</span><br><span class="line">  <span class="built_in">static_assert</span>(!(a != b));</span><br><span class="line">  <span class="built_in">static_assert</span>(!(a &lt; b));</span><br><span class="line">  <span class="built_in">static_assert</span>(a &lt;= b);</span><br><span class="line">  <span class="built_in">static_assert</span>(!(a &gt; b));</span><br><span class="line">  <span class="built_in">static_assert</span>(a &gt;= b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/07/04/2020-07-04-C++%E4%B8%A5%E6%A0%BC%E5%BC%B1%E5%BA%8F%E7%9A%84%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1328,7 +1408,7 @@ false, 那么op(a,c) and op(c,a) 也为false.</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1339,7 +1419,7 @@ false, 那么op(a,c) and op(c,a) 也为false.</p>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
