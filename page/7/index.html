@@ -180,6 +180,245 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/08/19/2020-08-19-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/19/2020-08-19-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">《Go语言学习笔记》读书笔记(1)测试</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-19 20:24:47" itemprop="dateCreated datePublished" datetime="2020-08-19T20:24:47+08:00">2020-08-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">Go 读书笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="11-测试">11. 测试</h2>
+<p>标准库自带单元测试框架</p>
+<ul>
+<li>测试代码须放在当前包以&quot;_test.go&quot;结尾的文件中</li>
+<li>测试函数以Test为名称前缀</li>
+<li>测试命令(go test) 忽略以&quot;_&quot; 或 “.” 开头的测试文件</li>
+<li>正常编译操作(go build/install)会忽略测试文件</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;testing&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(x, y <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> x + y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestAdd</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> tests = []<span class="keyword">struct</span> &#123;</span><br><span class="line">		x	<span class="type">int</span></span><br><span class="line">		y	<span class="type">int</span></span><br><span class="line">		expect	<span class="type">int</span></span><br><span class="line">	&#125; &#123;</span><br><span class="line">		&#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>&#125;,</span><br><span class="line">		&#123;<span class="number">2</span>, <span class="number">2</span>, <span class="number">4</span>&#125;,</span><br><span class="line">		&#123;<span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, tt := <span class="keyword">range</span> tests &#123;</span><br><span class="line">		actual := add(tt.x, tt.y)</span><br><span class="line">		<span class="keyword">if</span> actual != tt.expect &#123;</span><br><span class="line">			t.Errorf(<span class="string">&quot;add(%d, %d): expect %d, actual %d&quot;</span>, tt.x, tt.y, tt.expect, actual)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestA</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">	t.Parallel()</span><br><span class="line">	time.Sleep(time.Second * <span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestB</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">	t.Parallel()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	time.Sleep(time.Second * <span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-arg</td>
+<td>命令行参数</td>
+<td></td>
+</tr>
+<tr>
+<td>-v</td>
+<td>输出详细信息</td>
+<td></td>
+</tr>
+<tr>
+<td>-parallel</td>
+<td>并发执行, 默认执行GOMAXPROCS</td>
+<td>-parallel 2</td>
+</tr>
+<tr>
+<td>-run</td>
+<td>指定测试函数，正则表达式</td>
+<td>-run “Add”</td>
+</tr>
+<tr>
+<td>-timeout</td>
+<td>全部测试累计时间超时将引发panic, 默认值为10ms</td>
+<td>-timeout 1m30s</td>
+</tr>
+<tr>
+<td>-count</td>
+<td>重复测试次数，默认次数为1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="test-main">test main</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestMain</span><span class="params">(m * testing.M)</span></span>&#123;</span><br><span class="line">	<span class="comment">// setup</span></span><br><span class="line">	code := m.Run()	<span class="comment">// 调用测试函数</span></span><br><span class="line">	<span class="comment">// tear down</span></span><br><span class="line">	os.Exit(code)	<span class="comment">// 注意： os.Exit 不会执行defer</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>多测试用例</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestMain</span><span class="params">(m * testing.M)</span></span> &#123;</span><br><span class="line">	match := <span class="function"><span class="keyword">func</span><span class="params">(pat, str <span class="type">string</span>)</span></span> (<span class="type">bool</span>, <span class="type">error</span>) &#123;	<span class="comment">// pat: 命令行参数-run 提供的过滤条件</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>, <span class="literal">nil</span>	<span class="comment">// str: InternalTest.Name</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	tests := []testing.InternalTest &#123;</span><br><span class="line">		&#123;<span class="string">&quot;b&quot;</span>, TestB&#125;,</span><br><span class="line">		&#123;<span class="string">&quot;a&quot;</span>, TestA&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	benchmarks := []testing.InternalBenchmark&#123;&#125;</span><br><span class="line">	examples := []testing.InternalExample&#123;&#125;</span><br><span class="line"></span><br><span class="line">	m = testing.MainStart(match, tests, benchmarks, examples)</span><br><span class="line"></span><br><span class="line">	os.Exit(m.Run())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="example">example</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ExampleAdd</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(add(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">	fmt.Println(add(<span class="number">2</span>, <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Output:</span></span><br><span class="line">	<span class="comment">// 3</span></span><br><span class="line">	<span class="comment">// 4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：如果没有output注释，该示例就不会被执行。另外，不能使用内置函数print/printIn, 因为他们输出到stderr</p>
+<h3 id="benchmark">benchmark</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkAdd</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>go test -bench .</p>
+</blockquote>
+<p>如果希望仅执行性能测试，那么可以用<code>run=NONE</code>忽略所有测试用例。<br>
+性能测试默认以并发方式进行测试，但可用cpu参数设定多个并发限制来观察结果。</p>
+<blockquote>
+<p>go test -bench . -cpu 1,2,4</p>
+</blockquote>
+<p>某些耗时的目标，默认循环测试过少，取平均值不足以准确计量性能。可用<code>benchtime</code>设定最小测试时间来增加循环次数，以便返回更准确的结果。</p>
+<blockquote>
+<p>go test -bench . -benchtime 5s</p>
+</blockquote>
+<h3 id="timer">timer</h3>
+<p>如果在测试函数中要执行一些额外的操作，那么应该临时i组织计时器工作。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkAdd</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line">	time.Sleep(time.Second)</span><br><span class="line">	b.ResetTimer()	<span class="comment">// 重置</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">		<span class="keyword">if</span> i == <span class="number">1</span> &#123;</span><br><span class="line">			b.StopTimer()	<span class="comment">// 暂停</span></span><br><span class="line">			time.Sleep(time.Second)</span><br><span class="line">			b.StartTimer()	<span class="comment">// 恢复</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="memory">memory</h3>
+<p>性能测试查看内存情况</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">heap</span><span class="params">()</span></span> []<span class="type">byte</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="number">1024</span>*<span class="number">10</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkHeap</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span> ; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = heap()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>go test -bench . -benchmem -gcflags “-N -l” # 禁止内联和优化， 以便观察结果</p>
+</blockquote>
+<p>也可将测试函数设置为总是输出内存分配信息，无论使用benchmem参数与否</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">func <span class="title">BenchmarkHeap</span><span class="params">(b *testing.B)</span> </span>&#123;</span><br><span class="line">	b.<span class="built_in">ReportAllocs</span>()</span><br><span class="line">	b.<span class="built_in">ReportTimer</span>()</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span> ; i &lt; b.N; i++ &#123;</span><br><span class="line">		_ = <span class="built_in">heap</span>()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="代码覆盖率">代码覆盖率</h3>
+<blockquote>
+<p>go test -cover</p>
+</blockquote>
+<p>为获取更详细信息，可指定covermode 和coverprofile 参数</p>
+<ul>
+<li>set: 是否执行</li>
+<li>count: 执行次数</li>
+<li>atomic: 执行次数，支持并发模式</li>
+</ul>
+<blockquote>
+<p>go test -cover -covermode count -coverprofile cover.out</p>
+</blockquote>
+<p>还可以在浏览器中查看包括具体的执行次数等信息</p>
+<blockquote>
+<p>go tool cover -html=cover.out</p>
+</blockquote>
+<h3 id="性能监控">性能监控</h3>
+<p>引发性能问题的原因无外乎执行时间过长、内存占用过多，以及意外阻塞。通过捕获或监控相关执行状态数据，就可定位引发问题的原因，从而针对性改进算法。</p>
+<blockquote>
+<p>go test -run NONE -bench . -memprofile mem.out -cpuprofile cpu.out net/http</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-cpuprofile</td>
+<td>保存执行时间采样到指定文件</td>
+<td>-cpuprofile cpu.out</td>
+</tr>
+<tr>
+<td>-memprofile</td>
+<td>保存内存分配采样到指定文件</td>
+<td>-memprofile mem.out</td>
+</tr>
+<tr>
+<td>-memprofilerate</td>
+<td>内存分配采样起始值，默认为512KB</td>
+<td>-memprofilerate 1</td>
+</tr>
+<tr>
+<td>-blockprofile</td>
+<td>保存阻塞时间采样到指定文件</td>
+<td>-blockprofile block.out</td>
+</tr>
+<tr>
+<td>-blockprofilerate</td>
+<td>阻塞时间采样起始值，单位为：ns</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>如果执行性能测试，可能需要设置<code>benchtime</code>参数，以确保有足够的采样时间</p>
+<p>可使用交互模式查看，或用命令行直接输出单向结果。</p>
+<blockquote>
+<p>go tool pprof http.test mem.out<br>
+(pprof) top5</p>
+</blockquote>
+<ul>
+<li>flat: 仅当前函数，不包括它调用的其他函数。</li>
+<li>sum: 列表前几行所占百分比的总和。</li>
+<li>cum: 当前函数调用堆栈累计。</li>
+</ul>
+<p>top命令可指定排序字段，比如<code>top5 -cum</code><br>
+找出需要进一步查看的目标，使用<code>peek</code>命令列出调用来源<br>
+也可用list命令输出源码统计样式，以便更直观的定位<br>
+除文字模式以外，还可输出svg图形，将其保存或用浏览器查看</p>
+<p>在线采集数据须诸如 <code>http/pprof</code>包</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">&quot;net/http&quot;</span></span><br><span class="line">  _ <span class="string">&quot;net/http/pprof&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  http.ListenAndServe(<span class="string">&quot;:8080&quot;</span>, http.DefaultServeMux)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用浏览器访问指定路径，就可看到不同的检测项。</p>
+<blockquote>
+<p>go tool pprof <a target="_blank" rel="noopener" href="http://localhost:8080/debug/pprof/heap?debug=1">http://localhost:8080/debug/pprof/heap?debug=1</a></p>
+</blockquote>
+<p>必要时还可抓取数据，进行离线分析。</p>
+<blockquote>
+<p>curl <a target="_blank" rel="noopener" href="http://localhost:8080/debug/pprof/heap?debug=1">http://localhost:8080/debug/pprof/heap?debug=1</a> &gt; mem.out<br>
+go tool pprof test mem.out</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/07/31/2020-07-31-C++%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1222,213 +1461,10 @@ Qt支持这些信号槽的连接方式：</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/07/04/2020-07-04-C++%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/04/2020-07-04-C++%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">C++异常处理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-07-04 11:11:05" itemprop="dateCreated datePublished" datetime="2020-07-04T11:11:05+08:00">2020-07-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>异常处理</h1>
-<p>​<strong>异常处理</strong>（<code>exception handling</code>）机制允许程序独立开发的部分能够在运行时就出现问题<strong>进行通信</strong>并作出<strong>相应的处理</strong>。异常是的我们能够将问题的检测和解决过程分离开来。程序的一部分负责检测问题的出现，然后解决该问题的任务传递给程序的另一部分。检测环节无需知道问题处理模块的所有细节，反之亦然。</p>
-<h2 id="1-抛出异常">1. 抛出异常</h2>
-<p>​在C++语言中，我们通过<strong>抛出</strong>(<code>throwing</code>)一条表达式来<strong>引发</strong>(<code>raised</code>)一个异常。被抛出的表达式的类型以及当前的调用链共同决定了哪段<strong>处理代码</strong>(<code>handler</code>)将被用来处理该异常。被选中的处理代码实在调用链中与抛出对象类型匹配的最近的处理代码。其中，根据抛出对象的类型和内容，程序的异常抛出部分会告知异常处理部分到底发生了什么错误。</p>
-<p>​当执行一个<code>throw</code>时，跟在<code>throw</code>后面的语句将不再被执行。相反，程序的控制权从<code>throw</code>转移到与之匹配的<code>catch</code>模块。该<code>catch</code><strong>可能是同一函数中</strong>的局部<code>catch</code>，<strong>也可能位于直接或间接调用了发生异常的函数的另一个函数中</strong>。控制权从一处转移到另一处，这有两个重要的含义：</p>
-<ul>
-<li><strong>沿着调用链的函数可能会提早退出</strong>。</li>
-<li><strong>一旦程序开始执行异常处理代码，则沿着调用链创建的对象将被销毁</strong>。</li>
-</ul>
-<p>因为跟在<code>throw</code>后面的语句将不再被执行，所以<code>throw</code>语句的有类似于<code>return</code>语句：它通常作为条件语句的一部分或者作为某个函数的最后(或者唯一)一条语句。</p>
-<h3 id="1-1-栈展开">1.1 栈展开</h3>
-<p>​<strong>当抛出一个异常后</strong>，程序暂停当前函数的执行过程并立即开始寻找与异常匹配的<code>catch</code>子句。</p>
-<ul>
-<li>
-<p>当<code>throw</code>出现在一个<strong>try语句块</strong>(<code>try block</code>)内时，检查与该<code>try</code>块关联的<code>catch</code>子句。</p>
-</li>
-<li>
-<p>如果找到了匹配的<code>catch</code>，就使用该<code>catch</code>处理异常。</p>
-</li>
-<li>
-<p>如果这一步<strong>没找到匹配</strong>的<code>catch</code><strong>且该<code>try</code>语句嵌套在其他<code>try</code>块中</strong>，则<strong>继续检查与外层<code>try</code>匹配的<code>catch</code>子句</strong>。</p>
-</li>
-<li>
-<p>如果<strong>还是找不到匹配</strong>的<code>catch</code>，则<strong>退出当前函数</strong>，在调<strong>用当前函数的外层函数中</strong>继续寻找。</p>
-</li>
-<li>
-<p>如果对抛出异常的函数的调用语句位于一个<code>try</code>语句块内，则检查与该<code>try</code>块关联的<code>catch</code>子句。</p>
-</li>
-<li>
-<p>如果找到了匹配的<code>catch</code>，就使用该<code>catch</code>处理异常。</p>
-</li>
-<li>
-<p>否则，如果该<code>try</code>语句嵌套在其他<code>try</code>块中，则继续检查与外层<code>try</code>匹配的<code>catch</code>子句。</p>
-</li>
-<li>
-<p>如果仍然没找到匹配的<code>catch</code>，则退出当前这个主调函数，继续在调用刚刚退出的这个函数的其他函数中寻找，以此类推。</p>
-</li>
-</ul>
-<p>​上述过程被称为<strong>栈展开</strong>(<code>stack unwinding</code>)过程。栈展开过程沿着嵌套函数的调用链不断查找，直到找到了与异常匹配的<code>catch</code>子句为止；或者也可能一致没找到匹配的<code>catch</code>，则退出主函数后过程中止。</p>
-<p>​假设找到了一个匹配的<code>catch</code>子句，则程序进入该子句并执行其中代码。当执行完这个<code>catch</code>子句后，找到与<code>try</code>块关联的最后一个<code>catch</code>子句后的点，并从这里继续执行。</p>
-<p>​<strong>如果没有找到匹配的<code>catch</code>子句，程序将退出</strong>。因为异常通常被认为是妨碍程序正常执行的事件，所以一旦引发了某个异常，就不能对它置之不理。当找不到匹配的<code>catch</code>时，程序将调用标准库函数<code>terminate</code>，顾名思义，<code>terminate</code>负责中止程序的执行过程。</p>
-<h3 id="1-2-栈展开过程中对象被自动销毁">1.2 栈展开过程中对象被自动销毁</h3>
-<p>​在栈展开过程中，位于调用链上的语句块可能会提前退出。如果在<strong>栈展开过程中</strong>退出了某个块，编译器将负责确保在这个块中<strong>创建的对象都能被正确的销毁</strong>。如果某个局部对象的类型是<strong>类类型</strong>，则<strong>该对象的析构函数将被自动调用</strong>。与往常一样，编译器在销毁内置类型的对象时不需要做任何事情。</p>
-<p>​如果异常发生在构造函数中，则当前的对象可能只构造了一部分。有的成员已经开始初始化了，而另外一些成员在异常发生前也许还没有开始初始化。即使某个对象只构造了一部分，我们也要<strong>确保构造的成员能被正确的销毁</strong>（否则会发生内存泄露）。</p>
-<p>​类似的，异常也可能发生在<strong>数组</strong>或<strong>标准库容器的元素初始化过程</strong>中。与之前类似，如果在异常发生前已经构造了一部分元素，则我们应该确保这部分元素被正确的销毁。</p>
-<h3 id="1-3-析构函数与异常">1.3 析构函数与异常</h3>
-<p>​析构函数总是会被执行的，但是函数中负责释放资源的代码却可能会被跳过。如果一个块分配了资源，并且在<strong>负责释放这些资源的代码前面发生了异常</strong>，则释放资源的代码将<strong>不会被执行</strong>。另一方面，类对象分配的资源将由类的析构函数负责释放。因此，如果我们使用类来控制资源的分配，就能确保无论函数正常结束还是遭遇异常，资源都能被正确地释放。（<code>RAII</code>的思想，在构造函数中获取资源(i.e <code>new</code>)，在析构函数中释放资源(i.e <code>delete</code>)。）</p>
-<p>​所以出于栈展开可能使用析构函数的考虑，析构函数不应该抛出不能被它自身处理的异常。换句话说，<strong>如果析构函数需要执行某个可能抛出异常的操作，则该操作应该被放置在一个try语句块当中，并且在析构函数内部得到处理</strong>（如果不这样做的话，程序会马上被终止）。</p>
-<blockquote>
-<p>注：所有标准库类型都能保证它们的析构函数不会引发异常。</p>
-</blockquote>
-<h3 id="1-4-异常对象">1.4 异常对象</h3>
-<p><strong>异常对象</strong>（<code>exception object</code>）是一种特殊的对象，编译器使用<strong>异常抛出表达式</strong>来对<strong>异常对象</strong>进行<strong>拷贝初始化</strong>。因此<code>throw</code>语句中的表达式必须拥有<strong>完整类型</strong>。而且如果该表达式是<strong>类类型</strong>的话，则相应的类必须含有一个<strong>可访问的析构函数</strong>和一个<strong>可访问的拷贝或移动构造函数</strong>。如果该表达式是<strong>数组类型</strong>或<strong>函数类型</strong>，则表达式将被<strong>转换成</strong>与之对应的<strong>指针类型</strong>。</p>
-<p>​异常对象位于有编译器管理的空间中，编译器确保无论调用哪个<code>catch</code>子句都能访问该空间。异常处理完毕后，异常对象被销毁。</p>
-<p>​当一个异常被抛出是，沿着调用链的块将依次退出直至找到与异常匹配的处理代码。如果退出某个块，则同时释放块中局部对象使用的内存。因此，抛出一个指向<strong>局部对象的指针</strong>几乎肯定是一种<strong>错误</strong>行为。如果指针所指的对象位于某个块中，而该块在<code>catch</code>语句之前就已经退出了，则意味着在执行<code>catch</code>语句之前局部对象已经被销毁了。</p>
-<p>​当我们抛出一条表达式时，该表达式的静态编译时类型决定了异常对象的类型。很多情况下程序抛出的表达式类型来自于某个继承体系。如果一条<code>throw</code>表达式<strong>解引用一个基类指针</strong>，而该指针<strong>实际指向的是派生类对象</strong>，则<strong>抛出的对象将被切掉一部分，只有基类部分被抛出</strong>。</p>
-<blockquote>
-<p>注： 抛出指针要求在任何对应处理代码存在的地方，指针所指的对象都必须存在。</p>
-</blockquote>
-<h2 id="2-捕获异常">2. 捕获异常</h2>
-<p><code>catch</code>子句（<code>catch clause</code>）中的一场声明（<code>exception declaration</code>）看起来像是只包含一个形参的函数形参列表。像在形参列表中一样，如果<code>catch</code>无须访问抛出的表达式的话，则我们可以忽略捕获形参的名字。</p>
-<p>声明的类型决定了处理代码所能捕获的异常类型。这个类型必须是完全类型，它可以是左值引用，不能是右值引用。当进入一个<code>catch</code>语句后，入参通过异常对象初始化异常声明中的参数。和函数的参数类似，如果<code>catch</code>的参数类型是非引用类型，则该参数是异常对象的一个副本，如果参数是引用类型，则和其他引用参数一样，该参数是异常对象的一个别名。</p>
-<p>如果<code>catch</code>的参数是基类类型，则我们可以使用其派生类类型的异常对象对其进行初始化。此时，如果<code>catch</code>的参数是非引用类型，则异常对象将被切掉一部分，如果<code>catch</code>的参数是基类的引用，则该参数将以常规方式绑定到异常对象上。</p>
-<p>最后一点需要注意的是，异常声明的静态类型将决定<code>catch</code>语句所能执行的操作。如果<code>catch</code>的参数是基类类型，则<code>catch</code>无法使用派生类特有的任何成员。</p>
-<blockquote>
-<p>Tips: 通常情况下，如果<code>catch</code>接收的异常与某个继承体系有关，则最好将该<code>catch</code>的参数定义成引用类型。</p>
-</blockquote>
-<h3 id="2-1-查找匹配的处理代码">2.1 查找匹配的处理代码</h3>
-<p>​在搜寻<code>catch</code>语句的过程中，我们最终找到的<code>catch</code>未必是异常的最佳匹配。相反，挑选出来的应该是第一个与异常匹配的<code>catch</code>语句。因此，越是专门的<code>catch</code>越应该置于整个<code>catch</code>列表的前端。</p>
-<p>​因为<code>catch</code>语句是按照其出现的顺序逐一匹配的，所以当程序员使用具有继承关系的多个异常时必须对<code>catch</code>语句的顺序进行组织管理，是的派生类异常的处理代码出现在基类异常的处理代码异常之前。</p>
-<p>​与实参和形参的匹配规则相比，异常和<code>catch</code>异常声明的匹配规则受到更多限制。此时，绝大多数类型转换都不被允许，除了一些极细小的差别之外，要求异常的类型和<code>catch</code>声明的类型时精确匹配的：</p>
-<ul>
-<li>允许从非常量的类型转换，也就是说一条非常量对象的<code>throw</code>语句可以匹配一个接受常量引用的<code>catch</code>语句</li>
-<li>允许从派生类向基类的类型转换。</li>
-<li>数组被转换成指向数组（元素）类型的指针，函数被转化成指向该函数类型的指针。</li>
-</ul>
-<p>除此之外，包括标准算术类型转换和类类型转换在内，其他所有转换规则都不能在匹配catch的过程中使用。</p>
-<blockquote>
-<p>如果在多个catch语句的类型之间存在着继承关系，则我们应该把继承链最低端的类（<code>most derived type</code>）放在前面，而将继承链最顶端的类（<code>least derived type</code>）放在后面。</p>
-</blockquote>
-<h3 id="2-2-重新抛出">2.2 重新抛出</h3>
-<p>​一个单独的<code>catch</code>语句不能完整的处理某个异常。在执行了某些校正操作之后，当前的<code>catch</code>可能会决定由调用链更上一层的函数接着处理异常。一条catch语句通过重新抛出的操作将异常传递给另外一个<code>catch</code>语句。这里的重新抛出仍然是一条<code>throw</code>语句，只不过不包含任何表达式: <code>throw;</code></p>
-<p>​空的<code>throw</code>语句只能出现在<code>catch</code>语句或<code>catch</code>语句直接或间接调用的函数之内。如果在处理代码之外的区域遇到了空<code>throw</code>语句，编译器将调用<code>terminate</code>。</p>
-<p>​一个重新抛出语句并不指定新的表达式，而是将当前的异常对象沿着调用链向上传递。</p>
-<p>​很多时候，catch语句会改变其参数内容。如果在改变了参数的内容后catch语句重新抛出异常，则只有当catch异常声明是引用类型时我们对参数所作的改变才会被保留并继续传播。</p>
-<h3 id="2-3-捕获所有异常的处理代码">2.3 捕获所有异常的处理代码</h3>
-<p>​为了一次性捕获所有异常，我们使用省略号作为异常声明，这样的处理代码称为捕获所有异常的处理代码，形如<code>catch(...)</code>.</p>
-<p>​<code>catch(...)</code>通常与重新抛出语句一起使用，其中<code>catch</code>执行当前局部能完成的工作，随后重新抛出异常。</p>
-<blockquote>
-<p>Tips: 如果<code>catch(...)</code>与其他几个<code>catch</code>语句一起出现，则<code>catch(...)</code>必须在最后的位置。出现在捕获所有一场语句后面的<code>catch</code>语句将永远不会被匹配。</p>
-</blockquote>
-<h2 id="3-函数try语句块与构造函数">3. 函数try语句块与构造函数</h2>
-<p>​通常情况下，程序执行的任何时刻都可能发生异常，特别是一场可能发生在处理构造函数初始值的过程中。构造函数在进入其函数体之前首先执行初始值列表。因为在初始值列表抛出异常时构造函数体内的<code>try</code>语句块还未生效，所以构造函数体内的<code>catch</code>语句无法处理构造函数初始值列表抛出的异常。</p>
-<p>​要想处理构造函数初始值抛出的异常，我们必须将构造函数写成<strong>函数try语句块</strong>（<code>function try block</code>）的形式。函数<code>try</code>语句使得一组<code>catch</code>语句既能处理构造函数体（或析构函数体），也能处理构造函数的初始化过程（或析构函数的析构过程）。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">Blob&lt;T&gt;::<span class="built_in">Blob</span>(std::initializer_list&lt;T&gt; il)</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line"> : <span class="built_in">data</span>(std::make_shared&lt;std::vector&lt;T&gt;&gt;(il))</span><br><span class="line">&#123;<span class="comment">/** ... */</span>&#125;</span><br><span class="line"><span class="built_in">catch</span> (<span class="type">const</span> std::bad_alloc &amp;e)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">handle_out_of_memory</span>(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="4-noexcept-异常说明">4. noexcept 异常说明</h2>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">recoup</span><span class="params">()</span> <span class="keyword">noexcept</span></span>; <span class="comment">/** 不会抛出异常 */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">alloc</span><span class="params">()</span></span>;           <span class="comment">/** 可能会抛出异常 */</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>
-<p>对于一个函数来说，noexcept说明要么出现在该函数的所有声明语句和定义语句中，要么一次也不出现。该说明应该在函数应该在函数的尾置返回类型之前。</p>
-</li>
-<li>
-<p>我们也可以在函数指针的声明和定义中指定<code>noexcept</code>。</p>
-</li>
-<li>
-<p>在typedef或类型别名中则不能出现<code>noexcept</code>。</p>
-</li>
-<li>
-<p>在成员函数中，<code>noexcept</code>说明符需要跟在<code>const</code>及引用限定符之后，而在<code>final</code>、<code>override</code>或虚函数<code>=0</code>之前。</p>
-</li>
-</ul>
-<h3 id="4-1-违反异常说明">4.1 违反异常说明</h3>
-<p>​编译器并不会在编译时检查<code>noexcept</code>说明。实际上，如果一个函数说明了<code>noexcept</code>的同时又含有<code>throw</code>语句或者调用了可能抛出异常的其他函数，编译器将顺利通过，并不会因为这种违反异常说明的情况而报错。</p>
-<p>​因此可能会出现一种情况：尽管函数说明了它不会抛出异常，但实际上还是抛出了。一旦一个<code>noexcept</code>函数抛出异常，程序就会调用<code>terminate</code>以确保遵守不在运行时抛出异常的承诺。</p>
-<p>​上述过程是执行栈展开未作约定，因此<code>noexcept</code>可以用在两种情况下：一是我们确认函数不会抛出异常，二是我们根本不知道该如何处理异常。</p>
-<h3 id="4-2-noexcept运算符">4.2 noexcept运算符</h3>
-<p>​<code>noexcept</code>说明符接受一个可选实参，该实参必须能转换为<code>bool</code>类型：如果实参是<code>true</code>，则函数不会抛出异常；如果实参是<code>false</code>，则函数可能抛出异常：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">recoup</span><span class="params">()</span> <span class="title">noexcept</span><span class="params">(<span class="literal">true</span>)</span></span>;	<span class="comment">/** 不会抛出异常 */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">alloc</span><span class="params">()</span> <span class="title">noexcept</span><span class="params">(<span class="literal">false</span>)</span></span>;	<span class="comment">/** 可能抛出异常 */</span></span><br></pre></td></tr></table></figure>
-<p>​<code>noexcept</code>说明符的实参常常与<code>noexcept</code>运算符混合使用。<code>noexcept</code>运算符是一个一元运算符，它的返回值是一个bool类型的右值常量表达式，用于表示给定的表达式是否会抛出异常。和<code>sizeof</code>类似，<code>noexcept</code>也不会求其运算对象的值。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">noexcept</span>(<span class="built_in">recoup</span>())	<span class="comment">/** 如果recoup不跑出异常则结果为true；否则结果为false */</span></span><br><span class="line"><span class="built_in">noexcept</span>(e)	<span class="comment">/** 等价于上一句 */</span></span><br></pre></td></tr></table></figure>
-<p>我们可以使用noexcept运算符得到如下的异常说明：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">()</span> <span class="title">noexcept</span><span class="params">(<span class="keyword">noexcept</span>(g()))</span></span>;	<span class="comment">// f 和 g的异常说明一致</span></span><br></pre></td></tr></table></figure>
-<p>如果函数<code>g()</code>承诺了不会抛出异常，则f也不会抛出异常；如果<code>g()</code>没有异常说明符，或者g虽然有异常说明符但是允许抛出异常，则<code>f()</code>也可能抛出异常。</p>
-<blockquote>
-<p><code>noexcept</code>有两层含义：当跟在函数参数列表后面时它是异常说明符；而当作为<code>noexcept</code>异常说明的<code>bool</code>实参出现时，它是一个运算符。</p>
-</blockquote>
-<h3 id="4-3-异常说明与指针、虚函数和拷贝控制">4.3 异常说明与指针、虚函数和拷贝控制</h3>
-<p>​<strong>函数指针及该指针所指的函数必须具有一致的异常说明</strong>。也就是说我们为某个指针做了不抛出异常的声明，则该指针将只能指向不抛出异常的函数。相反，如果我们显式或隐式地说明了指针可能抛出异常，则该指针可以指向任何函数，即使是承诺了不抛出异常的函数也可以。</p>
-<p>​如果<strong>虚函数</strong>承诺了它<strong>不会抛出异常</strong>，则后续派生出来的<strong>虚函数</strong>也必须做出<strong>同样的承诺</strong>；与之相反如果<strong>基类的虚函数允许抛出异常</strong>，则派<strong>生类的对应函数既可以允许抛出异常，也可以不允许抛出异常。</strong></p>
-<p>​当编译器<strong>合成拷贝控制成员</strong>时，同时也<strong>生成一个异常说明</strong>。如果对<strong>所有成员</strong>和<strong>基类的所有操作</strong>都承诺了不会抛出异常，则合成的成员是<code>noexcept</code>的。如果合成成员调用的<strong>任意一个函数可能抛出异常</strong>，则合成的成员是<code>noexcept(false)</code>。而且如果我们定义了一个析构函数但是没有为它提供异常说明，则编译器将合成一个。合成的异常说明将于假设有编译器为类合成析构函数时所得的异常说明一致。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1494,7 +1530,7 @@ Qt支持这些信号槽的连接方式：</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">81</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1505,7 +1541,7 @@ Qt支持这些信号槽的连接方式：</p>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

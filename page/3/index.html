@@ -180,7 +180,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-12-18-C++%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E5%BB%BA%E8%AE%AE/">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2022-06-17-C++%E5%AE%B9%E5%99%A8%E7%9A%84%E7%89%B9%E6%80%A7%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -194,7 +194,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/07/21/2021-12-18-C++%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E5%BB%BA%E8%AE%AE/" class="post-title-link" itemprop="url">C++ 编程风格建议</a>
+            <a href="/2023/07/21/2022-06-17-C++%E5%AE%B9%E5%99%A8%E7%9A%84%E7%89%B9%E6%80%A7%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/" class="post-title-link" itemprop="url">C++容器的特性与适用场景</a>
         </h2>
 
         <div class="post-meta">
@@ -211,7 +211,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 16:07:50" itemprop="dateModified" datetime="2025-01-22T16:07:50+08:00">2025-01-22</time>
+                <time title="Modified: 2025-01-22 16:06:57" itemprop="dateModified" datetime="2025-01-22T16:06:57+08:00">2025-01-22</time>
               </span>
 
           
@@ -225,11 +225,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>C++ 编程风格建议</p>
-<p>本文总结了C++编程中的安全与效率优化建议。安全方面，强调使用引用而非指针、避免宏定义、缩短变量存活时间、禁止浮点数等量比较、类成员变量显式初始化、虚函数禁用缺省参数等。效率方面，建议优化循环嵌套、避免硬编码、使用强类型参数、避免布尔变量否定形式、删除无用代码等。此外，提倡使用<code>std::string</code>代替<code>char*</code>、避免<code>void*</code>、减少函数长度等，以提高代码可读性和维护性。这些建议旨在帮助开发者编写更安全、高效的C++代码。</p>
+          <p>本文详细介绍了C++中各类容器的特性与适用场景，涵盖序列式容器（如<code>std::vector</code>、<code>std::list</code>）、关联式容器（如<code>std::set</code>、<code>std::map</code>）和无序容器（如<code>std::unordered_set</code>、<code>std::unordered_map</code>）。文章分析了每种容器的内部实现、性能特点、适用场景及常见操作，如<code>std::vector</code>的动态数组特性、<code>std::list</code>的双向链表结构、<code>std::map</code>的键值对管理等。此外，还探讨了迭代器的种类及其失效场景，帮助开发者根据具体需求选择合适的容器，优化代码性能。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/07/21/2021-12-18-C++%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E5%BB%BA%E8%AE%AE/#more" rel="contents">
+              <a class="btn" href="/2023/07/21/2022-06-17-C++%E5%AE%B9%E5%99%A8%E7%9A%84%E7%89%B9%E6%80%A7%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -325,6 +324,79 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-12-18-C++%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E5%BB%BA%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2021-12-18-C++%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E5%BB%BA%E8%AE%AE/" class="post-title-link" itemprop="url">C++ 编程风格建议</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:07:50" itemprop="dateModified" datetime="2025-01-22T16:07:50+08:00">2025-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>C++ 编程风格建议</p>
+<p>本文总结了C++编程中的安全与效率优化建议。安全方面，强调使用引用而非指针、避免宏定义、缩短变量存活时间、禁止浮点数等量比较、类成员变量显式初始化、虚函数禁用缺省参数等。效率方面，建议优化循环嵌套、避免硬编码、使用强类型参数、避免布尔变量否定形式、删除无用代码等。此外，提倡使用<code>std::string</code>代替<code>char*</code>、避免<code>void*</code>、减少函数长度等，以提高代码可读性和维护性。这些建议旨在帮助开发者编写更安全、高效的C++代码。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/21/2021-12-18-C++%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E5%BB%BA%E8%AE%AE/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-12-02-%E7%BD%91%E8%AF%BE%E3%80%8A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6%E6%9E%B6%E6%9E%84%E3%80%8B%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -397,78 +469,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-10-23-C++%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/07/21/2021-10-23-C++%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">面对对象简介与 C++ 类的基本介绍</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 16:16:03" itemprop="dateModified" datetime="2025-01-22T16:16:03+08:00">2025-01-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文深入探讨了C++中构造函数与析构函数的作用，以及面向对象编程的三大特性：封装、继承和多态。通过实例代码，详细解析了如何通过封装隐藏实现细节、通过继承复用代码、以及通过多态实现接口与实现的分离。文章还介绍了<code>public</code>、<code>private</code>、<code>protected</code>等关键字的用法，以及虚函数、友元函数、静态成员等高级特性。最后，探讨了多重继承中的菱形继承问题及其解决方案，帮助读者全面理解C++面向对象编程的核心概念与实践技巧。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/07/21/2021-10-23-C++%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-11-20-MySQL%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -518,6 +518,78 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/07/21/2021-11-20-MySQL%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-10-23-C++%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2021-10-23-C++%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">面对对象简介与 C++ 类的基本介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:16:03" itemprop="dateModified" datetime="2025-01-22T16:16:03+08:00">2025-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文深入探讨了C++中构造函数与析构函数的作用，以及面向对象编程的三大特性：封装、继承和多态。通过实例代码，详细解析了如何通过封装隐藏实现细节、通过继承复用代码、以及通过多态实现接口与实现的分离。文章还介绍了<code>public</code>、<code>private</code>、<code>protected</code>等关键字的用法，以及虚函数、友元函数、静态成员等高级特性。最后，探讨了多重继承中的菱形继承问题及其解决方案，帮助读者全面理解C++面向对象编程的核心概念与实践技巧。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/21/2021-10-23-C++%E9%9D%A2%E5%AF%B9%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -757,78 +829,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">读书笔记-《代码大全》</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 16:20:34" itemprop="dateModified" datetime="2025-01-22T16:20:34+08:00">2025-01-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文总结了《代码大全》中关于变量命名、初始化和使用的核心建议。强调了变量命名应清晰、准确，避免使用模糊的缩写或隐含含义；变量初始化应靠近首次使用位置，缩短变量存活时间以提高代码可读性和维护性；同时，避免使用硬编码和具有相似含义的变量名。文章还提供了布尔变量命名的具体指导，建议使用肯定的语义和一致的缩写规则，确保代码易于理解和维护。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/07/21/2021-05-14-%E3%80%8A%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-05-17-%E5%8D%8E%E4%B8%BAC++%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%E6%91%98%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -900,7 +900,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -966,7 +966,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">81</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -977,7 +977,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
