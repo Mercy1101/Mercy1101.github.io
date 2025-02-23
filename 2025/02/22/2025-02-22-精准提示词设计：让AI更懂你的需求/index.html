@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="这篇博客分享如何设计高效提示词，让AI生成满意回复。通过设定目标、指定角色、提供场景及采用多轮迭代等方式，带领读者掌握更精准的提问技巧。我也结合具体示例讲解操作中的关键要点，列举提示词的应用价值。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="精准提示词设计：让AI更懂你的需求">
+<meta property="og:url" content="https://mercy1101.github.io/2025/02/22/2025-02-22-%E7%B2%BE%E5%87%86%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%AE%BE%E8%AE%A1%EF%BC%9A%E8%AE%A9AI%E6%9B%B4%E6%87%82%E4%BD%A0%E7%9A%84%E9%9C%80%E6%B1%82/index.html">
+<meta property="og:site_name" content="李建聪的博客">
+<meta property="og:description" content="这篇博客分享如何设计高效提示词，让AI生成满意回复。通过设定目标、指定角色、提供场景及采用多轮迭代等方式，带领读者掌握更精准的提问技巧。我也结合具体示例讲解操作中的关键要点，列举提示词的应用价值。">
+<meta property="og:locale">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-02-22-%E6%8F%90%E7%A4%BA%E8%AF%8D/%E7%B2%BE%E5%87%86%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%AE%BE%E8%AE%A1-%E6%9D%8E%E5%BB%BA%E8%81%AA.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-02-22-%E6%8F%90%E7%A4%BA%E8%AF%8D/Snipaste_2025-02-23_20-33-23.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-02-22-%E6%8F%90%E7%A4%BA%E8%AF%8D/Snipaste_2025-02-23_21-36-30.png">
+<meta property="article:published_time" content="2025-02-22T13:52:00.000Z">
+<meta property="article:modified_time" content="2025-02-23T13:59:17.742Z">
+<meta property="article:author" content="李建聪">
+<meta property="article:tag" content="ai">
+<meta property="article:tag" content="提示词">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mercy1101.github.io/resource/2025-02-22-%E6%8F%90%E7%A4%BA%E8%AF%8D/%E7%B2%BE%E5%87%86%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%AE%BE%E8%AE%A1-%E6%9D%8E%E5%BB%BA%E8%81%AA.png">
+
+<link rel="canonical" href="https://mercy1101.github.io/2025/02/22/2025-02-22-%E7%B2%BE%E5%87%86%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%AE%BE%E8%AE%A1%EF%BC%9A%E8%AE%A9AI%E6%9B%B4%E6%87%82%E4%BD%A0%E7%9A%84%E9%9C%80%E6%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>精准提示词设计：让AI更懂你的需求 | 李建聪的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">李建聪的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2025/02/22/2025-02-22-%E7%B2%BE%E5%87%86%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%AE%BE%E8%AE%A1%EF%BC%9A%E8%AE%A9AI%E6%9B%B4%E6%87%82%E4%BD%A0%E7%9A%84%E9%9C%80%E6%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          精准提示词设计：让AI更懂你的需求
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-02-22 21:52:00" itemprop="dateCreated datePublished" datetime="2025-02-22T21:52:00+08:00">2025-02-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-02-23 21:59:17" itemprop="dateModified" datetime="2025-02-23T21:59:17+08:00">2025-02-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/resource/2025-02-22-%E6%8F%90%E7%A4%BA%E8%AF%8D/%E7%B2%BE%E5%87%86%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%AE%BE%E8%AE%A1-%E6%9D%8E%E5%BB%BA%E8%81%AA.png" alt="alt text"></p>
+<p>这篇博客分享如何设计高效提示词，让AI生成满意回复。通过设定目标、指定角色、提供场景及采用多轮迭代等方式，带领读者掌握更精准的提问技巧。我也结合具体示例讲解操作中的关键要点，列举提示词的应用价值。</p>
+<span id="more"></span>
+<h2 id="什么是提示词？">什么是提示词？</h2>
+<p>提示词是一种设计和优化与AI模型的交互方式。简单来说，就是通过精心构建输入文本（提示词），来引导AI模型生成我们期望的高质量输出。这项技术的重要性在于：它不用随着大模型的发展而改变，而是适用于所有大语言模型。</p>
+<h2 id="为什么需要掌握提示词工程？">为什么需要掌握提示词工程？</h2>
+<p>想必很多人都有这样的经历：看到他人能让AI模型（比如DeepSeek）输出精彩绝伦的内容，而自己使用时却总是得到驴唇不对马嘴的回答。这种差异的根本原因在于提示词的质量 —— AI能发挥多大作用，很大程度上取决于你如何提问。</p>
+<h2 id="使用提示词的误区">使用提示词的误区</h2>
+<p>在使用提示词（Prompts）的过程中，常常会遇到一些容易被忽视或误解的地方。以下总结了若干常见的误区以及相应的思考方向，帮助更好地提升提示词的质量与效果。</p>
+<hr>
+<h3 id="1-未明确目标或缺少上下文">1. 未明确目标或缺少上下文</h3>
+<p><strong>误区</strong>：只给出一个含糊不清的提示词，却没有明确预期目标或不提供足够的背景信息，导致模型返回的结果偏离需求。<br>
+<strong>思考</strong>：在设计提示词时，应当先明确想要得到的结果和目标场景，并尽可能提供与之相关的上下文、关键因素或限制条件。示例中最好给出一些具体例子或关键点，让模型能够理解你的需求。</p>
+<hr>
+<h3 id="2-提示词过长或过度复杂">2. 提示词过长或过度复杂</h3>
+<p><strong>误区</strong>：把所有问题和背景信息一次性全部塞进提示词，导致提示词臃肿难懂，甚至让模型也“摸不着头脑”。<br>
+<strong>思考</strong>：在复杂任务面前，建议先拆解目标，分步骤编写提示词。而不是将所有信息堆叠到一条提示中，可以通过多轮对话或关键点分块的形式，让模型在每一步都能更精准地理解当前目标。</p>
+<hr>
+<h3 id="3-语义不清晰或指令模糊">3. 语义不清晰或指令模糊</h3>
+<p><strong>误区</strong>：提示词中包含指令冲突，或语言含混不清，让模型难以分辨重点，导致生成的内容混乱不符合要求。<br>
+<strong>思考</strong>：应通过精炼的描述和简洁的结构，让模型知道要解决的问题是什么、需要关注哪些重点和变式。比如多使用动词或明确的角色设定（如“扮演某种角色”“从专家角度回答”），同时尽量避免互相矛盾的指令。</p>
+<hr>
+<h3 id="4-未根据模型特性调整提示方式">4. 未根据模型特性调整提示方式</h3>
+<p><strong>误区</strong>：忽视了模型本身的特点和局限，直接套用固定的提示模板，或者一味使用单一的提示结构。<br>
+<strong>思考</strong>：不同的模型、版本或者应用场景都有特定的适配方式。要在实践中不断测试并微调，例如减少或增加提示词长度、使用更具象的实例、改变措辞方式等。尤其要注意模型对于上下文长度、指令格式等特性的兼容度。</p>
+<hr>
+<h3 id="5-期望模型推理超出能力范围">5. 期望模型推理超出能力范围</h3>
+<p><strong>误区</strong>：对模型的推理能力期望过高，给出的提示词过度依赖模型去处理其不擅长或不可能完成的任务，或进行专业知识推理但却提供的信息不足。<br>
+<strong>思考</strong>：利用提示词激发模型潜能时，也要清楚模型并非万能。可借助外部知识库或预先补充明确而详尽的背景信息，确保模型的回答更为正确和准确。对于模型难以处理的专业任务，需要结合正确的辅助工具或由专家审阅。</p>
+<hr>
+<h3 id="6-忽视对回复的评估与迭代">6. 忽视对回复的评估与迭代</h3>
+<p><strong>误区</strong>：使用一次提示词后就不再评估是否达成目标，也不针对产生的问题进行调优。<br>
+<strong>思考</strong>：将模型的输出与预期结果进行对比，找到差距并通过修改提示词（如增加说明、拆分步骤、更换关键字等）进行迭代。可以通过对输出结果的格式、风格、细节要求等方面进行细化测试，不断完善提示词设计。</p>
+<hr>
+<h3 id="7-删减或添加提示词时破坏原有逻辑">7. 删减或添加提示词时破坏原有逻辑</h3>
+<p><strong>误区</strong>：为了精简提示词，随意删除关键信息；或对原有提示词进行大幅度改动，导致逻辑关系被破坏，难以完成所需任务。<br>
+<strong>思考</strong>：若需要对提示词进行精简或深入时，应在保留提醒模型的核心逻辑前提下进行删改，并观察是否影响整体的任务完成度。借助分步骤迭代或对比测试，确认新的提示词方案依旧能完成需求。</p>
+<h2 id="高效提示词的四大要素">高效提示词的四大要素</h2>
+<h3 id="1-明确需求">1. 明确需求</h3>
+<p>与AI交流就像点外卖，越具体越好。不能简单说&quot;来份早餐&quot;，而应该详细说明：“要一份1.5公里外某家店的胡辣汤套餐，配四个水煎包和餐具，没有特殊忌口”。同样的逻辑适用于与AI对话 —— 只有详细说明你的需求背景和具体要求，才能获得满意的答案。</p>
+<hr>
+<h3 id="2-设定角色">2. 设定角色</h3>
+<p>虽然现代AI系统已经足够智能，能从对话中推断所需角色，但在处理复杂任务时，明确设定AI的角色仍然很有帮助。例如：</p>
+<ul>
+<li>“你现在是一位通信问题处理专家”</li>
+<li>“你是一个专业的学术研究助手”</li>
+</ul>
+<hr>
+<h3 id="3-提供完整背景">3. 提供完整背景</h3>
+<p>就像餐厅点菜需要说明烹饪方式和口味偏好，与AI交流也需要提供充分的背景信息。例如要求AI写一篇文章时，应该说明：</p>
+<ul>
+<li>回答的具体用途</li>
+<li>回答的风格和语气（专业还是口语化的）</li>
+<li>内容的详细程度</li>
+</ul>
+<hr>
+<h3 id="4-指定输出格式">4. 指定输出格式</h3>
+<ul>
+<li>明确内容的组织结构</li>
+<li>规定具体的展示形式</li>
+<li>说明排版和格式要求</li>
+</ul>
+<hr>
+<h3 id="5-注重答案反馈与多轮对话">5. 注重答案反馈与多轮对话</h3>
+<ul>
+<li>在多轮对话中，模型会根据上下文和用户的问题不断调整回答。因此，在每次对话后，可以对模型的回答进行评估，并根据需要调整提问。</li>
+<li>不断优化自己的提示词以获得更好的效果。</li>
+</ul>
+<h2 id="提示词示例">提示词示例</h2>
+<h3 id="Mermaid-画图">Mermaid 画图</h3>
+<p>我在调试一个有多个通话重叠的日志时，通常每个通话的开始和结束，都是列出表格，但是这样不直观。所以我使用了Mermaid 画图，但是Mermaid 画图的语法，我总是记不住。</p>
+<p>所以，我使用AI，帮我画一个Mermaid 的图，然后我再根据AI 画的图，再进行修改。</p>
+<p>在不使用 提示词的情况下, 测试过 <code>OpenAI o1</code>、<code>DeepSeek R1</code> 和 <code>Claude 3.5 Sonnet</code> 有概率答非所问，所以我添加了以下提示词后，三种模型均可以正确输出。</p>
+<p>提示词:</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">- 角色：Mermaid图表代码生成器</span><br><span class="line">- 功能 根据用户提供的流程或架构描述，自动生成符合Mermaid语法的图表代码.</span><br><span class="line">- 技能 熟悉Mermaid的图表类型和语法，能高效将流程转化为代码。理解流程分析、架构设计及结构化展示等领域知识。</span><br><span class="line">- 约束：</span><br><span class="line">* 代码必须符合Mermaid语法规范.</span><br><span class="line">* 流程和结构表达需准确清晰。</span><br><span class="line">* 输出的代码格式应简洁且易于理解。</span><br><span class="line">- 工作流程：</span><br><span class="line">* 如果用户没有明确指出使用哪种类型图表，则询问用户希望绘制哪种类型的图表</span><br><span class="line">* 收集详细的流程或架构描述，根据描述分析并设计图表结构.</span><br><span class="line">* 生成并输出符合Mermaid语法的代码。</span><br><span class="line">* 校验代码，确保没有语法错误。</span><br><span class="line">* 将最终代码提供给用户。</span><br><span class="line">- 输出格式：</span><br><span class="line">Mermaid图表代码。</span><br><span class="line">示例：</span><br><span class="line">```mermaid</span><br><span class="line">graph TD;</span><br><span class="line">A［开始］--&gt;Bf做事情）：</span><br><span class="line">B --&gt; C|/&amp;*):</span><br></pre></td></tr></table></figure>
+<p>问题与回答：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">使用以下数据，画出甘特图</span><br><span class="line"></span><br><span class="line">| 时间戳                  | 日志内容                      |</span><br><span class="line">| ----------------------- | ----------------------------- |</span><br><span class="line">| 2019-05-16 06:31:07.948 | 组呼呼出: 通话组1             |</span><br><span class="line">| 2019-05-16 06:31:10.241 | 通话建立: 通话组1             |</span><br><span class="line">| 2019-05-16 06:31:11.089 | 通话结束: 通话组1             |</span><br><span class="line">| 2019-05-16 06:31:12.940 | 组呼呼出: 通话组2             |</span><br><span class="line">| 2019-05-16 06:31:19.401 | 组呼建立: 通话组2             |</span><br><span class="line">| 2019-05-16 06:31:23.927 | 请呼呼入: 终端1               |</span><br><span class="line">| 2019-05-16 06:31:27.418 | 接听请呼 终端1                |</span><br><span class="line">| 2019-05-16 06:31:27.428 | 请呼呼出成功: 终端1默认通话组 |</span><br><span class="line">| 2019-05-16 06:31:35.909 | 组呼结束: 通话组2             |</span><br><span class="line">| 2019-05-16 06:31:43.601 | 请呼结束: 终端1默认通话组     |</span><br><span class="line">| 2019-05-16 06:31:45.200 | 组呼呼出: 通话组1             |</span><br><span class="line">| 2019-05-16 06:31:45.253 | 通话建立: 通话组1             |</span><br><span class="line">| 2019-05-16 06:31:46.511 | 组呼结束: 通话组1             |</span><br><span class="line">| 2019-05-16 06:31:47.630 | 组呼呼出: 通话组2             |</span><br><span class="line">| 2019-05-16 06:31:47.683 | 通话建立: 通话组2             |</span><br><span class="line">| 2019-05-16 06:32:44.953 | 通话组2 组呼结束              |</span><br><span class="line">| 2019-05-16 06:32:52.625 | 请呼呼入: 终端1               |</span><br><span class="line">| 2019-05-16 06:32:52.735 | 组呼呼出: 通话组1             |</span><br><span class="line">| 2019-05-16 06:32:53.617 | 请呼接听: 终端1               |</span><br><span class="line">| 2019-05-16 06:32:53.639 | 请呼呼出: 终端1默认通话组     |</span><br><span class="line">| 2019-05-16 06:32:57.792 | 通话组1 组呼结束              |</span><br><span class="line">| 2019-05-16 06:33:00.604 | 终端1默认通话组 请呼结束      |</span><br></pre></td></tr></table></figure>
+<ul>
+<li>DeepSeek R1 使用提示词前(typora 渲染返回的文本)</li>
+</ul>
+<p><img src="/resource/2025-02-22-%E6%8F%90%E7%A4%BA%E8%AF%8D/Snipaste_2025-02-23_20-33-23.png" alt="alt text"></p>
+<ul>
+<li>DeepSeek R1 使用提示词后(typora 渲染返回的文本)</li>
+</ul>
+<p><img src="/resource/2025-02-22-%E6%8F%90%E7%A4%BA%E8%AF%8D/Snipaste_2025-02-23_21-36-30.png" alt="alt text"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ai/" rel="tag"># ai</a>
+              <a href="/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D/" rel="tag"># 提示词</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/02/20/2025-02-20-%E5%B0%8F%E8%AF%B4%E3%80%8A%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B8%8E%E4%BA%BA%E7%B1%BB%E5%86%85%E5%BF%83%E5%86%B2%E7%AA%81%E3%80%8B-Open%20o1%20copy/" rel="prev" title="小说《自动化与人类内心冲突》">
+      <i class="fa fa-chevron-left"></i> 小说《自动化与人类内心冲突》
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8F%90%E7%A4%BA%E8%AF%8D%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是提示词？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E6%8E%8C%E6%8F%A1%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么需要掌握提示词工程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%9A%84%E8%AF%AF%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">使用提示词的误区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9C%AA%E6%98%8E%E7%A1%AE%E7%9B%AE%E6%A0%87%E6%88%96%E7%BC%BA%E5%B0%91%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-number">3.1.</span> <span class="nav-text">1. 未明确目标或缺少上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%BF%87%E9%95%BF%E6%88%96%E8%BF%87%E5%BA%A6%E5%A4%8D%E6%9D%82"><span class="nav-number">3.2.</span> <span class="nav-text">2. 提示词过长或过度复杂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%AF%AD%E4%B9%89%E4%B8%8D%E6%B8%85%E6%99%B0%E6%88%96%E6%8C%87%E4%BB%A4%E6%A8%A1%E7%B3%8A"><span class="nav-number">3.3.</span> <span class="nav-text">3. 语义不清晰或指令模糊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%9C%AA%E6%A0%B9%E6%8D%AE%E6%A8%A1%E5%9E%8B%E7%89%B9%E6%80%A7%E8%B0%83%E6%95%B4%E6%8F%90%E7%A4%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">3.4.</span> <span class="nav-text">4. 未根据模型特性调整提示方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%9C%9F%E6%9C%9B%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E8%B6%85%E5%87%BA%E8%83%BD%E5%8A%9B%E8%8C%83%E5%9B%B4"><span class="nav-number">3.5.</span> <span class="nav-text">5. 期望模型推理超出能力范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%BF%BD%E8%A7%86%E5%AF%B9%E5%9B%9E%E5%A4%8D%E7%9A%84%E8%AF%84%E4%BC%B0%E4%B8%8E%E8%BF%AD%E4%BB%A3"><span class="nav-number">3.6.</span> <span class="nav-text">6. 忽视对回复的评估与迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%88%A0%E5%87%8F%E6%88%96%E6%B7%BB%E5%8A%A0%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%97%B6%E7%A0%B4%E5%9D%8F%E5%8E%9F%E6%9C%89%E9%80%BB%E8%BE%91"><span class="nav-number">3.7.</span> <span class="nav-text">7. 删减或添加提示词时破坏原有逻辑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%95%88%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%9A%84%E5%9B%9B%E5%A4%A7%E8%A6%81%E7%B4%A0"><span class="nav-number">4.</span> <span class="nav-text">高效提示词的四大要素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%98%8E%E7%A1%AE%E9%9C%80%E6%B1%82"><span class="nav-number">4.1.</span> <span class="nav-text">1. 明确需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AE%BE%E5%AE%9A%E8%A7%92%E8%89%B2"><span class="nav-number">4.2.</span> <span class="nav-text">2. 设定角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%8F%90%E4%BE%9B%E5%AE%8C%E6%95%B4%E8%83%8C%E6%99%AF"><span class="nav-number">4.3.</span> <span class="nav-text">3. 提供完整背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%8C%87%E5%AE%9A%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.4.</span> <span class="nav-text">4. 指定输出格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%B3%A8%E9%87%8D%E7%AD%94%E6%A1%88%E5%8F%8D%E9%A6%88%E4%B8%8E%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D"><span class="nav-number">4.5.</span> <span class="nav-text">5. 注重答案反馈与多轮对话</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">提示词示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mermaid-%E7%94%BB%E5%9B%BE"><span class="nav-number">5.1.</span> <span class="nav-text">Mermaid 画图</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

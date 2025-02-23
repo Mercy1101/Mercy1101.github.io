@@ -180,6 +180,136 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/08/22/2020-08-21-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(3)%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/22/2020-08-21-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(3)%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4/" class="post-title-link" itemprop="url">《Go语言学习笔记》读书笔记(3)工作空间</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-22 19:34:47" itemprop="dateCreated datePublished" datetime="2020-08-22T19:34:47+08:00">2020-08-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">Go 读书笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="工作空间">工作空间</h2>
+<p>依照规范，工作空间由<code>src</code>、<code>bin</code>、<code>pkg</code>三个目录组成。通常需要将空间路径添加到<code>GOPATH</code>环境变量列表中, 以便相关工具能正常工作。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">workspace/</span><br><span class="line">  |</span><br><span class="line">  +-- src/</span><br><span class="line">  |    |</span><br><span class="line">  |    +-- main.go</span><br><span class="line">  |    |</span><br><span class="line">  |    +-- service/</span><br><span class="line">  |          |</span><br><span class="line">  |          +-- user.go</span><br><span class="line">  |</span><br><span class="line">  +-- bin/</span><br><span class="line">  |    |</span><br><span class="line">  |    +-- server</span><br><span class="line">  |</span><br><span class="line">  +-- pkg/</span><br><span class="line">       |</span><br><span class="line">       +-- linux_amd64/</span><br><span class="line">            |</span><br><span class="line">            +-- service.a</span><br></pre></td></tr></table></figure>
+<p>在工作空间里，包括子包在内的所有源码文件都保存在<code>src</code>目录下。至于<code>bin</code>、<code>pkg</code>两个目录， 其主要影响 <code>go install/get</code>命令，他们会将编译结果(可执行文件或静态库)安装到这两个目录下，以实现增量编译。</p>
+<h3 id="环境变量">环境变量</h3>
+<p>编译器等相关工具按<code>GOPATH</code>设置的路径搜索目标。也就是说在导入目标库时，排在列表前面的路径比当前工作空间优先级更高。另外，<code>go get</code>默认将下载的第三方包保存到列表中第一个工作空间内。</p>
+<p>环境变量<code>GOPATH</code>用于指示工具链和标准库的存放位置。在生成工具链时，相关路径就已经嵌入到可执行文件内，故无需额外设置。<br>
+除通过设置<code>GOROOT</code>环境变量覆盖内部路径外，还可移动目录(改名、符号链接等), 或重新编译工具链来解决。<br>
+至于<code>GOBIN</code>, 则是强制替代工作空间的<code>bin</code>目录，作为<code>go install</code>目标保存路径。这可避免将所有工作空间的<code>bin</code>路径添加到<code>PATH</code>环境变量当中。</p>
+<h3 id="导入包">导入包</h3>
+<p>使用标准库或第三方包前，须用<code>import</code>导入，参数是工作空间中以<code>src</code>为起始的绝对路径。编译器从标准库开始搜索，然后依次搜索<code>GOPATH</code>列表中的各个工作空间。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&quot;net/http&quot;</span> <span class="comment">// 实际路径: /usr/local/go/src/net/http</span></span><br></pre></td></tr></table></figure>
+<p>除使用默认包名外，还可使用别名，以解决同名冲突问题。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> osx <span class="string">&quot;github.com/apple/osx/lib&quot;</span></span><br><span class="line"><span class="keyword">import</span> nix <span class="string">&quot;github.com/linux/lib&quot;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意: <code>import</code>导入参数是路径，而非包名。尽管习惯将包和目录名保持一致，但这不是强制规定。在代码中引用包成员时，使用包名而非目录名。</p>
+</blockquote>
+<p>有四种不同的导入方式。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>    <span class="string">&quot;github.com/Mercy1101/test&quot;</span> <span class="comment">// 默认方式: test.A</span></span><br><span class="line"><span class="keyword">import</span> X  <span class="string">&quot;github.com/Mercy1101/test&quot;</span> <span class="comment">// 别名方式: X.A</span></span><br><span class="line"><span class="keyword">import</span> .  <span class="string">&quot;github.com/Mercy1101/test&quot;</span> <span class="comment">// 简便方式: A</span></span><br><span class="line"><span class="keyword">import</span> _  <span class="string">&quot;github.com/Mercy1101/test&quot;</span> <span class="comment">// 初始化方式: 无法引用，仅用来初始化目标包。</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不能直接或间接导入自己，不支持任何形式的循环导入。</p>
+</blockquote>
+<p>未使用的导入(不包括初始化方式)会被编译器视为错误。</p>
+<h3 id="相对路径">相对路径</h3>
+<p>除工作空间和绝对路径外，部分工具还支持相对路径。可在非工作空间目录下，直接运行、编译一些测试代码。<br>
+但在设置了<code>GOPATH</code>的工作空间后相对路径会导致编译失败。<code>go run</code>不受影响。</p>
+<h3 id="初始化">初始化</h3>
+<p>包内每个源码文件都可定义一到多个初始化函数，但编译器不保证执行次序。<br>
+实际上，所有这些初始化函数(包括标准库和导入的第三方包)都由编译器自动生成的一个包装函数进行调用，因此可保证在单一线程上执行，且仅执行一次。</p>
+<p>编译器首先确保完成所有全局变量初始化，然后才开始执行初始化函数。直到这些全部结束后，运行时才正式进入<code>main.main</code>入口函数。<br>
+可在初始化函数中创建<code>goroutine</code>，或等到它结束执行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">  done := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">defer</span> <span class="built_in">close</span>(done)</span><br><span class="line">    fmt.Println(<span class="string">&quot;init:&quot;</span>, time.Now)</span><br><span class="line">    time.Sleep(time.Second * <span class="number">2</span>)</span><br><span class="line">  &#125; ()</span><br><span class="line"></span><br><span class="line">  &lt;-done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span> <span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">&quot;main: &quot;</span>, time.Now())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果在多个初始化函数中引用全局变量，那么最好在变量定义处直接赋值。因无法保证执行次序，所以任何初始化函数中的赋值都有可能&quot;延迟无效&quot;。</p>
+<h3 id="内部包">内部包</h3>
+<p>内部包机制相当于增加了新的访问权限控制：所有保存在<code>internal</code>目录下的包(包括自身)仅能被其父目录下的包(包含所有子目录) 访问。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">workspace/</span><br><span class="line">  |</span><br><span class="line">  +-- src/</span><br><span class="line">  |    |</span><br><span class="line">  |    +-- main.go</span><br><span class="line">  |    |</span><br><span class="line">  |    +-- lib/</span><br><span class="line">  |         |</span><br><span class="line">  |         +-- internal/</span><br><span class="line">  |         |       |</span><br><span class="line">  |         |       +-- a/</span><br><span class="line">  |         |       |</span><br><span class="line">  |         |       +-- b/</span><br><span class="line">  |         +-- x/</span><br><span class="line">  |             |</span><br><span class="line">  |             +-- y/</span><br><span class="line">  |</span><br></pre></td></tr></table></figure>
+<p>在<code>lib</code>目录外(比如<code>main.go</code>)导入内部包会引发编译错误。</p>
+<blockquote>
+<p>导入内部包必须使用完整路径， 例如： import “lib/internal/a”</p>
+</blockquote>
+<h3 id="依赖管理">依赖管理</h3>
+<p>如何使用<code>vendor</code>，专门存放第三方包，实现将源码和依赖完整打包分发。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">workspace/</span><br><span class="line">  |</span><br><span class="line">  +-- src/</span><br><span class="line">  |    |</span><br><span class="line">  |    +-- main.go</span><br><span class="line">  |    |</span><br><span class="line">  |    +-- server/</span><br><span class="line">  |         |</span><br><span class="line">  |         +-- vendor/</span><br><span class="line">  |         |       |</span><br><span class="line">  |         |       +-- github.com/</span><br><span class="line">  |         |              |</span><br><span class="line">  |         |              +-- mercy1101/</span><br><span class="line">                                  |</span><br><span class="line">                                  +-- test/</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;github.com/Mercy1101/test&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  test.Hello()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在<code>main.go</code>中导入<code>github.com/mercy1101/test</code>时，优先使用<code>vendor/github.com/mercy1101/test</code></p>
+</blockquote>
+<p>导入<code>vendor</code>中的第三方包，参数是以<code>vendor/</code>为起点的绝对路径。这避免了<code>vendor</code>目录位置带来的麻烦，让导入无论使用<code>vendor</code>,还是<code>GOPATH</code>都能保持一致。</p>
+<blockquote>
+<p>注意：<code>vendor</code>优先级比标准库高</p>
+</blockquote>
+<p>当多个<code>vendor</code>目录嵌套时，匹配规则如下:<br>
+从当前源文件所在目录开始，逐级向上构造<code>vendor</code>全路径，直到发现路径匹配的目标为止。匹配失败，则依旧搜索<code>GOPATH</code></p>
+<p>要使用<code>vendor</code>机制，须开启<code>GO15VENDOREXPERIMENT=1</code>环境变量开关(Go 1.6默认开启),且必须设置了<code>GOPATH</code>的工作空间。</p>
+<blockquote>
+<p>使用<code>go get</code>下载第三方包时，依旧使用<code>GOPATH</code>第一个工作空间，而非<code>vendor</code>目录。当前工具链中并没有真正意义上的包依赖管理，好在由不少第三放工具可选。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/08/20/2020-08-20-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)%E5%8F%8D%E5%B0%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1441,80 +1571,6 @@ Qt支持这些信号槽的连接方式：</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/07/05/2020-07-05-C++%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%86%E5%89%B2%E4%B8%8E%E8%A7%A3%E6%9E%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/05/2020-07-05-C++%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%86%E5%89%B2%E4%B8%8E%E8%A7%A3%E6%9E%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">C++字符串分割与解析代码学习</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-07-05 15:19:05" itemprop="dateCreated datePublished" datetime="2020-07-05T15:19:05+08:00">2020-07-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/26328793/how-to-split-string-with-delimiter-using-c">源码链接</a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief           把字符串前后的字符串给去除</span></span><br><span class="line"><span class="comment"> * @param           s       [in]    要剪切的字符串</span></span><br><span class="line"><span class="comment"> * @param           chars   [in]    要去除什么的字符串</span></span><br><span class="line"><span class="comment"> * @return          std::string&amp; 剪切后的字符串</span></span><br><span class="line"><span class="comment"> * @author          lijiancong(lijiancong@gbcom.com.cn)</span></span><br><span class="line"><span class="comment"> * @note</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">static</span> std::string&amp; <span class="title">strip</span><span class="params">(std::string&amp; s, <span class="type">const</span> std::string&amp; chars = <span class="string">&quot; &quot;</span>)</span> </span>&#123;</span><br><span class="line">  s.<span class="built_in">erase</span>(<span class="number">0</span>, s.<span class="built_in">find_first_not_of</span>(chars.<span class="built_in">c_str</span>()));</span><br><span class="line">  s.<span class="built_in">erase</span>(s.<span class="built_in">find_last_not_of</span>(chars.<span class="built_in">c_str</span>()) + <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief           以特定符号为分隔符，切分字符串并放入vector里</span></span><br><span class="line"><span class="comment"> * @param           s           [in]    原字符串</span></span><br><span class="line"><span class="comment"> * @param           tokens      [out]   剪切后的子字符串</span></span><br><span class="line"><span class="comment"> * @param           delimiters  [in]    分隔符</span></span><br><span class="line"><span class="comment"> * @author          lijiancong(lijiancong@gbcom.com.cn)</span></span><br><span class="line"><span class="comment"> * @note</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">split</span><span class="params">(<span class="type">const</span> std::string&amp; s, std::vector&lt;std::string&gt;&amp; tokens,</span></span></span><br><span class="line"><span class="params"><span class="function">                  <span class="type">const</span> std::string&amp; delimiters = <span class="string">&quot; &quot;</span>)</span> </span>&#123;</span><br><span class="line">  std::string::size_type lastPos = s.<span class="built_in">find_first_not_of</span>(delimiters, <span class="number">0</span>);</span><br><span class="line">  std::string::size_type pos = s.<span class="built_in">find_first_of</span>(delimiters, lastPos);</span><br><span class="line">  <span class="keyword">while</span> (std::string::npos != pos || std::string::npos != lastPos) &#123;</span><br><span class="line">    tokens.<span class="built_in">push_back</span>(s.<span class="built_in">substr</span>(lastPos, pos - lastPos));</span><br><span class="line">    lastPos = s.<span class="built_in">find_first_not_of</span>(delimiters, pos);</span><br><span class="line">    pos = s.<span class="built_in">find_first_of</span>(delimiters, lastPos);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">parse</span><span class="params">(std::string&amp; s, std::map&lt;std::string, std::string&gt;&amp; items)</span> </span>&#123;</span><br><span class="line">  std::vector&lt;std::string&gt; elements;</span><br><span class="line">  s.<span class="built_in">erase</span>(<span class="number">0</span>, s.<span class="built_in">find_first_not_of</span>(<span class="string">&quot; &#123;&quot;</span>));</span><br><span class="line">  s.<span class="built_in">erase</span>(s.<span class="built_in">find_last_not_of</span>(<span class="string">&quot;&#125; &quot;</span>) + <span class="number">1</span>);</span><br><span class="line">  <span class="built_in">split</span>(s, elements, <span class="string">&quot;,&quot;</span>);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; iter : elements) &#123;</span><br><span class="line">    std::vector&lt;std::string&gt; kv;</span><br><span class="line">    <span class="built_in">split</span>(iter, kv, <span class="string">&quot;:&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (kv.<span class="built_in">size</span>() != <span class="number">2</span>) <span class="keyword">continue</span>;</span><br><span class="line">    items[<span class="built_in">strip</span>(kv[<span class="number">0</span>], <span class="string">&quot; \&quot;&quot;</span>)] = <span class="built_in">strip</span>(kv[<span class="number">1</span>], <span class="string">&quot; \&quot;&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  std::string data =</span><br><span class="line">      <span class="string">&quot;  &#123;  \&quot;key1\&quot;  :  \&quot;data1\&quot;  ,  \&quot;key2\&quot;  :  \&quot;data2\&quot;    &#125;  &quot;</span>;</span><br><span class="line">  std::map&lt;std::string, std::string&gt; items;</span><br><span class="line">  <span class="built_in">parse</span>(data, items);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; iter:items)&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;key=&quot;</span> &lt;&lt; iter.first &lt;&lt; <span class="string">&quot;,value=&quot;</span> &lt;&lt; iter.second &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1584,7 +1640,7 @@ Qt支持这些信号槽的连接方式：</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">83</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1595,7 +1651,7 @@ Qt支持这些信号槽的连接方式：</p>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
