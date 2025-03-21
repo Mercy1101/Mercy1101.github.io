@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="为了可以使 windows 桌面应用可以支持西班牙语，并且在无法使用 QT 等现代具有多语言翻译模块的背景下，尝试设计软件显示多种语言。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多语言版本软件设计">
+<meta property="og:url" content="https://mercy1101.github.io/2025/03/21/2025-03-21-%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:site_name" content="李建聪的博客">
+<meta property="og:description" content="为了可以使 windows 桌面应用可以支持西班牙语，并且在无法使用 QT 等现代具有多语言翻译模块的背景下，尝试设计软件显示多种语言。">
+<meta property="og:locale">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-21-%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC%E8%AE%BE%E8%AE%A1/%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1-%E6%9D%8E%E5%BB%BA%E8%81%AA.png">
+<meta property="article:published_time" content="2025-03-21T08:38:02.000Z">
+<meta property="article:modified_time" content="2025-03-21T08:42:41.428Z">
+<meta property="article:author" content="李建聪">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="个人总结">
+<meta property="article:tag" content="软件设计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mercy1101.github.io/resource/2025-03-21-%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC%E8%AE%BE%E8%AE%A1/%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1-%E6%9D%8E%E5%BB%BA%E8%81%AA.png">
+
+<link rel="canonical" href="https://mercy1101.github.io/2025/03/21/2025-03-21-%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>多语言版本软件设计 | 李建聪的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">李建聪的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2025/03/21/2025-03-21-%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          多语言版本软件设计
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-03-21 16:38:02 / Modified: 16:42:41" itemprop="dateCreated datePublished" datetime="2025-03-21T16:38:02+08:00">2025-03-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/resource/2025-03-21-%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC%E8%AE%BE%E8%AE%A1/%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1-%E6%9D%8E%E5%BB%BA%E8%81%AA.png" alt="alt text"></p>
+<p>为了可以使 windows 桌面应用可以支持西班牙语，并且在无法使用 QT 等现代具有多语言翻译模块的背景下，尝试设计软件显示多种语言。</p>
+<span id="more"></span>
+<h2 id="背景">背景</h2>
+<p>为了可以使 windows 桌面应用可以支持西班牙语，并且在无法使用 QT 等现代具有多语言翻译模块的背景下，尝试设计软件显示多种语言。</p>
+<h2 id="西班牙语中的字符">西班牙语中的字符</h2>
+<p>西班牙语字母表共有27个字母，包括：</p>
+<ul>
+<li>26个基础拉丁字母（与英语相同），</li>
+<li>再加上一个特殊字母 “ñ”。</li>
+</ul>
+<p>除此之外，西班牙语中还有以下常见的带附加符号的字符：</p>
+<ul>
+<li><strong>带重音符号</strong>（á, é, í, ó, ú）：用于表示重读音节的位置。</li>
+<li><strong>分音符</strong>（ü）：用于特殊情况下标示发音，例如 <em>pingüino</em>（企鹅），表示字母 “u” 应发音。</li>
+</ul>
+<p>虽然这些带附加符号的字母并未单独计入字母表，但在西班牙语书写和阅读中仍然非常重要。</p>
+<h3 id="特殊标点符号的使用：">特殊标点符号的使用：</h3>
+<p>句首和句尾分别使用 <strong>¿?</strong> 和 <strong>¡!</strong> 表示疑问句和感叹句：</p>
+<ul>
+<li>如：“¿<em>Quieres salir del cliente de administración de red</em>?” —— 是否退出网管客户端？</li>
+<li>如：“¡<em>Contraseña incorrecta</em>!” —— 密码错误！</li>
+</ul>
+<h2 id="ANSI-编码">ANSI 编码</h2>
+<ol>
+<li>
+<p><strong>“ANSI 编码”不是正式标准名：</strong></p>
+<ul>
+<li>虽然名字中有“ANSI”，但“ANSI 编码”不是指 ANSI 官方制定的某个明确的字符编码标准。</li>
+<li>在微软文档中，“ANSI 编码”常指 Windows 的默认“本地代码页”（ACP，Active Code Page）。</li>
+</ul>
+</li>
+<li>
+<p><strong>“ANSI 编码”会随系统语言/区域设置变化：</strong></p>
+<ul>
+<li>简体中文环境：ANSI 编码 = Code Page 936 = GBK。</li>
+<li>英文（美国）/西欧环境：ANSI 编码 = Code Page 1252 = Windows-1252。</li>
+<li>其他国家/地区的 Windows 系统可能采用不同的代码页（如 1251、932 等）。</li>
+</ul>
+</li>
+<li>
+<p><strong>ANSI ≠ ASCII：</strong></p>
+<ul>
+<li>有时初学者会将“ANSI 编码”与“ASCII”混淆，实际 ANSI 编码一般是基于 ASCII 的扩展，但字符集远大于 ASCII。</li>
+</ul>
+</li>
+<li>
+<p><strong>“ANSI 编码”≠ Unicode：</strong></p>
+<ul>
+<li>Unicode（如 UTF-8、UTF-16）是一种跨平台、跨语言的统一编码方式。</li>
+<li>ANSI 编码不具备这种兼容性，容易出现乱码。</li>
+</ul>
+</li>
+</ol>
+<h2 id="ASCII-编码">ASCII 编码</h2>
+<p>ASCII（<strong>American Standard Code for Information Interchange</strong>），中文通常译作“美国信息交换标准代码”，是一种基于拉丁字母的 <strong>7 位字符编码方案</strong>。它主要包括：</p>
+<ol>
+<li>
+<p><strong>可显示字符：</strong></p>
+<ul>
+<li>英文字母（大小写）</li>
+<li>阿拉伯数字（0–9）</li>
+<li>标点符号及其他常用符号</li>
+</ul>
+</li>
+<li>
+<p><strong>控制字符：</strong></p>
+<ul>
+<li>用于控制设备（如打印机、终端等）行为的一些特殊字符（如换行、回车、制表符等）</li>
+</ul>
+</li>
+</ol>
+<h4 id="主要特点">主要特点</h4>
+<ul>
+<li><strong>范围：</strong> ASCII 编码使用 <strong>7 位二进制数</strong>表示字符，编码值从 <strong>0 到 127</strong>。(Extended ASCII 使用 8 位，但不是标准 ASCII 的一部分。)</li>
+<li><strong>用途广泛：</strong> 几乎所有现代字符编码方案都兼容 ASCII，或将其作为子集。例如：<strong>UTF-8</strong>、<strong>ISO-8859-1</strong>、<strong>GBK</strong> 等编码在 ASCII 范围内的字符通常与 ASCII 保持一致。</li>
+<li><strong>历史地位：</strong> ASCII 在 <strong>20 世纪 60 年代</strong>就已标准化，是最早的一批计算机字符编码标准之一，对后续的字符编码体系产生了深远影响。</li>
+</ul>
+<h4 id="容易与-ANSI-的混淆">容易与 ANSI 的混淆</h4>
+<p>“<strong>ANSI</strong>”是 <strong>美国国家标准学会（American National Standards Institute）</strong> 的缩写，也常被用来泛指 Windows 系统默认使用的某些本地编码（如 <strong>Windows-1252</strong>）。然而它：</p>
+<ul>
+<li>并不是 ASCII，</li>
+<li>也与 ASCII 在设计理念和字符范围上不同，</li>
+<li>两者不应混为一谈。</li>
+</ul>
+<h2 id="GB2312、GBK-和-GB18030-编码">GB2312、GBK 和 GB18030 编码</h2>
+<h3 id="GB2312">GB2312</h3>
+<ul>
+<li>中国最早的简体中文字符集标准，由国家标准局于 <strong>1980 年发布</strong>。</li>
+<li><strong>收录字符：</strong> 共 <strong>6763 个汉字</strong>，覆盖简体中文常用字符。</li>
+<li><strong>编码方式：</strong> 使用双字节编码表示汉字，ASCII 字符使用单字节编码。</li>
+<li><strong>局限性：</strong> 仅支持简体中文和部分符号，<strong>不支持繁体字、生僻字</strong>及其他语言字符。</li>
+</ul>
+<h3 id="GBK">GBK</h3>
+<ul>
+<li>是 GB2312 的扩展版本，由中国国家标准化管理委员会于 <strong>1995 年发布</strong>。</li>
+<li><strong>收录字符：</strong> 约 <strong>21,000 个汉字</strong>，大幅增加了繁体字和生僻字。</li>
+<li><strong>编码方式：</strong> 双字节编码，<strong>向下兼容 GB2312</strong>。</li>
+<li><strong>特点：</strong> 支持部分繁体字，<strong>但不包含</strong>藏文、蒙古文等少数民族文字。</li>
+</ul>
+<h3 id="GB18030">GB18030</h3>
+<ul>
+<li>是 GBK 的进一步扩展，最新版本为 <strong>GB18030-2022</strong>（于 2022 年发布）。</li>
+<li><strong>收录字符：</strong> 完整支持 <strong>Unicode 的全部字符</strong>，包括所有汉字（简体、繁体）、生僻字、少数民族文字，甚至覆盖日文、韩文、部分符号等。</li>
+<li><strong>编码方式：</strong> <strong>变长编码</strong>（可使用单字节、双字节或四字节），<strong>向下兼容 GBK 和 GB2312</strong>。</li>
+<li><strong>特点：</strong> 是中国官方的 <strong>强制性编码标准</strong>，<strong>所有在中国境内销售的软件产品必须支持 GB18030 编码</strong>。</li>
+</ul>
+<h3 id="编码对比表：">编码对比表：</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"><strong>GB2312</strong></th>
+<th style="text-align:center"><strong>GBK</strong></th>
+<th style="text-align:center"><strong>GB18030</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>制定时间</strong></td>
+<td style="text-align:center">1980 年</td>
+<td style="text-align:center">1995 年</td>
+<td style="text-align:center">2000 年（最新版本为 2022 年）</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>编码长度</strong></td>
+<td style="text-align:center">单字节（ASCII）+ 双字节（汉字）</td>
+<td style="text-align:center">单字节（ASCII）+ 双字节（汉字）</td>
+<td style="text-align:center"><strong>变长编码</strong>（单字节、双字节、四字节）</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>收录字符数</strong></td>
+<td style="text-align:center">约 6,763 个汉字</td>
+<td style="text-align:center">约 21,000 个汉字</td>
+<td style="text-align:center">支持全部 Unicode 字符（超过百万字符）</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>支持繁体字</strong></td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>兼容性</strong></td>
+<td style="text-align:center">不支持繁体、生僻字和其他语言字符</td>
+<td style="text-align:center">支持繁体字，不支持部分民族文字</td>
+<td style="text-align:center">向下兼容 GBK、GB2312，支持所有 Unicode 字符</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>法律地位</strong></td>
+<td style="text-align:center">–</td>
+<td style="text-align:center">–</td>
+<td style="text-align:center"><strong>中国强制性国家标准（GB18030）</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Unicode-编码">Unicode 编码</h2>
+<p>Unicode 是一个全球统一的“字符大字典”，目标是把全世界所有字符（英文、汉字、阿拉伯文、日文、韩文、特殊符号、甚至表情符号等）都纳入到一个统一的标准体系里。</p>
+<p>每个字符在 Unicode 中都有一个唯一编号（码点，code point） 通过这样一种方式，Unicode 确保了字符编码的统一性，避免了过去各种字符集相互冲突的问题。</p>
+<p>下面介绍几种 Unicode 的实现方式：</p>
+<h3 id="UTF-8">UTF-8</h3>
+<p><strong>UTF-8</strong> 是一种编码方式（Encoding），用于将 Unicode 中的码点转换为计算机可处理的二进制字节序列。</p>
+<h4 id="UTF-8-的特点：">UTF-8 的特点：</h4>
+<ul>
+<li>是 Unicode 最流行的实现方式之一。</li>
+<li><strong>变长编码（1–4 个字节）</strong>：
+<ul>
+<li>英文字符（ASCII 范围）仅使用 1 个字节。</li>
+<li>常用汉字、日文等非 ASCII 字符通常使用 3 个字节。</li>
+<li>生僻字符、表情符号等可能使用 4 个字节。</li>
+</ul>
+</li>
+<li>与 ASCII 编码完全兼容（ASCII 字符的 UTF-8 编码与 ASCII 完全一致）。</li>
+</ul>
+<h4 id="UTF-8-与-UTF-8-with-BOM">UTF-8 与 UTF-8 with BOM</h4>
+<p><strong>UTF-8 with BOM</strong>（Byte Order Mark）是 UTF-8 的一种带有标记的形式，用来标识文件使用 UTF-8 编码。</p>
+<ul>
+<li>
+<p><strong>什么是 BOM：</strong><br>
+BOM（字节顺序标记）是一个特殊的 Unicode 字符（U+FEFF），在 UTF-8 中对应的字节序列为 <code>EF BB BF</code>。它可以出现在文件开头，用于指示编码格式。</p>
+</li>
+<li>
+<p><strong>作用：</strong><br>
+添加 BOM 有助于某些编辑器或软件自动识别文件编码为 UTF-8。</p>
+</li>
+<li>
+<p><strong>注意事项：</strong></p>
+<ul>
+<li>UTF-8 不涉及字节序，因此 BOM 并非必须。</li>
+<li><strong>跨平台开发或服务器环境中</strong>，通常推荐使用<strong>不带 BOM 的 UTF-8</strong>文件。</li>
+<li>Windows 上的一些编辑器（如记事本）保存 UTF-8 文件时默认带 BOM。例如，配置文件经记事本保存后添加了 BOM，可能导致程序读取失败。</li>
+</ul>
+</li>
+</ul>
+<h3 id="UTF-16-编码">UTF-16 编码</h3>
+<p><strong>UTF-16</strong> 是另一种 Unicode 编码方式，使用 2 个或 4 个字节表示一个字符。</p>
+<h4 id="UTF-16-的特点：">UTF-16 的特点：</h4>
+<ul>
+<li><strong>变长编码（2 或 4 字节）：</strong>
+<ul>
+<li>对于 BMP（基本多语言平面，码点范围 U+0000 ~ U+FFFF）中的字符，使用一个 UTF-16 单元（2 字节）。</li>
+<li>对于超出 BMP 的字符（如 emoji、大量生僻字），使用一对代理项（<strong>surrogate pair</strong>），总共占用 4 字节。</li>
+</ul>
+</li>
+</ul>
+<h3 id="UTF-32-编码">UTF-32 编码</h3>
+<p><strong>UTF-32</strong> 是一种固定长度的 Unicode 编码方式，每个字符使用固定的 4 个字节。</p>
+<h4 id="UTF-32-的特点：">UTF-32 的特点：</h4>
+<ul>
+<li>**固定长度：**每个字符占用 4 个字节（实现简单，但空间占用大）。</li>
+<li>与 ASCII 编码在字符值层面兼容（ASCII 范围字符的 UTF-32 编码与其 Unicode 编码值一致）。</li>
+</ul>
+<h2 id="C-C-语言中的字符类型">C/C++ 语言中的字符类型</h2>
+<h3 id="char"><code>char</code></h3>
+<ul>
+<li>最基本的字符类型，<strong>通常占用 1 字节</strong></li>
+<li>默认是否为 <code>signed</code> 取决于平台（如 x86 是 signed，但非所有架构一致）</li>
+<li>主要用于存储 ASCII 字符或 UTF-8 编码的文本（但标准本身不绑定具体编码）。</li>
+<li>衍生类型：
+<ul>
+<li><code>unsigned char</code>：无符号版本</li>
+<li><code>signed char</code>：有符号版本</li>
+</ul>
+</li>
+</ul>
+<h3 id="wchar-t"><code>wchar_t</code></h3>
+<ul>
+<li>宽字符类型，<strong>大小依赖于平台</strong>：
+<ul>
+<li>Windows 上通常为 <strong>16 位</strong></li>
+<li>Unix/Linux 上通常为 <strong>32 位</strong></li>
+</ul>
+</li>
+<li>用于表示宽字符，<strong>在国际化应用中曾广泛使用</strong>，但并不等价于 Unicode。</li>
+<li>某些库函数（如 <code>wcout</code>、<code>wprintf</code>）在不同平台上处理宽字符的行为可能不同</li>
+<li>字符串字面量 <code>L&quot;...&quot;</code> 对应 <code>wchar_t</code> 类型。</li>
+</ul>
+<h3 id="char8-t（C-20-起）"><code>char8_t</code>（C++20 起）</h3>
+<ul>
+<li>与 <code>char</code> 一样占用 <strong>1 字节（8 位）</strong>，但含义更明确：<strong>专用于存储 UTF-8 编码单元</strong>。</li>
+<li>是一种<strong>独立类型</strong>，不能与 <code>char</code> 互相隐式转换，以避免混淆本地编码与 UTF-8。</li>
+<li>不同类型字符串（如 <code>string</code> vs <code>u8string</code>）不可直接拼接，需要显式转换</li>
+<li>字符串字面量 <code>u8&quot;...&quot;</code> 对应 <code>char8_t</code> 类型。</li>
+<li>类型间转换需显式进行，例如使用 <code>reinterpret_cast</code>。</li>
+</ul>
+<h3 id="char16-t（C-11-起）"><code>char16_t</code>（C++11 起）</h3>
+<ul>
+<li>占用 <strong>16 位（2 字节）</strong>，用于存储 <strong>UTF-16 编码单元</strong>。</li>
+<li>同样是<strong>独立类型</strong>，不与 <code>char</code>、<code>wchar_t</code> 互相隐式转换。</li>
+<li>字符串字面量 <code>u&quot;...&quot;</code> 对应 <code>char16_t</code> 类型。</li>
+</ul>
+<h3 id="char32-t（C-11-起）"><code>char32_t</code>（C++11 起）</h3>
+<ul>
+<li>占用 <strong>32 位（4 字节）</strong>，用于存储 <strong>UTF-32 编码单元</strong>，可以表示所有 Unicode 码点（范围 U+0000 ~ U+10FFFF）。</li>
+<li>是一种<strong>独立类型</strong>，不与 <code>char</code>、<code>wchar_t</code> 做隐式转换。</li>
+<li>编码简单，但占用空间大</li>
+<li>字符串字面量 <code>U&quot;...&quot;</code> 对应 <code>char32_t</code> 类型。</li>
+</ul>
+<h3 id="总结对比表">总结对比表</h3>
+<table>
+<thead>
+<tr>
+<th>类型名称</th>
+<th>字节/位大小</th>
+<th>主要用途/编码类型</th>
+<th>字符串字面量前缀</th>
+<th>引入版本 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>char</code></td>
+<td>通常 1 字节</td>
+<td>存储 ASCII 或 UTF-8（不强制）</td>
+<td><code>&quot;&quot;</code></td>
+<td>最基础类型，有符号/无符号依平台而定</td>
+</tr>
+<tr>
+<td><code>wchar_t</code></td>
+<td>Windows: 16 位 / Linux: 32 位</td>
+<td>早期宽字符类型，支持国际化，但非专属 Unicode</td>
+<td><code>L&quot;&quot;</code></td>
+<td>宽字符类型，平台相关</td>
+</tr>
+<tr>
+<td><code>char8_t</code></td>
+<td>1 字节（8 位）</td>
+<td>专门存储 UTF-8 编码</td>
+<td><code>u8&quot;&quot;</code></td>
+<td>C++20 引入，独立类型</td>
+</tr>
+<tr>
+<td><code>char16_t</code></td>
+<td>2 字节（16 位）</td>
+<td>存储 UTF-16 编码单元</td>
+<td><code>u&quot;&quot;</code></td>
+<td>C++11 引入，独立类型</td>
+</tr>
+<tr>
+<td><code>char32_t</code></td>
+<td>4 字节（32 位）</td>
+<td>存储 UTF-32 编码单元，表示所有 Unicode 码点</td>
+<td><code>U&quot;&quot;</code></td>
+<td>C++11 引入，独立类型</td>
+</tr>
+</tbody>
+</table>
+<h2 id="C-STL-中的字符串类型">C++ STL 中的字符串类型</h2>
+<p>C++ 提供了 <strong><code>std::basic_string&lt;T&gt;</code></strong> 模板，可以为不同字符类型构建对应的字符串类型：</p>
+<table>
+<thead>
+<tr>
+<th>STL 类型</th>
+<th>模板参数</th>
+<th>用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>std::string</code></td>
+<td><code>std::basic_string&lt;char&gt;</code></td>
+<td>常规字符串，默认用于 ASCII / UTF-8</td>
+</tr>
+<tr>
+<td><code>std::wstring</code></td>
+<td><code>std::basic_string&lt;wchar_t&gt;</code></td>
+<td>宽字符字符串，国际化场景中使用</td>
+</tr>
+<tr>
+<td><code>std::u8string</code></td>
+<td><code>std::basic_string&lt;char8_t&gt;</code></td>
+<td>UTF-8 字符串（<strong>C++20 起支持</strong>）</td>
+</tr>
+<tr>
+<td><code>std::u16string</code></td>
+<td><code>std::basic_string&lt;char16_t&gt;</code></td>
+<td>UTF-16 字符串</td>
+</tr>
+<tr>
+<td><code>std::u32string</code></td>
+<td><code>std::basic_string&lt;char32_t&gt;</code></td>
+<td>UTF-32 字符串</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Windows-平台字符串处理">Windows 平台字符串处理</h2>
+<h3 id="Windows-对宽字符的支持">Windows 对宽字符的支持</h3>
+<p>在 Windows 平台上，系统内部全面采用 Unicode（<strong>严格来说是 UTF-16 LE 编码</strong>）表示文本内容。为兼容早期系统，Windows API 分为 ANSI 版本和 Unicode 版本，分别以 <code>A</code> 和 <code>W</code> 为后缀：</p>
+<ul>
+<li><code>CreateFileA</code>：参数为 <code>char*</code>，根据当前系统的<strong>本地代码页</strong>（ACP）进行编码解释。</li>
+<li><code>CreateFileW</code>：参数为 <code>wchar_t*</code>，使用 UTF-16 编码，原生支持 Unicode。</li>
+</ul>
+<p><strong>Windows 宏自动切换机制：</strong></p>
+<p>Windows 头文件使用宏来自动映射 Unicode 或 ANSI 版本的 API。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifdef</span> UNICODE</span></span><br><span class="line">  <span class="meta">#<span class="keyword">define</span> CreateFile  CreateFileW</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">  <span class="meta">#<span class="keyword">define</span> CreateFile  CreateFileA</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>这意味着只要定义了 <code>UNICODE</code>（或 <code>_UNICODE</code>），就能透明地调用 <code>W</code> 版本的 API 函数。</p>
+<h4 id="常见字符类型">常见字符类型</h4>
+<ul>
+<li><strong><code>TCHAR</code></strong>：可移植字符类型，在启用 <code>UNICODE</code> 宏时表示 <code>wchar_t</code>，否则为 <code>char</code>。</li>
+<li><strong><code>WCHAR</code></strong>：Windows 上的宽字符类型，等价于 <code>wchar_t</code>，占用 <strong>2 字节（16 位）</strong>，用于表示 UTF-16 编码的字符。</li>
+<li><strong><code>LPWSTR</code> / <code>LPCWSTR</code></strong>：分别表示“指向宽字符串的指针”和“指向常量宽字符串的指针”，用于 API 参数传递。</li>
+</ul>
+<h3 id="Windows-API-中的-Unicode-处理方式">Windows API 中的 Unicode 处理方式</h3>
+<h4 id="使用-UTF-16-编码字符串">使用 UTF-16 编码字符串</h4>
+<p>Windows 中的宽字符字符串通过 UTF-16 编码表示。示例如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">wchar_t</span>* ws = <span class="string">L&quot;示例字符串&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>字面量 <code>L&quot;...&quot;</code> 会在编译时转换为 UTF-16 字节序列（LE）。</p>
+<h3 id="多字节（如-UTF-8）与宽字符互转">多字节（如 UTF-8）与宽字符互转</h3>
+<p>若需支持 UTF-8 或其他多字节编码的输入，可以使用 Windows 提供的编码转换函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">MultiByteToWideChar</span><span class="params">(</span></span><br><span class="line"><span class="params">    UINT   CodePage,         <span class="comment">// 如 CP_UTF8</span></span></span><br><span class="line"><span class="params">    DWORD  dwFlags,</span></span><br><span class="line"><span class="params">    LPCCH  lpMultiByteStr,</span></span><br><span class="line"><span class="params">    <span class="type">int</span>    cbMultiByte,</span></span><br><span class="line"><span class="params">    LPWSTR lpWideCharStr,</span></span><br><span class="line"><span class="params">    <span class="type">int</span>    cchWideChar</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+<p>对应地，使用 <code>WideCharToMultiByte</code> 可将宽字符转为指定编码（如 UTF-8、GBK、系统默认 ACP 等）。</p>
+<h3 id="控制台下的编码设置">控制台下的编码设置</h3>
+<p>在 Windows 控制台中在中文系统中默认编码为 GBK 编码，输出 UTF8 文本需要设置控制台代码页为 UTF-8 编码：</p>
+<ul>
+<li>执行命令：<code>chcp 65001</code> 切换到 UTF-8 代码页</li>
+<li>或者使用 <code>WriteConsoleW</code> 直接输出 <code>wchar_t*</code> 字符串（UTF-16）</li>
+<li>注意 <code>std::wcout</code> 输出非 ASCII 字符时，控制台必须能正确支持字体和编码，否则仍可能出现乱码</li>
+</ul>
+<h2 id="Linux-平台字符串处理">Linux 平台字符串处理</h2>
+<h3 id="编码机制与字符处理方式">编码机制与字符处理方式</h3>
+<p>Linux 系统中，对字符串的处理本质上是对“<strong>字节序列</strong>”的处理：</p>
+<ul>
+<li>系统调用层（如 <code>open</code>、<code>read</code>、<code>write</code>）不关心字符串的编码，只看是否是合法的字节流。</li>
+<li>编码的解释主要发生在用户空间（应用层）或库函数中。</li>
+</ul>
+<p>现代 Linux 发行版几乎默认使用 UTF-8 编码：</p>
+<ul>
+<li>通常环境变量中会有：<code>LANG=zh_CN.UTF-8</code>、<code>LC_CTYPE=en_US.UTF-8</code> 等</li>
+<li>Shell、终端、文本编辑器、Glibc 函数（如 <code>wprintf</code>）等都默认使用 UTF-8</li>
+</ul>
+<p>因此，<strong>在 Linux 上编写 UTF-8 兼容代码通常比 Windows 更简单和自然。</strong></p>
+<h2 id="C-Builder-中的字符串类型">C++ Builder 中的字符串类型</h2>
+<p>在 C++ Builder 中，<code>UnicodeString</code> 是最常用的字符串类型，<strong>也是 VCL 和 FMX 框架中默认的字符串类型</strong>。</p>
+<p>早期版本（如 C++ Builder 2007 及之前）默认使用的是 <code>AnsiString</code>。从 <strong>C++ Builder 2009</strong> 开始，默认字符串类型转为 <code>UnicodeString</code>，以更好地支持 Unicode 和多语言应用。</p>
+<p>在现代 C++ Builder 项目中，与控件之间的字符串交互（如获取或设置控件文本）默认都使用 <code>UnicodeString</code>。</p>
+<h3 id="AnsiString"><code>AnsiString</code></h3>
+<ul>
+<li>
+<p><strong>编码形式：</strong><br>
+使用 <strong>单字节字符</strong>，或者依赖指定代码页的<strong>多字节字符集</strong>（MBCS），常被称为“ANSI 编码”或“本地编码”。</p>
+</li>
+<li>
+<p><strong>支持自定义代码页（新版本）：</strong><br>
+在较新的 C++ Builder 版本（如 10 Seattle、10.1 Berlin、10.2 Tokyo、10.3 Rio、10.4 Sydney、11 Alexandria 等）中，可使用模板 <code>AnsiStringT&lt;codepage&gt;</code> 显式指定字符编码，例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AnsiStringT&lt;<span class="number">936</span>&gt; str_gbk; <span class="comment">// 指定 GBK 编码</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>局限性：</strong></p>
+<ul>
+<li>所能表示的字符范围依赖于指定的代码页。</li>
+<li>如果某些字符不在目标编码内，将会出现<strong>乱码或数据丢失</strong>。</li>
+<li>不推荐在多语言应用中继续使用 <code>AnsiString</code>，应使用 <code>UnicodeString</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="UnicodeString"><code>UnicodeString</code></h3>
+<ul>
+<li>
+<p><strong>编码形式：</strong><br>
+使用 <strong>UTF-16 编码</strong>，每个字符占用 2 字节。</p>
+</li>
+<li>
+<p><strong>兼容 Windows 宽字符 API：</strong><br>
+可通过 <code>UnicodeString::c_str()</code> 方法将字符串转换为 <code>const wchar_t*</code>，用于与 Windows 原生的 <code>W</code> 系列 API 互通，例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UnicodeString str = <span class="string">L&quot;标题&quot;</span>;</span><br><span class="line"><span class="built_in">MessageBoxW</span>(<span class="literal">NULL</span>, str.<span class="built_in">c_str</span>(), <span class="string">L&quot;提示&quot;</span>, MB_OK);</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>默认字符串类型（C++ Builder 2009 起）：</strong><br>
+所有与界面控件交互的字符串默认类型均为 <code>UnicodeString</code>，无需手动转换。</p>
+</li>
+</ul>
+<h3 id="总结对比表-2">总结对比表</h3>
+<table>
+<thead>
+<tr>
+<th>类型名称</th>
+<th>编码方式</th>
+<th>字节大小</th>
+<th>可否指定代码页</th>
+<th>是否支持 Unicode</th>
+<th>与 Windows API 的兼容性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AnsiString</code></td>
+<td>单字节/MBCS</td>
+<td>1 字节/字符</td>
+<td>✅（<code>AnsiStringT&lt;codepage&gt;</code>）</td>
+<td>❌ 依赖代码页，无法覆盖全部 Unicode</td>
+<td>部分支持（需使用 ANSI API）</td>
+</tr>
+<tr>
+<td><code>UnicodeString</code></td>
+<td>UTF-16</td>
+<td>2 字节/字符</td>
+<td>❌</td>
+<td>✅ 全面支持 Unicode</td>
+<td>✅（支持 Windows <code>W</code> 系列 API）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="C-Builder-中的多语言字符串处理">C++ Builder 中的多语言字符串处理</h2>
+<h3 id="使用-L-常量初始化-UnicodeString">使用 <code>L&quot;&quot;</code> 常量初始化 <code>UnicodeString</code></h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnicodeString uniStr = <span class="string">L&quot;Hello, 你好!&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>使用宽字符字面量 <code>L&quot;&quot;</code> 可直接初始化 <code>UnicodeString</code>，该类型以 UTF-16 编码存储字符。</p>
+<h3 id="AnsiString-转换为-std-string"><code>AnsiString</code> 转换为 <code>std::string</code></h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AnsiString ansiStr = <span class="string">&quot;Hello, 你好!&quot;</span>;</span><br><span class="line">std::string str = ansiStr.<span class="built_in">c_str</span>();</span><br></pre></td></tr></table></figure>
+<h3 id="std-string-转换为-AnsiString"><code>std::string</code> 转换为 <code>AnsiString</code></h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::string str = <span class="string">&quot;Hello, 你好!&quot;</span>;</span><br><span class="line">AnsiString ansiStr = str.<span class="built_in">c_str</span>();</span><br></pre></td></tr></table></figure>
+<h3 id="AnsiString-UTF-8-转换为-UnicodeString"><code>AnsiString(UTF-8)</code> 转换为 <code>UnicodeString</code></h3>
+<p>使用函数 <code>MultiByteToWideChar</code> 将 UTF-8 编码的 <code>char*</code> 字符串转换为 <code>UnicodeString</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">UnicodeString <span class="title">UTF8ToUnicode</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    UnicodeString strResult;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> textlen = <span class="built_in">MultiByteToWideChar</span>(CP_UTF8, <span class="number">0</span>, str, <span class="number">-1</span>, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (textlen &lt;= <span class="number">0</span>) <span class="keyword">return</span> strResult;</span><br><span class="line"></span><br><span class="line">    <span class="type">size_t</span> bufsize = <span class="built_in">static_cast</span>&lt;<span class="type">size_t</span>&gt;(textlen + <span class="number">1</span>);</span><br><span class="line">    <span class="type">wchar_t</span>* pBuf = <span class="keyword">new</span> <span class="type">wchar_t</span>[bufsize];</span><br><span class="line">    <span class="built_in">memset</span>(pBuf, <span class="number">0</span>, <span class="built_in">sizeof</span>(<span class="type">wchar_t</span>) * bufsize);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">MultiByteToWideChar</span>(CP_UTF8, <span class="number">0</span>, str, <span class="number">-1</span>, pBuf, textlen);</span><br><span class="line">    strResult = pBuf;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">delete</span>[] pBuf;</span><br><span class="line">    <span class="keyword">return</span> strResult;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="UnicodeString-转换为-AnsiString-UTF-8"><code>UnicodeString</code> 转换为 <code>AnsiString(UTF-8)</code></h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">AnsiString <span class="title">UnicodeToUTF8</span><span class="params">(UnicodeString str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> len = <span class="built_in">WideCharToMultiByte</span>(CP_UTF8, <span class="number">0</span>, str.<span class="built_in">c_str</span>(), <span class="number">-1</span>, <span class="literal">NULL</span>, <span class="number">0</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="type">char</span>* buffer = <span class="keyword">new</span> <span class="type">char</span>[len];</span><br><span class="line">    <span class="built_in">WideCharToMultiByte</span>(CP_UTF8, <span class="number">0</span>, str.<span class="built_in">c_str</span>(), <span class="number">-1</span>, buffer, len, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    AnsiString result = buffer;</span><br><span class="line">    <span class="keyword">delete</span>[] buffer;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="UTF-8-与-GB2312-编码转换说明">UTF-8 与 GB2312 编码转换说明</h3>
+<p>文件编码与显示编码不一致, UTF-8 文件用 GB2312 打开，常见乱码，需在编辑器中指定正确编码。</p>
+<ul>
+<li>
+<p><strong>GBK 是对 GB2312 的超集</strong>，因此：</p>
+<ul>
+<li><strong>GB2312 → UTF-8 可无损转换</strong></li>
+<li>UTF-8 → GB2312，<strong>无法反向完整转换</strong>，非交集字符会变乱码或问号</li>
+</ul>
+</li>
+<li>
+<p>示例说明：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GB2312 不支持字符串 &quot;ñáéíóúü&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="字符串常量初始化">字符串常量初始化</h3>
+<p><code>UnicodeString</code> 支持使用宽字符常量 <code>L&quot;&quot;</code> 初始化。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnicodeString uniStr = <span class="string">L&quot;Hello, 你好!&quot;</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>建议源码文件保存为 <strong>UTF-8 编码</strong>，否则如使用 GBK 编码时，部分非 ASCII 字符（如中文、ñáéíóúü）可能出现乱码。</li>
+<li>编译器将 <code>L&quot;&quot;</code> 文字编译为 UTF-16 编码，存储于 <code>UnicodeString</code> 中。</li>
+</ul>
+<h3 id="日志打印（编码转换示例）">日志打印（编码转换示例）</h3>
+<p>界面读取内容为 <code>UnicodeString</code> 类型，打印日志时应转换为 UTF-8 编码再传入格式化函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UnicodeString str = <span class="string">L&quot;Hello, 你好!&quot;</span>;</span><br><span class="line"><span class="built_in">GosLog</span>(LOG_INFO, <span class="string">&quot;%s&quot;</span>, <span class="built_in">UnicodeToUTF8</span>(str).<span class="built_in">c_str</span>());</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/" rel="tag"># 个人总结</a>
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/" rel="tag"># 软件设计</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/13/2025-03-13-PVE8%E5%AE%89%E8%A3%85RTL8125%E7%BD%91%E5%8D%A1%E9%A9%B1%E5%8A%A8/" rel="prev" title="PVE8 安装 RTL8125 网卡驱动">
+      <i class="fa fa-chevron-left"></i> PVE8 安装 RTL8125 网卡驱动
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A5%BF%E7%8F%AD%E7%89%99%E8%AF%AD%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">西班牙语中的字符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">特殊标点符号的使用：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ANSI-%E7%BC%96%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">ANSI 编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASCII-%E7%BC%96%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">ASCII 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%89%B9%E7%82%B9"><span class="nav-number">4.0.1.</span> <span class="nav-text">主要特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E6%98%93%E4%B8%8E-ANSI-%E7%9A%84%E6%B7%B7%E6%B7%86"><span class="nav-number">4.0.2.</span> <span class="nav-text">容易与 ANSI 的混淆</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GB2312%E3%80%81GBK-%E5%92%8C-GB18030-%E7%BC%96%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text">GB2312、GBK 和 GB18030 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GB2312"><span class="nav-number">5.1.</span> <span class="nav-text">GB2312</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GBK"><span class="nav-number">5.2.</span> <span class="nav-text">GBK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GB18030"><span class="nav-number">5.3.</span> <span class="nav-text">GB18030</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E5%AF%B9%E6%AF%94%E8%A1%A8%EF%BC%9A"><span class="nav-number">5.4.</span> <span class="nav-text">编码对比表：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unicode-%E7%BC%96%E7%A0%81"><span class="nav-number">6.</span> <span class="nav-text">Unicode 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-8"><span class="nav-number">6.1.</span> <span class="nav-text">UTF-8</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UTF-8-%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="nav-number">6.1.1.</span> <span class="nav-text">UTF-8 的特点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UTF-8-%E4%B8%8E-UTF-8-with-BOM"><span class="nav-number">6.1.2.</span> <span class="nav-text">UTF-8 与 UTF-8 with BOM</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-16-%E7%BC%96%E7%A0%81"><span class="nav-number">6.2.</span> <span class="nav-text">UTF-16 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UTF-16-%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="nav-number">6.2.1.</span> <span class="nav-text">UTF-16 的特点：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-32-%E7%BC%96%E7%A0%81"><span class="nav-number">6.3.</span> <span class="nav-text">UTF-32 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UTF-32-%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="nav-number">6.3.1.</span> <span class="nav-text">UTF-32 的特点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-C-%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B"><span class="nav-number">7.</span> <span class="nav-text">C&#x2F;C++ 语言中的字符类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#char"><span class="nav-number">7.1.</span> <span class="nav-text">char</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wchar-t"><span class="nav-number">7.2.</span> <span class="nav-text">wchar_t</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#char8-t%EF%BC%88C-20-%E8%B5%B7%EF%BC%89"><span class="nav-number">7.3.</span> <span class="nav-text">char8_t（C++20 起）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#char16-t%EF%BC%88C-11-%E8%B5%B7%EF%BC%89"><span class="nav-number">7.4.</span> <span class="nav-text">char16_t（C++11 起）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#char32-t%EF%BC%88C-11-%E8%B5%B7%EF%BC%89"><span class="nav-number">7.5.</span> <span class="nav-text">char32_t（C++11 起）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%AF%B9%E6%AF%94%E8%A1%A8"><span class="nav-number">7.6.</span> <span class="nav-text">总结对比表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-STL-%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text">C++ STL 中的字符串类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-%E5%B9%B3%E5%8F%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86"><span class="nav-number">9.</span> <span class="nav-text">Windows 平台字符串处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-%E5%AF%B9%E5%AE%BD%E5%AD%97%E7%AC%A6%E7%9A%84%E6%94%AF%E6%8C%81"><span class="nav-number">9.1.</span> <span class="nav-text">Windows 对宽字符的支持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B"><span class="nav-number">9.1.1.</span> <span class="nav-text">常见字符类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-API-%E4%B8%AD%E7%9A%84-Unicode-%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="nav-number">9.2.</span> <span class="nav-text">Windows API 中的 Unicode 处理方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-UTF-16-%E7%BC%96%E7%A0%81%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">9.2.1.</span> <span class="nav-text">使用 UTF-16 编码字符串</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%AD%97%E8%8A%82%EF%BC%88%E5%A6%82-UTF-8%EF%BC%89%E4%B8%8E%E5%AE%BD%E5%AD%97%E7%AC%A6%E4%BA%92%E8%BD%AC"><span class="nav-number">9.3.</span> <span class="nav-text">多字节（如 UTF-8）与宽字符互转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%B0%E4%B8%8B%E7%9A%84%E7%BC%96%E7%A0%81%E8%AE%BE%E7%BD%AE"><span class="nav-number">9.4.</span> <span class="nav-text">控制台下的编码设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-%E5%B9%B3%E5%8F%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86"><span class="nav-number">10.</span> <span class="nav-text">Linux 平台字符串处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E6%9C%BA%E5%88%B6%E4%B8%8E%E5%AD%97%E7%AC%A6%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="nav-number">10.1.</span> <span class="nav-text">编码机制与字符处理方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-Builder-%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="nav-number">11.</span> <span class="nav-text">C++ Builder 中的字符串类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AnsiString"><span class="nav-number">11.1.</span> <span class="nav-text">AnsiString</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UnicodeString"><span class="nav-number">11.2.</span> <span class="nav-text">UnicodeString</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%AF%B9%E6%AF%94%E8%A1%A8-2"><span class="nav-number">11.3.</span> <span class="nav-text">总结对比表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-Builder-%E4%B8%AD%E7%9A%84%E5%A4%9A%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">C++ Builder 中的多语言字符串处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-L-%E5%B8%B8%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96-UnicodeString"><span class="nav-number">12.1.</span> <span class="nav-text">使用 L&quot;&quot; 常量初始化 UnicodeString</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AnsiString-%E8%BD%AC%E6%8D%A2%E4%B8%BA-std-string"><span class="nav-number">12.2.</span> <span class="nav-text">AnsiString 转换为 std::string</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-string-%E8%BD%AC%E6%8D%A2%E4%B8%BA-AnsiString"><span class="nav-number">12.3.</span> <span class="nav-text">std::string 转换为 AnsiString</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AnsiString-UTF-8-%E8%BD%AC%E6%8D%A2%E4%B8%BA-UnicodeString"><span class="nav-number">12.4.</span> <span class="nav-text">AnsiString(UTF-8) 转换为 UnicodeString</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UnicodeString-%E8%BD%AC%E6%8D%A2%E4%B8%BA-AnsiString-UTF-8"><span class="nav-number">12.5.</span> <span class="nav-text">UnicodeString 转换为 AnsiString(UTF-8)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-8-%E4%B8%8E-GB2312-%E7%BC%96%E7%A0%81%E8%BD%AC%E6%8D%A2%E8%AF%B4%E6%98%8E"><span class="nav-number">12.6.</span> <span class="nav-text">UTF-8 与 GB2312 编码转换说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">12.7.</span> <span class="nav-text">字符串常量初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0%EF%BC%88%E7%BC%96%E7%A0%81%E8%BD%AC%E6%8D%A2%E7%A4%BA%E4%BE%8B%EF%BC%89"><span class="nav-number">12.8.</span> <span class="nav-text">日志打印（编码转换示例）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
