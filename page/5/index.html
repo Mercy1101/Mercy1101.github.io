@@ -180,7 +180,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -194,7 +194,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">C++ 类内默认成员函数</a>
+            <a href="/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">UML语法简介</a>
         </h2>
 
         <div class="post-meta">
@@ -211,7 +211,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 16:51:05" itemprop="dateModified" datetime="2025-01-22T16:51:05+08:00">2025-01-22</time>
+                <time title="Modified: 2025-01-22 16:27:58" itemprop="dateModified" datetime="2025-01-22T16:27:58+08:00">2025-01-22</time>
               </span>
 
           
@@ -225,10 +225,298 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在C++中，类的默认成员函数包括默认构造函数、析构函数、拷贝构造函数、移动构造函数、拷贝赋值运算符和移动赋值运算符。如果未显式定义，编译器会自动生成这些函数。默认函数的生成依赖于类成员的类型特性，特别是在涉及const或引用成员时。编译器不会为某些类合成移动操作，尤其是当类定义了自己的拷贝控制成员时。移动操作不同于拷贝操作，不会隐式定义为删除的函数，但在某些条件下可能被定义为删除的。理解这些默认函数的生成和依赖关系，有助于编写更高效和安全的C++代码。</p>
+          <p>本文详细介绍了UML（统一建模语言）中的几种核心关系：泛化关系、实现关系、聚合关系、组合关系、关联关系和依赖关系。通过清晰的图示和实例，文章解释了每种关系的定义、表示方法及其在面向对象设计中的应用场景。例如，泛化关系表示类的继承，组合关系表示强依赖的整体与部分关系，而依赖关系则描述对象间的临时性调用关系。本文为开发者提供了UML关系的全面指南，帮助其在软件设计中更好地理解和应用这些概念。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/#more" rel="contents">
+              <a class="btn" href="/2023/07/21/2021-04-26-UML%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2021-04-28-C++POD%E7%9A%84%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2021-04-28-C++POD%E7%9A%84%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">C++ POD的介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:23:53" itemprop="dateModified" datetime="2025-01-22T16:23:53+08:00">2025-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文详细介绍了C++中的POD（Plain Old Data）类型，解释了其定义、特性以及在编程中的特殊用途。POD类型包括标量类型、POD数组和符合特定条件的类类型，具有内存布局明确、生命周期简单等特点。文章还探讨了POD类型在内存操作（如<code>memcpy</code>）、<code>goto</code>语句和类型转换中的优势，并提供了相关标准定义的参考链接，帮助读者深入理解POD类型的重要性和应用场景。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/21/2021-04-28-C++POD%E7%9A%84%E4%BB%8B%E7%BB%8D/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">C++ 观察者设计模式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:28:18" itemprop="dateModified" datetime="2025-01-22T16:28:18+08:00">2025-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文介绍了C++中的观察者设计模式，通过代码示例展示了如何实现一个简单的观察者模式。观察者模式允许对象（观察者）订阅另一个对象（被观察者）的状态变化，并在状态变化时自动接收通知。文章通过<code>subscriber</code>和<code>observer</code>类的实现，演示了如何注册观察者、广播消息以及处理观察者的生命周期。该模式适用于需要解耦对象间依赖关系的场景，如事件处理系统。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/21/2020-12-16-C++%E8%A7%82%E5%AF%9F%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-15-C++%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2020-12-15-C++%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/" class="post-title-link" itemprop="url">C++ 指针与引用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:33:46" itemprop="dateModified" datetime="2025-01-22T16:33:46+08:00">2025-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文详细探讨了C++中指针与引用的区别与应用场景。指针可以为空，支持偏移操作，常用于修改变量和高效传递对象；而引用必须初始化，不可为空，且不支持四则运算，但同样能直接修改对象并减少复制成本。文章通过代码示例展示了指针和引用的具体用法，帮助读者理解两者的核心差异及其在编程中的实际应用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/21/2020-12-15-C++%E6%8C%87%E9%92%88%E4%B8%8E%E5%BC%95%E7%94%A8/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-14-%20%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2020-12-14-%20%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)/" class="post-title-link" itemprop="url">《Effective Modern C++》读书笔记(2)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:45:55" itemprop="dateModified" datetime="2025-01-22T16:45:55+08:00">2025-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文深入探讨了《Effective Modern C++》中的关键概念，重点分析了C++11/14中的初始化方式、特种成员函数生成机制以及<code>auto</code>和<code>decltype</code>的类型推导规则。文章详细介绍了大括号初始化的优势与陷阱，强调了其在阻止隐式窄化转换和避免解析歧义中的作用。同时，文章还解析了移动操作、复制操作和析构函数的生成条件，帮助读者理解如何正确管理资源。最后，文章对比了<code>auto</code>和模板类型推导的异同，并总结了<code>decltype</code>的行为特点，为现代C++编程提供了实用指导。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/21/2020-12-14-%20%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -315,6 +603,78 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/07/21/2020-12-11-C++%20%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%AE%80%E4%BB%8B%E4%B8%8E%E9%94%99%E8%AF%AF%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">C++ 类内默认成员函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-21 13:28:45" itemprop="dateCreated datePublished" datetime="2023-07-21T13:28:45+08:00">2023-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:51:05" itemprop="dateModified" datetime="2025-01-22T16:51:05+08:00">2025-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在C++中，类的默认成员函数包括默认构造函数、析构函数、拷贝构造函数、移动构造函数、拷贝赋值运算符和移动赋值运算符。如果未显式定义，编译器会自动生成这些函数。默认函数的生成依赖于类成员的类型特性，特别是在涉及const或引用成员时。编译器不会为某些类合成移动操作，尤其是当类定义了自己的拷贝控制成员时。移动操作不同于拷贝操作，不会隐式定义为删除的函数，但在某些条件下可能被定义为删除的。理解这些默认函数的生成和依赖关系，有助于编写更高效和安全的C++代码。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/21/2020-12-11-C++%20%E7%B1%BB%E5%86%85%E9%BB%98%E8%AE%A4%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -573,416 +933,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/12/13/2020-12-13-%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%20/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/13/2020-12-13-%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%20/" class="post-title-link" itemprop="url">《Effective Modern C++》读书笔记(1)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-13 10:19:33" itemprop="dateCreated datePublished" datetime="2020-12-13T10:19:33+08:00">2020-12-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 16:50:04" itemprop="dateModified" datetime="2025-01-22T16:50:04+08:00">2025-01-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">c++ 读书笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>《Effective Modern C++》读书笔记中，作者详细讲解了C++11/14中<code>std::move</code>与<code>std::forward</code>的使用。<code>T&amp;&amp;</code>在模板中有两种含义：右值引用和万能引用。万能引用可用于完美转发，但需谨慎使用<code>std::move</code>和<code>std::forward</code>，避免意外的左值改动。完美转发可能在大括号初始化、重载函数名、模板名及位域传参时失败。位域传参需传递副本。本文通过代码示例，深入探讨右值引用、万能引用的特性及其在实际应用中的注意事项，帮助读者更好地理解和应用现代C++特性。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/12/13/2020-12-13-%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%20/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/12/09/2020-12-09-C++%20lambda%20%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/09/2020-12-09-C++%20lambda%20%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">C++ lambda表达式</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-09 20:48:47" itemprop="dateCreated datePublished" datetime="2020-12-09T20:48:47+08:00">2020-12-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 16:56:23" itemprop="dateModified" datetime="2025-01-22T16:56:23+08:00">2025-01-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>C++11引入的lambda表达式提供了按引用和按值两种捕获模式。在使用按引用捕获时，需警惕空悬引用问题，即闭包内的引用可能指向已销毁的局部变量或形参。</p>
-<p>按值捕获虽然避免了空悬引用，但在捕获类成员时，仅捕获<code>this</code>指针的副本，而非成员变量的副本。lambda表达式不能捕获<code>static</code>变量，只能按引用使用。</p>
-<p>相比于<code>std::bind</code>，lambda表达式更灵活，特别是在处理函数重载和延迟计算时，lambda表达式更具优势，建议优先使用。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/12/09/2020-12-09-C++%20lambda%20%E8%A1%A8%E8%BE%BE%E5%BC%8F/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/11/05/2020-11-04-%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(4)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/05/2020-11-04-%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(4)/" class="post-title-link" itemprop="url">《C++ 并发编程实战》读书笔记(4)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-05 14:05:47" itemprop="dateCreated datePublished" datetime="2020-11-05T14:05:47+08:00">2020-11-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 17:00:52" itemprop="dateModified" datetime="2025-01-22T17:00:52+08:00">2025-01-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">c++ 读书笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在《C++ 并发编程实战》读书笔记中，作者介绍了屏障和无锁数据结构的概念。屏障（或内存障碍）用于强制内存顺序，确保某些操作的执行顺序不被编译器或硬件重排。无锁数据结构允许多个线程并发访问，避免了传统锁机制带来的阻塞问题。无锁数据结构具有更高的并发性和健壮性，但可能导致活锁或降低整体性能。通过代码示例，作者展示了如何实现无锁栈数据结构，并讨论了其优缺点。理解并应用这些并发编程技术，可以显著提高程序的性能和可靠性。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/05/2020-11-04-%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(4)/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/11/04/2020-11-04%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(3)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/04/2020-11-04%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(3)/" class="post-title-link" itemprop="url">《C++ 并发编程实战》读书笔记(3)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-04 16:53:47" itemprop="dateCreated datePublished" datetime="2020-11-04T16:53:47+08:00">2020-11-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 16:57:30" itemprop="dateModified" datetime="2025-01-22T16:57:30+08:00">2025-01-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">c++ 读书笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在C++中的多线程编程中，<code>synchronizes-with</code>关系用于确保线程间的同步，主要通过原子操作实现。</p>
-<p><code>happens-before</code>关系则用于定义操作的执行顺序，确保一个操作的结果在另一个操作之前可见。原子操作的内存顺序有六种：<code>memory_order_relaxed</code>、<code>memory_order_consume</code>、<code>memory_order_acquire</code>、<code>memory_order_release</code>、<code>memory_order_acq_rel</code>和<code>memory_order_seq_cst</code>。</p>
-<p>其中，<code>memory_order_seq_cst</code>提供最严格的顺序一致性，而<code>memory_order_relaxed</code>则允许最大程度的重排序。</p>
-<p>获取-释放顺序在同步线程间数据时提供了一种平衡性能和一致性的方式。通过合理选择内存顺序，可以在性能和线程安全之间找到最佳平衡。本文通过代码示例详细解释了这些概念的应用和区别。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/04/2020-11-04%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(3)/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/11/03/2020-11-03-C++%20visit%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/03/2020-11-03-C++%20visit%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">C++ std::visit介绍</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-03 11:07:23" itemprop="dateCreated datePublished" datetime="2020-11-03T11:07:23+08:00">2020-11-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-22 17:03:39" itemprop="dateModified" datetime="2025-01-22T17:03:39+08:00">2025-01-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文深入探讨了C++中的<code>std::visit</code>及其在变体类型（<code>std::variant</code>）中的应用。通过多个示例，展示了如何使用<code>std::visit</code>访问变体类型中的值，并介绍了如何通过重载的<code>operator()</code>实现多态行为。文章还展示了如何利用模板和宏简化<code>std::visit</code>的使用，使其更加灵活和易读。核心代码片段展示了如何通过<code>overload</code>结构体和宏封装实现类型匹配和访问，为处理复杂变体类型提供了高效的工具。本文为C++开发者提供了实用的技巧，帮助他们在实际项目中更好地使用<code>std::visit</code>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/03/2020-11-03-C++%20visit%E4%BB%8B%E7%BB%8D/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1052,7 +1002,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1063,7 +1013,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

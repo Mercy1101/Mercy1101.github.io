@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="下面将对四个多智能体（Multi-agent）框架——LangGraph、MetaGPT、CAMEL、Crewl——的主要功能、特点以及它们之间的异同点和优缺点进行简单介绍与对比。需要注意的是，这些框架都处在快速演进中，以下总结基于现有的公开信息，仅作参考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智能体开源框架对比">
+<meta property="og:url" content="https://mercy1101.github.io/2025/03/19/2025-03-19-%E6%99%BA%E8%83%BD%E4%BD%93%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94/index.html">
+<meta property="og:site_name" content="李建聪的博客">
+<meta property="og:description" content="下面将对四个多智能体（Multi-agent）框架——LangGraph、MetaGPT、CAMEL、Crewl——的主要功能、特点以及它们之间的异同点和优缺点进行简单介绍与对比。需要注意的是，这些框架都处在快速演进中，以下总结基于现有的公开信息，仅作参考。">
+<meta property="og:locale">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-19-%E6%99%BA%E8%83%BD%E4%BD%93%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94/%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94-%E6%9D%8E%E5%BB%BA%E8%81%AA.png">
+<meta property="article:published_time" content="2025-03-19T05:51:00.000Z">
+<meta property="article:modified_time" content="2025-03-21T09:34:35.879Z">
+<meta property="article:author" content="李建聪">
+<meta property="article:tag" content="AI生成">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="智能体">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mercy1101.github.io/resource/2025-03-19-%E6%99%BA%E8%83%BD%E4%BD%93%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94/%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94-%E6%9D%8E%E5%BB%BA%E8%81%AA.png">
+
+<link rel="canonical" href="https://mercy1101.github.io/2025/03/19/2025-03-19-%E6%99%BA%E8%83%BD%E4%BD%93%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>智能体开源框架对比 | 李建聪的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">李建聪的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2025/03/19/2025-03-19-%E6%99%BA%E8%83%BD%E4%BD%93%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          智能体开源框架对比
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-03-19 13:51:00" itemprop="dateCreated datePublished" datetime="2025-03-19T13:51:00+08:00">2025-03-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-03-21 17:34:35" itemprop="dateModified" datetime="2025-03-21T17:34:35+08:00">2025-03-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/resource/2025-03-19-%E6%99%BA%E8%83%BD%E4%BD%93%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94/%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6%E5%AF%B9%E6%AF%94-%E6%9D%8E%E5%BB%BA%E8%81%AA.png" alt=""></p>
+<p>下面将对四个多智能体（Multi-agent）框架——<strong>LangGraph</strong>、<strong>MetaGPT</strong>、<strong>CAMEL</strong>、<strong>Crewl</strong>——的主要功能、特点以及它们之间的异同点和优缺点进行简单介绍与对比。需要注意的是，这些框架都处在快速演进中，以下总结基于现有的公开信息，仅作参考。</p>
+<span id="more"></span>
+<h2 id="1-LangGraph">1. LangGraph</h2>
+<h3 id="1-1-功能概述">1.1 功能概述</h3>
+<ul>
+<li><strong>定位与理念</strong><br>
+LangGraph 旨在以“图”或“流程”的方式来编排多个大语言模型（Large Language Models，LLM）Agent 的交互、数据流与依赖关系。它将多 Agent 系统抽象为节点与边，通过可视化或配置化的工作流（Workflow），让开发者在一个“图”式框架中管理 Agent 间的协作。</li>
+<li><strong>主要特点</strong>
+<ol>
+<li>使用“Graph”抽象：将 Agent 的输入输出、任务依赖映射为“节点”和“边”。</li>
+<li>关注工作流可视化：对多 Agent 的调用顺序、条件分支、数据传递进行可视化或可配置管理。</li>
+<li>侧重组件化：提供对常见功能（如检索、总结、对话、插件调用等）的组件式封装，方便复用与组合。</li>
+</ol>
+</li>
+</ul>
+<h3 id="1-2-优势与不足">1.2 优势与不足</h3>
+<ul>
+<li>
+<p><strong>优势</strong></p>
+<ul>
+<li><strong>流程化管理</strong>：可以方便地定义多智能体之间的调用顺序或条件分支，让多 Agent 协作更直观、更易维护。</li>
+<li><strong>可视化</strong>：对较为复杂的 Agent 协作流程，图式或流程式管理能更好地帮助团队理解、调试与扩展。</li>
+<li><strong>扩展性</strong>：通过类似“节点-连线”的形式，可以灵活插入新的 Agent 节点或新的工具插件。</li>
+</ul>
+</li>
+<li>
+<p><strong>不足</strong></p>
+<ul>
+<li><strong>学习成本</strong>：如果对“工作流”或“图”这种编排方式不熟悉，需要额外的学习与适应。</li>
+<li><strong>场景局限</strong>：在一些简单的单一 Agent 或者交互较少的场景，LangGraph 可能略显“重”，需要的配置与维护工作量更大。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-MetaGPT">2. MetaGPT</h2>
+<h3 id="2-1-功能概述">2.1 功能概述</h3>
+<ul>
+<li><strong>定位与理念</strong><br>
+MetaGPT 最初以“多角色协同”生成软件项目的代码与文档而著称：它通过模拟“PM（产品经理）”、“Architect（架构师）”、“工程师（工程师团队）”、“测试”等角色，让多个 LLM Agent 分工协作、讨论与生成。现在也可扩展到更多场景。</li>
+<li><strong>主要特点</strong>
+<ol>
+<li><strong>角色分工</strong>：通过设定不同的角色（Product Manager, Developer, Architect, Tester 等）来处理各自职责范围的内容。</li>
+<li><strong>多轮对话协作</strong>：角色之间能够基于上下文多轮交互，推进项目或任务的执行。</li>
+<li><strong>侧重软件工程场景</strong>：从问题分析、需求文档、代码实现到测试的链条较为完整。</li>
+</ol>
+</li>
+</ul>
+<h3 id="2-2-优势与不足">2.2 优势与不足</h3>
+<ul>
+<li>
+<p><strong>优势</strong></p>
+<ul>
+<li><strong>清晰的角色定位</strong>：对软件工程类任务而言，能够模拟出一个初步的“团队”协同工作流程，让生成内容更符合工程实践。</li>
+<li><strong>上下文关联</strong>：多轮对话和分工机制，可以对大项目分块进行，协作效率更高。</li>
+<li><strong>可扩展到通用多智能体场景</strong>：不止代码生成，也可在其它需要多角色分工的场景进行探索。</li>
+</ul>
+</li>
+<li>
+<p><strong>不足</strong></p>
+<ul>
+<li><strong>针对性</strong>：目前最突出的功能依旧是生成软件工程相关文档、代码，对其他类型的多智能体场景支持相对有限，需要自行扩展。</li>
+<li><strong>复杂度</strong>：对小规模的需求，直接扮演“多角色”可能显得繁琐；同时也需要对对话策略、角色配置有一定的理解与调优。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="3-CAMEL">3. CAMEL</h2>
+<h3 id="3-1-功能概述">3.1 功能概述</h3>
+<ul>
+<li><strong>定位与理念</strong><br>
+CAMEL（有时写作 Camel）是一个多智能体对话与角色扮演的框架，着重在“让两个或多个大语言模型通过给定角色和目标进行深入对话”，并在这个过程中实现推理或任务完成。其核心概念是通过“System Prompt”约束和“角色设定”，让模型之间产生协作或对话式演绎，进而生成解决方案。</li>
+<li><strong>主要特点</strong>
+<ol>
+<li><strong>双向/多向对话代理</strong>：常见是“用户代理”和“助手代理”，它们根据系统指令（System Prompt）进行讨论，从而得出更完善的答案。</li>
+<li><strong>角色扮演策略</strong>：可以为每个 Agent 定义角色（如：Python 程序员、产品经理、学术研究者等），使对话内容具备一定风格或专业性。</li>
+<li><strong>动态对话</strong>：各 Agent 可以相互质疑或补充，从而进行推敲式的内容生成。</li>
+</ol>
+</li>
+</ul>
+<h3 id="3-2-优势与不足">3.2 优势与不足</h3>
+<ul>
+<li>
+<p><strong>优势</strong></p>
+<ul>
+<li><strong>多角色多视角</strong>：通过不同角色的模拟对话，往往能得到较深度的推理过程与更丰富的输出。</li>
+<li><strong>操作简便</strong>：很多情况下只需定义好两个或多个角色的 System Prompt，然后让它们直接“对话”即可，不需要太复杂的“图”或“工作流”机制。</li>
+<li><strong>拓展性</strong>：可将多角色协作扩展到教学、问答、代码审阅等多种场景。</li>
+</ul>
+</li>
+<li>
+<p><strong>不足</strong></p>
+<ul>
+<li><strong>可控度</strong>：纯粹依赖“对话式”策略时，如果任务复杂、需要执行多个外部工具或存在复杂的依赖流程，管理和调试就不如基于工作流或更加工程化的方案方便。</li>
+<li><strong>上下文规模</strong>：随着角色和轮次增多，Prompt 长度和上下文管理会成为瓶颈，需要一定策略去剪枝或总结。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="4-Crewl">4. Crewl</h2>
+<h3 id="4-1-功能概述">4.1 功能概述</h3>
+<ul>
+<li><strong>定位与理念</strong><br>
+Crewl 是一个相对新兴的多智能体编排与协作框架，目标是让多个 LLM 代理像一个“团队”一样并行或分步工作。它关注在灵活地组合多个 Agent，处理不同的任务或不同阶段，并提供对任务拆解、上下文共享的支持。</li>
+<li><strong>主要特点</strong>
+<ol>
+<li><strong>并行化或分阶段执行</strong>：允许多个 Agent 同时处理各自子任务，或按顺序阶段性交接。</li>
+<li><strong>上下文管理</strong>：提供一定的上下文机制，在 Agent 之间共享或传递关键信息。</li>
+<li><strong>通用性</strong>：对具体场景不做太多限制，更多地想成为一个“编排层”，让开发者自由定制。</li>
+</ol>
+</li>
+</ul>
+<h3 id="4-2-优势与不足">4.2 优势与不足</h3>
+<ul>
+<li>
+<p><strong>优势</strong></p>
+<ul>
+<li><strong>编排灵活</strong>：可以并行化多个子任务，也可以顺序化协作；适合需要“多线程”或“流水线式”处理的场景。</li>
+<li><strong>任务拆解</strong>：对任务进行自动/半自动拆解和分配，有利于复杂任务的分工与合并。</li>
+<li><strong>关注团队式协同</strong>：类似于给一组“微服务”做调度，但主体换成了 LLM Agent。</li>
+</ul>
+</li>
+<li>
+<p><strong>不足</strong></p>
+<ul>
+<li><strong>成熟度</strong>：相对其他人气更高的项目，Crewl 在社区生态、文档与最佳实践上可能还不够完善，需要更多探索和经验分享。</li>
+<li><strong>集成度</strong>：需要与其他工具（如数据库检索、插件接口等）配合时，还要自行或依赖社区进行二次封装与整合。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="5-总体对比">5. 总体对比</h2>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>主要特点</th>
+<th>优势</th>
+<th>不足</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LangGraph</strong></td>
+<td>以图或工作流编排多 Agent</td>
+<td>1. 流程化可视化管理<br>2. 组件化易扩展</td>
+<td>1. 学习成本较高<br>2. 对小任务显得偏“重”</td>
+<td>复杂流程、多步依赖、可视化</td>
+</tr>
+<tr>
+<td><strong>MetaGPT</strong></td>
+<td>多角色协同，尤以软件开发见长</td>
+<td>1. 清晰的角色定位<br>2. 适合工程链条</td>
+<td>1. 主要针对软件工程<br>2. 复杂度较高</td>
+<td>软件项目、工程角色扮演</td>
+</tr>
+<tr>
+<td><strong>CAMEL</strong></td>
+<td>多角色对话与角色扮演</td>
+<td>1. 多视角推理<br>2. 操作相对简单</td>
+<td>1. 复杂依赖管理有限<br>2. Prompt 上下文可能变冗长</td>
+<td>QA、对话式场景、教学、代码审阅等</td>
+</tr>
+<tr>
+<td><strong>Crewl</strong></td>
+<td>并行化或管线式多 Agent 编排</td>
+<td>1. 并行或分阶段执行<br>2. 灵活任务拆解</td>
+<td>1. 生态相对不成熟<br>2. 需要更多实践经验</td>
+<td>多子任务并发处理、分布式团队协作</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>如果你需要<strong>可视化和流程控制</strong>：LangGraph 和 Crewl 都可以承担“编排/管线”角色。其中，LangGraph 倾向用“图”的形式做可视化，Crewl 强调并行或分阶段。</li>
+<li>如果你<strong>专注软件工程场景</strong>：MetaGPT 提供了比较完整的软件项目角色化落地方案，从需求到开发再到测试的一体化对话。</li>
+<li>如果你希望<strong>快速实现多角色对话</strong>：CAMEL 比较轻量级；它的“角色扮演”对于一些需要多视角讨论的任务非常直接且简单易懂。</li>
+</ul>
+<hr>
+<h2 id="6-结论与选择建议">6. 结论与选择建议</h2>
+<ul>
+<li><strong>LangGraph</strong> 更像是一个工作流式的“框架”和“可视化工具”，对多智能体的“流程编排”与“数据流管理”做了良好的抽象；适合对多步、多阶段流程有清晰需求并注重可视化和可扩展性的项目。</li>
+<li><strong>MetaGPT</strong> 更适合在软件工程流程中落地，强调从需求、设计、开发到测试的多角色模拟。如果你的主要目标是让 AI 团队“扮演”软件开发者甚至管理者，并生成符合工程规范的产物，这个项目值得重点关注。</li>
+<li><strong>CAMEL</strong> 用最简洁的“多角色对话”模式来获得更深入的推理或更丰富的答案，门槛相对较低。但在执行更复杂、多步骤的工作时，需要自己进一步管理上下文与流程。</li>
+<li><strong>Crewl</strong> 在“多 Agent 并行或流水线”执行方面较具特色，提供更灵活的拆解与执行模式，但目前社区文档和成熟度可能弱一些，适合愿意尝鲜或需要自定义程度较高的团队尝试。</li>
+</ul>
+<p>综上所述，四个框架都有各自的设计侧重与成熟度取向。具体选择时，应根据项目需求（如需要可视化的工作流、是否聚焦于软件工程、是否只做对话式推理、需要并行还是顺序编排等）来做权衡。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI%E7%94%9F%E6%88%90/" rel="tag"># AI生成</a>
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/Agent/" rel="tag"># Agent</a>
+              <a href="/tags/%E6%99%BA%E8%83%BD%E4%BD%93/" rel="tag"># 智能体</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/16/2025-03-19-%E6%95%8F%E6%8D%B7%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" rel="prev" title="敏捷软件开发流程">
+      <i class="fa fa-chevron-left"></i> 敏捷软件开发流程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/03/21/2025-03-21-%E5%A4%9A%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/" rel="next" title="多语言版本软件设计">
+      多语言版本软件设计 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-LangGraph"><span class="nav-number">1.</span> <span class="nav-text">1. LangGraph</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%8A%9F%E8%83%BD%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 功能概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%BC%98%E5%8A%BF%E4%B8%8E%E4%B8%8D%E8%B6%B3"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 优势与不足</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-MetaGPT"><span class="nav-number">2.</span> <span class="nav-text">2. MetaGPT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%8A%9F%E8%83%BD%E6%A6%82%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 功能概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%BC%98%E5%8A%BF%E4%B8%8E%E4%B8%8D%E8%B6%B3"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 优势与不足</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-CAMEL"><span class="nav-number">3.</span> <span class="nav-text">3. CAMEL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%8A%9F%E8%83%BD%E6%A6%82%E8%BF%B0"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 功能概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%BC%98%E5%8A%BF%E4%B8%8E%E4%B8%8D%E8%B6%B3"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 优势与不足</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Crewl"><span class="nav-number">4.</span> <span class="nav-text">4. Crewl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%8A%9F%E8%83%BD%E6%A6%82%E8%BF%B0"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 功能概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%BC%98%E5%8A%BF%E4%B8%8E%E4%B8%8D%E8%B6%B3"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 优势与不足</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%80%BB%E4%BD%93%E5%AF%B9%E6%AF%94"><span class="nav-number">5.</span> <span class="nav-text">5. 总体对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%BB%93%E8%AE%BA%E4%B8%8E%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="nav-number">6.</span> <span class="nav-text">6. 结论与选择建议</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

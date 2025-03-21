@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mercy1101.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="PVE系统中安装OpenWrt">
+<meta property="og:url" content="https://mercy1101.github.io/2025/03/12/2025-03-12-PVE%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%AE%89%E8%A3%85OpenWrt/index.html">
+<meta property="og:site_name" content="李建聪的博客">
+<meta property="og:locale">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/PVE%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%AE%89%E8%A3%85OpenWrt-%E6%9D%8E%E5%BB%BA%E8%81%AA.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-11-42.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-15-40.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-29-00.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-37-36.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-38-45.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-39-27.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-40-06.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-40-28.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-40-53.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-42-00.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-42-31.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-43-56.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-44-40.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-52-25.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_18-16-01.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_18-24-10.png">
+<meta property="og:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_18-23-12.png">
+<meta property="article:published_time" content="2025-03-12T07:25:00.000Z">
+<meta property="article:modified_time" content="2025-03-21T09:17:57.109Z">
+<meta property="article:author" content="李建聪">
+<meta property="article:tag" content="PVE">
+<meta property="article:tag" content="OpenWrt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mercy1101.github.io/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/PVE%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%AE%89%E8%A3%85OpenWrt-%E6%9D%8E%E5%BB%BA%E8%81%AA.png">
+
+<link rel="canonical" href="https://mercy1101.github.io/2025/03/12/2025-03-12-PVE%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%AE%89%E8%A3%85OpenWrt/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>PVE系统中安装OpenWrt | 李建聪的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">李建聪的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2025/03/12/2025-03-12-PVE%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%AE%89%E8%A3%85OpenWrt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PVE系统中安装OpenWrt
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-03-12 15:25:00" itemprop="dateCreated datePublished" datetime="2025-03-12T15:25:00+08:00">2025-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-03-21 17:17:57" itemprop="dateModified" datetime="2025-03-21T17:17:57+08:00">2025-03-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/PVE%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%AE%89%E8%A3%85OpenWrt-%E6%9D%8E%E5%BB%BA%E8%81%AA.png" alt=""></p>
+<span id="more"></span>
+<h2 id="目的">目的</h2>
+<p>为了解决 PVE 中的虚拟机科学上网问题，在 OpenWrt 中使用统一的 OpenClash 为虚拟机提供上网服务。</p>
+<h2 id="硬件与软件版本">硬件与软件版本</h2>
+<ul>
+<li>电脑主板网口: 用作 PVE 系统管理口</li>
+<li>PCIe RTL 8125B 2.5G 网卡: 用作接入 OpenWrt 的外部网口 (WAN口)</li>
+</ul>
+<h2 id="网络拓扑">网络拓扑</h2>
+<p>TODO 网络拓扑</p>
+<h2 id="OpenWrt-安装步骤">OpenWrt 安装步骤</h2>
+<p>PVE 建立网桥, 作为 OpenWrt 的<code>WAN</code>口和<code>LAN</code>口。</p>
+<ol>
+<li>
+<p>安装好驱动的物理网口(<code>ens1</code>)作为 OpenWrt 的 <code>WAN</code> 口（连接外部网络）</p>
+</li>
+<li>
+<p>创建一个新的网桥（vmbr1）作为 OpenWrt 的 <code>LAN</code> 口（用于内部虚拟机通信）</p>
+</li>
+<li>
+<p>其他虚拟机连接到 OpenWrt 提供的 LAN 网络</p>
+</li>
+<li>
+<p>ens1(网口名称)-&gt;vmbr1(网桥名称)-&gt;OpenWRT WAN 口</p>
+</li>
+<li>
+<p>OpenWRT LAN 口 -&gt; vmbr2(网桥名称) -&gt; 虚拟机网卡</p>
+</li>
+</ol>
+<p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-11-42.png" alt=""></p>
+<p>WAN 口网桥桥接网口 <code>ens1</code></p>
+<p>注: 物理网口的网卡名称可以使用 <code>ip link show</code> 或 <code>ifconfig</code> 获取</p>
+<p>创建 <code>OpenWRT</code> <code>WAN</code> 口网桥 <code>vmbr1</code>：</p>
+<ol>
+<li>在 PVE Web 界面，进入 Datacenter -&gt; Node -&gt; Network。</li>
+<li>点击 “Create” -&gt; “Linux Bridge”，填写：<br>
+• 名称: vmbr1<br>
+• 桥接端口: ens1<br>
+• IPv4/IPv6: 设为 无（None）<br>
+• Autostart: 选中 ✔</li>
+<li>点击 “Create” 并 应用更改。</li>
+</ol>
+<p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-15-40.png" alt=""></p>
+<p>创建 <code>OpenWRT</code> <code>LAN</code> 口网桥 <code>vmbr2</code>:</p>
+<ol>
+<li>在 PVE Web 界面，点击 “Create” -&gt; “Linux Bridge”。</li>
+<li>填写如下信息：<br>
+• 名称: vmbr2<br>
+• 桥接端口: 为空（如果需要给外部设备提供网关功能，则填写对应网口即可）<br>
+• IPv4/IPv6: 设为 无（None）<br>
+• Autostart: 选中 ✔</li>
+<li>点击 “Create” 并 应用更改</li>
+</ol>
+<p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-29-00.png" alt=""></p>
+<p>到 <a target="_blank" rel="noopener" href="https://openwrt.org/zh/downloads">OpenWrt 官网</a>, 下载对应固件。</p>
+<p>我的设备是 <code>x86</code> 的所以下载固件 <a target="_blank" rel="noopener" href="https://downloads.openwrt.org/releases/24.10.0/targets/x86/64/openwrt-24.10.0-x86-64-generic-ext4-combined-efi.img.gz">penwrt-24.10.0-x86-64-generic-ext4-combined-efi.img.gz</a></p>
+<p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-37-36.png" alt=""><br>
+<img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-38-45.png" alt=""><br>
+<img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-39-27.png" alt=""><br>
+<img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-40-06.png" alt=""><br>
+<img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-40-28.png" alt=""><br>
+<img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-40-53.png" alt=""><br>
+<img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-42-00.png" alt=""><br>
+<img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-42-31.png" alt=""></p>
+<p>查看已经创建好的 OpenWrt 虚拟机，把 LAN 口网桥也添加上去</p>
+<p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-43-56.png" alt=""></p>
+<p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-44-40.png" alt=""></p>
+<p>为 OpenWrt 导入系统镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">qm importdisk 100 openwrt-24.10.0-x86-64-generic-ext4-combined-efi.img local-lvm # 导入 openwrt 系统镜像到硬盘</span><br><span class="line">qm set 100 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-100-disk-0 # 设置该硬盘属性</span><br><span class="line">qm set 100 --boot c --bootdisk scsi0 # 设置该虚拟机启动盘</span><br></pre></td></tr></table></figure>
+<p>将如上</p>
+<ol>
+<li><code>openwrt-24.10.0-x86-64-generic-ext4-combined-efi.img</code> 替换为自己的上传镜像的路径和文件名</li>
+<li><code>100</code> 替换为你的 <code>VM ID</code></li>
+<li>将 <code>local-lvm</code> 替换为你想要安装 <code>OpenWrt</code> 系统的硬盘</li>
+</ol>
+<p>如果想要对系统盘扩容，可执行如下操作:</p>
+<p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_17-52-25.png" alt=""></p>
+<p>配置完网口和硬盘后, 可以启动系统</p>
+<p>进入 OpenWrt 系统后, 配置 <code>WAN</code> 口和 <code>LAN</code> 口地址</p>
+<p>这俩我想要 LAN 口下的设备都为 <code>192.168.27.xx</code> 在配置文件中找到如下片段，改为如下配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/config/network</span><br><span class="line"></span><br><span class="line">config interface &#x27;lan&#x27;</span><br><span class="line">	option device &#x27;br-lan&#x27;</span><br><span class="line">	option proto &#x27;static&#x27;</span><br><span class="line">	option ipaddr &#x27;192.168.27.1&#x27;</span><br><span class="line">	option netmask &#x27;255.255.255.0&#x27;</span><br><span class="line">	option gateway &#x27;192.168.27.1&#x27;</span><br><span class="line">	option ip6assign &#x27;60&#x27;</span><br></pre></td></tr></table></figure>
+<p>在同文件中，修改 WAN 口配置, 配置为静态地址方便后续 SSH</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">config interface &#x27;wan&#x27;</span><br><span class="line">	option device &#x27;eth1&#x27;</span><br><span class="line">	option proto &#x27;static&#x27;</span><br><span class="line">	option gateway &#x27;17.9.1.254&#x27;</span><br><span class="line">	list ipaddr &#x27;192.0.1.67/24&#x27;</span><br><span class="line">	list dns &#x27;8.8.8.8&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>重启网络服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/network restart</span><br></pre></td></tr></table></figure>
+<p>在外部设备上 ping 其 WAN 口地址，以确认其 WAN 口静态地址设置成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping 192.0.1.67</span><br></pre></td></tr></table></figure>
+<p>检查 SSH 是否已启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -tlnp | grep dropbear</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果输出中包含 0.0.0.0:22，表示 SSH 监听在所有 IP，已经开启</span></span><br></pre></td></tr></table></figure>
+<p>如果没有启动则</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动 SSH 服务</span></span><br><span class="line">/etc/init.d/dropbear start</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开机自启</span></span><br><span class="line">/etc/init.d/dropbear enable</span><br></pre></td></tr></table></figure>
+<p>设置 SSH 服务可以穿过防火墙</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/config/firewall</span><br><span class="line"></span><br><span class="line">config rule</span><br><span class="line">	option name &#x27;Allow-ISAKMP&#x27;</span><br><span class="line">	option src &#x27;wan&#x27;</span><br><span class="line">	option dest &#x27;lan&#x27;</span><br><span class="line">	option dest_port &#x27;500&#x27;</span><br><span class="line">	option proto &#x27;udp&#x27;</span><br><span class="line">	option target &#x27;ACCEPT&#x27;</span><br><span class="line"></span><br><span class="line">config rule &#x27;allow_ssh&#x27;</span><br><span class="line">	option name &#x27;Allow-SSH&#x27;</span><br><span class="line">	option src &#x27;wan&#x27;</span><br><span class="line">	option proto &#x27;tcp&#x27;</span><br><span class="line">	option dest_port &#x27;22&#x27;</span><br><span class="line">	option target &#x27;ACCEPT&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">uci commit firewall</span><br><span class="line">/etc/init.d/firewall restart</span><br></pre></td></tr></table></figure>
+<p>使用 <code>passwd</code> 命令设置 <code>root</code> 密码</p>
+<p>在外部可以 ping 通 OpenWrt WAN 口的设备上</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.0.1.67</span><br></pre></td></tr></table></figure>
+<h2 id="使用网页">使用网页</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/config/firewall</span><br><span class="line"></span><br><span class="line">config rule</span><br><span class="line">	option name &#x27;Allow-HTTP&#x27;</span><br><span class="line">	option src &#x27;lan&#x27;</span><br><span class="line">	option dest_port &#x27;80&#x27;</span><br><span class="line">	option proto &#x27;tcp&#x27;</span><br><span class="line">	option target &#x27;ACCEPT&#x27;</span><br><span class="line"></span><br><span class="line">config rule</span><br><span class="line">	option name &#x27;Allow-HTTP-WAN&#x27;</span><br><span class="line">	option src &#x27;wan&#x27;</span><br><span class="line">	option dest_port &#x27;80&#x27;</span><br><span class="line">	option proto &#x27;tcp&#x27;</span><br><span class="line">	option target &#x27;ACCEPT&#x27;</span><br><span class="line"></span><br><span class="line">uci commit firewall</span><br><span class="line">/etc/init.d/firewall restart</span><br></pre></td></tr></table></figure>
+<p>在浏览器中，输入对用 ip 地址进行访问 <a target="_blank" rel="noopener" href="http://192.0.1.67">http://192.0.1.67</a></p>
+<p>使用刚才配置的 root 密码进入主界面</p>
+<p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_18-16-01.png" alt=""></p>
+<p>同步一下时间，便于后续安装软件</p>
+<p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_18-24-10.png" alt=""></p>
+<p>参考资料: <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/apze0rw2/">超详细,多图 PVE 安装 OpenWRT 教程(个人记录)</a></p>
+<h2 id="安装-OpenClash">安装 OpenClash</h2>
+<p>下载安装包 <a target="_blank" rel="noopener" href="https://github.com/vernesong/OpenClash/releases">vernesong/OpenClash Releases</a>, 我下载的是 <a target="_blank" rel="noopener" href="https://github.com/vernesong/OpenClash/releases/download/v0.46.079/luci-app-openclash_0.46.079_all.ipk">v0.46.079</a></p>
+<p>导入 OpenWrt 中, 先安装依赖，再安装 ipk 包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">opkg update</span><br><span class="line">opkg install bash iptables dnsmasq-full curl ca-bundle ipset ip-full iptables-mod-tproxy iptables-mod-extra ruby ruby-yaml kmod-tun kmod-inet-diag unzip luci-compat luci luci-base</span><br><span class="line"></span><br><span class="line">opkg install /tmp/openclash.ipk</span><br></pre></td></tr></table></figure>
+<p>启动前请先在插件设置页面的版本更新标签下确认内核编译版本，您也可以手动下载 <a target="_blank" rel="noopener" href="https://github.com/MetaCubeX/mihomo/releases">Clash内核</a> 后解压到 /etc/openclash/core/文件夹，并将二进制文件命名为clash_meta</p>
+<p>安装后在 网页端 Service -&gt; OpenClash 界面中进入 OpenClash 配置界面</p>
+<p><img src="/resource/2025-03-12-PVE%E5%AE%89%E8%A3%85OpenWrt/Snipaste_2025-03-12_18-23-12.png" alt=""></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PVE/" rel="tag"># PVE</a>
+              <a href="/tags/OpenWrt/" rel="tag"># OpenWrt</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/11/2025-03-11-PVE8%E5%AE%89%E8%A3%85RTL8125%E7%BD%91%E5%8D%A1%E9%A9%B1%E5%8A%A8/" rel="prev" title="PVE8 安装 RTL8125 网卡驱动">
+      <i class="fa fa-chevron-left"></i> PVE8 安装 RTL8125 网卡驱动
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/03/13/2025-03-13-%E6%90%AD%E5%BB%BADocker%E5%AE%98%E6%96%B9%E7%BC%93%E5%AD%98%E9%95%9C%E5%83%8F%E6%9C%8D%E5%8A%A1/" rel="next" title="搭建Docker官方缓存镜像服务">
+      搭建Docker官方缓存镜像服务 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E4%B8%8E%E8%BD%AF%E4%BB%B6%E7%89%88%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">硬件与软件版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%8B%93%E6%89%91"><span class="nav-number">3.</span> <span class="nav-text">网络拓扑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenWrt-%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.</span> <span class="nav-text">OpenWrt 安装步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%BD%91%E9%A1%B5"><span class="nav-number">5.</span> <span class="nav-text">使用网页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-OpenClash"><span class="nav-number">6.</span> <span class="nav-text">安装 OpenClash</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">李建聪</p>
+  <div class="site-description" itemprop="description">在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jiancong Li</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

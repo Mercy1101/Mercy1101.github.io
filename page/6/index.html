@@ -180,6 +180,416 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/12/13/2020-12-13-%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/13/2020-12-13-%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%20/" class="post-title-link" itemprop="url">《Effective Modern C++》读书笔记(1)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-13 10:19:33" itemprop="dateCreated datePublished" datetime="2020-12-13T10:19:33+08:00">2020-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:50:04" itemprop="dateModified" datetime="2025-01-22T16:50:04+08:00">2025-01-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">c++ 读书笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>《Effective Modern C++》读书笔记中，作者详细讲解了C++11/14中<code>std::move</code>与<code>std::forward</code>的使用。<code>T&amp;&amp;</code>在模板中有两种含义：右值引用和万能引用。万能引用可用于完美转发，但需谨慎使用<code>std::move</code>和<code>std::forward</code>，避免意外的左值改动。完美转发可能在大括号初始化、重载函数名、模板名及位域传参时失败。位域传参需传递副本。本文通过代码示例，深入探讨右值引用、万能引用的特性及其在实际应用中的注意事项，帮助读者更好地理解和应用现代C++特性。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/13/2020-12-13-%E3%80%8AEffective%20Modern%20C++%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(1)%20/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/12/09/2020-12-09-C++%20lambda%20%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/09/2020-12-09-C++%20lambda%20%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">C++ lambda表达式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-09 20:48:47" itemprop="dateCreated datePublished" datetime="2020-12-09T20:48:47+08:00">2020-12-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:56:23" itemprop="dateModified" datetime="2025-01-22T16:56:23+08:00">2025-01-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>C++11引入的lambda表达式提供了按引用和按值两种捕获模式。在使用按引用捕获时，需警惕空悬引用问题，即闭包内的引用可能指向已销毁的局部变量或形参。</p>
+<p>按值捕获虽然避免了空悬引用，但在捕获类成员时，仅捕获<code>this</code>指针的副本，而非成员变量的副本。lambda表达式不能捕获<code>static</code>变量，只能按引用使用。</p>
+<p>相比于<code>std::bind</code>，lambda表达式更灵活，特别是在处理函数重载和延迟计算时，lambda表达式更具优势，建议优先使用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/09/2020-12-09-C++%20lambda%20%E8%A1%A8%E8%BE%BE%E5%BC%8F/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/11/05/2020-11-04-%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(4)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/05/2020-11-04-%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(4)/" class="post-title-link" itemprop="url">《C++ 并发编程实战》读书笔记(4)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-05 14:05:47" itemprop="dateCreated datePublished" datetime="2020-11-05T14:05:47+08:00">2020-11-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 17:00:52" itemprop="dateModified" datetime="2025-01-22T17:00:52+08:00">2025-01-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">c++ 读书笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在《C++ 并发编程实战》读书笔记中，作者介绍了屏障和无锁数据结构的概念。屏障（或内存障碍）用于强制内存顺序，确保某些操作的执行顺序不被编译器或硬件重排。无锁数据结构允许多个线程并发访问，避免了传统锁机制带来的阻塞问题。无锁数据结构具有更高的并发性和健壮性，但可能导致活锁或降低整体性能。通过代码示例，作者展示了如何实现无锁栈数据结构，并讨论了其优缺点。理解并应用这些并发编程技术，可以显著提高程序的性能和可靠性。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/05/2020-11-04-%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(4)/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/11/04/2020-11-04%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(3)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/04/2020-11-04%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(3)/" class="post-title-link" itemprop="url">《C++ 并发编程实战》读书笔记(3)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-04 16:53:47" itemprop="dateCreated datePublished" datetime="2020-11-04T16:53:47+08:00">2020-11-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 16:57:30" itemprop="dateModified" datetime="2025-01-22T16:57:30+08:00">2025-01-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">c++ 读书笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在C++中的多线程编程中，<code>synchronizes-with</code>关系用于确保线程间的同步，主要通过原子操作实现。</p>
+<p><code>happens-before</code>关系则用于定义操作的执行顺序，确保一个操作的结果在另一个操作之前可见。原子操作的内存顺序有六种：<code>memory_order_relaxed</code>、<code>memory_order_consume</code>、<code>memory_order_acquire</code>、<code>memory_order_release</code>、<code>memory_order_acq_rel</code>和<code>memory_order_seq_cst</code>。</p>
+<p>其中，<code>memory_order_seq_cst</code>提供最严格的顺序一致性，而<code>memory_order_relaxed</code>则允许最大程度的重排序。</p>
+<p>获取-释放顺序在同步线程间数据时提供了一种平衡性能和一致性的方式。通过合理选择内存顺序，可以在性能和线程安全之间找到最佳平衡。本文通过代码示例详细解释了这些概念的应用和区别。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/04/2020-11-04%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(3)/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/11/03/2020-11-03-C++%20visit%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="李建聪">
+      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李建聪的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/03/2020-11-03-C++%20visit%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">C++ std::visit介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-03 11:07:23" itemprop="dateCreated datePublished" datetime="2020-11-03T11:07:23+08:00">2020-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-01-22 17:03:39" itemprop="dateModified" datetime="2025-01-22T17:03:39+08:00">2025-01-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文深入探讨了C++中的<code>std::visit</code>及其在变体类型（<code>std::variant</code>）中的应用。通过多个示例，展示了如何使用<code>std::visit</code>访问变体类型中的值，并介绍了如何通过重载的<code>operator()</code>实现多态行为。文章还展示了如何利用模板和宏简化<code>std::visit</code>的使用，使其更加灵活和易读。核心代码片段展示了如何通过<code>overload</code>结构体和宏封装实现类型匹配和访问，为处理复杂变体类型提供了高效的工具。本文为C++开发者提供了实用的技巧，帮助他们在实际项目中更好地使用<code>std::visit</code>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/03/2020-11-03-C++%20visit%E4%BB%8B%E7%BB%8D/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
     <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/11/03/2020-11-03%E3%80%8AC++%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(2)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -581,501 +991,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/09/19/2020-09-19-C++%20%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E7%A4%BA%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/19/2020-09-19-C++%20%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E7%A4%BA%E4%BE%8B/" class="post-title-link" itemprop="url">C++ 回调函数示例</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-09-19 15:58:09" itemprop="dateCreated datePublished" datetime="2020-09-19T15:58:09+08:00">2020-09-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="C-回调函数示例">C++ 回调函数示例</h2>
-<p>简单示例</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;print()&quot;</span> &lt;&lt; std::endl; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">callback</span><span class="params">(std::function&lt;<span class="type">void</span>()&gt; func)</span> </span>&#123;</span><br><span class="line">  std::cout &lt;&lt; <span class="string">&quot;Enter: callback()&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">  <span class="built_in">func</span>();</span><br><span class="line">  std::cout &lt;&lt; <span class="string">&quot;Leave: callback()&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">callback</span>(print);</span><br><span class="line">  <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>输出：</p>
-<p>Enter: callback()</p>
-<p>print()</p>
-<p>Leave: callback()</p>
-</blockquote>
-<p>接下来我们把这两个函数放入类中实现，在调用的时候绑定函数名和其对应实例就可以按以上例子方法调用。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">operation</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;print()&quot;</span> &lt;&lt; std::endl; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">controller</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">callback</span><span class="params">(std::function&lt;<span class="type">void</span>()&gt; func)</span> </span>&#123;</span><br><span class="line">  std::cout &lt;&lt; <span class="string">&quot;Enter: callback()&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">  <span class="built_in">func</span>();</span><br><span class="line">  std::cout &lt;&lt; <span class="string">&quot;Leave: callback()&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  controller control;</span><br><span class="line">  operation op;</span><br><span class="line">  <span class="comment">/// 绑定实例和对应的操作函数</span></span><br><span class="line">  <span class="keyword">auto</span> f = std::<span class="built_in">bind</span>(&amp;operation::print, &amp;op);</span><br><span class="line">  control.<span class="built_in">callback</span>(f);</span><br><span class="line">  <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>现在我们把绑定函数对象的过程封装起来</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">operation</span> &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">auto</span> <span class="title">get_print_function</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> std::<span class="built_in">bind</span>(&amp;operation::print, <span class="keyword">this</span>); &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;print()&quot;</span> &lt;&lt; std::endl; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">controller</span> &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">callback</span><span class="params">(std::function&lt;<span class="type">void</span>()&gt; func)</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Enter: callback()&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">func</span>();</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Leave: callback()&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  controller control;</span><br><span class="line">  operation op;</span><br><span class="line">  control.<span class="built_in">callback</span>(op.<span class="built_in">get_print_function</span>());</span><br><span class="line">  <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/08/31/2020-08-31-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(7)%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/31/2020-08-31-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(7)%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">《Go语言学习笔记》读书笔记(7)数据结构</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-31 20:38:47" itemprop="dateCreated datePublished" datetime="2020-08-31T20:38:47+08:00">2020-08-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">Go 读书笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="数据结构">数据结构</h2>
-<h3 id="字符串">字符串</h3>
-<p>字符串是不可变字节(<code>byte</code>)序列，其本身是一个符合结构.</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> stringStruct <span class="keyword">struct</span> &#123;</span><br><span class="line">  str unsafe.Pointer</span><br><span class="line">  <span class="built_in">len</span> <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>头部指针指向字节数组，但没有<code>NULL</code>结尾。默认以<code>UTF-8</code>编码存储<code>Unicode</code>字符，字面量里允许使用十六进制、八进制和<code>UTF</code>编码格式。</p>
-<blockquote>
-<p>内置函数<code>len</code>返回字节数组长度，<code>cap</code>不接受字符串类型参数。</p>
-</blockquote>
-<p>字符串默认值不是<code>nil</code>, 而是<code>&quot;&quot;</code>.</p>
-<p>使用<code>for</code>遍历字符串是，分<code>byte</code>和<code>rune</code>两种方式。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span> <span class="params">()</span></span> &#123;	<span class="comment">// byte</span></span><br><span class="line">	s:=<span class="string">&quot;李建聪&quot;</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;%d: [%c]\n&quot;</span>, i, s[i])</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i, c := <span class="keyword">range</span> s &#123;	<span class="comment">// rune: 返回数组索引号，以及Unicode字符</span></span><br><span class="line">		fmt.Printf(<span class="string">&quot;%d: [%c]\n&quot;</span>, i, c)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">///0: [æ]</span></span><br><span class="line"><span class="comment">///1: [</span></span><br><span class="line"><span class="comment">///2: []</span></span><br><span class="line"><span class="comment">///3: [å]</span></span><br><span class="line"><span class="comment">///4: [»]</span></span><br><span class="line"><span class="comment">///5: [º]</span></span><br><span class="line"><span class="comment">///6: [è]</span></span><br><span class="line"><span class="comment">///7: []</span></span><br><span class="line"><span class="comment">///8: [ª]</span></span><br><span class="line"><span class="comment">///0: [李]</span></span><br><span class="line"><span class="comment">///3: [建]</span></span><br><span class="line"><span class="comment">///6: [聪]</span></span><br></pre></td></tr></table></figure>
-<p>要修改字符串，须将其转换为可变类型(<code>[]rune</code>或<code>[]byte</code>), 待完成后再转换回来。但不管怎么转换，都须重新分配内存，并复制数据。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">pp</span><span class="params">(format <span class="type">string</span>, ptr <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	p := reflect.ValueOf(ptr).Pointer()</span><br><span class="line">	h := (*<span class="type">uintptr</span>)(unsafe.Pointer(p))</span><br><span class="line">	fmt.Printf(format, *h)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span> <span class="params">()</span></span> &#123;	<span class="comment">// byte</span></span><br><span class="line">	s:=<span class="string">&quot;hello, world!&quot;</span></span><br><span class="line">	pp(<span class="string">&quot;s: %x\n&quot;</span>, &amp;s)</span><br><span class="line"></span><br><span class="line">	bs := []<span class="type">byte</span>(s)</span><br><span class="line">	s2 := <span class="type">string</span>(bs)</span><br><span class="line"></span><br><span class="line">	pp(<span class="string">&quot;string to []byte, bs:%x\n&quot;</span>, &amp;bs)</span><br><span class="line">	pp(<span class="string">&quot;[]byte to string, s2:%x\n&quot;</span>, &amp;s2)</span><br><span class="line"></span><br><span class="line">	rs := []<span class="type">rune</span>(s)</span><br><span class="line">	s3 := <span class="type">string</span>(rs)</span><br><span class="line"></span><br><span class="line">	pp(<span class="string">&quot;string to []byte, rs:%x\n&quot;</span>, &amp;rs)</span><br><span class="line">	pp(<span class="string">&quot;[]byte to string, s3:%x\n&quot;</span>, &amp;s3)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// s: 2bcc91</span></span><br><span class="line"><span class="comment">/// string to []byte, bs:c0000a20a0</span></span><br><span class="line"><span class="comment">/// []byte to string, s2:c0000a20b0</span></span><br><span class="line"><span class="comment">/// string to []byte, rs:c0000b80c0</span></span><br><span class="line"><span class="comment">/// []byte to string, s3:c0000a20d0</span></span><br></pre></td></tr></table></figure>
-<p>编译器会为了某些场合进行专门优化，避免额外分配和复制操作：</p>
-<ul>
-<li>将<code>[]byte</code>转换为<code>string key</code>, 去<code>map[string]</code>查询的时候。</li>
-<li>将<code>string</code>转换为<code>[]byte</code>, 进行<code>for range</code>迭代时，直接取字节赋值给局部变量。</li>
-</ul>
-<p>除了类型转换外，动态构建字符串也容易造成性能问题。<br>
-用加法操作符拼接字符串时，每次都须重新分配内存。如此，在构建超大字符串时，性能就显得极差。<br>
-改进思路时预分配i足够大的空间。常用方法是用<code>string.Join</code>函数，他会统计所有参数长度，并一次性完成内存分配操作。<br>
-另外<br>
-utf8.ValidString(s) 返回s是不是一个有效的字符串<br>
-utf8.RuneCountInString(s) 替代<code>len</code>返回<code>unicode</code>的字符数量</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/08/27/2020-08-21-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(6)%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/27/2020-08-21-%E3%80%8AGo%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0(6)%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">《Go语言学习笔记》读书笔记(6)方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-27 21:24:47" itemprop="dateCreated datePublished" datetime="2020-08-27T21:24:47+08:00">2020-08-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">Go 读书笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="方法">方法</h2>
-<p>方法是与对象实例绑定的特殊函数。<br>
-方法是面向对象编程的基本概念，用于维护和展示对象的自身状态。对象是内敛的，每个实例都有各自不同的独立特征，以属性和方法来暴露对外通信接口。普通函数则专注于算法流程，通过接收参数来完成特定逻辑运算，并返回最终结果。换句话说，方法是有关联的而函数通常没有。<br>
-方法和函数定义语法区别，在于前者有前置实例接收参数，编译器以此确定方法所数类型。<br>
-可以为当前包，以及除接口和指针以外的任何类型定义方法。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n N)</span></span> toString() <span class="type">string</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> fmt.Sprintf(<span class="string">&quot;%#x&quot;</span>, n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> a N = <span class="number">25</span></span><br><span class="line">  <span class="built_in">println</span>(a.toString())</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// 0x19</span></span><br></pre></td></tr></table></figure>
-<p>方法同样不支持重载(<code>overload</code>)。<code>receiver</code>参数名没有限制，按惯例会选用简短有意义的名称。如方法内部并不引用实例，可省略参数名，仅保留类型。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(N)</span></span> test() &#123;</span><br><span class="line">  <span class="built_in">println</span>(<span class="string">&quot;hi~&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>方法可看作特殊的函数，那么<code>receiver</code>的类型自然可以是基础类型或指针类型。这会关系到调用时对象实例是否被赋值。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n N)</span></span> value() &#123;</span><br><span class="line">  n++</span><br><span class="line">  fmt.Printf(<span class="string">&quot;v: %p, %v\n&quot;</span>, &amp;n, n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n *N)</span></span> pointer() &#123;</span><br><span class="line">  (*n)++</span><br><span class="line">  fmt.Printf(<span class="string">&quot;p: %p, %v\n&quot;</span>, n, *n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> a N = <span class="number">25</span></span><br><span class="line">  a.value()</span><br><span class="line">  a.pointer()</span><br><span class="line"></span><br><span class="line">  fmt.Printf(<span class="string">&quot;a: %p, %v\n&quot;</span>, &amp;a, a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// v: 0xc8200741c8, 26 /// receiver 被复制</span></span><br><span class="line"><span class="comment">/// p: 0xc8200741c0, 26</span></span><br><span class="line"><span class="comment">/// a: 0xc8200741c0, 26</span></span><br></pre></td></tr></table></figure>
-<p>可使用实例值或指针调用方法，编译器会根据方法<code>receiver</code>类型自动在基础类型和指针类型间转换。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> a N = <span class="number">25</span></span><br><span class="line">  p := &amp;a</span><br><span class="line">  a.value()</span><br><span class="line">  a.pointer()</span><br><span class="line">  p.value()</span><br><span class="line">  p.pointer()</span><br><span class="line"></span><br><span class="line">  <span class="comment">/// p2 := &amp;p   错误</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// v: 0xc82999a2c0, 26</span></span><br><span class="line"><span class="comment">/// p: 0xc82999a298, 26</span></span><br><span class="line"><span class="comment">/// v: 0xc82000a2f0, 27</span></span><br><span class="line"><span class="comment">/// v: 0xc82000a298, 27</span></span><br></pre></td></tr></table></figure>
-<p>指针类型的<code>receiver</code>必须时合法指针(包括<code>nil</code>), 或能获取实例地址。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> X <span class="keyword">struct</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(x *X)</span></span> test() &#123;</span><br><span class="line">  <span class="built_in">println</span>(<span class="string">&quot;hi!&quot;</span>, x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> a *X</span><br><span class="line">  a.test()  <span class="comment">///相当于test(nil)</span></span><br><span class="line">  X&#123;&#125;.test()  <span class="comment">/// 错误无法获取地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如何选择方法的<code>receiver</code>类型：</p>
-<ul>
-<li>要修改实例状态，用<code>*T</code></li>
-<li>无需修改状态的小对象或固定值，建议用<code>T</code></li>
-<li>大对象建议用<code>*T</code>, 以减少复制成本。</li>
-<li>引用类型、字符串、函数等指针包装对象，直接用T。</li>
-<li>若包含<code>Mutex</code>等同步字段，用<code>*T</code>,避免因复制造成锁操作无效</li>
-<li>其他无法确定的情况，都用<code>*T</code></li>
-</ul>
-<h3 id="匿名字段">匿名字段</h3>
-<p>可以访问匿名字段成员那样调用其方法，有编译器负责查找。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> data <span class="keyword">struct</span> &#123;</span><br><span class="line">  sync.Mutex</span><br><span class="line">  buf [<span class="number">1024</span>]<span class="type">byte</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  d := data()</span><br><span class="line">  d.Lock()  <span class="comment">/// 编译器会处理为 sync.(*Mutex).Lock()调用</span></span><br><span class="line">  <span class="keyword">defer</span> d.Unlock()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>方法也会有同名遮蔽问题。但利用这一特性可实现类似(<code>override</code>)操作。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> user <span class="keyword">struct</span> &#123;&#125;</span><br><span class="line"><span class="keyword">type</span> manager <span class="keyword">struct</span> &#123;</span><br><span class="line">  user</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun (user) toString() <span class="type">string</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;user&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m manager)</span></span> toString() <span class="type">string</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> m.user.toString() + <span class="string">&quot;; manager&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> m manager</span><br><span class="line">  <span class="built_in">println</span>(m.toString())</span><br><span class="line">  <span class="built_in">println</span>(m.user.toString())</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// user; manager</span></span><br><span class="line"><span class="comment">/// user</span></span><br></pre></td></tr></table></figure>
-<p>尽可能直接访问匿名字段的成员和方法，但他们依然不属于继承关系。</p>
-<h3 id="方法集">方法集</h3>
-<p>类型有一个与之相关的方法集，这决定了它是否实现某个接口。</p>
-<ul>
-<li>类型<code>T</code>方法集包含所有<code>receiver T</code>方法。</li>
-<li>类型<code>*T</code>方法集包含所有<code>recever T</code> + <code>*T</code>方法。</li>
-<li>匿名嵌入<code>S</code>, <code>T</code>方法集包含所有<code>receiver S</code>方法。</li>
-<li>匿名嵌入<code>*S</code>, <code>T</code>方法集包含所有<code>receiver S</code>+<code>*S</code>方法。</li>
-<li>匿名嵌入<code>S</code>或<code>*S</code>, <code>*T</code>方法集包含所有<code>receiver S</code>+<code>*S</code>方法。</li>
-</ul>
-<p>可利用反射测试这些规则。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> S <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"><span class="keyword">type</span> T <span class="keyword">struct</span>&#123;</span><br><span class="line">  S <span class="comment">// 匿名嵌入字段</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(S)</span></span> sVal() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(*S)</span></span> sPtr() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(T)</span></span> tVal() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(*T)</span></span> tPtr() &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">methodSet</span><span class="params">(a <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">  t := reflect.TypeOf(a)</span><br><span class="line">  <span class="keyword">for</span> i, n := <span class="number">0</span>, t.NumMethod(); i &lt; n; i++ &#123;</span><br><span class="line">    m := t.Method(i)</span><br><span class="line">    fmt.Println(m.Name, m.Type)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> t T</span><br><span class="line">  methodSet(t)  <span class="comment">///&lt; 显示T方法集</span></span><br><span class="line">  <span class="built_in">println</span>(<span class="string">&quot;-------&quot;</span>)</span><br><span class="line">  methodSet(&amp;t) <span class="comment">///&lt; 显示*T方法集</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// sVal func(main.T)</span></span><br><span class="line"><span class="comment">/// tVal func(main.T)</span></span><br><span class="line"><span class="comment">/// ---------</span></span><br><span class="line"><span class="comment">/// sPtr func(*main.T)</span></span><br><span class="line"><span class="comment">/// sVal func(*main.T)</span></span><br><span class="line"><span class="comment">/// tPtr func(*main.T)</span></span><br><span class="line"><span class="comment">/// tVal func(*main.T)</span></span><br></pre></td></tr></table></figure>
-<p>方法集影响接口实现和方法表达式转换，于通过实例或实例指针调用方法无关。实例并不使用方法集，而是直接调用(或通过隐式字段名).<br>
-很显然，匿名字段就是为方法准备的。否则，完全没必要为少写个字段名而大费周折。<br>
-面向对象的三大特征&quot;封装&quot;,“继承&quot;和&quot;多态”, Go仅仅实现了部分特征，它更倾向于”组合优于继承“这种思想。将模块分解成相互独立的更小单元，分别处理不同方面的需求，最后以匿名嵌入方式组合到一起，共同实现对外接口。而且其简短一致的调用方式，更是隐藏了内部实现细节。</p>
-<blockquote>
-<p>组合没有父子依赖，不会破坏封装。且整体和局部松耦合，可任意增加来实现实现扩展。各单元持有单一职责，互无关联，实现和维护更加简单。</p>
-</blockquote>
-<h3 id="表达式">表达式</h3>
-<p>方法和函数一样，除直接调用外还可以赋值给变量，或作为参数传递。依照具体引用方式不同，可分为<code>expression</code>和<code>value</code>两种状态。<br>
-通过类型引用<code>Method expression</code>会被还原为普通函数央视，receiver是第一参数，调用时须显示传参。至于类型，可以是<code>T</code>或<code>*T</code>, 只要目标方法集中即可。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n N)</span></span> test() &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;test.n: %p, %d&quot;</span>, &amp;n, n)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> n N = <span class="number">25</span></span><br><span class="line">  fmt.Printf(<span class="string">&quot;main.n: %p, %d\n&quot;</span>, &amp;n, n)</span><br><span class="line">  f1 := N.test  <span class="comment">///&lt; func(n N)</span></span><br><span class="line">  f1(n)</span><br><span class="line">  f2 := (*N).test <span class="comment">///&lt; func(n *N)</span></span><br><span class="line">  f2(&amp;n)  <span class="comment">///&lt; 按方法集中的签名传递正确类型的参数</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// main.n: 0xc82000a140, 25</span></span><br><span class="line"><span class="comment">/// test.n: 0xc82000a158, 25</span></span><br><span class="line"><span class="comment">/// test.n: 0xc82000a168, 25</span></span><br></pre></td></tr></table></figure>
-<p>当然，也可直接以表达式方式调用。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> n N = <span class="number">25</span></span><br><span class="line">  N.test(n)</span><br><span class="line">  (*N).test(&amp;n) <span class="comment">///&lt; 注意： *N 须使用括号，以免语法解析错误。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>基于实例或指针引用的<code>method value</code>, 参数签名不会改变，依旧按正常方式调用。<br>
-但当<code>method value</code>被赋值给变量或作为参数传递时，会立即计算并复制该方法执行所需的<code>receiver</code>对象，与其绑定，以便在稍后执行时，能隐式传入<code>receiver</code>参数。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n N)</span></span> test() &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;test.n: %p, %v\n&quot;</span>, &amp;n, n)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> n N = <span class="number">100</span></span><br><span class="line">  p := &amp;n</span><br><span class="line">  n++</span><br><span class="line">  f1 := n.test  <span class="comment">//&lt; 因为test方法的reveiver是类型,所以复制n, 等于101</span></span><br><span class="line"></span><br><span class="line">  n++</span><br><span class="line">  f2 := p.test  <span class="comment">///&lt; 复制*p, 等于102</span></span><br><span class="line">  n++</span><br><span class="line">  fmt.Printf(<span class="string">&quot;main.n: %p, %v\n&quot;</span>, p, n)</span><br><span class="line">  f1()</span><br><span class="line">  f2()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// main.n: 0xc829976028, 103</span></span><br><span class="line"><span class="comment">/// test.n: 0xc820076060, 101</span></span><br><span class="line"><span class="comment">/// test.n: 0xc820076060, 102</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>编译器会为method value生成一个包装函数，实现间接调用。至于<code>receiver</code>复制，和闭包的实现方法基本相同，打包成<code>funcval</code>, 经由<code>DX</code>寄存器传递。</p>
-</blockquote>
-<p>当<code>method value</code>作为参数是，会复制含<code>receiver</code>在内的整个<code>method value</code>。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">call</span><span class="params">(m <span class="keyword">func</span>()</span></span>) &#123;</span><br><span class="line">  m()</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> n N = <span class="number">100</span></span><br><span class="line">  p := &amp;n</span><br><span class="line">  fmt.Printf(<span class="string">&quot;main.h: %p, %v&quot;</span>, p, n)</span><br><span class="line">  n++</span><br><span class="line">  call(n.test)</span><br><span class="line">  n++</span><br><span class="line">  call(p.test)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// main.n 0x82000a288, 100</span></span><br><span class="line"><span class="comment">/// test.n 0x82000a2c0, 101</span></span><br><span class="line"><span class="comment">/// main.n 0x82000a2d0, 102</span></span><br></pre></td></tr></table></figure>
-<p>当然，如果目标方法的<code>receiver</code>是指针类型，那么被复制的仅是指针。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n *N)</span></span> test() &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;test.n: %p, %v\n&quot;</span>, n, *n)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">var</span> n N = <span class="number">100</span></span><br><span class="line">  p := &amp;n</span><br><span class="line">  n++</span><br><span class="line">  f1 := n.test  <span class="comment">///&lt; 因为test方法的receiver是*N类型, 所以复制&amp;n</span></span><br><span class="line">  n++</span><br><span class="line">  f2 := p.test  <span class="comment">///&lt; 复制p指针</span></span><br><span class="line">  n++</span><br><span class="line">  fmt.Printf(<span class="string">&quot;main.n: %p, %v\n&quot;</span>, p, n)</span><br><span class="line">  f1()  <span class="comment">///&lt; 延迟调用，n == 103</span></span><br><span class="line">  f2()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/// 输出：</span></span><br><span class="line"><span class="comment">/// main.n: 0xc82000a298, 103</span></span><br><span class="line"><span class="comment">/// test.n: 0xc82000a298, 103</span></span><br><span class="line"><span class="comment">/// test.n: 0xc82000a298, 103</span></span><br></pre></td></tr></table></figure>
-<p>只要receiver参数类型正确，使用<code>nil</code>同样可以执行。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> N <span class="type">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(N)</span></span> value() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(*N)</span></span> pointer() &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> p *N</span><br><span class="line">  p.pointer() <span class="comment">// method value</span></span><br><span class="line">  (*N)(<span class="literal">nil</span>).pointer() <span class="comment">// method value</span></span><br><span class="line">  (*N).pointer(<span class="literal">nil</span>) <span class="comment">// method expression</span></span><br><span class="line">  <span class="comment">/// p.value() 错误： invalid memory address or nil pointer dereference</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/08/26/2020-08-26-C++%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/26/2020-08-26-C++%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/" class="post-title-link" itemprop="url">C++ 二叉树的遍历</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-26 21:52:09" itemprop="dateCreated datePublished" datetime="2020-08-26T21:52:09+08:00">2020-08-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">c++ 数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>前序遍历：</p>
-<p>遍历的顺序是：根节点-左节点-右节点</p>
-<p>递归代码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">      std::function&lt;<span class="type">void</span>(TreeNode*)&gt; order = [&amp;](TreeNode* node)&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line">        res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">        <span class="built_in">order</span>(node-&gt;left);</span><br><span class="line">        <span class="built_in">order</span>(node-&gt;right);</span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="built_in">order</span>(root);</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>迭代代码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">      std::stack&lt;TreeNode*&gt; s;</span><br><span class="line">      s.<span class="built_in">push</span>(root);</span><br><span class="line">      <span class="keyword">while</span>(!s.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        root = s.<span class="built_in">top</span>();</span><br><span class="line">        s.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">continue</span>;</span><br><span class="line">        res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">        s.<span class="built_in">push</span>(root-&gt;right);</span><br><span class="line">        s.<span class="built_in">push</span>(root-&gt;left);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>中序遍历：</p>
-<p>遍历的顺序是：左节点-根节点-右节点</p>
-<p>递归代码</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        std::function&lt;<span class="type">void</span>(TreeNode*)&gt; order = [&amp;](TreeNode* node)&#123;</span><br><span class="line">          <span class="keyword">if</span>(node == <span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line">          <span class="built_in">order</span>(node-&gt;left);</span><br><span class="line">          res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">          <span class="built_in">order</span>(node-&gt;right);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="built_in">order</span>(root);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>迭代代码</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">      std::stack&lt;TreeNode*&gt; s;</span><br><span class="line">      <span class="keyword">while</span>(root != <span class="literal">nullptr</span> || !s.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        <span class="keyword">while</span>(root != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">          s.<span class="built_in">push</span>(root);</span><br><span class="line">          root = root-&gt;left;</span><br><span class="line">        &#125;</span><br><span class="line">        root = s.<span class="built_in">top</span>();</span><br><span class="line">        s.<span class="built_in">pop</span>();</span><br><span class="line">        res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">        root = root-&gt;right;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>后序遍历：</p>
-<p>遍历的顺序是：左节点-右节点-根节点</p>
-<p>递归代码</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">        std::function&lt;<span class="type">void</span>(TreeNode*)&gt; order = [&amp;](TreeNode* node)&#123;</span><br><span class="line">          <span class="keyword">if</span>(node == <span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line">          <span class="built_in">order</span>(node-&gt;left);</span><br><span class="line">          <span class="built_in">order</span>(node-&gt;right);</span><br><span class="line">          res.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="built_in">order</span>(root);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>迭代代码</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      std::vector&lt;<span class="type">int</span>&gt; res;</span><br><span class="line">      <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> res;</span><br><span class="line">      std::stack&lt;TreeNode*&gt; s;</span><br><span class="line">      s.<span class="built_in">push</span>(root);</span><br><span class="line">      <span class="keyword">while</span>(!s.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        root = s.<span class="built_in">top</span>();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">          s.<span class="built_in">pop</span>();</span><br><span class="line">          res.<span class="built_in">push_back</span>(s.<span class="built_in">top</span>()-&gt;val);</span><br><span class="line">          s.<span class="built_in">pop</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          s.<span class="built_in">push</span>(<span class="literal">nullptr</span>);</span><br><span class="line">          <span class="keyword">if</span>(root-&gt;right) s.<span class="built_in">push</span>(root-&gt;right);</span><br><span class="line">          <span class="keyword">if</span>(root-&gt;left) s.<span class="built_in">push</span>(root-&gt;left);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
-    <link itemprop="mainEntityOfPage" href="https://mercy1101.github.io/2020/08/26/2020-08-26-C++%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李建聪">
-      <meta itemprop="description" content="在不断开放的世界中，我们的力量来源于我们能构建的连接，而非单一的智慧。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="李建聪的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/26/2020-08-26-C++%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">C++ 算法题解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-26 21:48:47" itemprop="dateCreated datePublished" datetime="2020-08-26T21:48:47+08:00">2020-08-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-28 14:29:44" itemprop="dateModified" datetime="2023-10-28T14:29:44+08:00">2023-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c-leetcode/" itemprop="url" rel="index"><span itemprop="name">c++ leetcode</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="排序操作次数">排序操作次数</h2>
-<p>题目描述:<br>
-有一种排序算法定义如下，该排序算法每次把一个元素提到序列的开头，例如2, 1, 3, 4，只需要一次操作把1提到序列起始位置就可以使得原序列从小到大有序。现在给你个乱序的1-n的排列，请你计算最少需要多少次操作才可以使得原序列从小到大有序。<br>
-输入描述</p>
-<p>输入第一行包含两个正整数n，表示序列的长度。（1 &lt;= n &lt;= 100000）<br>
-接下来一行有n个正整数，表示序列中的n个元素，中间用空格隔开。（1 &lt;= a_i &lt;= n）</p>
-<p>输出描述</p>
-<p>输出仅包含一个整数，表示最少的操作次数。</p>
-<p>样例输入<br>
-4<br>
-2 1 3 4</p>
-<p>样例输出<br>
-1</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">get_operation_count</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">int</span>&gt;&amp; vec)</span> </span>&#123;</span><br><span class="line">  <span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">sorted</span><span class="params">(vec)</span></span>;</span><br><span class="line">  std::<span class="built_in">sort</span>(sorted.<span class="built_in">begin</span>(), sorted.<span class="built_in">end</span>());</span><br><span class="line">  <span class="type">int</span> p = sorted.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> q = p;</span><br><span class="line">  <span class="keyword">while</span> (p &gt;= <span class="number">0</span> &amp;&amp; q &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (vec.<span class="built_in">at</span>(p) == sorted.<span class="built_in">at</span>(q)) &#123;</span><br><span class="line">      --p;</span><br><span class="line">      --q;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">while</span> (p &gt;= <span class="number">0</span> &amp;&amp; vec.<span class="built_in">at</span>(p) != sorted.<span class="built_in">at</span>(q)) &#123;</span><br><span class="line">        --p;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> q + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> n = <span class="number">0</span>;</span><br><span class="line">  std::cin &gt;&gt; n;</span><br><span class="line">  <span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">vec</span><span class="params">(n)</span></span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">    std::cin &gt;&gt; vec.<span class="built_in">at</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">  std::cout &lt;&lt; <span class="built_in">get_operation_count</span>(vec) &lt;&lt; std::endl;</span><br><span class="line">  <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1145,7 +1060,7 @@ utf8.RuneCountInString(s) 替代<code>len</code>返回<code>unicode</code>的字
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1156,7 +1071,7 @@ utf8.RuneCountInString(s) 替代<code>len</code>返回<code>unicode</code>的字
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
